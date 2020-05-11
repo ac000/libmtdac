@@ -1,0 +1,342 @@
+/* SPDX-License-Identifier: LGPL-2.1 */
+
+/*
+ * curl.c
+ *
+ * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ */
+
+#define _GNU_SOURCE
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdarg.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+#include <curl/curl.h>
+
+#include <jansson.h>
+
+#include "mtd.h"
+#include "curl.h"
+#include "endpoints.h"
+#include "auth.h"
+#include "logger.h"
+
+/* Just the HTTP status codes relevant to the MTD API */
+enum http_status_code {
+	OK = 200,
+	ACCEPTED = 202,
+	NO_CONTENT = 204,
+	BAD_REQUEST = 400,
+	UNAUTHORIZED,
+	FORBIDDEN = 403,
+	NOT_FOUND,
+	METHOD_NOT_ALLOWED,
+	NOT_ACCEPTABLE,
+	TOO_MANY_REQUESTS = 429,
+	INTERNAL_SERVER_ERROR = 500,
+	NOT_IMPLEMENTED,
+	SERVICE_UNAVAILABLE = 503,
+	GATEWAY_TIMEOUT,
+};
+
+static const struct http_status_code_entry {
+	const enum http_status_code sc;
+	const char *str_enum;
+	const char *str;
+} http_status_code_map[] = {
+	{ OK, "OK", "OK" },
+	{ ACCEPTED, "ACCEPTED", "Accepted" },
+	{ NO_CONTENT, "NO_CONTENT", "No Content" },
+	{ BAD_REQUEST, "BAD_REQUEST", "Bad Request" },
+	{ UNAUTHORIZED, "UNAUTHORIZED", "Unauthorized" },
+	{ FORBIDDEN, "FORBIDDEN", "Forbidden" },
+	{ NOT_FOUND, "NOT_FOUND", "Not Found" },
+	{ METHOD_NOT_ALLOWED, "METHOD_NOT_ALLOWED", "Method Not Allowed" },
+	{ NOT_ACCEPTABLE, "NOT_ACCEPTABLE", "Not Acceptable" },
+	{ TOO_MANY_REQUESTS, "TOO_MANY_REQUESTS", "Too Many Requests" },
+	{ INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR",
+				 "Internal Server Error" },
+	{ NOT_IMPLEMENTED, "NOT_IMPLEMENTED", "Not Implemented" },
+	{ SERVICE_UNAVAILABLE, "SERVICE_UNAVAILABLE", "Service Unavailable" },
+	{ GATEWAY_TIMEOUT, "GATEWAY_TIMEOUT", "Gateway Timeout" },
+};
+
+extern unsigned mtd_log_level;
+
+static inline const char *http_status_code2str(enum http_status_code sc)
+{
+	int i = 0;
+	int nr = sizeof(http_status_code_map) /
+		 sizeof(http_status_code_map[0]);
+
+	for ( ; i < nr; i++) {
+		if (http_status_code_map[i].sc == sc)
+			return http_status_code_map[i].str;
+	}
+
+	return "(Unknown status code)";
+}
+
+size_t curl_readfp_cb(void *ptr, size_t size, size_t nmemb, void *userp)
+{
+	return fread(ptr, size, nmemb, (FILE *)userp);
+}
+
+size_t curl_writeb_cb(void *contents, size_t size, size_t nmemb, void *userp)
+{
+	size_t realsize = size * nmemb;
+	struct curl_buf *curl_buf = userp;
+
+	curl_buf->buf = realloc(curl_buf->buf, curl_buf->len + realsize + 1);
+
+	memcpy(curl_buf->buf + curl_buf->len, contents, realsize);
+	curl_buf->len += realsize;
+	curl_buf->buf[curl_buf->len] = '\0';
+
+	return realsize;
+}
+
+void curl_ctx_free(const struct curl_ctx *ctx)
+{
+	free(ctx->curl_buf->buf);
+	free(ctx->curl_buf);
+	curl_slist_free_all(ctx->hdrs);
+
+	if (ctx->src_file)
+		fclose(ctx->src_file);
+}
+
+static int curl_add_hdr(struct curl_ctx *ctx, const char *fmt, ...)
+{
+	int len;
+	char *hdr;
+	va_list ap;
+
+	va_start(ap, fmt);
+	len = vasprintf(&hdr, fmt, ap);
+	if (len == -1) {
+		va_end(ap);
+		return -1;
+	}
+	va_end(ap);
+
+	ctx->hdrs = curl_slist_append(ctx->hdrs, hdr);
+
+	free(hdr);
+
+	return 0;
+}
+
+static void set_response(struct curl_ctx *ctx)
+{
+	json_t *rootbuf;
+	json_t *new;
+
+	if (ctx->curl_buf->buf)
+		rootbuf = json_loads(ctx->curl_buf->buf, 0, NULL);
+	else
+		rootbuf = json_null();
+
+	new = json_pack("{s:i, s:s, s:s s:o}",
+			"status_code", ctx->status_code,
+			"status_str", http_status_code2str(ctx->status_code),
+			"url", ctx->url,
+			"result", rootbuf);
+
+	free(ctx->curl_buf->buf);
+	ctx->curl_buf->buf = json_dumps(new, 0);
+	ctx->curl_buf->len = 0;
+
+	json_decref(rootbuf);
+	json_decref(new);
+}
+
+static int curl_perform(struct curl_ctx *ctx)
+{
+	int ret = 0;
+	CURL *curl;
+	CURLcode res;
+
+	curl = curl_easy_init();
+
+	if (ctx->hdrs)
+		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, ctx->hdrs);
+	curl_easy_setopt(curl, CURLOPT_URL, ctx->url);
+
+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, ctx->write_cb);
+	curl_easy_setopt(curl, CURLOPT_WRITEDATA, ctx->curl_buf);
+
+	if (ctx->post_data) {
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, ctx->post_data);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, ctx->post_size);
+	} else if (ctx->http_method == M_POST && ctx->src_file) {
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, NULL);
+		curl_easy_setopt(curl, CURLOPT_READFUNCTION, ctx->read_cb);
+		curl_easy_setopt(curl, CURLOPT_READDATA, ctx->src_file);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, ctx->src_size);
+	} else if (ctx->http_method == M_PUT) {
+		curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+		curl_easy_setopt(curl, CURLOPT_READFUNCTION, ctx->read_cb);
+		curl_easy_setopt(curl, CURLOPT_READDATA, ctx->src_file);
+		curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,
+				 (curl_off_t)ctx->src_size);
+	}
+
+	curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+
+	if (mtd_log_level == MTD_LOG_DEBUG)
+		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+
+	res = curl_easy_perform(curl);
+	if (res != CURLE_OK) {
+		logger(MTD_LOG_ERR, "curl_easy_perform(): %s\n",
+			curl_easy_strerror(res));
+		ret = MTD_ERR_CURL;
+	}
+	curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &ctx->status_code);
+	curl_easy_cleanup(curl);
+
+	logger(MTD_LOG_DEBUG, "[%ld] (%s)\n", ctx->status_code, ctx->url);
+
+	set_response(ctx);
+
+	return ret;
+}
+
+void curl_init(void)
+{
+	curl_global_init(CURL_GLOBAL_ALL);
+}
+
+void curl_destroy(void)
+{
+	curl_global_cleanup();
+}
+
+static int do_curl(struct curl_ctx *ctx)
+{
+	int err;
+	char url[URL_LEN + 1];
+	bool refreshed_token = false;
+
+	ctx->url = ep_make_url(ctx->endpoint, ctx->params, url);
+
+curl_again:
+	if (!strstr(ctx->url, "/oauth/token"))
+		err = curl_add_hdr(ctx, ctx->mtd_api_ver);
+
+	if (ctx->post_data)
+		err = curl_add_hdr(ctx, "Content-Type: "
+				   "application/x-www-form-urlencoded");
+        else
+		err = curl_add_hdr(ctx, "Content-Type: application/json");
+
+	if (!strstr(ctx->url, "/oauth/token")) {
+		char *access_token = load_token("access_token", FT_AUTH);
+
+		err = curl_add_hdr(ctx, "Authorization: Bearer %s",
+				   access_token);
+		free(access_token);
+	}
+	if (err)
+		return MTD_ERR_OS;
+
+	err = curl_perform(ctx);
+	if (err) {
+		return MTD_ERR_CURL;
+	} else if (ctx->status_code == UNAUTHORIZED && !refreshed_token) {
+		if (strstr(ctx->curl_buf->buf, "INVALID_CREDENTIALS")) {
+			logger(MTD_LOG_INFO, "INVALID_CREDENTIALS: "
+			       "Refreshing access_token\n");
+			refresh_access_token();
+			curl_slist_free_all(ctx->hdrs);
+			ctx->hdrs = NULL;
+			*ctx->curl_buf->buf = '\0';
+			ctx->curl_buf->len = 0;
+			refreshed_token = true;
+			logger(MTD_LOG_INFO, "Trying the request again...\n");
+			goto curl_again;
+		}
+	} else if (ctx->status_code == BAD_REQUEST && refreshed_token) {
+		if (strstr(ctx->curl_buf->buf, "invalid_request"))
+			return MTD_ERR_NEEDS_AUTHORISATION;
+	} else if (ctx->status_code >= 300) {
+		return MTD_ERR_REQUEST;
+	}
+
+	return MTD_ERR_NONE;
+}
+
+static int do_put_post(struct curl_ctx *ctx, const char *src_file,
+		       const char *data, char **buf,
+		       enum http_method http_method)
+{
+	int err;
+	struct stat sb;
+
+	*buf = NULL;
+
+	ctx->http_method = http_method;
+	ctx->write_cb = curl_writeb_cb;
+	ctx->curl_buf = calloc(1, sizeof(struct curl_buf));
+
+	if (src_file) {
+		err = stat(src_file, &sb);
+		if (err) {
+			logger(MTD_LOG_ERR, "%s: couldn't stat() %s\n",
+			       __func__, src_file);
+			return MTD_ERR_OS;
+		}
+		ctx->src_file = fopen(src_file, "r");
+		ctx->src_size = sb.st_size;
+		ctx->read_cb = curl_readfp_cb;
+	} else if (data) {
+		ctx->post_data = data;
+		ctx->post_size = strlen(data);
+	}
+
+	err = do_curl(ctx);
+	if (ctx->curl_buf->buf)
+		*buf = strdup(ctx->curl_buf->buf);
+
+	curl_ctx_free(ctx);
+
+	return err;
+}
+
+int do_put(struct curl_ctx *ctx, const char *src_file, const char *data,
+	   char **buf)
+{
+	return do_put_post(ctx, src_file, data, buf, M_PUT);
+}
+
+int do_post(struct curl_ctx *ctx, const char *src_file, const char *data,
+	    char **buf)
+{
+	return do_put_post(ctx, src_file, data, buf, M_POST);
+}
+
+int do_get(struct curl_ctx *ctx, char **buf)
+{
+	int err;
+
+	*buf = NULL;
+
+	ctx->http_method = M_GET;
+	ctx->write_cb = curl_writeb_cb;
+	ctx->curl_buf = calloc(1, sizeof(struct curl_buf));
+
+	err = do_curl(ctx);
+	if (ctx->curl_buf->buf)
+		*buf = strdup(ctx->curl_buf->buf);
+
+	curl_ctx_free(ctx);
+
+	return err;
+}
