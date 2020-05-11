@@ -209,16 +209,6 @@ static int curl_perform(struct curl_ctx *ctx)
 	return ret;
 }
 
-void curl_init(void)
-{
-	curl_global_init(CURL_GLOBAL_ALL);
-}
-
-void curl_destroy(void)
-{
-	curl_global_cleanup();
-}
-
 static int do_curl(struct curl_ctx *ctx)
 {
 	int err;

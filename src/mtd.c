@@ -19,6 +19,8 @@
 
 #include <jansson.h>
 
+#include <curl/curl.h>
+
 #include "mtd.h"
 #include "auth.h"
 #include "curl.h"
@@ -76,9 +78,14 @@ int mtd_init(int flags)
 	else if (flags & MTD_OPT_LOG_DEBUG)
 		mtd_log_level = MTD_LOG_DEBUG;
 
-	curl_init();
+	curl_global_init(CURL_GLOBAL_ALL);
 
 	return MTD_ERR_NONE;
+}
+
+void mtd_deinit(void)
+{
+	curl_global_cleanup();
 }
 
 extern char **environ;

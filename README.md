@@ -59,6 +59,10 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     int mtd_init_config(void)
 
+#### mtd\_deinit - de-initialise the library
+
+    void mtd_deinit(void)
+
 
 ### Make Tax Digital - Self-Assessment API functions
 

@@ -39,6 +39,7 @@ enum mtd_error {
 #pragma GCC visibility push(default)
 
 extern int mtd_init(int flags);
+extern void mtd_deinit(void);
 extern int mtd_init_auth(void);
 extern int mtd_init_config(void);
 
