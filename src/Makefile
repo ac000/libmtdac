@@ -1,7 +1,7 @@
 LIBNAME = libmtdac
 
 SOVER	= 0
-VERSION = $(SOVER).0.0
+VERSION = $(SOVER).1.0
 
 DEPDIR  := .d
 $(shell mkdir -p $(DEPDIR) >/dev/null)

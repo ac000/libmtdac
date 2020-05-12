@@ -50,7 +50,6 @@ static const struct _endpoint {
 char *ep_make_url(enum endpoint ep, const char **params, char *url)
 {
 	char *nino = load_token("nino", FT_CONFIG);
-	char *seid = load_token("seid", FT_CONFIG);
 	char *string;
 	char *ptr;
 	int len;
@@ -76,7 +75,7 @@ char *ep_make_url(enum endpoint ep, const char **params, char *url)
 					nino);
 		else if (strcmp(token, "{selfEmploymentId}") == 0)
 			len += snprintf(url + len, URL_LEN+1 - len, "/%s",
-					seid);
+					params[p++]);
 		else if (strcmp(token, "{optional_query_params}") == 0)
 			len += snprintf(url + len, URL_LEN+1 - len, "%s",
 					params[p] ? params[p++] : "");
@@ -87,7 +86,6 @@ char *ep_make_url(enum endpoint ep, const char **params, char *url)
 
 	free(string);
 	free(nino);
-	free(seid);
 
 	return url;
 }

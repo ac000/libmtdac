@@ -72,48 +72,53 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 #### mtd\_sa\_get\_employment
 
-    int mtd_sa_get_employment(const char *employment_id, char **buf)
+    int mtd_sa_get_employment(const char *seid, char **buf)
 
 #### mtd\_sa\_list\_obligations
 
-    int mtd_sa_list_obligations(char **buf)
+    int mtd_sa_list_obligations(const char *seid, char **buf)
 
 
 #### mtd\_sa\_list\_periods
 
-    int mtd_sa_list_periods(char **buf)
+    int mtd_sa_list_periods(const char *seid, char **buf)
 
 #### mtd\_sa\_create\_period
 
-    int mtd_sa_create_period(const char *src_file, char **buf)
+    int mtd_sa_create_period(const char *src_file, const char *seid,
+                             char **buf)
 
 #### mtd\_sa\_get\_period
 
-    int mtd_sa_get_period(const char *period_id, char **buf)
+    int mtd_sa_get_period(const char *seid, const char *period_id,
+                          char **buf)
 
 #### mtd\_sa\_update\_period
 
-    int mtd_sa_update_period(const char *src_file, const char *period_id,
-                             char **buf)
+    int mtd_sa_update_period(const char *src_file, const char *seid,
+                             const char *period_id, char **buf)
 
 #### mtd\_sa\_get\_annual\_summary
 
-    int mtd_sa_get_annual_summary(const char *tax_year, char **buf)
+    int mtd_sa_get_annual_summary(const char *seid, const char *tax_year,
+                                  char **buf)
 
 #### mtd\_sa\_update\_annual\_summary
 
-    int mtd_sa_update_annual_summary(const char *src_file,
+    int mtd_sa_update_annual_summary(const char *src_file, const char *seid,
                                      const char *tax_year, char **buf)
 
 #### mtd\_sa\_submit\_end\_of\_period\_statement
 
     int mtd_sa_submit_end_of_period_statement(const char *src_file,
+                                              const char *seid,
                                               const char *start,
                                               const char *end, char **buf)
 
 #### mtd\_sa\_get\_end\_of\_period\_statement
 
-    int mtd_sa_get_end_of_period_statement(const char *start,
+    int mtd_sa_get_end_of_period_statement(const char *seid,
+                                           const char *start,
                                            const char *end,
                                            char **buf)
 

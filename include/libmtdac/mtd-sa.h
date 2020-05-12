@@ -17,22 +17,27 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
-extern int mtd_sa_get_end_of_period_statement(const char *start,
+extern int mtd_sa_get_end_of_period_statement(const char *seid,
+					      const char *start,
 					      const char *end,
 					      char **buf);
 extern int mtd_sa_submit_end_of_period_statement(const char *src_file,
+						 const char *seid,
 						 const char *start,
 						 const char *end, char **buf);
-extern int mtd_sa_update_annual_summary(const char *src_file,
+extern int mtd_sa_update_annual_summary(const char *src_file, const char *seid,
 					const char *tax_year, char **buf);
-extern int mtd_sa_get_annual_summary(const char *tax_year, char **buf);
-extern int mtd_sa_update_period(const char *src_file, const char *period_id,
+extern int mtd_sa_get_annual_summary(const char *seid, const char *tax_year,
+				     char **buf);
+extern int mtd_sa_update_period(const char *src_file, const char *seid,
+				const char *period_id, char **buf);
+extern int mtd_sa_get_period(const char *seid, const char *period_id,
+			     char **buf);
+extern int mtd_sa_create_period(const char *src_file, const char *seid,
 				char **buf);
-extern int mtd_sa_get_period(const char *period_id, char **buf);
-extern int mtd_sa_create_period(const char *src_file, char **buf);
-extern int mtd_sa_list_periods(char **buf);
-extern int mtd_sa_list_obligations(char **buf);
-extern int mtd_sa_get_employment(const char *employment_id, char **buf);
+extern int mtd_sa_list_periods(const char *seid, char **buf);
+extern int mtd_sa_list_obligations(const char *seid, char **buf);
+extern int mtd_sa_get_employment(const char *seid, char **buf);
 extern int mtd_sa_list_employments(char **buf);
 
 #pragma GCC visibility pop

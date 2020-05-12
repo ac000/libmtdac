@@ -21,11 +21,11 @@
  * This is a bit of an odd one out, as it's the only one that
  * takes an *optional* query string.
  */
-int mtd_sa_get_end_of_period_statement(const char *start, const char *end,
-				       char **buf)
+int mtd_sa_get_end_of_period_statement(const char *seid, const char *start,
+				       const char *end, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { NULL };
+	const char *params[2] = { seid, NULL };
 	char query_string[64];
 
 	ctx.mtd_api_ver = MTD_SA_API_VER;
@@ -37,7 +37,7 @@ int mtd_sa_get_end_of_period_statement(const char *start, const char *end,
 			 start ? "from=" : "", start ? start : "",
 			 (start && end) ? "&" : "",
 			 end ? "to=" : "", end ? end : "");
-		params[0] = query_string;
+		params[1] = query_string;
 	}
 
 	return do_get(&ctx, buf);
@@ -48,11 +48,12 @@ int mtd_sa_get_end_of_period_statement(const char *start, const char *end,
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}
  */
 int mtd_sa_submit_end_of_period_statement(const char *src_file,
+					  const char *seid,
 					  const char *start,
 					  const char *end, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[2] = { start, end };
+	const char *params[3] = { seid, start, end };
 
 	ctx.mtd_api_ver = MTD_SA_API_VER;
 	ctx.endpoint = SA_SUBMIT_END_OF_PERIOD_STATEMENT;
@@ -65,11 +66,11 @@ int mtd_sa_submit_end_of_period_statement(const char *src_file,
  * [PUT ]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/{taxYear}
  */
-int mtd_sa_update_annual_summary(const char *src_file, const char *tax_year,
-				 char **buf)
+int mtd_sa_update_annual_summary(const char *src_file, const char *seid,
+				 const char *tax_year, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { tax_year };
+	const char *params[2] = { seid, tax_year };
 
 	ctx.mtd_api_ver = MTD_SA_API_VER;
 	ctx.endpoint = SA_UPDATE_ANNUAL_SUMMARY;
@@ -82,10 +83,10 @@ int mtd_sa_update_annual_summary(const char *src_file, const char *tax_year,
  * [GET ]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/{taxYear}
  */
-int mtd_sa_get_annual_summary(const char *tax_year, char **buf)
+int mtd_sa_get_annual_summary(const char *seid, const char *tax_year, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { tax_year };
+	const char *params[2] = { seid, tax_year };
 
 	ctx.mtd_api_ver = MTD_SA_API_VER;
 	ctx.endpoint = SA_GET_ANNUAL_SUMMARY;
@@ -98,11 +99,11 @@ int mtd_sa_get_annual_summary(const char *tax_year, char **buf)
  * [PUT ]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods/{periodId}
  */
-int mtd_sa_update_period(const char *src_file, const char *period_id,
-			 char **buf)
+int mtd_sa_update_period(const char *src_file, const char *seid,
+			 const char *period_id, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { period_id };
+	const char *params[2] = { seid, period_id };
 
 	ctx.mtd_api_ver = MTD_SA_API_VER;
 	ctx.endpoint = SA_UPDATE_PERIOD;
@@ -115,10 +116,10 @@ int mtd_sa_update_period(const char *src_file, const char *period_id,
  * [GET ]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods/{periodId}
  */
-int mtd_sa_get_period(const char *period_id, char **buf)
+int mtd_sa_get_period(const char *seid, const char *period_id, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { period_id };
+	const char *params[2] = { seid, period_id };
 
 	ctx.mtd_api_ver = MTD_SA_API_VER;
 	ctx.endpoint = SA_GET_PERIOD;
@@ -131,12 +132,14 @@ int mtd_sa_get_period(const char *period_id, char **buf)
  * [POST]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods
  */
-int mtd_sa_create_period(const char *src_file, char **buf)
+int mtd_sa_create_period(const char *src_file, const char *seid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
+	const char *params[1] = { seid };
 
 	ctx.mtd_api_ver = MTD_SA_API_VER;
 	ctx.endpoint = SA_CREATE_PERIOD;
+	ctx.params = params;
 
 	return do_post(&ctx, src_file, NULL, buf);
 }
@@ -145,12 +148,14 @@ int mtd_sa_create_period(const char *src_file, char **buf)
  * [GET ]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods
  */
-int mtd_sa_list_periods(char **buf)
+int mtd_sa_list_periods(const char *seid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
+	const char *params[1] = { seid };
 
 	ctx.mtd_api_ver = MTD_SA_API_VER;
 	ctx.endpoint = SA_LIST_PERIODS;
+	ctx.params = params;
 
 	return do_get(&ctx, buf);
 }
@@ -159,12 +164,14 @@ int mtd_sa_list_periods(char **buf)
  * [GET ]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/obligations
  */
-int mtd_sa_list_obligations(char **buf)
+int mtd_sa_list_obligations(const char *seid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
+	const char *params[1] = { seid };
 
 	ctx.mtd_api_ver = MTD_SA_API_VER;
 	ctx.endpoint = SA_LIST_OBLIGATIONS;
+	ctx.params = params;
 
 	return do_get(&ctx, buf);
 }
@@ -173,10 +180,10 @@ int mtd_sa_list_obligations(char **buf)
  * [GET ]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}
  */
-int mtd_sa_get_employment(const char *employment_id, char **buf)
+int mtd_sa_get_employment(const char *seid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { employment_id };
+	const char *params[1] = { seid };
 
 	ctx.mtd_api_ver = MTD_SA_API_VER;
 	ctx.endpoint = SA_GET_SELF_EMPLOYMENT;
