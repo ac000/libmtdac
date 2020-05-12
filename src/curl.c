@@ -138,7 +138,7 @@ static void set_response(struct curl_ctx *ctx)
 	json_t *rootbuf;
 	json_t *new;
 
-	if (ctx->curl_buf->buf)
+	if (ctx->curl_buf->buf && strlen(ctx->curl_buf->buf) > 0)
 		rootbuf = json_loads(ctx->curl_buf->buf, 0, NULL);
 	else
 		rootbuf = json_null();
