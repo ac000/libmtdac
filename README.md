@@ -42,10 +42,8 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     int mtd_init(int flags)
 
-    flags should be set to either MTD_OPT_UI_CLI or MTD_OPT_UI_GUI
-
-    it can also be OR'd with one of the following to specify the desired log
-    level (defaults to MTD_OPT_LOG_ERR)
+    it can currently be one of the following to specify the desired log level
+    (defaults to MTD_OPT_LOG_ERR)
 
         MTD_OPT_LOG_ERR
         MTD_OPT_LOG_INFO
