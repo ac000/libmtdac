@@ -22,11 +22,14 @@
 #include <curl/curl.h>
 
 #include "mtd.h"
+#include "mtd-priv.h"
 #include "auth.h"
 #include "curl.h"
 #include "logger.h"
 
 int mtd_opts;
+
+enum app_conn_type mtd_app_conn_type = MTD_ACT_OTHER_DIRECT;
 
 enum log_level mtd_log_level = MTD_LOG_ERR;
 
@@ -60,11 +63,7 @@ int mtd_init(int flags)
 	int err;
 
 	/* Check for unknown flags */
-	if (flags & ~(MTD_OPT_UI_CLI |
-		      MTD_OPT_UI_GUI |
-		      MTD_OPT_LOG_ERR |
-		      MTD_OPT_LOG_INFO |
-		      MTD_OPT_LOG_DEBUG))
+	if (flags & ~(MTD_OPT_ALL))
 		return MTD_ERR_UNKNOWN_FLAGS;
 
 	err = check_files();
