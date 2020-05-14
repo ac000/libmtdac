@@ -18,7 +18,7 @@
 #define BASE_URL		"https://test-api.service.hmrc.gov.uk"
 
 static const struct _endpoint {
-	enum endpoint ep;
+	const enum endpoint ep;
 	const char *template;
 } endpoints[] = {
 	{ SA_LIST_SELF_EMPLOYMENTS,
