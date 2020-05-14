@@ -10,7 +10,7 @@
 
 #include "mtd-sa.h"
 #include "endpoints.h"
-#include "curl.h"
+#include "mtd-curl.h"
 
 #define MTD_SA_API_VER		"Accept: application/vnd.hmrc.2.0+json"
 

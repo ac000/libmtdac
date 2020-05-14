@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * curl.c
+ * mtd-curl.c
  *
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
@@ -22,7 +22,7 @@
 #include <jansson.h>
 
 #include "mtd.h"
-#include "curl.h"
+#include "mtd-curl.h"
 #include "endpoints.h"
 #include "auth.h"
 #include "logger.h"

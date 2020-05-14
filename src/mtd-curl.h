@@ -1,13 +1,13 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * curl.h
+ * mtd-curl.h
  *
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
 
-#ifndef _MY_CURL_H_
-#define _MY_CURL_H_
+#ifndef _MTD_CURL_H_
+#define _MTD_CURL_H_
 
 #include <stdio.h>
 #include <stddef.h>
@@ -77,4 +77,4 @@ extern int do_get(struct curl_ctx *ctx, char **buf);
 } /* extern "C" */
 #endif
 
-#endif /* _MY_CURL_H_ */
+#endif /* _MTD_CURL_H_ */

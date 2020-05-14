@@ -17,7 +17,7 @@
 
 #include "auth.h"
 #include "mtd.h"
-#include "curl.h"
+#include "mtd-curl.h"
 #include "logger.h"
 
 char *load_token(const char *which, enum file_type type)
