@@ -30,7 +30,7 @@ static const struct logger {
 	{ MTD_LOG_DEBUG, LIBNAME " DEBUG" },
 };
 
-extern unsigned mtd_log_level;
+extern enum log_level mtd_log_level;
 static inline void logger(enum log_level log_level, const char *fmt, ...)
 {
 	int len;

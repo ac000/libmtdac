@@ -28,7 +28,7 @@
 
 int mtd_opts;
 
-unsigned mtd_log_level = MTD_LOG_ERR;
+enum log_level mtd_log_level = MTD_LOG_ERR;
 
 static int check_files(void)
 {
