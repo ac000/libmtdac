@@ -62,11 +62,6 @@ struct curl_ctx {
 	long status_code;
 };
 
-extern size_t curl_readfp_cb(void *ptr, size_t size, size_t nmemb,
-			     void *userp);
-extern size_t curl_writeb_cb(void *contents, size_t size, size_t nmemb,
-			     void *userp);
-extern void curl_ctx_free(const struct curl_ctx *ctx);
 extern int do_put(struct curl_ctx *ctx, const char *src_file, const char *data,
 		  char **buf);
 extern int do_post(struct curl_ctx *ctx, const char *src_file,

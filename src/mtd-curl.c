@@ -83,12 +83,13 @@ static inline const char *http_status_code2str(enum http_status_code sc)
 	return "(Unknown status code)";
 }
 
-size_t curl_readfp_cb(void *ptr, size_t size, size_t nmemb, void *userp)
+static size_t curl_readfp_cb(void *ptr, size_t size, size_t nmemb, void *userp)
 {
 	return fread(ptr, size, nmemb, (FILE *)userp);
 }
 
-size_t curl_writeb_cb(void *contents, size_t size, size_t nmemb, void *userp)
+static size_t curl_writeb_cb(void *contents, size_t size, size_t nmemb,
+			     void *userp)
 {
 	size_t realsize = size * nmemb;
 	struct curl_buf *curl_buf = userp;
@@ -102,7 +103,7 @@ size_t curl_writeb_cb(void *contents, size_t size, size_t nmemb, void *userp)
 	return realsize;
 }
 
-void curl_ctx_free(const struct curl_ctx *ctx)
+static void curl_ctx_free(const struct curl_ctx *ctx)
 {
 	free(ctx->curl_buf->buf);
 	free(ctx->curl_buf);
