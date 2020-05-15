@@ -244,6 +244,7 @@ curl_again:
 	if (err)
 		return MTD_ERR_OS;
 
+retry_curl:
 	err = curl_perform(ctx);
 	if (err) {
 		return MTD_ERR_CURL;
@@ -260,6 +261,14 @@ curl_again:
 			logger(MTD_LOG_INFO, "Trying the request again...\n");
 			goto curl_again;
 		}
+	} else if (ctx->status_code == TOO_MANY_REQUESTS) {
+		logger(MTD_LOG_INFO, "TOO_MANY_REQUESTS. "
+		       "Sleeping 1s before retrying request...\n");
+		*ctx->curl_buf->buf = '\0';
+		ctx->curl_buf->len = 0;
+		sleep(1);
+		/* no need to re-add headers... */
+		goto retry_curl;
 	} else if (ctx->status_code == BAD_REQUEST && refreshed_token) {
 		if (strstr(ctx->curl_buf->buf, "invalid_request"))
 			return MTD_ERR_NEEDS_AUTHORISATION;
