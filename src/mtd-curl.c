@@ -25,6 +25,7 @@
 #include "mtd-curl.h"
 #include "endpoints.h"
 #include "auth.h"
+#include "anti-fraud.h"
 #include "logger.h"
 
 /* Just the HTTP status codes relevant to the MTD API */
@@ -113,7 +114,7 @@ static void curl_ctx_free(const struct curl_ctx *ctx)
 		fclose(ctx->src_file);
 }
 
-static int curl_add_hdr(struct curl_ctx *ctx, const char *fmt, ...)
+int curl_add_hdr(struct curl_ctx *ctx, const char *fmt, ...)
 {
 	int len;
 	char *hdr;
@@ -219,6 +220,8 @@ static int do_curl(struct curl_ctx *ctx)
 	ctx->url = ep_make_url(ctx->endpoint, ctx->params, url);
 
 curl_again:
+	set_anti_fraud_hdrs(ctx);
+
 	if (!strstr(ctx->url, "/oauth/token"))
 		err = curl_add_hdr(ctx, ctx->mtd_api_ver);
 

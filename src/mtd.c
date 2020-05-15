@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <spawn.h>
 #include <linux/limits.h>
+#include <errno.h>
 
 #include <jansson.h>
 
@@ -32,6 +33,65 @@ int mtd_opts;
 enum app_conn_type mtd_app_conn_type = MTD_ACT_OTHER_DIRECT;
 
 enum log_level mtd_log_level = MTD_LOG_ERR;
+
+static char *gen_uuid(char *buf)
+{
+	FILE *fp;
+	size_t bytes_read;
+
+	fp = fopen("/proc/sys/kernel/random/uuid", "r");
+	if (!fp)
+		return NULL;
+
+	bytes_read = fscanf(fp, "%36s", buf);
+	fclose(fp);
+
+	if (bytes_read == 0)
+		return NULL;
+
+	return buf;
+}
+
+static int generate_device_id(void)
+{
+	char path[PATH_MAX];
+	char uuid[37];
+	char *p;
+	struct stat sb;
+	json_t *new;
+	int err;
+
+	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"),
+		 "uuid.json");
+
+	err = stat(path, &sb);
+	if (!err) {
+		logger(MTD_LOG_INFO,
+		       "%s: %s already exists, not overwriting\n", __func__,
+		       path);
+		return 0;
+	}
+
+	if (errno != ENOENT) {
+		char errbuf[129];
+
+		logger(MTD_LOG_ERR, "%s: stat %s: %s\n", __func__, path,
+		       strerror_r(errno, errbuf, sizeof(errbuf)));
+		return -1;
+	}
+
+	p = gen_uuid(uuid);
+	if (!p) {
+		logger(MTD_LOG_ERR, "%s: error generating UUID\n", __func__);
+		return -1;
+	}
+
+	new = json_pack("{s:s}", "device_id", uuid);
+	json_dump_file(new, path, JSON_INDENT(4));
+	json_decref(new);
+
+	return 0;
+}
 
 static int check_files(void)
 {
@@ -174,6 +234,7 @@ int mtd_init_config(void)
 	char nino[41];
 	char *s;
 	json_t *new;
+	int err;
 
 	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"),
 		 "config.json");
@@ -206,6 +267,10 @@ int mtd_init_config(void)
 	printf("\n");
 
 	json_decref(new);
+
+	err = generate_device_id();
+	if (err)
+		return MTD_ERR_OS;
 
 	return MTD_ERR_NONE;
 }

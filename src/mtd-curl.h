@@ -62,6 +62,7 @@ struct curl_ctx {
 	long status_code;
 };
 
+extern int curl_add_hdr(struct curl_ctx *ctx, const char *fmt, ...);
 extern int do_put(struct curl_ctx *ctx, const char *src_file, const char *data,
 		  char **buf);
 extern int do_post(struct curl_ctx *ctx, const char *src_file,

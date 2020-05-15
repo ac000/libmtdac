@@ -6,8 +6,10 @@
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
 3. [Build it](#build-it)
 4. [How to use](#how-to-use)
-5. [License](#license)
-6. [Contributing](#contributing)
+5. [Fraud Prevention Headers](#fraud-prevention-headers)
+6. [Thread safety](#thread-safety)
+7. [License](#license)
+8. [Contributing](#contributing)
 
 ## Overview
 
@@ -42,12 +44,32 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     int mtd_init(int flags)
 
-    it can currently be one of the following to specify the desired log level
-    (defaults to MTD_OPT_LOG_ERR)
+   *flags* can currently be one of the following to specify the desired log
+   level (defaults to MTD\_OPT\_LOG\_ERR)
 
         MTD_OPT_LOG_ERR
         MTD_OPT_LOG_INFO
         MTD_OPT_LOG_DEBUG
+
+   it can also be OR'd with one of the following to specify the application
+   connection type. Only used when sending fraud prevention headers
+
+        MTD_OPT_ACT_MOBILE_APP_DIRECT
+        MTD_OPT_ACT_DESKTOP_APP_DIRECT
+        MTD_OPT_ACT_MOBILE_APP_VIA_SERVER
+        MTD_OPT_ACT_DESKTOP_APP_VIA_SERVER
+        MTD_OPT_ACT_WEB_APP_VIA_SERVER
+        MTD_OPT_ACT_BATCH_PROCESS_DIRECT
+        MTD_OPT_ACT_OTHER_DIRECT
+        MTD_OPT_ACT_OTHER_VIA_SERVER
+
+   when using one of the above, you should also set
+
+        MTD_OPT_SND_ANTI_FRAUD_HDRS
+
+   however you should read
+   [Fraud Prevention Headers](#fraud-prevention-headers) to understand the
+   possible privacy implications.
 
 #### mtd\_init\_auth - initialise oauth.json
 
@@ -75,7 +97,6 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 #### mtd\_sa\_list\_obligations
 
     int mtd_sa_list_obligations(const char *seid, char **buf)
-
 
 #### mtd\_sa\_list\_periods
 
@@ -143,6 +164,19 @@ Just
 
 in your program and link with *-lmtdac* assuming you've built and installed the
 RPM or similar.
+
+
+## Fraud Prevention Headers
+
+HMRC describe various headers that should be added (currently only required
+for VAT submissions, but seems the intent is to require them for everything)
+for [Fraud Prevention](https://developer.service.hmrc.gov.uk/api-documentation/docs/fraud-prevention)
+
+Some of the information sent in the headers contains somewhat potentially
+sensitive information, such as OS username, local IP addresses/mac addresses
+and a unique device id.
+
+Caveat Emptor.
 
 
 ## Thread safety
