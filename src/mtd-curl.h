@@ -46,6 +46,8 @@ struct curl_ctx {
 
 	const char **params;
 
+	int (*oauther)(void);
+
 	struct curl_slist *hdrs;
 
 	size_t (*write_cb)(void *contents, size_t size, size_t nmemb,

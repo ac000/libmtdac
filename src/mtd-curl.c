@@ -217,6 +217,9 @@ static int do_curl(struct curl_ctx *ctx)
 	char url[URL_LEN + 1];
 	bool refreshed_token = false;
 
+	if (!ctx->oauther)
+		ctx->oauther = refresh_access_token;	/* default */
+
 	ctx->url = ep_make_url(ctx->endpoint, ctx->params, url);
 
 curl_again:
@@ -248,7 +251,7 @@ curl_again:
 		if (strstr(ctx->curl_buf->buf, "INVALID_CREDENTIALS")) {
 			logger(MTD_LOG_INFO, "INVALID_CREDENTIALS: "
 			       "Refreshing access_token\n");
-			refresh_access_token();
+			ctx->oauther();
 			curl_slist_free_all(ctx->hdrs);
 			ctx->hdrs = NULL;
 			*ctx->curl_buf->buf = '\0';
