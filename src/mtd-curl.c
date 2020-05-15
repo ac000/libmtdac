@@ -155,7 +155,6 @@ static void set_response(struct curl_ctx *ctx)
 	ctx->curl_buf->buf = json_dumps(new, 0);
 	ctx->curl_buf->len = 0;
 
-	json_decref(rootbuf);
 	json_decref(new);
 }
 
