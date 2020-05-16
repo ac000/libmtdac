@@ -4,6 +4,7 @@
   * [Errors](#errors)
   * [Initialisation functions](#initialisation-functions)
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
+  * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
 3. [Build it](#build-it)
 4. [How to use](#how-to-use)
 5. [Fraud Prevention Headers](#fraud-prevention-headers)
@@ -17,6 +18,10 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 
 ## API
+
+    #include <libmtdac/mtd.h>
+
+   This header is included by each of the API specific header files.
 
 ### Library version
 
@@ -86,6 +91,8 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 ### Make Tax Digital - Self-Assessment API functions
 
+    #include <libmtdac/mtd-sa.h>
+
 #### mtd\_sa\_list\_employments
 
     int mtd_sa_list_employments(char **buf)
@@ -142,6 +149,40 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
                                            char **buf)
 
 
+### Make Tax Digital - Self-Assessment Accounts API functions [test-only]
+
+    #include <libmtdac/mtd-saac.h>
+
+#### mtd\_saac\_get\_balance
+
+    int mtd_saac_get_balance(char **buf)
+
+#### mtd\_saac\_list\_transactions
+
+    int mtd_saac_list_transactions(const char *from, const char *to,
+                                   char **buf)
+
+#### mtd\_saac\_get\_transaction
+
+    int mtd_saac_get_transaction(const char *trid, char **buf)
+
+#### mtd\_saac\_list\_charges
+
+    int mtd_saac_list_charges(const char *from, const char *to, char **buf)
+
+#### mtd\_saac\_get\_charge
+
+    int mtd_saac_get_charge(const char *trid, char **buf)
+
+#### mtd\_saac\_list\_payments
+
+    int mtd_saac_list_payments(const char *from, const char *to, char **buf)
+
+#### mtd\_saac\_get\_payment
+
+    int mtd_saac_get_payment(const char *pyid, char **buf)
+
+
 ## Build it
 
 The simplest way is to build the rpm by simply doing
@@ -158,12 +199,8 @@ and the *rpmbuild* tool which can be found in the *rpm-build* package.
 
 ## How to use
 
-Just
-
-    #include <libmtdac/mtd-sa.h>
-
-in your program and link with *-lmtdac* assuming you've built and installed the
-RPM or similar.
+Include the appropriate header file(s) as described above and link with
+*-lmtdac* assuming you've built and installed the RPM or similar.
 
 
 ## Fraud Prevention Headers

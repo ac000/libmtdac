@@ -21,6 +21,7 @@ static const struct _endpoint {
 	const enum endpoint ep;
 	const char *template;
 } endpoints[] = {
+	/* Self-Assement */
 	{ SA_LIST_SELF_EMPLOYMENTS,
 	 "/self-assessment/ni/{nino}/self-employments" },
 	{ SA_GET_SELF_EMPLOYMENT,
@@ -43,6 +44,23 @@ static const struct _endpoint {
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}" },
 	{ SA_GET_END_OF_PERIOD_STATEMENT,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations/{optional_query_params}" },
+
+	/* Self-Assessment Accounts */
+	{ SAAC_GET_BALANCE, "/accounts/self-assessment/{nino}/balance" },
+	{ SAAC_LIST_TRANSACTIONS,
+	 "/accounts/self-assessment/{nino}/transactions/{query_params}" },
+	{ SAAC_GET_TRANSACTION,
+	 "/accounts/self-assessment/{nino}/transactions/{transactionId}" },
+	{ SAAC_LIST_CHARGES,
+	 "/accounts/self-assessment/{nino}/charges/{query_params}" },
+	{ SAAC_GET_CHARGE,
+	 "/accounts/self-assessment/{nino}/charges/{transactionId}" },
+	{ SAAC_LIST_PAYMENTS,
+	 "/accounts/self-assessment/{nino}/payments/{query_params}" },
+	{ SAAC_GET_PAYMENT,
+	 "/accounts/self-assessment/{nino}/payments/{paymentId}" },
+
+	/* OAuth */
 	{ OA_REFRESH_TOKEN, "/oauth/token" },
 	{ OA_EXCHANGE_AUTH_CODE, "/oauth/token" },
 };
@@ -76,7 +94,7 @@ char *ep_make_url(enum endpoint ep, const char **params, char *url)
 		else if (strcmp(token, "{selfEmploymentId}") == 0)
 			len += snprintf(url + len, URL_LEN+1 - len, "/%s",
 					params[p++]);
-		else if (strcmp(token, "{optional_query_params}") == 0)
+		else if (strstr(token, "query_params"))
 			len += snprintf(url + len, URL_LEN+1 - len, "%s",
 					params[p] ? params[p++] : "");
 		else if (*token == '{')
