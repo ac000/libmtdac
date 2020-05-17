@@ -5,6 +5,7 @@
   * [Initialisation functions](#initialisation-functions)
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
+  * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
 3. [Build it](#build-it)
 4. [How to use](#how-to-use)
 5. [Fraud Prevention Headers](#fraud-prevention-headers)
@@ -181,6 +182,16 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 #### mtd\_saac\_get\_payment
 
     int mtd_saac_get_payment(const char *pyid, char **buf)
+
+
+### Make Tax Digital - National Insurance API functions
+
+    #include <libmtdac/mtd-ni.h>
+
+#### mtd\_ni\_get\_annual\_summary
+
+    int mtd_ni_get_annual_summary(const char *utr, const char *tax_year,
+                                  char **buf)
 
 
 ## Build it

@@ -182,7 +182,7 @@ int mtd_init_auth(void)
 	getchar();
 
 	args[0] = "xdg-open";
-	args[1] = BASE_URL "/oauth/authorize?response_type=code&client_id=TlQLDx2MSRpl6KAkgVeL4CaeXkAa&scope=write:self-assessment+read:self-assessment&redirect_uri=urn:ietf:wg:oauth:2.0:oob";
+	args[1] = BASE_URL "/oauth/authorize?response_type=code&client_id=TlQLDx2MSRpl6KAkgVeL4CaeXkAa&scope=write:self-assessment+read:self-assessment+read:national-insurance&redirect_uri=urn:ietf:wg:oauth:2.0:oob";
 	args[2] = (const char *)NULL;
 	posix_spawnp(&child_pid, args[0], NULL, NULL, (char * const *)args,
 		     environ);

@@ -38,6 +38,9 @@ enum endpoint {
 	SAAC_LIST_PAYMENTS,
 	SAAC_GET_PAYMENT,
 
+	/* National Insurance */
+	NI_GET_ANNUAL_SUMMARY,
+
 	/* OAuth */
 	OA_REFRESH_TOKEN,
 	OA_EXCHANGE_AUTH_CODE,

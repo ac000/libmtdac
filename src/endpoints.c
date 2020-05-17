@@ -59,6 +59,10 @@ static const struct _endpoint {
 	{ SAAC_GET_PAYMENT,
 	 "/accounts/self-assessment/{nino}/payments/{paymentId}" },
 
+	/* National Insurance */
+	{ NI_GET_ANNUAL_SUMMARY,
+	 "/national-insurance/sa/{utr}/annual-summary/{taxYear}" },
+
 	/* OAuth */
 	{ OA_REFRESH_TOKEN, "/oauth/token" },
 	{ OA_EXCHANGE_AUTH_CODE, "/oauth/token" },
