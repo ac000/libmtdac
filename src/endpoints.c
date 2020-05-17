@@ -12,10 +12,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "mtd-priv.h"
 #include "endpoints.h"
 #include "auth.h"
-
-#define BASE_URL		"https://test-api.service.hmrc.gov.uk"
 
 static const struct _endpoint {
 	const enum endpoint ep;
