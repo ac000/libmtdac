@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 
-#include "mtd-saac.h"
+#include "mtd-saac.h"		/* for default (public) visibility */
 #include "endpoints.h"
 #include "mtd-curl.h"
 
