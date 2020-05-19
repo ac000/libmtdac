@@ -6,6 +6,7 @@
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
+  * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
 3. [Build it](#build-it)
 4. [How to use](#how-to-use)
 5. [Fraud Prevention Headers](#fraud-prevention-headers)
@@ -192,6 +193,27 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     int mtd_ni_get_annual_summary(const char *utr, const char *tax_year,
                                   char **buf)
+
+
+### Make Tax Digital - Create Test User API functions [test-only]
+
+    #include <libmtdac/mtd-test-cu.h>
+
+### mtd\_test\_cu\_create\_individual
+
+    int mtd_test_cu_create_individual(const char *src_file, char **buf)
+
+### mtd\_test\_cu\_create\_organisation
+
+    int mtd_test_cu_create_organisation(const char *src_file, char **buf)
+
+### mtd\_test\_cu\_create\_agent
+
+    int mtd_test_cu_create_agent(const char *src_file, char **buf)
+
+### mtd\_test\_cu\_list\_services
+
+    int mtd_test_cu_list_services(char **buf)
 
 
 ## Build it

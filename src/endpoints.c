@@ -67,6 +67,12 @@ static const struct _endpoint {
 	{ NI_GET_ANNUAL_SUMMARY,
 	 "/national-insurance/sa/{utr}/annual-summary/{taxYear}" },
 
+	/* Create Test User */
+	{ TEST_CU_CREATE_INDIVIDUAL, "/create-test-user/individuals" },
+	{ TEST_CU_CREATE_ORGANISATION, "/create-test-user/organisations" },
+	{ TEST_CU_CREATE_AGENT, "/create-test-user/agents" },
+	{ TEST_CU_LIST_SERVICES, "/create-test-user/services" },
+
 	/* OAuth */
 	{ OA_REFRESH_TOKEN, "/oauth/token" },
 	{ OA_EXCHANGE_AUTH_CODE, "/oauth/token" },
