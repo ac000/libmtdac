@@ -25,7 +25,7 @@
 #include "mtd.h"
 #include "mtd-priv.h"
 #include "auth.h"
-#include "mtd-curl.h"
+#include "curler.h"
 #include "logger.h"
 
 int mtd_opts;

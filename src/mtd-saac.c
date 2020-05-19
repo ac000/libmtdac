@@ -10,7 +10,7 @@
 
 #include "mtd-saac.h"		/* for default (public) visibility */
 #include "endpoints.h"
-#include "mtd-curl.h"
+#include "curler.h"
 
 #define API_VER			"Accept: application/vnd.hmrc.1.0+json"
 

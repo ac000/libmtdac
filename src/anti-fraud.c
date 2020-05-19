@@ -24,7 +24,7 @@
 
 #include "mtd.h"
 #include "mtd-priv.h"
-#include "mtd-curl.h"
+#include "curler.h"
 
 #define BUF_SZ	1024
 
