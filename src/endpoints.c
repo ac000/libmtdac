@@ -16,6 +16,10 @@
 #include "endpoints.h"
 #include "auth.h"
 
+/*
+ * The order of these entries must match the order in enum endpoint
+ * in endpoints.h
+ */
 static const struct _endpoint {
 	const enum endpoint ep;
 	const char *template;

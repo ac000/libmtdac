@@ -15,6 +15,10 @@ extern "C" {
 
 #define URL_LEN			1024
 
+/*
+ * The order of these entries must match the order in endpoints[]
+ * in endpoints.c
+ */
 enum endpoint {
 	/* Self-Assement */
 	SA_LIST_SELF_EMPLOYMENTS = 0,
