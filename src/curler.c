@@ -31,7 +31,8 @@
 /* Just the HTTP status codes relevant to the MTD API */
 enum http_status_code {
 	OK = 200,
-	ACCEPTED = 202,
+	CREATED,
+	ACCEPTED,
 	NO_CONTENT = 204,
 	BAD_REQUEST = 400,
 	UNAUTHORIZED,
@@ -52,6 +53,7 @@ static const struct http_status_code_entry {
 	const char *str;
 } http_status_code_map[] = {
 	{ OK, "OK", "OK" },
+	{ CREATED, "CREATED", "Created" },
 	{ ACCEPTED, "ACCEPTED", "Accepted" },
 	{ NO_CONTENT, "NO_CONTENT", "No Content" },
 	{ BAD_REQUEST, "BAD_REQUEST", "Bad Request" },
