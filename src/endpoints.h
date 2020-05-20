@@ -20,7 +20,7 @@ extern "C" {
  * in endpoints.c
  */
 enum endpoint {
-	/* Self-Assement */
+	/* Self-Assessment */
 	SA_LIST_SELF_EMPLOYMENTS = 0,
 	SA_GET_SELF_EMPLOYMENT,
 	SA_LIST_OBLIGATIONS,
