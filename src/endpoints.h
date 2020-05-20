@@ -61,6 +61,9 @@ enum endpoint {
 	TEST_CU_CREATE_AGENT,
 	TEST_CU_LIST_SERVICES,
 
+	/* Test Fraud Prevention Headers */
+	TEST_FPH_VALIDATE,
+
 	/* OAuth */
 	OA_REFRESH_TOKEN,
 	OA_EXCHANGE_AUTH_CODE,

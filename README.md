@@ -8,6 +8,7 @@
   * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
+  * [Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]](#make-tax-digital---test-fraud-prevention-headers-api-functions-test-only)
 3. [Build it](#build-it)
 4. [How to use](#how-to-use)
 5. [Fraud Prevention Headers](#fraud-prevention-headers)
@@ -252,6 +253,15 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 ### mtd\_test\_cu\_list\_services
 
     int mtd_test_cu_list_services(char **buf)
+
+
+### Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]
+
+    #include <libmtdac/mtd-test-fph.h>
+
+#### mtd\_test\_fph\_validate
+
+    int mtd_test_fph_validate(char **buf)
 
 
 ## Build it

@@ -33,6 +33,7 @@ install -Dp -m644 include/libmtdac/mtd-saac.h $RPM_BUILD_ROOT/%{_includedir}/lib
 install -Dp -m644 include/libmtdac/mtd-ic.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-ic.h
 install -Dp -m644 include/libmtdac/mtd-ni.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-ni.h
 install -Dp -m644 include/libmtdac/mtd-test-cu.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-test-cu.h
+install -Dp -m644 include/libmtdac/mtd-test-fph.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-test-fph.h
 install -Dp -m0755 src/libmtdac.so.%{version} $RPM_BUILD_ROOT/%{_libdir}/libmtdac.so.%{version}
 cd $RPM_BUILD_ROOT/%{_libdir}
 ln -s libmtdac.so.0 libmtdac.so

@@ -91,6 +91,9 @@ static const struct _endpoint {
 	{ TEST_CU_CREATE_AGENT, "/create-test-user/agents" },
 	{ TEST_CU_LIST_SERVICES, "/create-test-user/services" },
 
+	/* Test Fraud Prevention Headers */
+	{ TEST_FPH_VALIDATE, "/test/fraud-prevention-headers/validate" },
+
 	/* OAuth */
 	{ OA_REFRESH_TOKEN, "/oauth/token" },
 	{ OA_EXCHANGE_AUTH_CODE, "/oauth/token" },
