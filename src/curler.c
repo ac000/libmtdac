@@ -70,6 +70,20 @@ static const struct http_status_code_entry {
 	{ GATEWAY_TIMEOUT, "GATEWAY_TIMEOUT", "Gateway Timeout" },
 };
 
+static const struct http_method_str {
+	const enum http_method method;
+	const char *str;
+} methods_str[] = {
+	{ M_OPTIONS, "OPTIONS" },
+	{ M_GET, "GET" },
+	{ M_HEAD, "HEAD" },
+	{ M_POST, "POST" },
+	{ M_PUT, "PUT" },
+	{ M_DELETE, "DELETE" },
+	{ M_TRACE, "TRACE" },
+	{ M_CONNECT, "CONNECT" },
+};
+
 extern unsigned mtd_log_level;
 
 static inline const char *http_status_code2str(enum http_status_code sc)
@@ -147,10 +161,11 @@ static void set_response(struct curl_ctx *ctx)
 	else
 		rootbuf = json_null();
 
-	new = json_pack("{s:i, s:s, s:s s:o}",
+	new = json_pack("{s:i, s:s, s:s, s:s, s:o}",
 			"status_code", ctx->status_code,
 			"status_str", http_status_code2str(ctx->status_code),
 			"url", ctx->url,
+			"method", methods_str[ctx->http_method].str,
 			"result", rootbuf);
 
 	free(ctx->curl_buf->buf);
