@@ -175,9 +175,21 @@ static void set_response(struct curl_ctx *ctx)
 	json_decref(new);
 }
 
+static const char *get_user_agent(char *ua)
+{
+	curl_version_info_data *verinfo = curl_version_info(CURLVERSION_NOW);
+
+	snprintf(ua, 1024, "%s %d.%d.%d (%s) / (libcurl/%s)",
+		 LIBNAME, LIBMTDAC_MAJOR_VERSION, LIBMTDAC_MINOR_VERSION,
+		 LIBMTDAC_MICRO_VERSION, GIT_VERSION + 1, verinfo->version);
+
+	return ua;
+}
+
 static int curl_perform(struct curl_ctx *ctx)
 {
 	int ret = 0;
+	char ua[1024];
 	CURL *curl;
 	CURLcode res;
 
@@ -206,7 +218,7 @@ static int curl_perform(struct curl_ctx *ctx)
 				 (curl_off_t)ctx->src_size);
 	}
 
-	curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+	curl_easy_setopt(curl, CURLOPT_USERAGENT, get_user_agent(ua));
 
 	if (mtd_log_level == MTD_LOG_DEBUG)
 		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
