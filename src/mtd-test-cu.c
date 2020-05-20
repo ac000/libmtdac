@@ -6,8 +6,6 @@
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
 
-#include <stdio.h>
-
 #include "mtd-test-cu.h"		/* for default (public) visibility */
 #include "endpoints.h"
 #include "curler.h"
