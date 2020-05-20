@@ -214,7 +214,7 @@ static int curl_perform(struct curl_ctx *ctx)
 	res = curl_easy_perform(curl);
 	if (res != CURLE_OK) {
 		logger(MTD_LOG_ERR, "curl_easy_perform(): %s\n",
-			curl_easy_strerror(res));
+		       curl_easy_strerror(res));
 		ret = MTD_ERR_CURL;
 	}
 	curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &ctx->status_code);
