@@ -329,13 +329,14 @@ int do_post(struct curl_ctx *ctx, const char *src_file, const char *data,
 	return do_put_post(ctx, src_file, data, buf, M_POST);
 }
 
-int do_get(struct curl_ctx *ctx, char **buf)
+int do_get_delete(struct curl_ctx *ctx, char **buf,
+		  enum http_method http_method)
 {
 	int err;
 
 	*buf = NULL;
 
-	ctx->http_method = M_GET;
+	ctx->http_method = http_method;
 	ctx->write_cb = curl_writeb_cb;
 	ctx->curl_buf = calloc(1, sizeof(struct curl_buf));
 
@@ -346,4 +347,14 @@ int do_get(struct curl_ctx *ctx, char **buf)
 	curl_ctx_free(ctx);
 
 	return err;
+}
+
+int do_delete(struct curl_ctx *ctx, char **buf)
+{
+	return do_get_delete(ctx, buf, M_DELETE);
+}
+
+int do_get(struct curl_ctx *ctx, char **buf)
+{
+	return do_get_delete(ctx, buf, M_GET);
 }
