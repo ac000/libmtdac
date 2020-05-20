@@ -5,6 +5,7 @@
   * [Initialisation functions](#initialisation-functions)
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
+  * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
 3. [Build it](#build-it)
@@ -183,6 +184,43 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 #### mtd\_saac\_get\_payment
 
     int mtd_saac_get_payment(const char *pyid, char **buf)
+
+
+### Make Tax Digital - Individual Calculations API functions
+
+    #include <libmtdac/mtd-ic.h>
+
+#### mtd\_ic\_list\_calculations
+
+    int mtd_ic_list_calculations(char **buf)
+
+#### mtd\_ic\_trigger\_calculation
+
+    int mtd_ic_trigger_calculation(const char *src_file, char **buf)
+
+#### mtd\_ic\_get\_calculation\_meta
+
+    int mtd_ic_get_calculation_meta(const char *cid, char **buf)
+
+#### mtd\_ic\_get\_income\_tax\_nics\_calc
+
+    int mtd_ic_get_income_tax_nics_calc(const char *cid, char **buf)
+
+#### mtd\_ic\_get\_taxable\_income
+
+    int mtd_ic_get_taxable_income(const char *cid, char **buf)
+
+#### mtd\_ic\_get\_allowances\_deductions\_reliefs
+
+    int mtd_ic_get_allowances_deductions_reliefs(const char *cid, char **buf)
+
+#### mtd\_ic\_get\_end\_of\_year\_est
+
+    int mtd_ic_get_end_of_year_est(const char *cid, char **buf)
+
+#### mtd\_ic\_get\_messages
+
+    int mtd_ic_get_messages(const char *cid, char **buf)
 
 
 ### Make Tax Digital - National Insurance API functions

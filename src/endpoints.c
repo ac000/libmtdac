@@ -63,6 +63,24 @@ static const struct _endpoint {
 	{ SAAC_GET_PAYMENT,
 	 "/accounts/self-assessment/{nino}/payments/{paymentId}" },
 
+	/* Individual Calculations */
+	{ IC_LIST_CALCULATIONS,
+	 "/individuals/calculations/{nino}/self-assessment" },
+	{ IC_TRIGGER_CALCULATION,
+	 "/individuals/calculations/{nino}/self-assessment" },
+	{ IC_GET_CALCULATION_META,
+	 "/individuals/calculations/{nino}/self-assessment/{calculationId}" },
+	{ IC_GET_INCOME_TAX_NICS_CALC,
+	 "/individuals/calculations/{nino}/self-assessment/{calculationId}/income-tax-nics-calculated" },
+	{ IC_GET_TAXABLE_INCOME,
+	 "/individuals/calculations/{nino}/self-assessment/{calculationId}/taxable-income" },
+	{ IC_GET_ALLOWANCES_DEDUCT_RELIEFS,
+	 "/individuals/calculations/{nino}/self-assessment/{calculationId}/allowances-deductions-reliefs" },
+	{ IC_GET_EOY_EST,
+	 "/individuals/calculations/{nino}/self-assessment/{calculationId}/end-of-year-estimate" },
+	{ IC_GET_MSGS,
+	 "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages" },
+
 	/* National Insurance */
 	{ NI_GET_ANNUAL_SUMMARY,
 	 "/national-insurance/sa/{utr}/annual-summary/{taxYear}" },

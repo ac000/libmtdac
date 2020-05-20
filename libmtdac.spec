@@ -30,6 +30,7 @@ rm -rf $RPM_BUILD_ROOT
 install -Dp -m644 include/libmtdac/mtd.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd.h
 install -Dp -m644 include/libmtdac/mtd-sa.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-sa.h
 install -Dp -m644 include/libmtdac/mtd-saac.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-saac.h
+install -Dp -m644 include/libmtdac/mtd-ic.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-ic.h
 install -Dp -m644 include/libmtdac/mtd-ni.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-ni.h
 install -Dp -m644 include/libmtdac/mtd-test-cu.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-test-cu.h
 install -Dp -m0755 src/libmtdac.so.%{version} $RPM_BUILD_ROOT/%{_libdir}/libmtdac.so.%{version}
