@@ -1,5 +1,7 @@
 LIBNAME = libmtdac
 
+GIT_VERSION  = \"$(shell git describe --long --dirty)\"
+
 SOVER	= 0
 VERSION = $(SOVER).1.0
 
@@ -11,7 +13,7 @@ CC	= gcc
 CFLAGS	= -Wall -Wextra -Wdeclaration-after-statement -Wvla \
 	  -g -O2 -Wp,-D_FORTIFY_SOURCE=2 --param=ssp-buffer-size=4 \
 	  -fPIC -fexceptions -fvisibility=hidden -I../include/libmtdac \
-	  -DLIBNAME=\"$(LIBNAME)\"
+	  -DLIBNAME=\"$(LIBNAME)\" -DGIT_VERSION=${GIT_VERSION}
 LDFLAGS = -fpic -shared -Wl,-z,now,-z,defs,-z,relro,--as-needed
 LIBS	= -lcurl -ljansson
 POSTCOMPILE = @mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d && touch $@
