@@ -125,9 +125,6 @@ char *ep_make_url(enum endpoint ep, const char **params, char *url)
 		else if (strcmp(token, "{nino}") == 0)
 			len += snprintf(url + len, URL_LEN+1 - len, "/%s",
 					nino);
-		else if (strcmp(token, "{selfEmploymentId}") == 0)
-			len += snprintf(url + len, URL_LEN+1 - len, "/%s",
-					params[p++]);
 		else if (strstr(token, "query_params"))
 			len += snprintf(url + len, URL_LEN+1 - len, "%s",
 					params[p] ? params[p++] : "");
