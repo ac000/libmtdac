@@ -6,6 +6,7 @@
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
   * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
+  * [Make Tax Digital - Individual Loses API functions](#make-tax-digital---individual-loses-api-functions)
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
   * [Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]](#make-tax-digital---test-fraud-prevention-headers-api-functions-test-only)
@@ -220,6 +221,57 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 #### mtd\_ic\_get\_messages
 
     int mtd_ic_get_messages(const char *cid, char **buf)
+
+
+### Make Tax Digital - Individual Loses API functions
+
+    #include <libmtdac/mtd-il.h>
+
+#### mtd\_il\_bf\_list\_loses
+
+    int mtd_il_bf_list_loses(const char *query_string, char **buf)
+
+#### mtd\_il\_bf\_create\_loss
+
+    int mtd_il_bf_create_loss(const char *src_file, char **buf)
+
+#### mtd\_il\_bf\_get\_loss
+
+    int mtd_il_bf_get_loss(const char *lid, char **buf)
+
+#### mtd\_il\_bf\_delete\_loss
+
+    int mtd_il_bf_delete_loss(const char *lid, char **buf)
+
+#### mtd\_il\_bf\_update\_loss\_amnt
+
+    int mtd_il_bf_update_loss_amnt(const char *src_file, const char *lid,
+                                   char **buf)
+
+#### mtd\_il\_lc\_list\_loses
+
+    int mtd_il_lc_list_loses(const char *query_stirng, char **buf)
+
+#### mtd\_il\_lc\_create\_loss
+
+    int mtd_il_lc_create_loss(const char *src_file, char **buf)
+
+#### mtd\_il\_lc\_get\_loss
+
+    int mtd_il_lc_get_loss(const char *cid, char **buf)
+
+#### mtd\_il\_lc\_delete\_loss
+
+    int mtd_il_lc_delete_loss(const char *cid, char **buf)
+
+#### mtd\_il\_lc\_update\_loss\_type
+
+    int mtd_il_lc_update_loss_type(const char *src_file, const char *cid,
+                                   char **buf)
+
+#### mtd\_il\_lc\_update\_loss
+
+    int mtd_il_lc_update_loss(const char *src_file, char **buf)
 
 
 ### Make Tax Digital - National Insurance API functions

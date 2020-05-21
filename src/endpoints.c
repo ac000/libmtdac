@@ -81,6 +81,27 @@ static const struct _endpoint {
 	{ IC_GET_MSGS,
 	 "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages" },
 
+	/* Individual Loses */
+	{ IL_BF_LIST_LOSES,
+	 "/individuals/losses/{nino}/brought-forward-losses/{optional_query_params}" },
+	{ IL_BF_CREATE_LOSS,
+	 "/individuals/losses/{nino}/brought-forward-losses" },
+	{ IL_BF_GET_LOSS,
+	 "/individuals/losses/{nino}/brought-forward-losses/{lossId}" },
+	{ IL_BF_DELETE_LOSS,
+	 "/individuals/losses/{nino}/brought-forward-losses/{lossId}" },
+	{ IL_BF_UPDATE_LOSS_AMNT,
+	 "/individuals/losses/{nino}/brought-forward-losses/{lossId}/change-loss-amount" },
+	{ IL_LC_LIST_LOSES, "/individuals/losses/{nino}/loss-claims" },
+	{ IL_LC_CREATE_LOSS, "/individuals/losses/{nino}/loss-claims" },
+	{ IL_LC_GET_LOSS, "/individuals/losses/{nino}/loss-claims/{claimId}" },
+	{ IL_LC_DELETE_LOSS,
+	 "/individuals/losses/{nino}/loss-claims/{claimId}" },
+	{ IL_LC_UPDATE_LOSS_TYPE,
+	 "/individuals/losses/{nino}/loss-claims/{claimId}/change-type-of-claim" },
+	{ IL_LC_UPDATE_LOSS_ORDER,
+	 "/individuals/losses/{nino}/loss-claims/order" },
+
 	/* National Insurance */
 	{ NI_GET_ANNUAL_SUMMARY,
 	 "/national-insurance/sa/{utr}/annual-summary/{taxYear}" },
