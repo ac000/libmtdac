@@ -19,7 +19,7 @@
 int mtd_saac_get_payment(const char *pyid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { pyid };
+	const char *params[] = { pyid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SAAC_GET_PAYMENT;
@@ -35,12 +35,10 @@ int mtd_saac_get_payment(const char *pyid, char **buf)
 int mtd_saac_list_payments(const char *query_string, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1];
+	const char *params[] = { query_string };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SAAC_LIST_PAYMENTS;
-
-	params[0] = query_string;
 	ctx.params = params;
 
 	return do_get(&ctx, buf);
@@ -53,7 +51,7 @@ int mtd_saac_list_payments(const char *query_string, char **buf)
 int mtd_saac_get_charge(const char *trid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { trid };
+	const char *params[] = { trid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SAAC_GET_CHARGE;
@@ -69,12 +67,10 @@ int mtd_saac_get_charge(const char *trid, char **buf)
 int mtd_saac_list_charges(const char *query_string, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1];
+	const char *params[] = { query_string };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SAAC_LIST_CHARGES;
-
-	params[0] = query_string;
 	ctx.params = params;
 
 	return do_get(&ctx, buf);
@@ -87,7 +83,7 @@ int mtd_saac_list_charges(const char *query_string, char **buf)
 int mtd_saac_get_transaction(const char *trid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { trid };
+	const char *params[] = { trid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SAAC_GET_TRANSACTION;
@@ -103,12 +99,10 @@ int mtd_saac_get_transaction(const char *trid, char **buf)
 int mtd_saac_list_transactions(const char *query_string, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1];
+	const char *params[] = { query_string };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SAAC_LIST_TRANSACTIONS;
-
-	params[0] = query_string;
 	ctx.params = params;
 
 	return do_get(&ctx, buf);

@@ -24,7 +24,7 @@ int mtd_sa_get_end_of_period_statement(const char *seid,
 				       const char *query_string, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[2] = { seid, query_string };
+	const char *params[] = { seid, query_string };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_GET_END_OF_PERIOD_STATEMENT;
@@ -43,7 +43,7 @@ int mtd_sa_submit_end_of_period_statement(const char *src_file,
 					  const char *end, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[3] = { seid, start, end };
+	const char *params[] = { seid, start, end };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_SUBMIT_END_OF_PERIOD_STATEMENT;
@@ -60,7 +60,7 @@ int mtd_sa_update_annual_summary(const char *src_file, const char *seid,
 				 const char *tax_year, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[2] = { seid, tax_year };
+	const char *params[] = { seid, tax_year };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_UPDATE_ANNUAL_SUMMARY;
@@ -76,7 +76,7 @@ int mtd_sa_update_annual_summary(const char *src_file, const char *seid,
 int mtd_sa_get_annual_summary(const char *seid, const char *tax_year, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[2] = { seid, tax_year };
+	const char *params[] = { seid, tax_year };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_GET_ANNUAL_SUMMARY;
@@ -93,7 +93,7 @@ int mtd_sa_update_period(const char *src_file, const char *seid,
 			 const char *period_id, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[2] = { seid, period_id };
+	const char *params[] = { seid, period_id };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_UPDATE_PERIOD;
@@ -109,7 +109,7 @@ int mtd_sa_update_period(const char *src_file, const char *seid,
 int mtd_sa_get_period(const char *seid, const char *period_id, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[2] = { seid, period_id };
+	const char *params[] = { seid, period_id };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_GET_PERIOD;
@@ -125,7 +125,7 @@ int mtd_sa_get_period(const char *seid, const char *period_id, char **buf)
 int mtd_sa_create_period(const char *src_file, const char *seid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { seid };
+	const char *params[] = { seid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_CREATE_PERIOD;
@@ -141,7 +141,7 @@ int mtd_sa_create_period(const char *src_file, const char *seid, char **buf)
 int mtd_sa_list_periods(const char *seid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { seid };
+	const char *params[] = { seid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_LIST_PERIODS;
@@ -157,7 +157,7 @@ int mtd_sa_list_periods(const char *seid, char **buf)
 int mtd_sa_list_obligations(const char *seid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { seid };
+	const char *params[] = { seid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_LIST_OBLIGATIONS;
@@ -173,7 +173,7 @@ int mtd_sa_list_obligations(const char *seid, char **buf)
 int mtd_sa_get_employment(const char *seid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { seid };
+	const char *params[] = { seid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_GET_SELF_EMPLOYMENT;

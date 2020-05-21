@@ -19,7 +19,7 @@
 int mtd_ic_get_messages(const char *cid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { cid };
+	const char *params[] = { cid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = IC_GET_MSGS;
@@ -35,7 +35,7 @@ int mtd_ic_get_messages(const char *cid, char **buf)
 int mtd_ic_get_end_of_year_est(const char *cid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { cid };
+	const char *params[] = { cid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = IC_GET_EOY_EST;;
@@ -51,7 +51,7 @@ int mtd_ic_get_end_of_year_est(const char *cid, char **buf)
 int mtd_ic_get_allowances_deductions_reliefs(const char *cid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { cid };
+	const char *params[] = { cid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = IC_GET_ALLOWANCES_DEDUCT_RELIEFS;
@@ -67,7 +67,7 @@ int mtd_ic_get_allowances_deductions_reliefs(const char *cid, char **buf)
 int mtd_ic_get_taxable_income(const char *cid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { cid };
+	const char *params[] = { cid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = IC_GET_TAXABLE_INCOME;
@@ -83,7 +83,7 @@ int mtd_ic_get_taxable_income(const char *cid, char **buf)
 int mtd_ic_get_income_tax_nics_calc(const char *cid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { cid };
+	const char *params[] = { cid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = IC_GET_INCOME_TAX_NICS_CALC;
@@ -99,7 +99,7 @@ int mtd_ic_get_income_tax_nics_calc(const char *cid, char **buf)
 int mtd_ic_get_calculation_meta(const char *cid, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[1] = { cid };
+	const char *params[] = { cid };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = IC_GET_CALCULATION_META;

@@ -20,7 +20,7 @@ int mtd_ni_get_annual_summary(const char *utr, const char *tax_year,
 			      char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[2] = { utr, tax_year };
+	const char *params[] = { utr, tax_year };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = NI_GET_ANNUAL_SUMMARY;
