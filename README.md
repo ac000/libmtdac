@@ -148,8 +148,7 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 #### mtd\_sa\_get\_end\_of\_period\_statement
 
     int mtd_sa_get_end_of_period_statement(const char *seid,
-                                           const char *start,
-                                           const char *end,
+                                           const char *query_string,
                                            char **buf)
 
 
@@ -163,8 +162,7 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 #### mtd\_saac\_list\_transactions
 
-    int mtd_saac_list_transactions(const char *from, const char *to,
-                                   char **buf)
+    int mtd_saac_list_transactions(const char *query_string, char **buf)
 
 #### mtd\_saac\_get\_transaction
 
@@ -172,7 +170,7 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 #### mtd\_saac\_list\_charges
 
-    int mtd_saac_list_charges(const char *from, const char *to, char **buf)
+    int mtd_saac_list_charges(const char *query_string, char **buf)
 
 #### mtd\_saac\_get\_charge
 
@@ -180,7 +178,7 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 #### mtd\_saac\_list\_payments
 
-    int mtd_saac_list_payments(const char *from, const char *to, char **buf)
+    int mtd_saac_list_payments(const char *query_string, char **buf)
 
 #### mtd\_saac\_get\_payment
 

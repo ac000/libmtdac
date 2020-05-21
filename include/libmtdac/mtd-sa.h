@@ -18,8 +18,7 @@ extern "C" {
 #pragma GCC visibility push(default)
 
 extern int mtd_sa_get_end_of_period_statement(const char *seid,
-					      const char *start,
-					      const char *end,
+					      const char *query_string,
 					      char **buf);
 extern int mtd_sa_submit_end_of_period_statement(const char *src_file,
 						 const char *seid,

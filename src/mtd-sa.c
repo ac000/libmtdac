@@ -6,8 +6,6 @@
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
 
-#include <stdio.h>
-
 #include "mtd-sa.h"		/* for default (public) visibility */
 #include "endpoints.h"
 #include "curler.h"
@@ -18,27 +16,19 @@
  * [GET ]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations
  *
- * This is a bit of an odd one out, as it's the only one that
- * takes an *optional* query string.
+ * Optional query string:
+ *
+ * 	?from=YYYY-MM-DD&to=YYYY-MM-DD
  */
-int mtd_sa_get_end_of_period_statement(const char *seid, const char *start,
-				       const char *end, char **buf)
+int mtd_sa_get_end_of_period_statement(const char *seid,
+				       const char *query_string, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[2] = { seid, NULL };
-	char query_string[64];
+	const char *params[2] = { seid, query_string };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_GET_END_OF_PERIOD_STATEMENT;
 	ctx.params = params;
-
-	if (start || end) {
-		snprintf(query_string, sizeof(query_string), "?%s%s%s%s%s",
-			 start ? "from=" : "", start ? start : "",
-			 (start && end) ? "&" : "",
-			 end ? "to=" : "", end ? end : "");
-		params[1] = query_string;
-	}
 
 	return do_get(&ctx, buf);
 }

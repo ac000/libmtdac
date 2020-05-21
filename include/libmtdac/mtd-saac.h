@@ -18,13 +18,11 @@ extern "C" {
 #pragma GCC visibility push(default)
 
 extern int mtd_saac_get_payment(const char *pyid, char **buf);
-extern int mtd_saac_list_payments(const char *from, const char *to,
-				  char **buf);
+extern int mtd_saac_list_payments(const char *query_string, char **buf);
 extern int mtd_saac_get_charge(const char *trid, char **buf);
-extern int mtd_saac_list_charges(const char *from, const char *to, char **buf);
+extern int mtd_saac_list_charges(const char *query_string, char **buf);
 extern int mtd_saac_get_transaction(const char *trid, char **buf);
-extern int mtd_saac_list_transactions(const char *from, const char *to,
-				      char **buf);
+extern int mtd_saac_list_transactions(const char *query_string, char **buf);
 extern int mtd_saac_get_balance(char **buf);
 
 #pragma GCC visibility pop

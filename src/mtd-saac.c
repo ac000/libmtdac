@@ -6,8 +6,6 @@
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
 
-#include <stdio.h>
-
 #include "mtd-saac.h"		/* for default (public) visibility */
 #include "endpoints.h"
 #include "curler.h"
@@ -32,19 +30,16 @@ int mtd_saac_get_payment(const char *pyid, char **buf)
 
 /*
  * [GET ]
- * /accounts/self-assessment/{nino}/payments?from=YYYY-MM-DD&to=YYYY-MM_DD
+ * /accounts/self-assessment/{nino}/payments?from=YYYY-MM-DD&to=YYYY-MM-DD
  */
-int mtd_saac_list_payments(const char *from, const char *to, char **buf)
+int mtd_saac_list_payments(const char *query_string, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
 	const char *params[1];
-	char query_string[64];
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SAAC_LIST_PAYMENTS;
 
-	snprintf(query_string, sizeof(query_string), "?from=%s&to=%s",
-		 from, to);
 	params[0] = query_string;
 	ctx.params = params;
 
@@ -69,19 +64,16 @@ int mtd_saac_get_charge(const char *trid, char **buf)
 
 /*
  * [GET ]
- * /accounts/self-assessment/{nino}/charges?from=YYYY-MM-DD&to=YYYY-MM_DD
+ * /accounts/self-assessment/{nino}/charges?from=YYYY-MM-DD&to=YYYY-MM-DD
  */
-int mtd_saac_list_charges(const char *from, const char *to, char **buf)
+int mtd_saac_list_charges(const char *query_string, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
 	const char *params[1];
-	char query_string[64];
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SAAC_LIST_CHARGES;
 
-	snprintf(query_string, sizeof(query_string), "?from=%s&to=%s",
-		 from, to);
 	params[0] = query_string;
 	ctx.params = params;
 
@@ -106,19 +98,16 @@ int mtd_saac_get_transaction(const char *trid, char **buf)
 
 /*
  * [GET ]
- * /accounts/self-assessment/{nino}/transactions?from=YYYY-MM-DD&to=YYYY-MM_DD
+ * /accounts/self-assessment/{nino}/transactions?from=YYYY-MM-DD&to=YYYY-MM-DD
  */
-int mtd_saac_list_transactions(const char *from, const char *to, char **buf)
+int mtd_saac_list_transactions(const char *query_string, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
 	const char *params[1];
-	char query_string[64];
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SAAC_LIST_TRANSACTIONS;
 
-	snprintf(query_string, sizeof(query_string), "?from=%s&to=%s",
-		 from, to);
 	params[0] = query_string;
 	ctx.params = params;
 
