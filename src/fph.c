@@ -8,12 +8,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <time.h>
 #include <sys/utsname.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <ifaddrs.h>
 #include <linux/if_packet.h>
 #include <linux/limits.h>
@@ -88,6 +90,115 @@ static char *get_macs(CURL *curl, char *buf)
 	return buf;
 }
 
+struct ip_prefix {
+	const char *ip;
+	const short prefix;
+};
+
+static const struct ip_prefix local_ip4s[] = {
+	{ "127.0.0.1",		32 },
+	{ "10.0.0.0",		 8 },
+	{ "172.16.0.0",		12 },
+	{ "192.168.0.0",	16 },
+};
+
+static const struct ip_prefix local_ip6s[] = {
+	{ "::1",		128 },
+	{ "fc00::",		  7 },
+	{ "fe80::",		 10 },
+};
+
+static bool _ipv4_isin(const char *network, short cidr,
+		       const struct in_addr *addr)
+{
+	struct in_addr ip_addr;
+	struct in_addr net_addr;
+
+	inet_pton(AF_INET, network, &net_addr);
+
+	ip_addr.s_addr = addr->s_addr & htonl(~0UL << (32 - cidr));
+
+	return ip_addr.s_addr == net_addr.s_addr;
+}
+
+static bool _is_local_ip4(const struct sockaddr *sa)
+{
+	const struct in_addr *ip_addr = &((struct sockaddr_in *)sa)->sin_addr;
+	int nr = sizeof(local_ip4s) / sizeof(local_ip4s[0]);
+	int i;
+
+	for (i = 0; i < nr; i++) {
+		bool local;
+
+		local = _ipv4_isin(local_ip4s[i].ip, local_ip4s[i].prefix,
+				   ip_addr);
+		if (local)
+			return true;
+	}
+
+	return false;
+}
+
+static bool _ipv6_isin(const char *network, short prefixlen,
+		       const unsigned char *addr)
+{
+	short i;
+	unsigned char mask[sizeof(struct in6_addr)];
+	unsigned char net[sizeof(struct in6_addr)];
+
+	inet_pton(AF_INET6, network, net);
+
+	/* Create a mask based on prefixlen */
+	for (i = 0; i < 16; i++) {
+		short s = (prefixlen > 8) ? 8 : prefixlen;
+
+		prefixlen -= s;
+		mask[i] = (0xffu << (8 - s));
+	}
+
+	for (i = 0; i < 16; i++) {
+		if ((addr[i] & mask[i]) != net[i])
+			return false;
+	}
+
+	return true;
+}
+
+static bool _is_local_ip6(const struct sockaddr *sa)
+{
+	const unsigned char *ip_addr =
+		(unsigned char *)&((struct sockaddr_in6 *)sa)->sin6_addr;
+	int nr = sizeof(local_ip6s) / sizeof(local_ip6s[0]);
+	int i;
+
+	for (i = 0; i < nr; i++) {
+		bool local;
+
+		local = _ipv6_isin(local_ip6s[i].ip, local_ip6s[i].prefix,
+				   ip_addr);
+		if (local)
+			return true;
+	}
+
+	return false;
+}
+
+static bool _check_is_local_ip(const struct sockaddr *sa, int family)
+{
+	switch (family) {
+	case AF_INET:
+		return _is_local_ip4(sa);
+	case AF_INET6:
+		return _is_local_ip6(sa);
+	}
+
+	/*
+	 * We should not be able to get to here, but GCC couldn't
+	 * seem to work that out...
+	 */
+	return false;
+}
+
 static char *get_ips(CURL *curl, char *buf)
 {
 	struct ifaddrs *ifaddr;
@@ -112,6 +223,9 @@ static char *get_ips(CURL *curl, char *buf)
 
 		family = ifa->ifa_addr->sa_family;
 		if (family != AF_INET && family != AF_INET6)
+			continue;
+
+		if (!_check_is_local_ip(ifa->ifa_addr, family))
 			continue;
 
 		getnameinfo(ifa->ifa_addr,
