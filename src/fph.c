@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include <time.h>
 #include <sys/utsname.h>
 #include <sys/types.h>
@@ -35,15 +36,47 @@ static char *get_ua(CURL *curl, char *buf)
 	struct utsname un;
 	char *encsys;
 	char *encrel;
+	char *encvendor = NULL;
+	char *encmodel = NULL;
+	char line[BUF_SZ];
+	FILE *fp;
 
 	uname(&un);
 	encsys = curl_easy_escape(curl, un.sysname, 0);
 	encrel = curl_easy_escape(curl, un.release, 0);
 
-	snprintf(buf, BUF_SZ, "%s/%s (/)", encsys, encrel);
+	fp = fopen("/proc/cpuinfo", "re");
+	while (fgets(line, sizeof(line), fp)) {
+		char *ptr;
+
+		line[strlen(line) - 1] = '\0'; /* loose the trailing \n */
+
+		ptr = strstr(line, "vendor_id");
+		if (ptr && !encvendor) {
+			ptr = strchr(line, ':');
+			if (ptr)
+				encvendor = curl_easy_escape(curl, ptr + 2, 0);
+		}
+
+		ptr = strstr(line, "model name");
+		if (ptr && !encmodel) {
+			ptr = strchr(line, ':');
+			if (ptr)
+				encmodel = curl_easy_escape(curl, ptr + 2, 0);
+		}
+
+		if (encvendor && encmodel)
+			break;
+	}
+	fclose(fp);
+
+	snprintf(buf, BUF_SZ, "%s/%s (%s/%s)", encsys, encrel, encvendor,
+		 encmodel);
 
 	curl_free(encsys);
 	curl_free(encrel);
+	curl_free(encvendor);
+	curl_free(encmodel);
 
 	return buf;
 }
