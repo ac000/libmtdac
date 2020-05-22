@@ -24,28 +24,28 @@ static const struct _endpoint {
 	const enum endpoint ep;
 	const char *template;
 } endpoints[] = {
-	/* Self-Assement */
-	{ SA_LIST_SELF_EMPLOYMENTS,
+	/* Self-Assessment - Self-Employment */
+	{ SA_SE_LIST_SELF_EMPLOYMENTS,
 	 "/self-assessment/ni/{nino}/self-employments" },
-	{ SA_GET_SELF_EMPLOYMENT,
+	{ SA_SE_GET_SELF_EMPLOYMENT,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}" },
-	{ SA_LIST_OBLIGATIONS,
+	{ SA_SE_LIST_OBLIGATIONS,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/obligations" },
-	{ SA_LIST_PERIODS,
+	{ SA_SE_LIST_PERIODS,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods" },
-	{ SA_CREATE_PERIOD,
+	{ SA_SE_CREATE_PERIOD,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods" },
-	{ SA_GET_PERIOD,
+	{ SA_SE_GET_PERIOD,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods/{periodId}" },
-	{ SA_UPDATE_PERIOD,
+	{ SA_SE_UPDATE_PERIOD,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods/{periodId}" },
-	{ SA_GET_ANNUAL_SUMMARY,
+	{ SA_SE_GET_ANNUAL_SUMMARY,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/{taxYear}" },
-	{ SA_UPDATE_ANNUAL_SUMMARY,
+	{ SA_SE_UPDATE_ANNUAL_SUMMARY,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/{taxYear}" },
-	{ SA_SUBMIT_END_OF_PERIOD_STATEMENT,
+	{ SA_SE_SUBMIT_END_OF_PERIOD_STATEMENT,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}" },
-	{ SA_GET_END_OF_PERIOD_STATEMENT,
+	{ SA_SE_GET_END_OF_PERIOD_STATEMENT,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations/{optional_query_params}" },
 
 	/* Self-Assessment Accounts */
@@ -81,7 +81,7 @@ static const struct _endpoint {
 	{ IC_GET_MSGS,
 	 "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages" },
 
-	/* Individual Loses */
+	/* Individual Loses - Brought Forward */
 	{ IL_BF_LIST_LOSES,
 	 "/individuals/losses/{nino}/brought-forward-losses/{optional_query_params}" },
 	{ IL_BF_CREATE_LOSS,
@@ -92,6 +92,7 @@ static const struct _endpoint {
 	 "/individuals/losses/{nino}/brought-forward-losses/{lossId}" },
 	{ IL_BF_UPDATE_LOSS_AMNT,
 	 "/individuals/losses/{nino}/brought-forward-losses/{lossId}/change-loss-amount" },
+	/* Individual Loses - Loss Claims */
 	{ IL_LC_LIST_LOSES, "/individuals/losses/{nino}/loss-claims" },
 	{ IL_LC_CREATE_LOSS, "/individuals/losses/{nino}/loss-claims" },
 	{ IL_LC_GET_LOSS, "/individuals/losses/{nino}/loss-claims/{claimId}" },

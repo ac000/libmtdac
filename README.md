@@ -98,59 +98,63 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     #include <libmtdac/mtd-sa.h>
 
-#### mtd\_sa\_list\_employments
+#### Self-Assessment - Self-Employment
 
-    int mtd_sa_list_employments(char **buf)
+#### mtd\_sa\_se\_list\_employments
 
-#### mtd\_sa\_get\_employment
+    int mtd_sa_se_list_employments(char **buf)
 
-    int mtd_sa_get_employment(const char *seid, char **buf)
+#### mtd\_sa\_se\_get\_employment
 
-#### mtd\_sa\_list\_obligations
+    int mtd_sa_se_get_employment(const char *seid, char **buf)
 
-    int mtd_sa_list_obligations(const char *seid, char **buf)
+#### mtd\_sa\_se\_list\_obligations
 
-#### mtd\_sa\_list\_periods
+    int mtd_sa_se_list_obligations(const char *seid, char **buf)
 
-    int mtd_sa_list_periods(const char *seid, char **buf)
+#### mtd\_sa\_se\_list\_periods
 
-#### mtd\_sa\_create\_period
+    int mtd_sa_se_list_periods(const char *seid, char **buf)
 
-    int mtd_sa_create_period(const char *src_file, const char *seid,
+#### mtd\_sa\_se\_create\_period
+
+    int mtd_sa_se_create_period(const char *src_file, const char *seid,
+                                char **buf)
+
+#### mtd\_sa\_se\_get\_period
+
+    int mtd_sa_se_get_period(const char *seid, const char *period_id,
                              char **buf)
 
-#### mtd\_sa\_get\_period
+#### mtd\_sa\_se\_update\_period
 
-    int mtd_sa_get_period(const char *seid, const char *period_id,
-                          char **buf)
+    int mtd_sa_se_update_period(const char *src_file, const char *seid,
+                                const char *period_id, char **buf)
 
-#### mtd\_sa\_update\_period
+#### mtd\_sa\_se\_get\_annual\_summary
 
-    int mtd_sa_update_period(const char *src_file, const char *seid,
-                             const char *period_id, char **buf)
+    int mtd_sa_se_get_annual_summary(const char *seid, const char *tax_year,
+                                     char **buf)
 
-#### mtd\_sa\_get\_annual\_summary
+#### mtd\_sa\_se\_update\_annual\_summary
 
-    int mtd_sa_get_annual_summary(const char *seid, const char *tax_year,
-                                  char **buf)
+    int mtd_sa_se_update_annual_summary(const char *src_file,
+                                        const char *seid,
+                                        const char *tax_year, char **buf)
 
-#### mtd\_sa\_update\_annual\_summary
+#### mtd\_sa\_se\_submit\_end\_of\_period\_statement
 
-    int mtd_sa_update_annual_summary(const char *src_file, const char *seid,
-                                     const char *tax_year, char **buf)
+    int mtd_sa_se_submit_end_of_period_statement(const char *src_file,
+                                                 const char *seid,
+                                                 const char *start,
+                                                 const char *end,
+                                                 char **buf)
 
-#### mtd\_sa\_submit\_end\_of\_period\_statement
+#### mtd\_sa\_se\_get\_end\_of\_period\_statement
 
-    int mtd_sa_submit_end_of_period_statement(const char *src_file,
-                                              const char *seid,
-                                              const char *start,
-                                              const char *end, char **buf)
-
-#### mtd\_sa\_get\_end\_of\_period\_statement
-
-    int mtd_sa_get_end_of_period_statement(const char *seid,
-                                           const char *query_string,
-                                           char **buf)
+    int mtd_sa_se_get_end_of_period_statement(const char *seid,
+                                              const char *query_string,
+                                              char **buf)
 
 
 ### Make Tax Digital - Self-Assessment Accounts API functions [test-only]
@@ -227,6 +231,8 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     #include <libmtdac/mtd-il.h>
 
+#### Individual Loses - Brought Forward
+
 #### mtd\_il\_bf\_list\_loses
 
     int mtd_il_bf_list_loses(const char *query_string, char **buf)
@@ -247,6 +253,8 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     int mtd_il_bf_update_loss_amnt(const char *src_file, const char *lid,
                                    char **buf)
+
+#### Individual Loses - Loss Claims
 
 #### mtd\_il\_lc\_list\_loses
 
