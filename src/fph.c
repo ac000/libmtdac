@@ -31,6 +31,26 @@
 
 #define BUF_SZ	1024
 
+static char *get_version(CURL *curl, char *buf)
+{
+	char ver[128];
+	char *encname;
+	char *encver;
+
+	encname = curl_easy_escape(curl, LIBNAME, 0);
+	snprintf(ver, sizeof(ver), "%d.%d.%d (%s)",
+		 LIBMTDAC_MAJOR_VERSION, LIBMTDAC_MINOR_VERSION,
+		 LIBMTDAC_MICRO_VERSION, GIT_VERSION + 1);
+	encver = curl_easy_escape(curl, ver, 0);
+
+	snprintf(buf, BUF_SZ, "%s=%s", encname, encver);
+
+	curl_free(encname);
+	curl_free(encver);
+
+	return buf;
+}
+
 static char *get_ua(CURL *curl, char *buf)
 {
 	struct utsname un;
@@ -317,6 +337,7 @@ static void get_other_direct_hdrs(CURL *curl, struct curl_ctx *ctx)
 	curl_add_hdr(ctx, "Gov-Client-Local-IPs: %s", get_ips(curl, buf));
 	curl_add_hdr(ctx, "Gov-Client-MAC-Addresses: %s", get_macs(curl, buf));
 	curl_add_hdr(ctx, "Gov-Client-User-Agent: %s", get_ua(curl, buf));
+	curl_add_hdr(ctx, "Gov-Vendor-Version: %s", get_version(curl, buf));
 }
 
 static char *get_device_id(char *buf)
