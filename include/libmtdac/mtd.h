@@ -14,7 +14,7 @@ extern "C" {
 #endif
 
 #define LIBMTDAC_MAJOR_VERSION		0
-#define LIBMTDAC_MINOR_VERSION		2
+#define LIBMTDAC_MINOR_VERSION		3
 #define LIBMTDAC_MICRO_VERSION		0
 
 #define MTD_CONFIG_DIR_FMT		"%s/.config/libmtdac/%s"

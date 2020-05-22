@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	0.2.0
+Version:	0.3.0
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -54,6 +54,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Fri May 22 2020 Andrew Clayton <andrew@digital-domain.net> - 0.3.0-1
+- Namespace Self-Assessment API (API break)
 
 * Thu May 21 2020 Andrew Clayton <andrew@digital-domain.net> - 0.2.0-1
 - Change how query string parameters are passed in (API break)
