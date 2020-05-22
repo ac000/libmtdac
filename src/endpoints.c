@@ -47,6 +47,16 @@ static const struct _endpoint {
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}" },
 	{ SA_SE_GET_END_OF_PERIOD_STATEMENT,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations/{optional_query_params}" },
+	/* Self-Assessment - Savings Accounts */
+	{ SA_SA_LIST_ACCOUNTS, "/self-assessment/ni/{nino}/savings-accounts" },
+	{ SA_SA_CREATE_ACCOUNT,
+	 "/self-assessment/ni/{nino}/savings-accounts" },
+	{ SA_SA_GET_ACCOUNT,
+	 "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}" },
+	{ SA_SA_GET_ANNUAL_SUMMARY,
+	 "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}" },
+	{ SA_SA_UPDATE_ANNUAL_SUMMARY,
+	 "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}" },
 
 	/* Self-Assessment Accounts */
 	{ SAAC_GET_BALANCE, "/accounts/self-assessment/{nino}/balance" },

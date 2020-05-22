@@ -17,6 +17,15 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
+extern int mtd_sa_sa_update_annual_summary(const char *src_file,
+					   const char *said,
+					   const char *tax_year, char **buf);
+extern int mtd_sa_sa_get_annual_summary(const char *said, const char *tax_year,
+					char **buf);
+extern int mtd_sa_sa_get_account(const char *said, char **buf);
+extern int mtd_sa_sa_create_account(const char *src_file, char **buf);
+extern int mtd_sa_sa_list_accounts(char **buf);
+
 extern int mtd_sa_se_get_end_of_period_statement(const char *seid,
 						 const char *query_string,
 						 char **buf);

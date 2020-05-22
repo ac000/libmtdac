@@ -13,6 +13,84 @@
 #define API_VER			"Accept: application/vnd.hmrc.2.0+json"
 
 /*
+ * [PUT ]
+ * /self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}
+ */
+int mtd_sa_sa_update_annual_summary(const char *src_file, const char *said,
+				    const char *tax_year, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+	const char *params[] = { said, tax_year };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_SA_UPDATE_ANNUAL_SUMMARY;
+	ctx.params = params;
+
+	return do_put(&ctx, src_file, NULL, buf);
+}
+
+/*
+ * [GET ]
+ * /self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}
+ */
+int mtd_sa_sa_get_annual_summary(const char *said, const char *tax_year,
+				 char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+	const char *params[] = { said, tax_year };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_SA_GET_ANNUAL_SUMMARY;
+	ctx.params = params;
+
+	return do_get(&ctx, buf);
+}
+
+/*
+ * [GET ]
+ * /self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}
+ */
+int mtd_sa_sa_get_account(const char *said, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+	const char *params[] = { said };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_SA_GET_ACCOUNT;
+	ctx.params = params;
+
+	return do_get(&ctx, buf);
+}
+
+/*
+ * [POST]
+ * /self-assessment/ni/{nino}/savings-accounts
+ */
+int mtd_sa_sa_create_account(const char *src_file, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_SA_CREATE_ACCOUNT;
+
+	return do_post(&ctx, src_file, NULL, buf);
+}
+
+/*
+ * [GET ]
+ * /self-assessment/ni/{nino}/savings-accounts
+ */
+int mtd_sa_sa_list_accounts(char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_SA_LIST_ACCOUNTS;
+
+	return do_get(&ctx, buf);
+}
+
+/*
  * [GET ]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations
  *

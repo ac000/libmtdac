@@ -4,6 +4,8 @@
   * [Errors](#errors)
   * [Initialisation functions](#initialisation-functions)
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
+    - [Self-Assessment - Self-Employment](#self-assessment---self-employment)
+    - [Self-Assessment - Savings Accounts](#self-assessment---savings-accounts)
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
   * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
   * [Make Tax Digital - Individual Loses API functions](#make-tax-digital---individual-loses-api-functions)
@@ -155,6 +157,30 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
     int mtd_sa_se_get_end_of_period_statement(const char *seid,
                                               const char *query_string,
                                               char **buf)
+
+#### Self-Assessment - Savings Accounts
+
+#### mtd\_sa\_sa\_list\_accounts
+
+    int mtd_sa_sa_list_accounts(char **buf)
+
+#### mtd\_sa\_sa\_create\_account
+
+    int mtd_sa_sa_create_account(const char *src_file, char **buf)
+
+#### mtd\_sa\_sa\_get\_account
+
+    int mtd_sa_sa_get_account(const char *said, char **buf)
+
+#### mtd\_sa\_sa\_get\_annual\_summary
+
+    int mtd_sa_sa_get_annual_summary(const char *said, const char *tax_year,
+                                     char **buf)
+
+#### mtd\_sa\_sa\_update\_annual\_summary
+
+    int mtd_sa_sa_update_annual_summary(const char *src_file, const char *said,
+                                        const char *tax_year, char **buf)
 
 
 ### Make Tax Digital - Self-Assessment Accounts API functions [test-only]
