@@ -1,13 +1,13 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * anti-fraud.h - Make Tax Digital
+ * fph.h - Make Tax Digital - Fraud Prevention Headers
  *
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
 
-#ifndef _ANTI_FRAUD_H_
-#define _ANTI_FRAUD_H_
+#ifndef _FPH_H_
+#define _FPH_H_
 
 #include "curler.h"
 
@@ -21,4 +21,4 @@ extern void set_anti_fraud_hdrs(struct curl_ctx *ctx);
 } /* extern "C" */
 #endif
 
-#endif /* _ANTI_FRAUD_H_ */
+#endif /* _FPH_H_ */
