@@ -9,6 +9,8 @@
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
   * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
   * [Make Tax Digital - Individual Loses API functions](#make-tax-digital---individual-loses-api-functions)
+    - [Individual Loses - Brought Forward](#individual-loses---brought-forward)
+    - [Individual Loses - Loss Claims](#individual-loses---loss-claims)
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
   * [Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]](#make-tax-digital---test-fraud-prevention-headers-api-functions-test-only)
