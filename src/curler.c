@@ -213,6 +213,9 @@ static int curl_perform(struct curl_ctx *ctx)
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, ctx->write_cb);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, ctx->curl_buf);
 
+	if (ctx->src_file)	/* maybe we're retrying the request */
+		rewind(ctx->src_file);
+
 	if (ctx->post_data) {
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, ctx->post_data);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, ctx->post_size);
