@@ -124,6 +124,7 @@ static void curl_ctx_free(const struct curl_ctx *ctx)
 {
 	free(ctx->curl_buf->buf);
 	free(ctx->curl_buf);
+	free(ctx->res_buf);
 	curl_slist_free_all(ctx->hdrs);
 
 	if (ctx->src_file)
@@ -168,9 +169,7 @@ static void set_response(struct curl_ctx *ctx)
 			"method", methods_str[ctx->http_method].str,
 			"result", rootbuf);
 
-	free(ctx->curl_buf->buf);
-	ctx->curl_buf->buf = json_dumps(new, 0);
-	ctx->curl_buf->len = 0;
+	ctx->res_buf = json_dumps(new, 0);
 
 	json_decref(new);
 }
@@ -336,8 +335,8 @@ static int do_put_post(struct curl_ctx *ctx, const char *src_file,
 	}
 
 	err = do_curl(ctx);
-	if (ctx->curl_buf->buf)
-		*buf = strdup(ctx->curl_buf->buf);
+	if (ctx->res_buf)
+		*buf = strdup(ctx->res_buf);
 
 	curl_ctx_free(ctx);
 
@@ -368,8 +367,8 @@ int do_get_delete(struct curl_ctx *ctx, char **buf,
 	ctx->curl_buf = calloc(1, sizeof(struct curl_buf));
 
 	err = do_curl(ctx);
-	if (ctx->curl_buf->buf)
-		*buf = strdup(ctx->curl_buf->buf);
+	if (ctx->res_buf)
+		*buf = strdup(ctx->res_buf);
 
 	curl_ctx_free(ctx);
 

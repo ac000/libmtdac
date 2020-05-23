@@ -45,6 +45,7 @@ struct curl_ctx {
 	enum endpoint endpoint;
 
 	const char **params;
+	char *res_buf;
 
 	int (*oauther)(void);
 
