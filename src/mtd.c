@@ -159,6 +159,7 @@ int mtd_init_auth(void)
 	char data[4096];
 	char path[PATH_MAX];
 	char *s;
+	json_t *array;
 	json_t *root;
 	json_t *result;
 	pid_t child_pid;
@@ -210,12 +211,13 @@ int mtd_init_auth(void)
 
 	printf("\n");
 	printf("Wrote oauth.json to %s\n\n", path);
-	root = json_loads(buf, 0, NULL);
+	array = json_loads(buf, 0, NULL);
+	root = json_array_get(array, 0);
 	result = json_object_get(root, "result");
 	json_dumpf(result, stdout, JSON_INDENT(4));
 	json_dump_file(result, path, JSON_INDENT(4));
 	printf("\n");
-	json_decref(root);
+	json_decref(array);
 	json_decref(result);
 
 out_free:

@@ -51,6 +51,7 @@ int refresh_access_token(void)
 	char *refresh_token = load_token("refresh_token", FT_AUTH);
 	char *client_id = load_token("client_id", FT_CONFIG);
 	char *client_secret = load_token("client_secret", FT_CONFIG);
+	json_t *array;
 	json_t *root;
 	json_t *result;
 	int err;
@@ -69,10 +70,11 @@ int refresh_access_token(void)
 	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"),
 		 "oauth.json");
 
-	root = json_loads(buf, 0, NULL);
+	array = json_loads(buf, 0, NULL);
+	root = json_array_get(array, 0);
 	result = json_object_get(root, "result");
 	json_dump_file(result, path, JSON_INDENT(4));
-	json_decref(root);
+	json_decref(array);
 	json_decref(result);
 
 out_free:
