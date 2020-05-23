@@ -34,6 +34,7 @@ enum http_status_code {
 	CREATED,
 	ACCEPTED,
 	NO_CONTENT = 204,
+	SEE_OTHER = 303,
 	BAD_REQUEST = 400,
 	UNAUTHORIZED,
 	FORBIDDEN = 403,
@@ -56,6 +57,7 @@ static const struct http_status_code_entry {
 	{ CREATED, "CREATED", "Created" },
 	{ ACCEPTED, "ACCEPTED", "Accepted" },
 	{ NO_CONTENT, "NO_CONTENT", "No Content" },
+	{ SEE_OTHER, "SEE_OTHER", "See Other" },
 	{ BAD_REQUEST, "BAD_REQUEST", "Bad Request" },
 	{ UNAUTHORIZED, "UNAUTHORIZED", "Unauthorized" },
 	{ FORBIDDEN, "FORBIDDEN", "Forbidden" },
@@ -122,6 +124,7 @@ static size_t curl_writeb_cb(void *contents, size_t size, size_t nmemb,
 
 static void curl_ctx_free(const struct curl_ctx *ctx)
 {
+	free(ctx->location);
 	free(ctx->curl_buf->buf);
 	free(ctx->curl_buf);
 	free(ctx->res_buf);
@@ -155,6 +158,7 @@ int curl_add_hdr(struct curl_ctx *ctx, const char *fmt, ...)
 static void set_response(struct curl_ctx *ctx)
 {
 	json_t *rootbuf;
+	json_t *resbuf;
 	json_t *new;
 
 	if (ctx->curl_buf->buf && strlen(ctx->curl_buf->buf) > 0)
@@ -169,9 +173,17 @@ static void set_response(struct curl_ctx *ctx)
 			"method", methods_str[ctx->http_method].str,
 			"result", rootbuf);
 
-	ctx->res_buf = json_dumps(new, 0);
+	/* Cater for multiple responses in case of redirect... */
+	if (ctx->res_buf)
+		resbuf = json_loads(ctx->res_buf, 0, NULL);
+	else
+		resbuf = json_array();
+	json_array_append_new(resbuf, new);
 
-	json_decref(new);
+	free(ctx->res_buf);
+	ctx->res_buf = json_dumps(resbuf, 0);
+
+	json_decref(resbuf);
 }
 
 static const char *get_user_agent(char *ua)
@@ -229,6 +241,12 @@ static int curl_perform(struct curl_ctx *ctx)
 		ret = MTD_ERR_CURL;
 	}
 	curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &ctx->status_code);
+	if (ctx->status_code == SEE_OTHER) {
+		char *location;
+
+		curl_easy_getinfo(curl, CURLINFO_REDIRECT_URL, &location);
+		ctx->location = strdup(location);
+	}
 	curl_easy_cleanup(curl);
 
 	logger(MTD_LOG_DEBUG, "[%ld] (%s)\n", ctx->status_code, ctx->url);
@@ -299,6 +317,17 @@ retry_curl:
 	} else if (ctx->status_code == BAD_REQUEST && refreshed_token) {
 		if (strstr(ctx->curl_buf->buf, "invalid_request"))
 			return MTD_ERR_NEEDS_AUTHORISATION;
+	} else if (ctx->status_code == SEE_OTHER) {
+		logger(MTD_LOG_INFO, "Performing re-direct: GET %s\n",
+		       ctx->location);
+		if (ctx->src_file) {
+			fclose(ctx->src_file);
+			ctx->src_file = NULL;
+			ctx->src_size = 0;
+		}
+		ctx->url = ctx->location;
+		ctx->http_method = M_GET;
+		goto retry_curl;
 	} else if (ctx->status_code >= 300) {
 		return MTD_ERR_REQUEST;
 	}
