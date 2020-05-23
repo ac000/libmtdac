@@ -205,7 +205,7 @@ static int curl_perform(struct curl_ctx *ctx)
 	if (ctx->post_data) {
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, ctx->post_data);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, ctx->post_size);
-	} else if (ctx->http_method == M_POST && ctx->src_file) {
+	} else if (ctx->http_method == M_POST) {
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, NULL);
 		curl_easy_setopt(curl, CURLOPT_READFUNCTION, ctx->read_cb);
 		curl_easy_setopt(curl, CURLOPT_READDATA, ctx->src_file);
