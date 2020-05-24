@@ -103,7 +103,8 @@ static const struct _endpoint {
 	{ IL_BF_UPDATE_LOSS_AMNT,
 	 "/individuals/losses/{nino}/brought-forward-losses/{lossId}/change-loss-amount" },
 	/* Individual Loses - Loss Claims */
-	{ IL_LC_LIST_LOSES, "/individuals/losses/{nino}/loss-claims" },
+	{ IL_LC_LIST_LOSES,
+	 "/individuals/losses/{nino}/loss-claims/{optional_query_params}" },
 	{ IL_LC_CREATE_LOSS, "/individuals/losses/{nino}/loss-claims" },
 	{ IL_LC_GET_LOSS, "/individuals/losses/{nino}/loss-claims/{claimId}" },
 	{ IL_LC_DELETE_LOSS,
