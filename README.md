@@ -368,7 +368,21 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 ## Build it
 
-The simplest way is to build the rpm by simply doing
+libmtdac only has a couple of direct dependencies, *libcurl* & *jansson*
+
+On Red Hat/Fedora/etc you will need the
+
+    libcurl{,-devel)
+    jansson{,-devel}
+
+packages.
+
+On Debian (something like...)
+
+    libcurl4{,-openssl-dev}
+    libjansson{4,-dev}
+
+The simplest way is to build the rpm (on Red Hat/Fedora) by simply doing
 
     $ make rpm
 
