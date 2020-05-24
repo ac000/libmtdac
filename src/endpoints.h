@@ -38,6 +38,10 @@ enum endpoint {
 	SA_SA_GET_ACCOUNT,
 	SA_SA_GET_ANNUAL_SUMMARY,
 	SA_SA_UPDATE_ANNUAL_SUMMARY,
+	/* Self-Assessment - Crystallisation */
+	SA_CR_INTENT_TO_CRYSTALLISE,
+	SA_CR_CRYSTALLISE,
+	SA_CR_LIST_OBLIGATIONS,
 
 	/* Self-Assessment Accounts */
 	SAAC_GET_BALANCE,

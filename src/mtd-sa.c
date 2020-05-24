@@ -13,6 +13,52 @@
 #define API_VER			"Accept: application/vnd.hmrc.2.0+json"
 
 /*
+ * [POST]
+ * /self-assessment/ni/{nino}/crystallisation/obligations
+ */
+int mtd_sa_cr_list_obligations(char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_CR_LIST_OBLIGATIONS;
+
+	return do_post(&ctx, NULL, NULL, buf);
+}
+
+/*
+ * [POST]
+ * /self-assessment/ni/{nino}/{taxYear}/crystallisation
+ */
+int mtd_sa_cr_crystallise(const char *tax_year, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+	const char *params[] = { tax_year };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_CR_CRYSTALLISE;
+	ctx.params = params;
+
+	return do_post(&ctx, NULL, NULL, buf);
+}
+
+/*
+ * [POST]
+ * /self-assessment/ni/{nino}/{taxYear}/intent-to-crystallise
+ */
+int mtd_sa_cr_intent_to_crystallise(const char *tax_year, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+	const char *params[] = { tax_year };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_CR_INTENT_TO_CRYSTALLISE;
+	ctx.params = params;
+
+	return do_post(&ctx, NULL, NULL, buf);
+}
+
+/*
  * [PUT ]
  * /self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}
  */
