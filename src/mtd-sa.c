@@ -60,6 +60,39 @@ int mtd_sa_cr_intent_to_crystallise(const char *tax_year, char **buf)
 
 /*
  * [PUT ]
+ * /self-assessment/ni/{nino}/charitable-giving/{taxYear}
+ */
+int mtd_sa_cg_update_charitable_giving(const char *src_file,
+				       const char *tax_year, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+	const char *params[] = { tax_year };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_CG_UPDATE_CHARITABLE_GIVING;
+	ctx.params = params;
+
+	return do_put(&ctx, src_file, NULL, buf);
+}
+
+/*
+ * [GET ]
+ * /self-assessment/ni/{nino}/charitable-giving/{taxYear}
+ */
+int mtd_sa_cg_get_charitable_giving(const char *tax_year, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+	const char *params[] = { tax_year };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_CG_GET_CHARITABLE_GIVING;
+	ctx.params = params;
+
+	return do_get(&ctx, buf);
+}
+
+/*
+ * [PUT ]
  * /self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}
  */
 int mtd_sa_sa_update_annual_summary(const char *src_file, const char *said,

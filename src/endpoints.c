@@ -57,6 +57,11 @@ static const struct _endpoint {
 	 "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}" },
 	{ SA_SA_UPDATE_ANNUAL_SUMMARY,
 	 "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}" },
+	/* Charitable Giving */
+	{ SA_CG_GET_CHARITABLE_GIVING,
+	 "/self-assessment/ni/{nino}/charitable-giving/{taxYear}" },
+	{ SA_CG_UPDATE_CHARITABLE_GIVING,
+	 "/self-assessment/ni/{nino}/charitable-giving/{taxYear}" },
 	/* Self-Assessment - Crystallisation */
 	{ SA_CR_INTENT_TO_CRYSTALLISE,
 	 "/self-assessment/ni/{nino}/{taxYear}/intent-to-crystallise" },

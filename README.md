@@ -6,6 +6,7 @@
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
     - [Self-Assessment - Self-Employment](#self-assessment---self-employment)
     - [Self-Assessment - Savings Accounts](#self-assessment---savings-accounts)
+    - [Self-Assessment - Charitable Giving](#self-assessment---charitable-giving)
     - [Self-Assessment - Crystallisation](#self-assessment---crystallisation)
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
   * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
@@ -185,6 +186,16 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
     int mtd_sa_sa_update_annual_summary(const char *src_file, const char *said,
                                         const char *tax_year, char **buf)
 
+#### Self-Assessment - Charitable Giving
+
+#### mtd\_sa\_cg\_get\_charitable\_giving
+
+    int mtd_sa_cg_get_charitable_giving(const char *tax_year, char **buf)
+
+#### mtd\_sa\_cg\_update\_charitable\_giving
+
+    int mtd_sa_cg_update_charitable_giving(const char *src_file,
+                                           const char *tax_year, char **buf)
 
 #### Self-Assessment - Crystallisation
 
