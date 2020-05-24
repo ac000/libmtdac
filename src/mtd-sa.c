@@ -170,6 +170,39 @@ int mtd_sa_sa_list_accounts(char **buf)
 }
 
 /*
+ * [PUT ]
+ * /self-assessment/ni/{nino}/dividends/{taxYear}
+ */
+int mtd_sa_di_update_annual_summary(const char *src_file, const char *tax_year,
+				    char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+	const char *params[] = { tax_year };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_DI_UPDATE_ANNUAL_SUMMARY;
+	ctx.params = params;
+
+	return do_put(&ctx, src_file, NULL, buf);
+}
+
+/*
+ * [GET ]
+ * /self-assessment/ni/{nino}/dividends/{taxYear}
+ */
+int mtd_sa_di_get_annual_summary(const char *tax_year, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+	const char *params[] = { tax_year };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_DI_GET_ANNUAL_SUMMARY;
+	ctx.params = params;
+
+	return do_get(&ctx, buf);
+}
+
+/*
  * [GET ]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations
  *

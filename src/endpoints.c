@@ -47,6 +47,11 @@ static const struct _endpoint {
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}" },
 	{ SA_SE_GET_END_OF_PERIOD_STATEMENT,
 	 "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations/{optional_query_params}" },
+	/* Dividends Income */
+	{ SA_DI_GET_ANNUAL_SUMMARY,
+	 "/self-assessment/ni/{nino}/dividends/{taxYear}" },
+	{ SA_DI_UPDATE_ANNUAL_SUMMARY,
+	 "/self-assessment/ni/{nino}/dividends/{taxYear}" },
 	/* Self-Assessment - Savings Accounts */
 	{ SA_SA_LIST_ACCOUNTS, "/self-assessment/ni/{nino}/savings-accounts" },
 	{ SA_SA_CREATE_ACCOUNT,

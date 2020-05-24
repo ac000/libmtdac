@@ -5,6 +5,7 @@
   * [Initialisation functions](#initialisation-functions)
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
     - [Self-Assessment - Self-Employment](#self-assessment---self-employment)
+    - [Self-Assessment - Dividends Income](#self-assessment---dividends-income)
     - [Self-Assessment - Savings Accounts](#self-assessment---savings-accounts)
     - [Self-Assessment - Charitable Giving](#self-assessment---charitable-giving)
     - [Self-Assessment - Crystallisation](#self-assessment---crystallisation)
@@ -161,6 +162,17 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
     int mtd_sa_se_get_end_of_period_statement(const char *seid,
                                               const char *query_string,
                                               char **buf)
+
+#### Self-Assessment - Dividends Income
+
+#### mtd\_sa\_di\_get\_annual\_summary
+
+    int mtd_sa_di_get_annual_summary(const char *tax_year, char **buf)
+
+#### mtd\_sa\_di\_update\_annual\_summary
+
+    int mtd_sa_di_update_annual_summary(const char *src_file,
+                                        const char *tax_year, char **buf)
 
 #### Self-Assessment - Savings Accounts
 
