@@ -124,9 +124,46 @@ static size_t curl_writeb_cb(void *contents, size_t size, size_t nmemb,
 	return realsize;
 }
 
+static char *strchomp(char *string)
+{
+	size_t len = strlen(string);
+	char *ptr = string;
+
+	ptr += len;
+	while (*(--ptr)) {
+		if (*ptr == ' ' ||
+		    *ptr == '\t' ||
+		    *ptr == '\n' ||
+		    *ptr == '\r')
+			*ptr = '\0';
+		else
+			break;
+	}
+
+	return string;
+}
+
+static size_t header_cb(char *buffer, size_t size, size_t nitems,
+			void *userdata)
+{
+	if (strstr(buffer, "Location:")) {
+		struct curl_ctx *ctx = userdata;
+		char *ptr;
+
+		ptr = strchr(buffer, ' ');
+		if (!ptr)
+			goto out;
+		ctx->accepted_location = strdup(strchomp(++ptr));
+	}
+
+out:
+	return nitems * size;
+}
+
 static void curl_ctx_free(const struct curl_ctx *ctx)
 {
 	free(ctx->location);
+	free(ctx->accepted_location);
 	free(ctx->curl_buf->buf);
 	free(ctx->curl_buf);
 	free(ctx->res_buf);
@@ -167,6 +204,14 @@ static void set_response(struct curl_ctx *ctx)
 		rootbuf = json_loads(ctx->curl_buf->buf, 0, NULL);
 	else
 		rootbuf = json_null();
+
+	if (ctx->accepted_location && ctx->status_code == ACCEPTED) {
+		json_t *loc;
+
+		loc = json_pack("{s:s}", "location", ctx->accepted_location);
+		json_object_update(rootbuf, loc);
+		json_decref(loc);
+	}
 
 	new = json_pack("{s:i, s:s, s:s, s:s, s:o}",
 			"status_code", ctx->status_code,
@@ -233,6 +278,10 @@ static int curl_perform(struct curl_ctx *ctx)
 		curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,
 				 (curl_off_t)ctx->src_size);
 	}
+
+	/* Get the returned headers */
+	curl_easy_setopt(curl, CURLOPT_HEADERDATA, ctx);
+	curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, header_cb);
 
 	curl_easy_setopt(curl, CURLOPT_USERAGENT, get_user_agent(ua));
 

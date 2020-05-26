@@ -47,6 +47,7 @@ struct curl_ctx {
 
 	const char **params;
 	char *res_buf;
+	char *accepted_location;
 
 	int (*oauther)(void);
 
