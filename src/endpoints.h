@@ -32,7 +32,7 @@ enum endpoint {
 	SA_SE_UPDATE_ANNUAL_SUMMARY,
 	SA_SE_SUBMIT_END_OF_PERIOD_STATEMENT,
 	SA_SE_GET_END_OF_PERIOD_STATEMENT,
-	/* Dividends Income */
+	/* Self-Assessment - Dividends Income */
 	SA_DI_GET_ANNUAL_SUMMARY,
 	SA_DI_UPDATE_ANNUAL_SUMMARY,
 	/* Self-Assessment - Savings Accounts */
@@ -41,10 +41,10 @@ enum endpoint {
 	SA_SA_GET_ACCOUNT,
 	SA_SA_GET_ANNUAL_SUMMARY,
 	SA_SA_UPDATE_ANNUAL_SUMMARY,
-	/* Charitable Giving */
+	/* Self-Assessment - Charitable Giving */
 	SA_CG_GET_CHARITABLE_GIVING,
 	SA_CG_UPDATE_CHARITABLE_GIVING,
-	/* Tax Calculations - EOL Jul 2020 */
+	/* Self-Assessment - Tax Calculations - EOL Jul 2020 */
 	SA_TC_CALCULATE,
 	SA_TC_GET_CALCULATION,
 	SA_TC_GET_VALIDATION_MSGS,
@@ -103,6 +103,8 @@ enum endpoint {
 	OA_EXCHANGE_AUTH_CODE,
 };
 
+extern int do_ep(enum endpoint ep, const char *api_ver, const char *file,
+		 const char *data, char **buf, ...);
 extern char *ep_make_url(enum endpoint ep, const char **params, char *url);
 
 #ifdef __cplusplus
