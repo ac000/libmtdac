@@ -44,6 +44,10 @@ enum endpoint {
 	/* Charitable Giving */
 	SA_CG_GET_CHARITABLE_GIVING,
 	SA_CG_UPDATE_CHARITABLE_GIVING,
+	/* Tax Calculations - EOL Jul 2020 */
+	SA_TC_CALCULATE,
+	SA_TC_GET_CALCULATION,
+	SA_TC_GET_VALIDATION_MSGS,
 	/* Self-Assessment - Crystallisation */
 	SA_CR_INTENT_TO_CRYSTALLISE,
 	SA_CR_CRYSTALLISE,

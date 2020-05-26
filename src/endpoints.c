@@ -67,6 +67,12 @@ static const struct _endpoint {
 	 "/self-assessment/ni/{nino}/charitable-giving/{taxYear}" },
 	{ SA_CG_UPDATE_CHARITABLE_GIVING,
 	 "/self-assessment/ni/{nino}/charitable-giving/{taxYear}" },
+	/* Tax Calculations - EOL Jul 2020 */
+	{ SA_TC_CALCULATE, "/self-assessment/ni/{nino}/calculations" },
+	{ SA_TC_GET_CALCULATION,
+	 "/self-assessment/ni/{nino}/calculations/{calculationId}" },
+	{ SA_TC_GET_VALIDATION_MSGS,
+	 "/self-assessment/ni/{nino}/calculations/{calculationId}/validation-messages" },
 	/* Self-Assessment - Crystallisation */
 	{ SA_CR_INTENT_TO_CRYSTALLISE,
 	 "/self-assessment/ni/{nino}/{taxYear}/intent-to-crystallise" },

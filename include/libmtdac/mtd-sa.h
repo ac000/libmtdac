@@ -21,6 +21,10 @@ extern int mtd_sa_cr_list_obligations(char **buf);
 extern int mtd_sa_cr_crystallise(const char *tax_year, char **buf);
 extern int mtd_sa_cr_intent_to_crystallise(const char *tax_year, char **buf);
 
+extern int mtd_sa_tc_get_validation_msgs(const char *cid, char **buf);
+extern int mtd_sa_tc_get_calculation(const char *cid, char **buf);
+extern int mtd_sa_tc_calculate(const char *src_file, char **buf);
+
 extern int mtd_sa_cg_update_charitable_giving(const char *src_file,
 					      const char *tax_year,
 					      char **buf);

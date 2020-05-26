@@ -59,6 +59,52 @@ int mtd_sa_cr_intent_to_crystallise(const char *tax_year, char **buf)
 }
 
 /*
+ * [GET ]
+ * /self-assessment/ni/{nino}/calculations/{calculationId}/validation-messages
+ */
+int mtd_sa_tc_get_validation_msgs(const char *cid, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+	const char *params[] = { cid };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_TC_GET_VALIDATION_MSGS;
+	ctx.params = params;
+
+	return do_get(&ctx, buf);
+}
+
+/*
+ * [GET ]
+ * /self-assessment/ni/{nino}/calculations/{calculationId}
+ */
+int mtd_sa_tc_get_calculation(const char *cid, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+	const char *params[] = { cid };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_TC_GET_CALCULATION;
+	ctx.params = params;
+
+	return do_get(&ctx, buf);
+}
+
+/*
+ * [POST]
+ * /self-assessment/ni/{nino}/calculations
+ */
+int mtd_sa_tc_calculate(const char *src_file, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_TC_CALCULATE;
+
+	return do_post(&ctx, src_file, NULL, buf);
+}
+
+/*
  * [PUT ]
  * /self-assessment/ni/{nino}/charitable-giving/{taxYear}
  */
