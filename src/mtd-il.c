@@ -16,7 +16,7 @@
  * [PUT ]
  * /individuals/losses/{nino}/loss-claims/order
  */
-int mtd_il_lc_update_loss(const char *src_file, char **buf)
+int mtd_il_lc_update_loss_order(const char *src_file, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
 

@@ -359,9 +359,9 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
     int mtd_il_lc_update_loss_type(const char *src_file, const char *cid,
                                    char **buf)
 
-#### mtd\_il\_lc\_update\_loss
+#### mtd\_il\_lc\_update\_loss\_order
 
-    int mtd_il_lc_update_loss(const char *src_file, char **buf)
+    int mtd_il_lc_update_loss_order(const char *src_file, char **buf)
 
 
 ### Make Tax Digital - National Insurance API functions
