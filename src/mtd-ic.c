@@ -38,7 +38,7 @@ int mtd_ic_get_end_of_year_est(const char *cid, char **buf)
 	const char *params[] = { cid };
 
 	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IC_GET_EOY_EST;;
+	ctx.endpoint = IC_GET_EOY_EST;
 	ctx.params = params;
 
 	return do_get(&ctx, buf);
