@@ -6,9 +6,10 @@
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
 
+#include <stddef.h>
+
 #include "mtd-test-cu.h"		/* for default (public) visibility */
 #include "endpoints.h"
-#include "curler.h"
 
 #define API_VER			"Accept: application/vnd.hmrc.1.0+json"
 
@@ -18,12 +19,8 @@
  */
 int mtd_test_cu_list_services(char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = TEST_CU_LIST_SERVICES;
-
-	return do_get(&ctx, buf);
+	return do_ep(TEST_CU_LIST_SERVICES, API_VER,
+		     NULL, NULL, buf, (char *)NULL);
 }
 
 /*
@@ -32,12 +29,8 @@ int mtd_test_cu_list_services(char **buf)
  */
 int mtd_test_cu_create_agent(const char *src_file, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = TEST_CU_CREATE_AGENT;
-
-	return do_post(&ctx, src_file, NULL, buf);
+	return do_ep(TEST_CU_CREATE_AGENT, API_VER,
+		     src_file, NULL, buf, (char *)NULL);
 }
 
 /*
@@ -46,12 +39,8 @@ int mtd_test_cu_create_agent(const char *src_file, char **buf)
  */
 int mtd_test_cu_create_organisation(const char *src_file, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = TEST_CU_CREATE_ORGANISATION;
-
-	return do_post(&ctx, src_file, NULL, buf);
+	return do_ep(TEST_CU_CREATE_ORGANISATION, API_VER,
+		     src_file, NULL, buf, (char *)NULL);
 }
 
 /*
@@ -60,10 +49,6 @@ int mtd_test_cu_create_organisation(const char *src_file, char **buf)
  */
 int mtd_test_cu_create_individual(const char *src_file, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = TEST_CU_CREATE_INDIVIDUAL;
-
-	return do_post(&ctx, src_file, NULL, buf);
+	return do_ep(TEST_CU_CREATE_INDIVIDUAL, API_VER,
+		     src_file, NULL, buf, (char *)NULL);
 }
