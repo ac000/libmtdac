@@ -240,7 +240,7 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 #### mtd\_sa\_cr\_list\_obligations
 
-    int mtd_sa_cr_list_obligations(char **buf)
+    int mtd_sa_cr_list_obligations(const char *query_string, char **buf)
 
 
 ### Make Tax Digital - Self-Assessment Accounts API functions [test-only]

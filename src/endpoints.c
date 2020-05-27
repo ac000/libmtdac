@@ -168,8 +168,8 @@ static const struct _endpoint {
 	},
 	{
 		SA_CR_LIST_OBLIGATIONS,
-		"/self-assessment/ni/{nino}/crystallisation/obligations",
-		M_POST
+		"/self-assessment/ni/{nino}/crystallisation/obligations/{query_params}",
+		M_GET
 	},
 
 	/* Self-Assessment Accounts */

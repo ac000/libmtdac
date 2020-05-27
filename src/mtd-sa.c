@@ -13,17 +13,19 @@
 #define API_VER			"Accept: application/vnd.hmrc.2.0+json"
 
 /*
- * [POST]
- * /self-assessment/ni/{nino}/crystallisation/obligations
+ * [GET ]
+ * /self-assessment/ni/{nino}/crystallisation/obligations?from=YYYY-MM-DD&to=YYYY-MM-DD
  */
-int mtd_sa_cr_list_obligations(char **buf)
+int mtd_sa_cr_list_obligations(const char *query_string, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
+	const char *params[] = { query_string };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = SA_CR_LIST_OBLIGATIONS;
+	ctx.params = params;
 
-	return do_post(&ctx, NULL, NULL, buf);
+	return do_get(&ctx, buf);
 }
 
 /*
