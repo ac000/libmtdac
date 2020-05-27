@@ -6,9 +6,10 @@
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
 
+#include <stddef.h>
+
 #include "mtd-saac.h"		/* for default (public) visibility */
 #include "endpoints.h"
-#include "curler.h"
 
 #define API_VER			"Accept: application/vnd.hmrc.1.0+json"
 
@@ -18,14 +19,8 @@
  */
 int mtd_saac_get_payment(const char *pyid, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { pyid };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = SAAC_GET_PAYMENT;
-	ctx.params = params;
-
-	return do_get(&ctx, buf);
+	return do_ep(SAAC_GET_PAYMENT, API_VER,
+		     NULL, NULL, buf, pyid, (char *)NULL);
 }
 
 /*
@@ -34,14 +29,8 @@ int mtd_saac_get_payment(const char *pyid, char **buf)
  */
 int mtd_saac_list_payments(const char *query_string, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { query_string };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = SAAC_LIST_PAYMENTS;
-	ctx.params = params;
-
-	return do_get(&ctx, buf);
+	return do_ep(SAAC_LIST_PAYMENTS, API_VER,
+		     NULL, NULL, buf, query_string, (char *)NULL);
 }
 
 /*
@@ -50,14 +39,8 @@ int mtd_saac_list_payments(const char *query_string, char **buf)
  */
 int mtd_saac_get_charge(const char *trid, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { trid };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = SAAC_GET_CHARGE;
-	ctx.params = params;
-
-	return do_get(&ctx, buf);
+	return do_ep(SAAC_GET_CHARGE, API_VER,
+		     NULL, NULL, buf, trid, (char *)NULL);
 }
 
 /*
@@ -66,14 +49,8 @@ int mtd_saac_get_charge(const char *trid, char **buf)
  */
 int mtd_saac_list_charges(const char *query_string, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { query_string };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = SAAC_LIST_CHARGES;
-	ctx.params = params;
-
-	return do_get(&ctx, buf);
+	return do_ep(SAAC_LIST_CHARGES, API_VER,
+		     NULL, NULL, buf, query_string, (char *)NULL);
 }
 
 /*
@@ -82,14 +59,8 @@ int mtd_saac_list_charges(const char *query_string, char **buf)
  */
 int mtd_saac_get_transaction(const char *trid, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { trid };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = SAAC_GET_TRANSACTION;
-	ctx.params = params;
-
-	return do_get(&ctx, buf);
+	return do_ep(SAAC_GET_TRANSACTION, API_VER,
+		     NULL, NULL, buf, trid, (char *)NULL);
 }
 
 /*
@@ -98,14 +69,8 @@ int mtd_saac_get_transaction(const char *trid, char **buf)
  */
 int mtd_saac_list_transactions(const char *query_string, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { query_string };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = SAAC_LIST_TRANSACTIONS;
-	ctx.params = params;
-
-	return do_get(&ctx, buf);
+	return do_ep(SAAC_LIST_TRANSACTIONS, API_VER,
+		     NULL, NULL, buf, query_string, (char *)NULL);
 }
 
 /*
@@ -114,10 +79,6 @@ int mtd_saac_list_transactions(const char *query_string, char **buf)
  */
 int mtd_saac_get_balance(char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = SAAC_GET_BALANCE;
-
-	return do_get(&ctx, buf);
+	return do_ep(SAAC_GET_BALANCE, API_VER,
+		     NULL, NULL, buf, (char *)NULL);
 }
