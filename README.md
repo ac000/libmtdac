@@ -112,6 +112,10 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     int mtd_sa_se_list_employments(char **buf)
 
+#### mtd\_sa\_se\_create\_employment
+
+    int mtd_sa_se_create_employment(const char *src_file, char **buf)
+
 #### mtd\_sa\_se\_get\_employment
 
     int mtd_sa_se_get_employment(const char *seid, char **buf)

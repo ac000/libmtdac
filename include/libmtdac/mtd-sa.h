@@ -65,6 +65,7 @@ extern int mtd_sa_se_create_period(const char *src_file, const char *seid,
 extern int mtd_sa_se_list_periods(const char *seid, char **buf);
 extern int mtd_sa_se_list_obligations(const char *seid, char **buf);
 extern int mtd_sa_se_get_employment(const char *seid, char **buf);
+extern int mtd_sa_se_create_employment(const char *src_file, char **buf);
 extern int mtd_sa_se_list_employments(char **buf);
 
 #pragma GCC visibility pop

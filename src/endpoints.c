@@ -37,6 +37,11 @@ static const struct _endpoint {
 		M_GET
 	},
 	{
+		SA_SE_CREATE_SELF_EMPLOYMENT,
+		"/self-assessment/ni/{nino}/self-employments",
+		M_POST
+	},
+	{
 		SA_SE_GET_SELF_EMPLOYMENT,
 		"/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}",
 		M_GET

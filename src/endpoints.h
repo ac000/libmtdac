@@ -22,6 +22,7 @@ extern "C" {
 enum endpoint {
 	/* Self-Assessment - Self-Employment */
 	SA_SE_LIST_SELF_EMPLOYMENTS = 0,
+	SA_SE_CREATE_SELF_EMPLOYMENT,
 	SA_SE_GET_SELF_EMPLOYMENT,
 	SA_SE_LIST_OBLIGATIONS,
 	SA_SE_LIST_PERIODS,

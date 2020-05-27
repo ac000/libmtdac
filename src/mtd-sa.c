@@ -420,6 +420,20 @@ int mtd_sa_se_get_employment(const char *seid, char **buf)
 }
 
 /*
+ * [POST]
+ * /self-assessment/ni/{nino}/self-employments
+ */
+int mtd_sa_se_create_employment(const char *src_file, char **buf)
+{
+	struct curl_ctx ctx = { 0 };
+
+	ctx.mtd_api_ver = API_VER;
+	ctx.endpoint = SA_SE_CREATE_SELF_EMPLOYMENT;
+
+	return do_post(&ctx, src_file, NULL, buf);
+}
+
+/*
  * [GET ]
  * /self-assessment/ni/{nino}/self-employments
  */
