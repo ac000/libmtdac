@@ -6,9 +6,10 @@
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
 
+#include <stddef.h>
+
 #include "mtd-il.h"		/* for default (public) visibility */
 #include "endpoints.h"
-#include "curler.h"
 
 #define API_VER			"Accept: application/vnd.hmrc.1.0+json"
 
@@ -18,12 +19,8 @@
  */
 int mtd_il_lc_update_loss_order(const char *src_file, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IL_LC_UPDATE_LOSS_ORDER;
-
-	return do_put(&ctx, src_file, NULL, buf);
+	return do_ep(IL_LC_UPDATE_LOSS_ORDER, API_VER,
+		     src_file, NULL, buf, (char *)NULL);
 }
 
 /*
@@ -33,14 +30,8 @@ int mtd_il_lc_update_loss_order(const char *src_file, char **buf)
 int mtd_il_lc_update_loss_type(const char *src_file, const char *cid,
 			       char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { cid };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IL_LC_UPDATE_LOSS_TYPE;
-	ctx.params = params;
-
-	return do_post(&ctx, src_file, NULL, buf);
+	return do_ep(IL_LC_UPDATE_LOSS_TYPE, API_VER,
+		     src_file, NULL, buf, cid, (char *)NULL);
 }
 
 /*
@@ -49,14 +40,8 @@ int mtd_il_lc_update_loss_type(const char *src_file, const char *cid,
  */
 int mtd_il_lc_delete_loss(const char *cid, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { cid };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IL_LC_DELETE_LOSS;
-	ctx.params = params;
-
-	return do_delete(&ctx, buf);
+	return do_ep(IL_LC_DELETE_LOSS, API_VER,
+		     NULL, NULL, buf, cid, (char *)NULL);
 }
 
 /*
@@ -65,14 +50,8 @@ int mtd_il_lc_delete_loss(const char *cid, char **buf)
  */
 int mtd_il_lc_get_loss(const char *cid, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { cid };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IL_LC_GET_LOSS;
-	ctx.params = params;
-
-	return do_get(&ctx, buf);
+	return do_ep(IL_LC_GET_LOSS, API_VER,
+		     NULL, NULL, buf, cid, (char *)NULL);
 }
 
 /*
@@ -81,12 +60,8 @@ int mtd_il_lc_get_loss(const char *cid, char **buf)
  */
 int mtd_il_lc_create_loss(const char *src_file, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IL_LC_CREATE_LOSS;
-
-	return do_post(&ctx, src_file, NULL, buf);
+	return do_ep(IL_LC_CREATE_LOSS, API_VER,
+		     src_file, NULL, buf, (char *)NULL);
 }
 
 /*
@@ -101,14 +76,8 @@ int mtd_il_lc_create_loss(const char *src_file, char **buf)
  */
 int mtd_il_lc_list_loses(const char *query_string, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { query_string };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IL_LC_LIST_LOSES;
-	ctx.params = params;
-
-	return do_get(&ctx, buf);
+	return do_ep(IL_LC_LIST_LOSES, API_VER,
+		     NULL, NULL, buf, query_string, (char *)NULL);
 }
 
 /*
@@ -118,14 +87,8 @@ int mtd_il_lc_list_loses(const char *query_string, char **buf)
 int mtd_il_bf_update_loss_amnt(const char *src_file, const char *lid,
 			       char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { lid };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IL_BF_UPDATE_LOSS_AMNT;
-	ctx.params = params;
-
-	return do_post(&ctx, src_file, NULL, buf);
+	return do_ep(IL_BF_UPDATE_LOSS_AMNT, API_VER,
+		     src_file, NULL, buf, lid, (char *)NULL);
 }
 
 /*
@@ -134,14 +97,8 @@ int mtd_il_bf_update_loss_amnt(const char *src_file, const char *lid,
  */
 int mtd_il_bf_delete_loss(const char *lid, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { lid };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IL_BF_DELETE_LOSS;
-	ctx.params = params;
-
-	return do_delete(&ctx, buf);
+	return do_ep(IL_BF_DELETE_LOSS, API_VER,
+		     NULL, NULL, buf, lid, (char *)NULL);
 }
 
 /*
@@ -150,14 +107,8 @@ int mtd_il_bf_delete_loss(const char *lid, char **buf)
  */
 int mtd_il_bf_get_loss(const char *lid, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { lid };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IL_BF_GET_LOSS;
-	ctx.params = params;
-
-	return do_get(&ctx, buf);
+	return do_ep(IL_BF_GET_LOSS, API_VER,
+		     NULL, NULL, buf, lid, (char *)NULL);
 }
 
 /*
@@ -166,12 +117,8 @@ int mtd_il_bf_get_loss(const char *lid, char **buf)
  */
 int mtd_il_bf_create_loss(const char *src_file, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IL_BF_CREATE_LOSS;
-
-	return do_post(&ctx, src_file, NULL, buf);
+	return do_ep(IL_BF_CREATE_LOSS, API_VER,
+		     src_file, NULL, buf, (char *)NULL);
 }
 
 /*
@@ -186,12 +133,6 @@ int mtd_il_bf_create_loss(const char *src_file, char **buf)
  */
 int mtd_il_bf_list_loses(const char *query_string, char **buf)
 {
-	struct curl_ctx ctx = { 0 };
-	const char *params[] = { query_string };
-
-	ctx.mtd_api_ver = API_VER;
-	ctx.endpoint = IL_BF_LIST_LOSES;
-	ctx.params = params;
-
-	return do_get(&ctx, buf);
+	return do_ep(IL_BF_LIST_LOSES, API_VER,
+		     NULL, NULL, buf, query_string, (char *)NULL);
 }
