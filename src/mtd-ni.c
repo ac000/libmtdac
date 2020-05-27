@@ -6,9 +6,10 @@
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
 
+#include <stddef.h>
+
 #include "mtd-ni.h"		/* for default (public) visibility */
 #include "endpoints.h"
-#include "curler.h"
 
 #define API_VER			"Accept: application/vnd.hmrc.1.1+json"
 
