@@ -99,10 +99,10 @@ int mtd_il_lc_create_loss(const char *src_file, char **buf)
  *
  *	typeOfLoss={self-employment,uk-property-fhl,uk-property-non-fhl}
  */
-int mtd_il_lc_list_loses(const char *query_stirng, char **buf)
+int mtd_il_lc_list_loses(const char *query_string, char **buf)
 {
 	struct curl_ctx ctx = { 0 };
-	const char *params[] = { query_stirng };
+	const char *params[] = { query_string };
 
 	ctx.mtd_api_ver = API_VER;
 	ctx.endpoint = IL_LC_LIST_LOSES;

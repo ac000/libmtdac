@@ -344,7 +344,7 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 #### mtd\_il\_lc\_list\_loses
 
-    int mtd_il_lc_list_loses(const char *query_stirng, char **buf)
+    int mtd_il_lc_list_loses(const char *query_string, char **buf)
 
 #### mtd\_il\_lc\_create\_loss
 

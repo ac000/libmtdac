@@ -23,7 +23,7 @@ extern int mtd_il_lc_update_loss_type(const char *src_file, const char *cid,
 extern int mtd_il_lc_delete_loss(const char *cid, char **buf);
 extern int mtd_il_lc_get_loss(const char *cid, char **buf);
 extern int mtd_il_lc_create_loss(const char *src_file, char **buf);
-extern int mtd_il_lc_list_loses(const char *query_stirng, char **buf);
+extern int mtd_il_lc_list_loses(const char *query_string, char **buf);
 extern int mtd_il_bf_update_loss_amnt(const char *src_file, const char *lid,
 				      char **buf);
 extern int mtd_il_bf_delete_loss(const char *lid, char **buf);
