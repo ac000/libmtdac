@@ -18,7 +18,6 @@
  */
 int mtd_sa_cr_list_obligations(const char *query_string, char **buf)
 {
-	printf("query_string : %s\n", query_string);
 	return do_ep(SA_CR_LIST_OBLIGATIONS, API_VER,
 		     NULL, NULL, buf, query_string, (char *)NULL);
 }
