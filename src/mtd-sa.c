@@ -6,9 +6,10 @@
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
 
+#include <stddef.h>
+
 #include "mtd-sa.h"		/* for default (public) visibility */
 #include "endpoints.h"
-#include "curler.h"
 
 #define API_VER			"Accept: application/vnd.hmrc.2.0+json"
 
@@ -255,7 +256,7 @@ int mtd_sa_se_create_period(const char *src_file, const char *seid, char **buf)
 int mtd_sa_se_list_periods(const char *seid, char **buf)
 {
 	return do_ep(SA_SE_LIST_PERIODS, API_VER,
-			NULL, NULL, buf, seid, (char *)NULL);
+		     NULL, NULL, buf, seid, (char *)NULL);
 }
 
 /*
