@@ -17,6 +17,7 @@
     - [Individual Loses - Brought Forward](#individual-loses---brought-forward)
     - [Individual Loses - Loss Claims](#individual-loses---loss-claims)
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
+  * [Make Tax Digital - Business Income Source Summary API functions](#make-tax-digital---business-income-source-summary-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
   * [Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]](#make-tax-digital---test-fraud-prevention-headers-api-functions-test-only)
 3. [Build it](#build-it)
@@ -459,6 +460,19 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     int mtd_ni_get_annual_summary(const char *utr, const char *tax_year,
                                   char **buf)
+
+
+### Make Tax Digital - Business Income Source Summary API functions
+
+    #include <libmtdac/mtd-biss.h>
+
+#### mtd\_biss\_get\_self\_employment
+
+    int mtd_biss_get_self_employment(const char *query_string, char **buf)
+
+#### mtd\_biss\_get\_property
+
+    int mtd_biss_get_property(const char *query_string, char **buf)
 
 
 ### Make Tax Digital - Create Test User API functions [test-only]

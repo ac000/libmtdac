@@ -402,6 +402,18 @@ static const struct _endpoint {
 		M_GET
 	},
 
+	/* Business Income Source Summary */
+	{
+		BISS_GET_SELF_EMPLOYMNET,
+		"/individuals/self-assessment/income-summary/{nino}/self-employment/{query_params}",
+		M_GET,
+	},
+	{
+		BISS_GET_PROPERTY,
+		"/individuals/self-assessment/income-summary/{nino}/uk-property/{query_params}",
+		M_GET,
+	},
+
 	/* Create Test User */
 	{
 		TEST_CU_CREATE_INDIVIDUAL,

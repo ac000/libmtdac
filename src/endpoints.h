@@ -108,6 +108,10 @@ enum endpoint {
 	/* National Insurance */
 	NI_GET_ANNUAL_SUMMARY,
 
+	/* Business Income Source Summary */
+	BISS_GET_SELF_EMPLOYMNET,
+	BISS_GET_PROPERTY,
+
 	/* Create Test User */
 	TEST_CU_CREATE_INDIVIDUAL,
 	TEST_CU_CREATE_ORGANISATION,
