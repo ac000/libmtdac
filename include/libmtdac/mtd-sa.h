@@ -43,6 +43,35 @@ extern int mtd_sa_di_update_annual_summary(const char *src_file,
 					   const char *tax_year, char **buf);
 extern int mtd_sa_di_get_annual_summary(const char *tax_year, char **buf);
 
+extern int mtd_sa_pb_get_end_of_period_statement(const char *query_string,
+						 char **buf);
+extern int mtd_sa_pb_submit_end_of_period_statement(const char *src_file,
+						    const char *start,
+						    const char *end,
+						    char **buf);
+extern int mtd_sa_pb_update_fhl_annual_summary(const char *src_file,
+					       const char *tax_year,
+					       char **buf);
+extern int mtd_sa_pb_get_fhl_annual_summary(const char *tax_year, char **buf);
+extern int mtd_sa_pb_update_fhl_period(const char *src_file, const char *pid,
+				       char **buf);
+extern int mtd_sa_pb_get_fhl_period(const char *pid, char **buf);
+extern int mtd_sa_pb_create_fhl_period(const char *src_file, char **buf);
+extern int mtd_sa_pb_list_fhl_periods(char **buf);
+extern int mtd_sa_pb_update_non_fhl_annual_summary(const char *src_file,
+						   const char *tax_year,
+						   char **buf);
+extern int mtd_sa_pb_get_non_fhl_annual_summary(const char *tax_year,
+						char **buf);
+extern int mtd_sa_pb_update_non_fhl_period(const char *src_file,
+					   const char *pid, char **buf);
+extern int mtd_sa_pb_get_non_fhl_period(const char *pid, char **buf);
+extern int mtd_sa_pb_create_non_fhl_period(const char *src_file, char **buf);
+extern int mtd_sa_pb_list_non_fhl_periods(char **buf);
+extern int mtd_sa_pb_list_obligations(char **buf);
+extern int mtd_sa_pb_create_property(const char *src_file, char **buf);
+extern int mtd_sa_pb_get_property(char **buf);
+
 extern int mtd_sa_se_get_end_of_period_statement(const char *seid,
 						 const char *query_string,
 						 char **buf);

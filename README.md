@@ -5,6 +5,7 @@
   * [Initialisation functions](#initialisation-functions)
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
     - [Self-Assessment - Self-Employment](#self-assessment---self-employment)
+    - [Self-Assessment - UK Property Business](#self-assessment---uk-property-business)
     - [Self-Assessment - Dividends Income](#self-assessment---dividends-income)
     - [Self-Assessment - Savings Accounts](#self-assessment---savings-accounts)
     - [Self-Assessment - Charitable Giving](#self-assessment---charitable-giving)
@@ -167,6 +168,88 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
     int mtd_sa_se_get_end_of_period_statement(const char *seid,
                                               const char *query_string,
                                               char **buf)
+
+#### Self-Assessment - UK Property Business
+
+#### mtd\_sa\_pb\_get\_property
+
+    int mtd_sa_pb_get_property(char **buf)
+
+#### mtd\_sa\_pb\_create\_property
+
+    int mtd_sa_pb_create_property(const char *src_file, char **buf)
+
+#### mtd\_sa\_pb\_list\_obligations
+
+    int mtd_sa_pb_list_obligations(char **buf)
+
+#### mtd\_sa\_pb\_list\_non\_fhl\_periods
+
+    int mtd_sa_pb_list_non_fhl_periods(char **buf)
+
+#### mtd\_sa\_pb\_create\_non\_fhl\_period
+
+    int mtd_sa_pb_create_non_fhl_period(const char *src_file, char **buf)
+
+#### mtd\_sa\_pb\_get\_non\_fhl\_period
+
+    int mtd_sa_pb_get_non_fhl_period(const char *pid, char **buf)
+
+#### mtd\_sa\_pb\_update\_non\_fhl\_period
+
+    int mtd_sa_pb_update_non_fhl_period(const char *src_file,
+                                        const char *pid, char **buf)
+
+#### mtd\_sa\_pb\_get\_non\_fhl\_annual\_summary
+
+    int mtd_sa_pb_get_non_fhl_annual_summary(const char *tax_year,
+                                             char **buf)
+
+#### mtd\_sa\_pb\_update\_non\_fhl\_annual\_summary
+
+    int mtd_sa_pb_update_non_fhl_annual_summary(const char *src_file,
+                                                const char *tax_year,
+                                                char **buf)
+
+#### mtd\_sa\_pb\_list\_fhl\_periods
+
+    int mtd_sa_pb_list_fhl_periods(char **buf)
+
+#### mtd\_sa\_pb\_create\_fhl\_period
+
+    int mtd_sa_pb_create_fhl_period(const char *src_file, char **buf)
+
+#### mtd\_sa\_pb\_get\_fhl\_period
+
+    int mtd_sa_pb_get_fhl_period(const char *pid, char **buf)
+
+#### mtd\_sa\_pb\_update\_fhl\_period
+
+    int mtd_sa_pb_update_fhl_period(const char *src_file, const char *pid,
+                                    char **buf)
+
+#### mtd\_sa\_pb\_get\_fhl\_annual\_summary
+
+    int mtd_sa_pb_get_fhl_annual_summary(const char *tax_year, char **buf)
+
+#### mtd\_sa\_pb\_update\_fhl\_annual\_summary
+
+    int mtd_sa_pb_update_fhl_annual_summary(const char *src_file,
+                                            const char *tax_year,
+                                            char **buf)
+
+#### mtd\_sa\_pb\_submit\_end\_of\_period\_statement
+
+    int mtd_sa_pb_submit_end_of_period_statement(const char *src_file,
+                                                 const char *start,
+                                                 const char *end,
+                                                 char **buf)
+
+#### mtd\_sa\_pb\_get\_end\_of\_period\_statement
+
+    int mtd_sa_pb_get_end_of_period_statement(const char *query_string,
+                                              char **buf)
+
 
 #### Self-Assessment - Dividends Income
 
