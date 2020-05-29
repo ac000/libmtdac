@@ -93,50 +93,11 @@ static int generate_device_id(void)
 	return 0;
 }
 
-static int check_files(void)
-{
-	char path[PATH_MAX];
-	struct stat sb;
-	int err;
-
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
-		 "oauth.json");
-	err = stat(path, &sb);
-	if (err) {
-		logger(MTD_LOG_ERR, "%s: can't open %s\n", __func__, path);
-		return -1;
-	}
-
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
-		 "config.json");
-	err = stat(path, &sb);
-	if (err) {
-		logger(MTD_LOG_ERR, "%s: can't open %s\n", __func__, path);
-		return -1;
-	}
-
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
-		 "nino.json");
-	err = stat(path, &sb);
-	if (err) {
-		logger(MTD_LOG_ERR, "%s: can't open %s\n", __func__, path);
-		return -1;
-	}
-
-	return 0;
-}
-
 int mtd_init(int flags)
 {
-	int err;
-
 	/* Check for unknown flags */
 	if (flags & ~(MTD_OPT_ALL))
 		return MTD_ERR_UNKNOWN_FLAGS;
-
-	err = check_files();
-	if (err)
-		return MTD_ERR_MISSING_CONFIG;
 
 	mtd_opts = flags;
 

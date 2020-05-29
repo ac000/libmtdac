@@ -52,7 +52,6 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 	    MTD_ERR_OS,
 	    MTD_ERR_REQUEST,
 	    MTD_ERR_CURL,
-	    MTD_ERR_MISSING_CONFIG,
 	    MTD_ERR_NEEDS_AUTHORISATION,
 	    MTD_ERR_UNKNOWN_FLAGS,
     };
