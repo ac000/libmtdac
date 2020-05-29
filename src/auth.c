@@ -27,6 +27,7 @@ char *load_token(const char *which, enum file_type type)
 	const char *file;
 	json_t *root;
 	json_t *tok_obj;
+	json_error_t error;
 
 	switch (type) {
 	case FT_AUTH:
@@ -42,9 +43,12 @@ char *load_token(const char *which, enum file_type type)
 
 	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"), file);
 
-	root = json_load_file(path, 0, NULL);
-	if (!root)
+	root = json_load_file(path, 0, &error);
+	if (!root) {
+		logger(MTD_LOG_ERR, "%s: json_load_file: %s\n", __func__,
+		       error.text);
 		return NULL;
+	}
 	tok_obj = json_object_get(root, which);
 	if (!tok_obj)
 		return NULL;
