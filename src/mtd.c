@@ -61,7 +61,7 @@ static int generate_device_id(void)
 	json_t *new;
 	int err;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"),
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
 		 "uuid.json");
 
 	err = stat(path, &sb);
@@ -99,7 +99,7 @@ static int check_files(void)
 	struct stat sb;
 	int err;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"),
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
 		 "oauth.json");
 	err = stat(path, &sb);
 	if (err) {
@@ -107,7 +107,7 @@ static int check_files(void)
 		return -1;
 	}
 
-	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"),
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
 		 "config.json");
 	err = stat(path, &sb);
 	if (err) {
@@ -165,7 +165,7 @@ int mtd_init_auth(void)
 	pid_t child_pid;
 	int err;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"),
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
 		 "oauth.json");
 
 	printf("You need to authorise mtdac to have read/write access to your "
@@ -238,7 +238,7 @@ int mtd_init_config(void)
 	json_t *new;
 	int err;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"),
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
 		 "config.json");
 
 	printf("Enter your 'client_id'     > ");

@@ -16,7 +16,7 @@
 #include <jansson.h>
 
 #include "auth.h"
-#include "mtd.h"
+#include "mtd-priv.h"
 #include "curler.h"
 #include "logger.h"
 
@@ -27,7 +27,7 @@ char *load_token(const char *which, enum file_type type)
 	json_t *root;
 	json_t *tok_obj;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"),
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
 		 type == FT_AUTH ? "oauth.json" : "config.json");
 
 	root = json_load_file(path, 0, NULL);
@@ -67,7 +67,7 @@ int refresh_access_token(void)
 		goto out_free;
 	}
 
-	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"),
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
 		 "oauth.json");
 
 	array = json_loads(buf, 0, NULL);

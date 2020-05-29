@@ -346,7 +346,7 @@ static char *get_device_id(char *buf)
 	json_t *root;
 	json_t *did;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"),
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
 		 "uuid.json");
 	root = json_load_file(path, 0, NULL);
 	if (!root)

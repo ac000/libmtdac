@@ -17,8 +17,6 @@ extern "C" {
 #define LIBMTDAC_MINOR_VERSION		6
 #define LIBMTDAC_MICRO_VERSION		0
 
-#define MTD_CONFIG_DIR_FMT		"%s/.config/libmtdac/%s"
-
 /* MTD_OPT_* - option flags for mtd_init() */
 #define MTD_OPT_LOG_ERR				0x00000001
 #define MTD_OPT_LOG_INFO			0x00000002
