@@ -93,6 +93,28 @@ static int generate_device_id(void)
 	return 0;
 }
 
+static int check_config_dir(void)
+{
+	char path[PATH_MAX];
+	char errbuf[129];
+	struct stat sb;
+	int err;
+
+	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"));
+	err = stat(path, &sb);
+	if (!err)
+		return 0;
+
+	err = mkdir(path, 0777);
+	if (!err)
+		return 0;
+
+	logger(MTD_LOG_ERR, "%s: mkdir %s: %s\n", __func__, path,
+	       strerror_r(errno, errbuf, sizeof(errbuf)));
+
+	return -1;
+}
+
 int mtd_init(int flags)
 {
 	/* Check for unknown flags */
@@ -107,6 +129,8 @@ int mtd_init(int flags)
 		mtd_log_level = MTD_LOG_DEBUG;
 
 	curl_global_init(CURL_GLOBAL_ALL);
+
+	check_config_dir();
 
 	return MTD_ERR_NONE;
 }

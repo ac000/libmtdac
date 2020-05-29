@@ -15,7 +15,8 @@ extern "C" {
 
 #define BASE_URL		"https://test-api.service.hmrc.gov.uk"
 
-#define MTD_CONFIG_FMT		"%s/.config/libmtdac/%s"
+#define MTD_CONFIG_DIR_FMT	"%s/.config/libmtdac"
+#define MTD_CONFIG_FMT		MTD_CONFIG_DIR_FMT "/%s"
 
 enum app_conn_type {
 	MTD_ACT_MOBILE_APP_DIRECT = 0,
