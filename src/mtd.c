@@ -115,6 +115,14 @@ static int check_files(void)
 		return -1;
 	}
 
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
+		 "nino.json");
+	err = stat(path, &sb);
+	if (err) {
+		logger(MTD_LOG_ERR, "%s: can't open %s\n", __func__, path);
+		return -1;
+	}
+
 	return 0;
 }
 
@@ -228,12 +236,40 @@ out_free:
 	return err;
 }
 
+int mtd_init_nino(void)
+{
+	char path[PATH_MAX];
+	char nino[41];
+	char *s;
+	json_t *new;
+
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
+		 "nino.json");
+
+	printf("Enter your 'NINO'          > ");
+	s = fgets(nino, sizeof(nino) - 1, stdin);
+	if (!s)
+		return MTD_ERR_OS;
+	nino[strlen(nino) - 1] = '\0';
+
+	new = json_pack("{s:s}", "nino", nino);
+	json_dump_file(new, path, JSON_INDENT(4));
+
+	printf("\n");
+	printf("Wrote nino.json to %s\n\n", path);
+	json_dumpf(new, stdout, JSON_INDENT(4));
+	printf("\n");
+
+	json_decref(new);
+
+	return MTD_ERR_NONE;
+}
+
 int mtd_init_config(void)
 {
 	char path[PATH_MAX];
 	char client_id[41];
 	char client_secret[41];
-	char nino[41];
 	char *s;
 	json_t *new;
 	int err;
@@ -253,14 +289,8 @@ int mtd_init_config(void)
 		return MTD_ERR_OS;
 	client_secret[strlen(client_secret) - 1] = '\0';
 
-	printf("Enter your 'NINO'          > ");
-	s = fgets(nino, sizeof(nino) - 1, stdin);
-	if (!s)
-		return MTD_ERR_OS;
-	nino[strlen(nino) - 1] = '\0';
-
-	new = json_pack("{s:s, s:s, s:s}", "client_id", client_id,
-			"client_secret", client_secret, "nino", nino);
+	new = json_pack("{s:s, s:s}", "client_id", client_id,
+			"client_secret", client_secret);
 	json_dump_file(new, path, JSON_INDENT(4));
 
 	printf("\n");

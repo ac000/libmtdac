@@ -499,7 +499,7 @@ int do_ep(enum endpoint ep, const char *api_ver, const char *file,
 
 char *ep_make_url(enum endpoint ep, const char **params, char *url)
 {
-	char *nino = load_token("nino", FT_CONFIG);
+	char *nino = load_token("nino", FT_NINO);
 	char *string;
 	char *ptr;
 	int len;

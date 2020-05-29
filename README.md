@@ -99,6 +99,10 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     int mtd_init_config(void)
 
+#### mtd\_init\_nino - initialise nino.json
+
+    int mtd_init_nino(void)
+
 #### mtd\_deinit - de-initialise the library
 
     void mtd_deinit(void)

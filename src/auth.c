@@ -24,11 +24,23 @@ char *load_token(const char *which, enum file_type type)
 {
 	char path[PATH_MAX];
 	char *token;
+	const char *file;
 	json_t *root;
 	json_t *tok_obj;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
-		 type == FT_AUTH ? "oauth.json" : "config.json");
+	switch (type) {
+	case FT_AUTH:
+		file = "oauth.json";
+		break;
+	case FT_CONFIG:
+		file = "config.json";
+		break;
+	case FT_NINO:
+		file = "nino.json";
+		break;
+	}
+
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"), file);
 
 	root = json_load_file(path, 0, NULL);
 	if (!root)

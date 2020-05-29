@@ -16,6 +16,7 @@ extern "C" {
 enum file_type {
 	FT_AUTH = 0,
 	FT_CONFIG,
+	FT_NINO,
 };
 
 extern char *load_token(const char *which, enum file_type type);

@@ -67,6 +67,7 @@ extern int mtd_init(int flags);
 extern void mtd_deinit(void);
 extern int mtd_init_auth(void);
 extern int mtd_init_config(void);
+extern int mtd_init_nino(void);
 
 #pragma GCC visibility pop
 
