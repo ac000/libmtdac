@@ -311,6 +311,38 @@ static int curl_perform(struct curl_ctx *ctx)
 	return ret;
 }
 
+static int set_headers(struct curl_ctx *ctx)
+{
+	int err = MTD_ERR_NONE;
+
+	if (!strstr(ctx->url, "/oauth/token")) {
+		err = curl_add_hdr(ctx, ctx->mtd_api_ver);
+		if (err)
+			return MTD_ERR_OS;
+	}
+
+	if (ctx->post_data)
+		err = curl_add_hdr(ctx, "Content-Type: "
+				   "application/x-www-form-urlencoded");
+        else
+		err = curl_add_hdr(ctx, "Content-Type: application/json");
+	if (err)
+		return MTD_ERR_OS;
+
+	if (!strstr(ctx->url, "/oauth/token")) {
+		char *access_token = ep_get_token(ctx->endpoint);
+
+		err = curl_add_hdr(ctx, "Authorization: Bearer %s",
+				   access_token);
+		free(access_token);
+
+		if (err)
+			return MTD_ERR_OS;
+	}
+
+	return err;
+}
+
 static int do_curl(struct curl_ctx *ctx)
 {
 	int err;
@@ -322,25 +354,9 @@ static int do_curl(struct curl_ctx *ctx)
 
 curl_again:
 	set_anti_fraud_hdrs(ctx);
-
-	if (!strstr(ctx->url, "/oauth/token"))
-		err = curl_add_hdr(ctx, ctx->mtd_api_ver);
-
-	if (ctx->post_data)
-		err = curl_add_hdr(ctx, "Content-Type: "
-				   "application/x-www-form-urlencoded");
-        else
-		err = curl_add_hdr(ctx, "Content-Type: application/json");
-
-	if (!strstr(ctx->url, "/oauth/token")) {
-		char *access_token = ep_get_token(ctx->endpoint);
-
-		err = curl_add_hdr(ctx, "Authorization: Bearer %s",
-				   access_token);
-		free(access_token);
-	}
+	err = set_headers(ctx);
 	if (err)
-		return MTD_ERR_OS;
+		return err;
 
 retry_curl:
 	err = curl_perform(ctx);
