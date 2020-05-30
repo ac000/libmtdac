@@ -196,19 +196,20 @@ int curl_add_hdr(struct curl_ctx *ctx, const char *fmt, ...)
 
 static void set_response(struct curl_ctx *ctx)
 {
-	json_t *rootbuf;
+	json_t *rootbuf = NULL;
 	json_t *resbuf;
 	json_t *new;
 
 	if (ctx->curl_buf->buf && strlen(ctx->curl_buf->buf) > 0)
 		rootbuf = json_loads(ctx->curl_buf->buf, 0, NULL);
-	else
-		rootbuf = json_null();
 
-	if (ctx->accepted_location && ctx->status_code == ACCEPTED) {
+	if (ctx->accepted_location &&
+	    (ctx->status_code == ACCEPTED || ctx->status_code == CREATED)) {
 		json_t *loc;
 
 		loc = json_pack("{s:s}", "location", ctx->accepted_location);
+		if (!rootbuf)
+			rootbuf = json_pack("{}");
 		json_object_update(rootbuf, loc);
 		json_decref(loc);
 	}
@@ -218,7 +219,7 @@ static void set_response(struct curl_ctx *ctx)
 			"status_str", http_status_code2str(ctx->status_code),
 			"url", ctx->url,
 			"method", methods_str[ctx->http_method].str,
-			"result", rootbuf);
+			"result", rootbuf ? rootbuf : json_null());
 
 	/* Cater for multiple responses in case of redirect... */
 	if (ctx->res_buf)
