@@ -21,6 +21,12 @@
 
 #define MAX_PARAMS	7
 
+enum oauth_scope {
+	SCOPE_NONE = 0,
+	SCOPE_APPLICATION,
+	SCOPE_USER,
+};
+
 /*
  * The order of these entries must match the order in enum endpoint
  * in endpoints.h
@@ -535,6 +541,12 @@ static const struct _endpoint {
 		.method	= M_POST,
 		.scope	= SCOPE_NONE
 	},
+	{
+		.ep	= OA_APPLICATION_TOKEN,
+		.tmpl	= "/oauth/token",
+		.method	= M_POST,
+		.scope	= SCOPE_NONE
+	},
 };
 
 int do_ep(enum endpoint ep, const char *api_ver, const char *file,
@@ -578,9 +590,33 @@ int do_ep(enum endpoint ep, const char *api_ver, const char *file,
 	}
 }
 
+int (*ep_set_oauther(enum endpoint ep))(void)
+{
+	switch (endpoints[ep].scope) {
+	case SCOPE_USER:
+		return oauther_refresh_access_token;
+	case SCOPE_APPLICATION:
+		return oauther_get_application_token;
+	default:
+		return oauther_dummy;
+	}
+}
+
+char *ep_get_token(enum endpoint ep)
+{
+	switch(endpoints[ep].scope) {
+	case SCOPE_USER:
+		return load_token("access_token", FT_AUTH);
+	case SCOPE_APPLICATION:
+		return load_token("access_token", FT_AUTH_APPLICATION);
+	default:
+		return NULL;
+	}
+}
+
 char *ep_make_url(enum endpoint ep, const char **params, char *url)
 {
-	char *nino = load_token("nino", FT_NINO);
+	char *nino = NULL;
 	char *string;
 	char *ptr;
 	int len;
@@ -590,6 +626,9 @@ char *ep_make_url(enum endpoint ep, const char **params, char *url)
 	ptr = string;
 
 	len = snprintf(url, URL_LEN + 1, BASE_URL);
+
+	if (strstr(string,  "{nino}"))
+		nino = load_token("nino", FT_NINO);
 
 	for (;;) {
 		char *token;

@@ -124,16 +124,13 @@ enum endpoint {
 	/* OAuth */
 	OA_REFRESH_TOKEN,
 	OA_EXCHANGE_AUTH_CODE,
-};
-
-enum oauth_scope {
-	SCOPE_NONE = 0,
-	SCOPE_APPLICATION,
-	SCOPE_USER,
+	OA_APPLICATION_TOKEN,
 };
 
 extern int do_ep(enum endpoint ep, const char *api_ver, const char *file,
 		 const char *data, char **buf, ...);
+extern int (*ep_set_oauther(enum endpoint ep))(void);
+extern char *ep_get_token(enum endpoint ep);
 extern char *ep_make_url(enum endpoint ep, const char **params, char *url);
 
 #ifdef __cplusplus

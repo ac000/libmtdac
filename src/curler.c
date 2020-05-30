@@ -316,9 +316,7 @@ static int do_curl(struct curl_ctx *ctx)
 	char url[URL_LEN + 1];
 	bool refreshed_token = false;
 
-	if (!ctx->oauther)
-		ctx->oauther = refresh_access_token;	/* default */
-
+	ctx->oauther = ep_set_oauther(ctx->endpoint);
 	ctx->url = ep_make_url(ctx->endpoint, ctx->params, url);
 
 curl_again:
@@ -334,7 +332,7 @@ curl_again:
 		err = curl_add_hdr(ctx, "Content-Type: application/json");
 
 	if (!strstr(ctx->url, "/oauth/token")) {
-		char *access_token = load_token("access_token", FT_AUTH);
+		char *access_token = ep_get_token(ctx->endpoint);
 
 		err = curl_add_hdr(ctx, "Authorization: Bearer %s",
 				   access_token);

@@ -33,6 +33,9 @@ char *load_token(const char *which, enum file_type type)
 	case FT_AUTH:
 		file = "oauth.json";
 		break;
+	case FT_AUTH_APPLICATION:
+		file = "oauth-application.json";
+		break;
 	case FT_CONFIG:
 		file = "config.json";
 		break;
@@ -58,7 +61,7 @@ char *load_token(const char *which, enum file_type type)
 	return token;
 }
 
-int refresh_access_token(void)
+int oauther_refresh_access_token(void)
 {
 	struct curl_ctx ctx = { 0 };
 	char data[4096];
@@ -100,4 +103,51 @@ out_free:
 	free(client_secret);
 
 	return err;
+}
+
+int oauther_get_application_token(void)
+{
+	struct curl_ctx ctx = { 0 };
+	char data[4096];
+	char path[PATH_MAX];
+	char *buf;
+	char *client_id = load_token("client_id", FT_CONFIG);
+	char *client_secret = load_token("client_secret", FT_CONFIG);
+	json_t *array;
+	json_t *root;
+	json_t *result;
+	int err;
+
+	snprintf(data, sizeof(data),
+		 "client_secret=%s&client_id=%s&grant_type=client_credentials",
+		 client_secret, client_id);
+
+	ctx.endpoint = OA_APPLICATION_TOKEN;
+	err = do_post(&ctx, NULL, data, &buf);
+	if (err) {
+		logger(MTD_LOG_ERR, "%s: %s\n", __func__, buf);
+		goto out_free;
+	}
+
+	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
+		 "oauth-application.json");
+
+	array = json_loads(buf, 0, NULL);
+	root = json_array_get(array, 0);
+	result = json_object_get(root, "result");
+	json_dump_file(result, path, JSON_INDENT(4));
+	json_decref(array);
+	json_decref(result);
+
+out_free:
+	free(buf);
+	free(client_id);
+	free(client_secret);
+
+	return err;
+}
+
+int oauther_dummy(void)
+{
+	return 0;
 }

@@ -15,12 +15,15 @@ extern "C" {
 
 enum file_type {
 	FT_AUTH = 0,
+	FT_AUTH_APPLICATION,
 	FT_CONFIG,
 	FT_NINO,
 };
 
 extern char *load_token(const char *which, enum file_type type);
-extern int refresh_access_token(void);
+extern int oauther_refresh_access_token(void);
+extern int oauther_get_application_token(void);
+extern int oauther_dummy(void);
 
 #ifdef __cplusplus
 } /* extern "C" */
