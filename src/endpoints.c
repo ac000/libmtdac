@@ -29,430 +29,511 @@ static const struct _endpoint {
 	const enum endpoint ep;
 	const char *tmpl;
 	const enum http_method method;
+	const enum oauth_scope scope;
 } endpoints[] = {
 	/* Self-Assessment - Self-Employment */
 	{
-		SA_SE_LIST_SELF_EMPLOYMENTS,
-		"/self-assessment/ni/{nino}/self-employments",
-		M_GET
+		.ep	= SA_SE_LIST_SELF_EMPLOYMENTS,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SE_CREATE_SELF_EMPLOYMENT,
-		"/self-assessment/ni/{nino}/self-employments",
-		M_POST
+		.ep	= SA_SE_CREATE_SELF_EMPLOYMENT,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SE_GET_SELF_EMPLOYMENT,
-		"/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}",
-		M_GET
+		.ep	= SA_SE_GET_SELF_EMPLOYMENT,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SE_LIST_OBLIGATIONS,
-		"/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/obligations",
-		M_GET
+		.ep	= SA_SE_LIST_OBLIGATIONS,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/obligations",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SE_LIST_PERIODS,
-		"/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods",
-		M_GET
+		.ep	= SA_SE_LIST_PERIODS,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SE_CREATE_PERIOD,
-		"/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods",
-		M_POST
+		.ep	= SA_SE_CREATE_PERIOD,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SE_GET_PERIOD,
-		"/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods/{periodId}",
-		M_GET
+		.ep	= SA_SE_GET_PERIOD,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods/{periodId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SE_UPDATE_PERIOD,
-		"/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods/{periodId}",
-		M_PUT
+		.ep	= SA_SE_UPDATE_PERIOD,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods/{periodId}",
+		.method	= M_PUT,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SE_GET_ANNUAL_SUMMARY,
-		"/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/{taxYear}",
-		M_GET
+		.ep	= SA_SE_GET_ANNUAL_SUMMARY,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/{taxYear}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SE_UPDATE_ANNUAL_SUMMARY,
-		"/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/{taxYear}",
-		M_PUT
+		.ep	= SA_SE_UPDATE_ANNUAL_SUMMARY,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/{taxYear}",
+		.method	= M_PUT,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SE_SUBMIT_END_OF_PERIOD_STATEMENT,
-		"/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}",
-		M_POST
+		.ep	= SA_SE_SUBMIT_END_OF_PERIOD_STATEMENT,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SE_GET_END_OF_PERIOD_STATEMENT,
-		"/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations/{optional_query_params}",
-		M_GET
+		.ep	= SA_SE_GET_END_OF_PERIOD_STATEMENT,
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	/* Self-Assessment - UK Property Business */
 	{
-		SA_PB_GET_PROPERTY,
-		"/self-assessment/ni/{nino}/uk-properties",
-		M_GET
+		.ep	= SA_PB_GET_PROPERTY,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_CREATE_PROPERTY,
-		"/self-assessment/ni/{nino}/uk-properties",
-		M_POST
+		.ep	= SA_PB_CREATE_PROPERTY,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_LIST_OBLIGATIONS,
-		"/self-assessment/ni/{nino}/uk-properties/obligations",
-		M_GET
+		.ep	= SA_PB_LIST_OBLIGATIONS,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/obligations",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_LIST_NON_FHL_PERIODS,
-		"/self-assessment/ni/{nino}/uk-properties/other/periods",
-		M_GET
+		.ep	= SA_PB_LIST_NON_FHL_PERIODS,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/periods",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_CREATE_NON_FHL_PERIOD,
-		"/self-assessment/ni/{nino}/uk-properties/other/periods",
-		M_POST
+		.ep	= SA_PB_CREATE_NON_FHL_PERIOD,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/periods",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_GET_NON_FHL_PERIOD,
-		"/self-assessment/ni/{nino}/uk-properties/other/periods/{periodId}",
-		M_GET
+		.ep	= SA_PB_GET_NON_FHL_PERIOD,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/periods/{periodId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_UPDATE_NON_FHL_PERIOD,
-		"/self-assessment/ni/{nino}/uk-properties/other/periods/{periodId}",
-		M_PUT
+		.ep	= SA_PB_UPDATE_NON_FHL_PERIOD,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/periods/{periodId}",
+		.method	= M_PUT,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_GET_NON_FHL_ANNUAL_SUMMARY,
-		"/self-assessment/ni/{nino}/uk-properties/other/{taxYear}",
-		M_GET
+		.ep	= SA_PB_GET_NON_FHL_ANNUAL_SUMMARY,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/{taxYear}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_UPDATE_NON_FHL_ANNUAL_SUMMARY,
-		"/self-assessment/ni/{nino}/uk-properties/other/{taxYear}",
-		M_PUT
+		.ep	= SA_PB_UPDATE_NON_FHL_ANNUAL_SUMMARY,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/{taxYear}",
+		.method	= M_PUT,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_LIST_FHL_PERIODS,
-		"/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods",
-		M_GET
+		.ep	= SA_PB_LIST_FHL_PERIODS,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_CREATE_FHL_PERIOD,
-		"/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods",
-		M_POST
+		.ep	= SA_PB_CREATE_FHL_PERIOD,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_GET_FHL_PERIOD,
-		"/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods/{periodId}",
-		M_GET
+		.ep	= SA_PB_GET_FHL_PERIOD,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods/{periodId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_UPDATE_FHL_PERIOD,
-		"/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods/{periodId}",
-		M_PUT
+		.ep	= SA_PB_UPDATE_FHL_PERIOD,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods/{periodId}",
+		.method	= M_PUT,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_GET_FHL_ANNUAL_SUMMARY,
-		"/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/{taxYear}",
-		M_GET
+		.ep	= SA_PB_GET_FHL_ANNUAL_SUMMARY,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/{taxYear}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_UPDATE_FHL_ANNUAL_SUMMARY,
-		"/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/{taxYear}",
-		M_PUT
+		.ep	= SA_PB_UPDATE_FHL_ANNUAL_SUMMARY,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/{taxYear}",
+		.method	= M_PUT,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_SUBMIT_END_OF_PERIOD_STATEMENT,
-		"/self-assessment/ni/{nino}/uk-properties/end-of-period-statements/from/{start}/to/{end}",
-		M_POST
+		.ep	= SA_PB_SUBMIT_END_OF_PERIOD_STATEMENT,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/end-of-period-statements/from/{start}/to/{end}",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_PB_GET_END_OF_PERIOD_STATEMENT,
-		"/self-assessment/ni/{nino}/uk-properties/end-of-period-statements/obligations/{query_params}",
-		M_GET
+		.ep	= SA_PB_GET_END_OF_PERIOD_STATEMENT,
+		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/end-of-period-statements/obligations/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	/* Self-Assessment - Dividends Income */
 	{
-		SA_DI_GET_ANNUAL_SUMMARY,
-		"/self-assessment/ni/{nino}/dividends/{taxYear}",
-		M_GET
+		.ep	= SA_DI_GET_ANNUAL_SUMMARY,
+		.tmpl	= "/self-assessment/ni/{nino}/dividends/{taxYear}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_DI_UPDATE_ANNUAL_SUMMARY,
-		"/self-assessment/ni/{nino}/dividends/{taxYear}",
-		M_PUT
+		.ep	= SA_DI_UPDATE_ANNUAL_SUMMARY,
+		.tmpl	= "/self-assessment/ni/{nino}/dividends/{taxYear}",
+		.method	= M_PUT,
+		.scope	= SCOPE_USER
 	},
 	/* Self-Assessment - Savings Accounts */
 	{
-		SA_SA_LIST_ACCOUNTS,
-		"/self-assessment/ni/{nino}/savings-accounts",
-		M_GET
+		.ep	= SA_SA_LIST_ACCOUNTS,
+		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SA_CREATE_ACCOUNT,
-		"/self-assessment/ni/{nino}/savings-accounts",
-		M_POST
+		.ep	= SA_SA_CREATE_ACCOUNT,
+		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SA_GET_ACCOUNT,
-		"/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}",
-		M_GET
+		.ep	= SA_SA_GET_ACCOUNT,
+		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SA_GET_ANNUAL_SUMMARY,
-		"/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}",
-		M_GET
+		.ep	= SA_SA_GET_ANNUAL_SUMMARY,
+		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_SA_UPDATE_ANNUAL_SUMMARY,
-		"/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}",
-		M_PUT
+		.ep	= SA_SA_UPDATE_ANNUAL_SUMMARY,
+		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}",
+		.method	= M_PUT,
+		.scope	= SCOPE_USER
 	},
 	/* Self-Assessment - Charitable Giving */
 	{
-		SA_CG_GET_CHARITABLE_GIVING,
-		"/self-assessment/ni/{nino}/charitable-giving/{taxYear}",
-		M_GET
+		.ep	= SA_CG_GET_CHARITABLE_GIVING,
+		.tmpl	= "/self-assessment/ni/{nino}/charitable-giving/{taxYear}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_CG_UPDATE_CHARITABLE_GIVING,
-		"/self-assessment/ni/{nino}/charitable-giving/{taxYear}",
-		M_PUT
+		.ep	= SA_CG_UPDATE_CHARITABLE_GIVING,
+		.tmpl	= "/self-assessment/ni/{nino}/charitable-giving/{taxYear}",
+		.method	= M_PUT,
+		.scope	= SCOPE_USER
 	},
 	/* Self-Assessment - Tax Calculations - EOL Jul 2020 */
 	{
-		SA_TC_CALCULATE,
-		"/self-assessment/ni/{nino}/calculations",
-		M_POST
+		.ep	= SA_TC_CALCULATE,
+		.tmpl	= "/self-assessment/ni/{nino}/calculations",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_TC_GET_CALCULATION,
-		"/self-assessment/ni/{nino}/calculations/{calculationId}",
-		M_GET
+		.ep	= SA_TC_GET_CALCULATION,
+		.tmpl	= "/self-assessment/ni/{nino}/calculations/{calculationId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_TC_GET_VALIDATION_MSGS,
-		"/self-assessment/ni/{nino}/calculations/{calculationId}/validation-messages",
-		M_GET
+		.ep	= SA_TC_GET_VALIDATION_MSGS,
+		.tmpl	= "/self-assessment/ni/{nino}/calculations/{calculationId}/validation-messages",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	/* Self-Assessment - Crystallisation */
 	{
-		SA_CR_INTENT_TO_CRYSTALLISE,
-		"/self-assessment/ni/{nino}/{taxYear}/intent-to-crystallise",
-		M_POST
+		.ep	= SA_CR_INTENT_TO_CRYSTALLISE,
+		.tmpl	= "/self-assessment/ni/{nino}/{taxYear}/intent-to-crystallise",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_CR_CRYSTALLISE,
-		"/self-assessment/ni/{nino}/{taxYear}/crystallisation",
-		M_POST
+		.ep	= SA_CR_CRYSTALLISE,
+		.tmpl	= "/self-assessment/ni/{nino}/{taxYear}/crystallisation",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		SA_CR_LIST_OBLIGATIONS,
-		"/self-assessment/ni/{nino}/crystallisation/obligations/{query_params}",
-		M_GET
+		.ep	= SA_CR_LIST_OBLIGATIONS,
+		.tmpl	= "/self-assessment/ni/{nino}/crystallisation/obligations/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 
 	/* Self-Assessment Accounts */
 	{
-		SAAC_GET_BALANCE,
-		"/accounts/self-assessment/{nino}/balance",
-		M_GET
+		.ep	= SAAC_GET_BALANCE,
+		.tmpl	= "/accounts/self-assessment/{nino}/balance",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SAAC_LIST_TRANSACTIONS,
-		"/accounts/self-assessment/{nino}/transactions/{query_params}",
-		M_GET
+		.ep	= SAAC_LIST_TRANSACTIONS,
+		.tmpl	= "/accounts/self-assessment/{nino}/transactions/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SAAC_GET_TRANSACTION,
-		"/accounts/self-assessment/{nino}/transactions/{transactionId}",
-		M_GET
+		.ep	= SAAC_GET_TRANSACTION,
+		.tmpl	= "/accounts/self-assessment/{nino}/transactions/{transactionId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SAAC_LIST_CHARGES,
-		"/accounts/self-assessment/{nino}/charges/{query_params}",
-		M_GET
+		.ep	= SAAC_LIST_CHARGES,
+		.tmpl	= "/accounts/self-assessment/{nino}/charges/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SAAC_GET_CHARGE,
-		"/accounts/self-assessment/{nino}/charges/{transactionId}",
-		M_GET
+		.ep	= SAAC_GET_CHARGE,
+		.tmpl	= "/accounts/self-assessment/{nino}/charges/{transactionId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SAAC_LIST_PAYMENTS,
-		"/accounts/self-assessment/{nino}/payments/{query_params}",
-		M_GET
+		.ep	= SAAC_LIST_PAYMENTS,
+		.tmpl	= "/accounts/self-assessment/{nino}/payments/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		SAAC_GET_PAYMENT,
-		"/accounts/self-assessment/{nino}/payments/{paymentId}",
-		M_GET
+		.ep	= SAAC_GET_PAYMENT,
+		.tmpl	= "/accounts/self-assessment/{nino}/payments/{paymentId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 
 	/* Individual Calculations */
 	{
-		IC_LIST_CALCULATIONS,
-		"/individuals/calculations/{nino}/self-assessment",
-		M_GET
+		.ep	= IC_LIST_CALCULATIONS,
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		IC_TRIGGER_CALCULATION,
-		"/individuals/calculations/{nino}/self-assessment",
-		M_POST
+		.ep	= IC_TRIGGER_CALCULATION,
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		IC_GET_CALCULATION_META,
-		"/individuals/calculations/{nino}/self-assessment/{calculationId}",
-		M_GET
+		.ep	= IC_GET_CALCULATION_META,
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		IC_GET_INCOME_TAX_NICS_CALC,
-		"/individuals/calculations/{nino}/self-assessment/{calculationId}/income-tax-nics-calculated",
-		M_GET
+		.ep	= IC_GET_INCOME_TAX_NICS_CALC,
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/income-tax-nics-calculated",
+		.method	= M_GET,
+		.scope	= SCOPE_USER,
 	},
 	{
-		IC_GET_TAXABLE_INCOME,
-		"/individuals/calculations/{nino}/self-assessment/{calculationId}/taxable-income",
-		M_GET
+		.ep	= IC_GET_TAXABLE_INCOME,
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/taxable-income",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		IC_GET_ALLOWANCES_DEDUCT_RELIEFS,
-		"/individuals/calculations/{nino}/self-assessment/{calculationId}/allowances-deductions-reliefs",
-		M_GET
+		.ep	= IC_GET_ALLOWANCES_DEDUCT_RELIEFS,
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/allowances-deductions-reliefs",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		IC_GET_EOY_EST,
-		"/individuals/calculations/{nino}/self-assessment/{calculationId}/end-of-year-estimate",
-		M_GET
+		.ep	= IC_GET_EOY_EST,
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/end-of-year-estimate",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		IC_GET_MSGS,
-		"/individuals/calculations/{nino}/self-assessment/{calculationId}/messages",
-		M_GET
+		.ep	= IC_GET_MSGS,
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 
 	/* Individual Loses - Brought Forward */
 	{
-		IL_BF_LIST_LOSES,
-		"/individuals/losses/{nino}/brought-forward-losses/{optional_query_params}",
-		M_GET
+		.ep	= IL_BF_LIST_LOSES,
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		IL_BF_CREATE_LOSS,
-		"/individuals/losses/{nino}/brought-forward-losses",
-		M_POST
+		.ep	= IL_BF_CREATE_LOSS,
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		IL_BF_GET_LOSS,
-		"/individuals/losses/{nino}/brought-forward-losses/{lossId}",
-		M_GET
+		.ep	= IL_BF_GET_LOSS,
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		IL_BF_DELETE_LOSS,
-		"/individuals/losses/{nino}/brought-forward-losses/{lossId}",
-		M_DELETE
+		.ep	= IL_BF_DELETE_LOSS,
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}",
+		.method	= M_DELETE,
+		.scope	= SCOPE_USER
 	},
 	{
-		IL_BF_UPDATE_LOSS_AMNT,
-		"/individuals/losses/{nino}/brought-forward-losses/{lossId}/change-loss-amount",
-		M_POST
+		.ep	= IL_BF_UPDATE_LOSS_AMNT,
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}/change-loss-amount",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	/* Individual Loses - Loss Claims */
 	{
-		IL_LC_LIST_LOSES,
-		"/individuals/losses/{nino}/loss-claims/{optional_query_params}",
-		M_GET
+		.ep	= IL_LC_LIST_LOSES,
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		IL_LC_CREATE_LOSS,
-		"/individuals/losses/{nino}/loss-claims",
-		M_POST
+		.ep	= IL_LC_CREATE_LOSS,
+		.tmpl	= "/individuals/losses/{nino}/loss-claims",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		IL_LC_GET_LOSS,
-		"/individuals/losses/{nino}/loss-claims/{claimId}",
-		M_GET
+		.ep	= IL_LC_GET_LOSS,
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		IL_LC_DELETE_LOSS,
-		"/individuals/losses/{nino}/loss-claims/{claimId}",
-		M_DELETE
+		.ep	= IL_LC_DELETE_LOSS,
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}",
+		.method	= M_DELETE,
+		.scope	= SCOPE_USER
 	},
 	{
-		IL_LC_UPDATE_LOSS_TYPE,
-		"/individuals/losses/{nino}/loss-claims/{claimId}/change-type-of-claim",
-		M_POST
+		.ep	= IL_LC_UPDATE_LOSS_TYPE,
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}/change-type-of-claim",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
 	},
 	{
-		IL_LC_UPDATE_LOSS_ORDER,
-		"/individuals/losses/{nino}/loss-claims/order",
-		M_PUT
+		.ep	= IL_LC_UPDATE_LOSS_ORDER,
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/order",
+		.method	= M_PUT,
+		.scope	= SCOPE_USER
 	},
 
 	/* National Insurance */
 	{
-		NI_GET_ANNUAL_SUMMARY,
-		"/national-insurance/sa/{utr}/annual-summary/{taxYear}",
-		M_GET
+		.ep	= NI_GET_ANNUAL_SUMMARY,
+		.tmpl	= "/national-insurance/sa/{utr}/annual-summary/{taxYear}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 
 	/* Business Income Source Summary */
 	{
-		BISS_GET_SELF_EMPLOYMNET,
-		"/individuals/self-assessment/income-summary/{nino}/self-employment/{query_params}",
-		M_GET,
+		.ep	= BISS_GET_SELF_EMPLOYMNET,
+		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/self-employment/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 	{
-		BISS_GET_PROPERTY,
-		"/individuals/self-assessment/income-summary/{nino}/uk-property/{query_params}",
-		M_GET,
+		.ep	= BISS_GET_PROPERTY,
+		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/uk-property/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
 	},
 
 	/* Create Test User */
 	{
-		TEST_CU_CREATE_INDIVIDUAL,
-		"/create-test-user/individuals",
-		M_POST
+		.ep	= TEST_CU_CREATE_INDIVIDUAL,
+		.tmpl	= "/create-test-user/individuals",
+		.method	= M_POST,
+		.scope	= SCOPE_APPLICATION
 	},
 	{
-		TEST_CU_CREATE_ORGANISATION,
-		"/create-test-user/organisations",
-		M_POST
+		.ep	= TEST_CU_CREATE_ORGANISATION,
+		.tmpl	= "/create-test-user/organisations",
+		.method	= M_POST,
+		.scope	= SCOPE_APPLICATION
 	},
 	{
-		TEST_CU_CREATE_AGENT,
-		"/create-test-user/agents",
-		M_POST
+		.ep	= TEST_CU_CREATE_AGENT,
+		.tmpl	= "/create-test-user/agents",
+		.method	= M_POST,
+		.scope	= SCOPE_APPLICATION
 	},
 	{
-		TEST_CU_LIST_SERVICES,
-		"/create-test-user/services",
-		M_GET
+		.ep	= TEST_CU_LIST_SERVICES,
+		.tmpl	= "/create-test-user/services",
+		.method	= M_GET,
+		.scope	= SCOPE_APPLICATION
 	},
 
 	/* Test Fraud Prevention Headers */
 	{
-		TEST_FPH_VALIDATE,
-		"/test/fraud-prevention-headers/validate",
-		M_GET
+		.ep	= TEST_FPH_VALIDATE,
+		.tmpl	= "/test/fraud-prevention-headers/validate",
+		.method	= M_GET,
+		.scope	= SCOPE_APPLICATION
 	},
 
 	/* OAuth */
 	{
-		OA_REFRESH_TOKEN,
-		"/oauth/token",
-		M_POST
+		.ep	= OA_REFRESH_TOKEN,
+		.tmpl	= "/oauth/token",
+		.method	= M_POST,
+		.scope	= SCOPE_NONE
 	},
 	{
-		OA_EXCHANGE_AUTH_CODE,
-		"/oauth/token",
-		M_POST
+		.ep	= OA_EXCHANGE_AUTH_CODE,
+		.tmpl	= "/oauth/token",
+		.method	= M_POST,
+		.scope	= SCOPE_NONE
 	},
 };
 
