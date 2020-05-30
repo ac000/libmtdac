@@ -161,8 +161,8 @@ int mtd_init_auth(void)
 	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
 		 "oauth.json");
 
-	printf("You need to authorise mtdac to have read/write access to your "
-	       "Self Assessment\ninformation.\n");
+	printf("You need to authorise libmtdac to have read/write access to "
+	       "your Self\nAssessment information.\n");
 	printf("\n");
 	printf("The HMRC authorisation endpoint will open up in a new browser "
 	       "window/tab.\n");
