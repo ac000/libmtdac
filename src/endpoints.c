@@ -528,6 +528,14 @@ static const struct _endpoint {
 		.scope	= SCOPE_APPLICATION
 	},
 
+	/* National Insurance Test Support */
+	{
+		.ep	= TEST_NI_CREATE_ANNUAL_SUMMARY,
+		.tmpl	= "/national-insurance-test-support/sa/{utr}/annual-summary/{taxYear}",
+		.method	= M_POST,
+		.scope	= SCOPE_APPLICATION
+	},
+
 	/* OAuth */
 	{
 		.ep	= OA_REFRESH_TOKEN,

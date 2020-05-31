@@ -19,6 +19,7 @@
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Business Income Source Summary API functions](#make-tax-digital---business-income-source-summary-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
+  * [Make Tax Digital - National Insurance Test Support API functions [test-only]](#make-tax-digital---national-insurance-test-support-api-functions-test-only)
   * [Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]](#make-tax-digital---test-fraud-prevention-headers-api-functions-test-only)
 3. [Build it](#build-it)
 4. [How to use](#how-to-use)
@@ -497,6 +498,16 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 ### mtd\_test\_cu\_list\_services
 
     int mtd_test_cu_list_services(char **buf)
+
+
+### Make Tax Digital - National Insurance Test Support API functions [test-only]
+
+    #include <libmtdac/mtd-test-ni.h>
+
+#### mtd\_test\_ni\_create\_annual\_summary
+
+    mtd_test_ni_create_annual_summary(const char *src_file, const char *utr,
+                                      const char *tax_year, char **buf)
 
 
 ### Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]
