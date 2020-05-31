@@ -562,6 +562,7 @@ int do_ep(enum endpoint ep, const char *api_ver, const char *file,
 		if (i == MAX_PARAMS) {
 			logger(MTD_LOG_ERR, "%s: MAX_PARAMS (%d) reached\n",
 			       __func__, MAX_PARAMS);
+			va_end(ap);
 			return -1;
 		}
 
