@@ -568,8 +568,8 @@ int do_ep(enum endpoint ep, const char *api_ver, const char *file,
 	va_start(ap, buf);
 	for ( ; ; i++) {
 		if (i == MAX_PARAMS) {
-			logger(MTD_LOG_ERR, "%s: MAX_PARAMS (%d) reached\n",
-			       __func__, MAX_PARAMS);
+			logger(MTD_LOG_ERR, "MAX_PARAMS (%d) reached\n",
+			       MAX_PARAMS);
 			va_end(ap);
 			return -1;
 		}

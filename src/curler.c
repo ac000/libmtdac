@@ -420,8 +420,7 @@ static int do_put_post(struct curl_ctx *ctx, const char *src_file,
 	if (src_file) {
 		err = stat(src_file, &sb);
 		if (err) {
-			logger(MTD_LOG_ERR, "%s: couldn't stat() %s\n",
-			       __func__, src_file);
+			logger(MTD_LOG_ERR, "couldn't stat() %s\n", src_file);
 			return MTD_ERR_OS;
 		}
 		ctx->src_file = fopen(src_file, "r");

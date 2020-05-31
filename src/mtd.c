@@ -67,22 +67,21 @@ static int generate_device_id(void)
 	err = stat(path, &sb);
 	if (!err) {
 		logger(MTD_LOG_INFO,
-		       "%s: %s already exists, not overwriting\n", __func__,
-		       path);
+		       "%s already exists, not overwriting\n", path);
 		return 0;
 	}
 
 	if (errno != ENOENT) {
 		char errbuf[129];
 
-		logger(MTD_LOG_ERR, "%s: stat %s: %s\n", __func__, path,
+		logger(MTD_LOG_ERR, "stat %s: %s\n", path,
 		       strerror_r(errno, errbuf, sizeof(errbuf)));
 		return -1;
 	}
 
 	p = gen_uuid(uuid);
 	if (!p) {
-		logger(MTD_LOG_ERR, "%s: error generating UUID\n", __func__);
+		logger(MTD_LOG_ERR, "error generating UUID\n");
 		return -1;
 	}
 
@@ -109,7 +108,7 @@ static int check_config_dir(void)
 	if (!err)
 		return 0;
 
-	logger(MTD_LOG_ERR, "%s: mkdir %s: %s\n", __func__, path,
+	logger(MTD_LOG_ERR, "mkdir %s: %s\n", path,
 	       strerror_r(errno, errbuf, sizeof(errbuf)));
 
 	return -1;

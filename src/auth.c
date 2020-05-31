@@ -48,8 +48,7 @@ char *load_token(const char *which, enum file_type type)
 
 	root = json_load_file(path, 0, &error);
 	if (!root) {
-		logger(MTD_LOG_ERR, "%s: json_load_file: %s\n", __func__,
-		       error.text);
+		logger(MTD_LOG_ERR, "json_load_file: %s\n", error.text);
 		return NULL;
 	}
 	tok_obj = json_object_get(root, which);
@@ -82,7 +81,7 @@ int oauther_refresh_access_token(void)
 	ctx.endpoint = OA_REFRESH_TOKEN;
 	err = do_post(&ctx, NULL, data, &buf);
 	if (err) {
-		logger(MTD_LOG_ERR, "%s: %s\n", __func__, buf);
+		logger(MTD_LOG_ERR, "%s\n", buf);
 		goto out_free;
 	}
 
@@ -125,7 +124,7 @@ int oauther_get_application_token(void)
 	ctx.endpoint = OA_APPLICATION_TOKEN;
 	err = do_post(&ctx, NULL, data, &buf);
 	if (err) {
-		logger(MTD_LOG_ERR, "%s: %s\n", __func__, buf);
+		logger(MTD_LOG_ERR, "%s\n", buf);
 		goto out_free;
 	}
 

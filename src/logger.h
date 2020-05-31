@@ -30,8 +30,12 @@ static const struct logger {
 	{ MTD_LOG_DEBUG, LIBNAME " DEBUG" },
 };
 
+#define logger(log_level, fmt, ...) \
+	_logger((const char *)__func__, log_level, fmt, ##__VA_ARGS__)
+
 extern enum log_level mtd_log_level;
-static inline void logger(enum log_level log_level, const char *fmt, ...)
+static inline void _logger(const char *func, enum log_level log_level,
+			   const char *fmt, ...)
 {
 	int len;
 	char *logbuf;
@@ -52,7 +56,8 @@ static inline void logger(enum log_level log_level, const char *fmt, ...)
 	if (*logbuf == ' ') /* continuation line */
 		fprintf(out, "%s", logbuf);
 	else
-		fprintf(out, "[%s] %s", logger_map[log_level].str, logbuf);
+		fprintf(out, "[%s] %s: %s", logger_map[log_level].str, func,
+			logbuf);
 
 	free(logbuf);
 }
