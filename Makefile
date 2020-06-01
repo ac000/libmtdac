@@ -22,7 +22,9 @@ ifeq ($(wildcard ~/rpmbuild/),)
 	@false
 else
 	@version=$$(git describe | tail -c +2); echo "Building $${version}"; \
-		git archive --prefix=libmtdac-$${version%%-*}/ -o ~/rpmbuild/SOURCES/libmtdac-$${version%%-*}.tar HEAD
+		git archive --prefix=libmtdac-$${version%%-*}/ -o ~/rpmbuild/SOURCES/libmtdac-$${version%%-*}.tar HEAD; \
+		git describe | tail -c +2 > .version; \
+		tar -rf ~/rpmbuild/SOURCES/libmtdac-$${version%%-*}.tar --transform "s,^,libmtdac-$${version%%-*}/," .version
 	@rpmbuild -bb libmtdac.spec
 endif
 
@@ -30,3 +32,4 @@ endif
 clean:
 	@echo -e "Cleaning: libmtdac"
 	@$(MAKE) $(MAKE_OPTS) -C src/ clean
+	@rm -f .version

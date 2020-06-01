@@ -1,6 +1,6 @@
 LIBNAME = libmtdac
 
-GIT_VERSION  = \"$(shell git describe --long --dirty)\"
+GIT_VERSION  = \"$(shell git describe --long --dirty 2> /dev/null || cat ../.version)\"
 
 SOVER	= 0
 VERSION = $(SOVER).9.0
