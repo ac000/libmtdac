@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	0.8.0
+Version:	0.9.0
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -54,6 +54,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Mon Jun 01 2020 Andrew Clayton <andrew@digital-domain.net> - 0.9.0-1
+- Fix mtd_sa_cr_crystallise() to take an input file (API break)
 
 * Fri May 29 2020 Andrew Clayton <andrew@digital-domain.net> - 0.8.0-1
 - Internal re-woring but an exported enum value got removed (API break)
