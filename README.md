@@ -324,7 +324,8 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 #### mtd\_sa\_cr\_crystallise
 
-    int mtd_sa_cr_crystallise(const char *tax_year, char **buf)
+    int mtd_sa_cr_crystallise(const char *src_file, const char *tax_year,
+                              char **buf)
 
 #### mtd\_sa\_cr\_list\_obligations
 

@@ -27,10 +27,11 @@ int mtd_sa_cr_list_obligations(const char *query_string, char **buf)
  * [POST]
  * /self-assessment/ni/{nino}/{taxYear}/crystallisation
  */
-int mtd_sa_cr_crystallise(const char *tax_year, char **buf)
+int mtd_sa_cr_crystallise(const char *src_file, const char *tax_year,
+			  char **buf)
 {
 	return do_ep(SA_CR_CRYSTALLISE, API_VER,
-		     NULL, NULL, buf, tax_year, (char *)NULL);
+		     src_file, NULL, buf, tax_year, (char *)NULL);
 }
 
 /*

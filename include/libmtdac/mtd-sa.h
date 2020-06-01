@@ -18,7 +18,8 @@ extern "C" {
 #pragma GCC visibility push(default)
 
 extern int mtd_sa_cr_list_obligations(const char *query_string, char **buf);
-extern int mtd_sa_cr_crystallise(const char *tax_year, char **buf);
+extern int mtd_sa_cr_crystallise(const char *src_file, const char *tax_year,
+				 char **buf);
 extern int mtd_sa_cr_intent_to_crystallise(const char *tax_year, char **buf);
 
 extern int mtd_sa_tc_get_validation_msgs(const char *cid, char **buf);
