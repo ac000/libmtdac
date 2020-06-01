@@ -1,6 +1,6 @@
 Name:		libmtdac
 Version:	0.9.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
 Group:		System Environment/Libraries
@@ -27,14 +27,7 @@ make -C src/ %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -Dp -m644 include/libmtdac/mtd.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd.h
-install -Dp -m644 include/libmtdac/mtd-sa.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-sa.h
-install -Dp -m644 include/libmtdac/mtd-saac.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-saac.h
-install -Dp -m644 include/libmtdac/mtd-ic.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-ic.h
-install -Dp -m644 include/libmtdac/mtd-il.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-il.h
-install -Dp -m644 include/libmtdac/mtd-ni.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-ni.h
-install -Dp -m644 include/libmtdac/mtd-test-cu.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-test-cu.h
-install -Dp -m644 include/libmtdac/mtd-test-fph.h $RPM_BUILD_ROOT/%{_includedir}/libmtdac/mtd-test-fph.h
+install -Dp -m644 -t $RPM_BUILD_ROOT/%{_includedir}/libmtdac/ include/libmtdac/*.h
 install -Dp -m0755 src/libmtdac.so.%{version} $RPM_BUILD_ROOT/%{_libdir}/libmtdac.so.%{version}
 cd $RPM_BUILD_ROOT/%{_libdir}
 ln -s libmtdac.so.0 libmtdac.so
@@ -54,6 +47,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Mon Jun 01 2020 Andrew Clayton <andrew@digital-domain.net> - 0.9.0-2
+- Specfile fix, be sure to install all header files
 
 * Mon Jun 01 2020 Andrew Clayton <andrew@digital-domain.net> - 0.9.0-1
 - Fix mtd_sa_cr_crystallise() to take an input file (API break)
