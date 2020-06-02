@@ -1,0 +1,128 @@
+.TH libmtdac_mtd.h 3 "June 1, 2020" "libmtdac 0.9.0" "libmtdac_mtd.h"
+
+.SH NAME
+libmtdac_mtd.h \- Core types / defines
+
+.SH SYNOPSIS
+#include <libmtdac/mtd.h>
+
+.SH DESCRIPTION
+This header file contains the main types and defines. It is not generally
+required to directly include this as it will be included by the individual
+endpoint API header files.
+
+.SH DATA STRUCTURES
+The following types, enums and constants are defined
+
+.SH Library version
+#define \fBLIBMTDAC_MAJOR_VERSION\fP
+.br
+#define \fBLIBMTDAC_MINOR_VERSION\fP
+.br
+#define \fBLIBMTDAC_MICRO_VERSION\fP
+
+.RS
+These are integers that contain the library version.
+.RE
+
+.SH Log level
+#define \fBMTD_OPT_LOG_ERR\fP
+.br
+#define \fBMTD_OPT_LOG_INFO\fP
+.br
+#define \fBMTD_OPT_LOG_DEBUG\fP
+
+.RS
+These set the desired log level. Defaults to \fBMTD_OPT_LOG_ERR\fP
+.RE
+
+.SH Options
+
+#define \fBMTD_OPT_ACT_MOBILE_APP_DIRECT\fP
+.br
+#define \fBMTD_OPT_ACT_DESKTOP_APP_DIRECT\fP
+.br
+#define \fBMTD_OPT_ACT_MOBILE_APP_VIA_SERVER\fP
+.br
+#define \fBMTD_OPT_ACT_DESKTOP_APP_VIA_SERVER\fP
+.br
+#define \fBMTD_OPT_ACT_WEB_APP_VIA_SERVER\fP
+.br
+#define \fBMTD_OPT_ACT_BATCH_PROCESS_DIRECT\fP
+.br
+#define \fBMTD_OPT_ACT_OTHER_DIRECT\fP
+.br
+#define \fBMTD_OPT_ACT_OTHER_VIA_SERVER\fP
+
+.RS
+These set the application connection method. \fBOne\fP of these should be set.
+.RE
+
+#define \fBMTD_OPT_SND_ANTI_FRAUD_HDRS\fP
+
+.RS
+This enables the sending of Fraud Preention Headers.
+.RE
+
+#define \fBMTD_OPT_PRODUCTION_API\fP
+
+.RS
+By default libmtdac uses the \fBtest\fP API. Setting this will make it use the
+\fBproduction\fP API.
+.RE
+
+.SH Errors
+
+enum mtd_error {
+        \fBMTD_ERR_NONE\fP = 0,
+        \fBMTD_ERR_OS\fP,
+        \fBMTD_ERR_REQUEST\fP,
+        \fBMTD_ERR_CURL\fP,
+        \fBMTD_ERR_NEEDS_AUTHORISATION\fP,
+        \fBMTD_ERR_UNKNOWN_FLAGS\fP,
+.br
+};
+
+.SH Functions
+
+\fBint mtd_init\fP(\fBint\fP flags);
+.br
+
+.RS
+You should call this function at program startup. Passing in one or more of
+the above \fBMTD_OPT_\fP values OR'd (\fB|\fP) together.
+.RE
+
+\fBvoid mtd_deinit\fP(void);
+.br
+
+.RS
+Performs various cleanup. Should be called when you have finished with the
+library.
+.RE
+
+\fBint mtd_init_auth\fP(void);
+.br
+
+.RS
+This is used to setup the oauth.json file with the OAuth access token. This
+will open the HMRC site in a new browser tab for the user to login and
+authorise the library o have access to the required resources.
+.RE
+
+\fBint mtd_init_config\fP(void);
+.br
+
+.RS
+This is used to setup the config.json file which contains the client_id &
+client_secret.
+.RE
+
+\fBint mtd_init_nino\fP(void);
+
+.RS
+This is for creating the nino.json file which stores the users National
+Insurance Number.
+.RE
+
+The JSON files mentioned above are stored under \fI~/.config/libmtdac/\fP
