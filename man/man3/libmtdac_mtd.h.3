@@ -85,7 +85,7 @@ enum mtd_error {
 
 .SH Functions
 
-\fBint mtd_init\fP(\fBint\fP flags);
+.BI "int mtd_init(int " flags ");"
 .br
 
 .RS
@@ -93,7 +93,7 @@ You should call this function at program startup. Passing in one or more of
 the above \fBMTD_OPT_\fP values OR'd (\fB|\fP) together.
 .RE
 
-\fBvoid mtd_deinit\fP(void);
+.BI "void mtd_deinit(void);"
 .br
 
 .RS
@@ -101,7 +101,7 @@ Performs various cleanup. Should be called when you have finished with the
 library.
 .RE
 
-\fBint mtd_init_auth\fP(void);
+.BI "int mtd_init_auth(void);"
 .br
 
 .RS
@@ -110,7 +110,7 @@ will open the HMRC site in a new browser tab for the user to login and
 authorise the library o have access to the required resources.
 .RE
 
-\fBint mtd_init_config\fP(void);
+.BI "int mtd_init_config(void);"
 .br
 
 .RS
@@ -118,7 +118,7 @@ This is used to setup the config.json file which contains the client_id &
 client_secret.
 .RE
 
-\fBint mtd_init_nino\fP(void);
+.BI "int mtd_init_nino(void);"
 
 .RS
 This is for creating the nino.json file which stores the users National
