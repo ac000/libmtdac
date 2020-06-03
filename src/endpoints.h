@@ -134,7 +134,8 @@ extern int do_ep(enum endpoint ep, const char *api_ver, const char *file,
 		 const char *data, char **buf, ...);
 extern int (*ep_set_oauther(enum endpoint ep))(void);
 extern char *ep_get_token(enum endpoint ep);
-extern char *ep_make_url(enum endpoint ep, const char **params, char *url);
+extern char *ep_make_url(enum endpoint ep, const char * const params[],
+			 char *url);
 
 #ifdef __cplusplus
 } /* extern "C" */

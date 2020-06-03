@@ -622,7 +622,7 @@ char *ep_get_token(enum endpoint ep)
 	}
 }
 
-char *ep_make_url(enum endpoint ep, const char **params, char *url)
+char *ep_make_url(enum endpoint ep, const char * const params[], char *url)
 {
 	char *nino = NULL;
 	char *string;

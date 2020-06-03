@@ -45,7 +45,7 @@ struct curl_ctx {
 	enum http_method http_method;
 	enum endpoint endpoint;
 
-	const char **params;
+	const char * const *params;
 	char *res_buf;
 	char *accepted_location;
 
