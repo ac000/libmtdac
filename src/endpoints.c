@@ -582,8 +582,7 @@ int do_ep(enum endpoint ep, const char *api_ver, const char *file,
 
 	ctx.mtd_api_ver = api_ver;
 	ctx.endpoint = ep;
-	if (*params)
-		ctx.params = params;
+	ctx.params = params;
 
 	switch (endpoints[ep].method) {
 	case M_GET:
