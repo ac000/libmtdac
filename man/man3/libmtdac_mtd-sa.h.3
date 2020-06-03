@@ -1,0 +1,345 @@
+.TH libmtdac_mtd-sa.h 3 "June 1, 2020" "libmtdac 0.9.0" "libmtdac_mtd-sa.h"
+
+.SH NAME
+libmtdac_mtd-sa.h \- Make Tax Digital \- Self Assessment API
+
+.SH SYNOPSIS
+#include <libmtdac/mtd-sa.h>
+
+.SH DESCRIPTION
+These functions are for working with the UK's HMRC Make Tax Digital Self
+Assessment API which itself contains several sub API's.
+
+.SH FUNCTIONS
+
+.SS Self-employments
+
+.nf
+.BI "int mtd_sa_se_list_employments(char **" buf ");"
+
+.RS +4
+.BR mtd_sa_se_list_employments (3)
+.RE
+
+.BI "int mtd_sa_se_create_employment(const char *" src_file ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_se_create_employment (3)
+.RE
+
+.BI "int mtd_sa_se_get_employment(const char *" seid ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_se_get_employment (3)
+.RE
+
+.BI "int mtd_sa_se_list_obligations(const char *" seid ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_se_list_obligations (3)
+.RE
+
+.BI "int mtd_sa_se_list_periods(const char *" seid ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_se_list_periods (3)
+.RE
+
+.BI "int mtd_sa_se_create_period(const char *" src_file ",
+.BI "                            const char *" seid ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_se_create_period (3)
+.RE
+
+.BI "int mtd_sa_se_get_period(const char *" seid ", const char *" period_id ",
+.BI "                         char **" buf ");"
+
+.RS +4
+.BR mtd_sa_se_get_period (3)
+.RE
+
+.BI "int mtd_sa_se_update_period(const char *" src_file ", const char *" seid ",
+.BI "                            const char *" period_id ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_se_update_period (3)
+.RE
+
+.BI "int mtd_sa_se_get_annual_summary(const char *" seid ",
+.BI "                                 const char *" tax_year ", char **" buf ");"
+.RS +4
+.BR mtd_sa_se_get_annual_summary (3)
+.RE
+
+.BI "int mtd_sa_se_update_annual_summary(const char *" src_file ",
+.BI "                                    const char *" seid ",
+.BI "                                    const char *" tax_year ",
+.BI "                                    char **" buf ");"
+
+.RS +4
+.BR mtd_sa_se_update_annual_summary (3)
+.RE
+
+.BI "int mtd_sa_se_submit_end_of_period_statement(const char *" src_file ",
+.BI "                                             const char *" seid ",
+.BI "                                             const char *" start ",
+.BI "                                             const char *" end ",
+.BI "                                             char **" buf ");"
+
+.RS +4
+.BR mtd_sa_se_submit_end_of_period_statement (3)
+.RE
+
+.BI "int mtd_sa_se_get_end_of_period_statement(const char *" seid ",
+.BI "                                          const char *" query_string ",
+.BI "                                          char **" buf ");"
+
+.RS +4
+.BR mtd_sa_se_get_end_of_period_statement (3)
+.RE
+.ni
+
+.SS UK property business
+
+.nf
+.BI "int mtd_sa_pb_get_property(char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_get_property (3)
+.RE
+
+.BI "int mtd_sa_pb_create_property(const char *" src_file ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_create_property (3)
+.RE
+
+.BI "int mtd_sa_pb_list_obligations(char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_list_obligations (3)
+.RE
+
+.BI "int mtd_sa_pb_list_non_fhl_periods(char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_list_non_fhl_periods (3)
+.RE
+
+.BI "int mtd_sa_pb_create_non_fhl_period(const char *" src_file ",
+.BI "                                    char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_create_non_fhl_period (3)
+.RE
+
+.BI "int mtd_sa_pb_get_non_fhl_period(const char *" pid ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_get_non_fhl_period (3)
+.RE
+
+.BI "int mtd_sa_pb_update_non_fhl_period(const char *" src_file ",
+.BI "                                    const char *" pid ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_update_non_fhl_period (3)
+.RE
+
+.BI "int mtd_sa_pb_get_non_fhl_annual_summary(const char *" tax_year ",
+.BI "                                         char **" buf ");
+
+.RS +4
+.BR mtd_sa_pb_get_non_fhl_annual_summary (3)
+.RE
+
+.BI "int mtd_sa_pb_update_non_fhl_annual_summary(const char *" src_file ",
+.BI "                                            const char *" tax_year ",
+.BI "                                            char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_update_non_fhl_annual_summary (3)
+.RE
+
+.BI "int mtd_sa_pb_list_fhl_periods(char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_list_fhl_periods (3)
+.RE
+
+.BI "int mtd_sa_pb_create_fhl_period(const char *" src_file ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_create_fhl_period (3)
+.RE
+
+.BI "int mtd_sa_pb_get_fhl_period(const char *" pid ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_get_fhl_period (3)
+.RE
+
+.BI "int mtd_sa_pb_update_fhl_period(const char *" src_file ",
+.BI "                                const char *" pid ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_update_fhl_period (3)
+.RE
+
+.BI "int mtd_sa_pb_get_fhl_annual_summary(const char *" tax_year ",
+.BI "                                     char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_get_fhl_annual_summary (3)
+.RE
+
+.BI "int mtd_sa_pb_update_fhl_annual_summary(const char *" src_file ",
+.BI "                                        const char *" tax_year ",
+.BI "                                        char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_update_fhl_annual_summary (3)
+.RE
+
+.BI "int mtd_sa_pb_submit_end_of_period_statement(const char *" src_file ",
+.BI "                                             const char *" start ",
+.BI "                                             const char *" end ",
+.BI "                                             char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_submit_end_of_period_statement (3)
+.RE
+
+.BI "nt mtd_sa_pb_get_end_of_period_statement(const char *" query_string ",
+.BI "                                         char **" buf ");"
+
+.RS +4
+.BR mtd_sa_pb_get_end_of_period_statement (3)
+.RE
+.ni
+
+.SS Dividends income
+
+.nf
+.BI "int mtd_sa_di_get_annual_summary(const char *" tax_year ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_di_get_annual_summary (3)
+.RE
+
+.BI "int mtd_sa_di_update_annual_summary(const char *" src_file ",
+.BI "                                    const char *" tax_year ",
+.BI "                                    char **" buf ");"
+
+.RS +4
+.BR mtd_sa_di_update_annual_summary (3)
+.RE
+.ni
+
+.SS Savings accounts
+
+.nf
+.BI "int mtd_sa_sa_list_accounts(char **" buf ");"
+
+.RS +4
+.BR mtd_sa_sa_list_accounts (3)
+.RE
+
+.BI "int mtd_sa_sa_create_account(const char *" src_file ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_sa_create_account (3)
+.RE
+
+.BI "int mtd_sa_sa_get_account(const char *" said ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_sa_get_account (3)
+.RE
+
+.BI "int mtd_sa_sa_get_annual_summary(const char *" said ",
+.BI "                                 const char *" tax_year ",
+.BI "                                 char **" buf ");"
+
+.RS +4
+.BR mtd_sa_sa_get_annual_summary (3)
+.RE
+
+.BI "int mtd_sa_sa_update_annual_summary(const char *" src_file ",
+.BI "                                    const char *" said ",
+.BI "                                    const char *" tax_year ",
+.BI "                                    char **" buf ");"
+
+.RS +4
+.BR mtd_sa_sa_update_annual_summary (3)
+.RE
+.ni
+
+.SS Charitable giving
+
+.nf
+.BI "int mtd_sa_cg_get_charitable_giving(const char *" tax_year ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_cg_get_charitable_giving (3)
+.RE
+
+.BI "int mtd_sa_cg_update_charitable_giving(const char *" src_file ",
+.BI "                                       const char *" tax_year ",
+.BI "                                       char **" buf ");"
+
+.RS +4
+.BR mtd_sa_cg_update_charitable_giving (3)
+.RE
+.ni
+
+.SS Tax calculations (EOL Jul 2020)
+
+.nf
+.BI "int mtd_sa_tc_calculate(const char *" src_file ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_tc_calculate (3)
+.RE
+
+.BI "int mtd_sa_tc_get_calculation(const char *" cid ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_tc_get_calculation (3)
+.RE
+
+.BI "int mtd_sa_tc_get_validation_msgs(const char *" cid ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_tc_get_validation_msgs (3)
+.RE
+.ni
+
+.SS Crystallisation
+
+.nf
+.BI "int mtd_sa_cr_intent_to_crystallise(const char *" tax_year ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_cr_intent_to_crystallise (3)
+.RE
+
+.BI "int mtd_sa_cr_crystallise(const char *" src_file ",
+.BI "                          const char *" tax_year ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_cr_crystallise (3)
+.RE
+
+.BI "int mtd_sa_cr_list_obligations(const char *" query_string ", char **" buf ");"
+
+.RS +4
+.BR mtd_sa_cr_list_obligations (3)
+.RE
+.ni
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3)
