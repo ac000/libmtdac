@@ -18,6 +18,9 @@
     - [Individual Loses - Loss Claims](#individual-loses---loss-claims)
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Business Income Source Summary API functions](#make-tax-digital---business-income-source-summary-api-functions)
+  * [Make Tax Digital - Business Source Adjustable Summary API functions](#make-tax-digital---business-source-adjustable-summary-api-functions)
+    - [Business Source Adjustable Summary - Self-Employment](#business-source-adjustable-summary---self-employment)
+    - [Business Source Adjustable Summary - UK Property Business](#business-source-adjustable-summary---uk-property-business)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
   * [Make Tax Digital - National Insurance Test Support API functions [test-only]](#make-tax-digital---national-insurance-test-support-api-functions-test-only)
   * [Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]](#make-tax-digital---test-fraud-prevention-headers-api-functions-test-only)
@@ -478,6 +481,52 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 #### mtd\_biss\_get\_property
 
     int mtd_biss_get_property(const char *query_string, char **buf)
+
+
+### Make Tax Digital - Business Source Adjustable Summary API functions
+
+    #include <libmtdac/mtd-bsas.h>
+
+#### mtd\_bsas\_list\_summaries
+
+    int mtd_bsas_list_summaries(const char *query_string, char **buf)
+
+#### mtd\_bsas\_trigger\_summary
+
+    int mtd_bsas_trigger_summary(const char *src_file, char **buf)
+
+#### Business Source Adjustable Summary - Self-Employment
+
+#### mtd\_bsas\_se\_get\_summary
+
+    int mtd_bsas_se_get_summary(const char *bid, const char *query_string,
+                                char **buf)
+
+#### mtd\_bsas\_se\_list\_summary\_adjustments
+
+    int mtd_bsas_se_update_summary_adjustments(const char *src_file,
+                                               const char *bid, char **buf
+
+#### mtd\_bsas\_se\_update\_summary\_adjustments
+
+    int mtd_bsas_se_update_summary_adjustments(const char *src_file,
+                                               const char *bid, char **buf)
+
+#### Business Source Adjustable Summary - UK Property Business
+
+#### mtd\_bsas\_pb\_get\_summary
+
+    int mtd_bsas_pb_get_summary(const char *bid, const char *query_string,
+                                char **buf
+
+#### mtd\_bsas\_pb\_list\_summary\_adjustments
+
+    int mtd_bsas_pb_list_summary_adjustments(const char *bid, char **buf)
+
+#### mtd\_bsas\_pb\_update\_summary\_adjustments
+
+    int mtd_bsas_pb_update_summary_adjustments(const char *src_file,
+                                               const char *bid, char **buf)
 
 
 ### Make Tax Digital - Create Test User API functions [test-only]

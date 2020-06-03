@@ -494,6 +494,56 @@ static const struct _endpoint {
 		.scope	= SCOPE_USER
 	},
 
+	/* Business Source Adjustable Summary */
+	{
+		.ep	= BSAS_LIST_SUMMARIES,
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	{
+		.ep	= BSAS_TRIGGER_SUMMARY,
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/trigger",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
+	},
+	{
+		.ep	= BSAS_SE_GET_SUMMARY,
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	{
+		.ep	= BSAS_SE_LIST_SUMMARY_ADJUSTMENTS,
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust",
+		.method = M_GET,
+		.scope	= SCOPE_USER
+	},
+	{
+		.ep	= BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS,
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
+	},
+	{
+		.ep	= BSAS_PB_GET_SUMMARY,
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	{
+		.ep	= BSAS_PB_LIST_SUMMARY_ADJUSTMENTS,
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	{
+		.ep	= BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS,
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust",
+		.method	= M_POST,
+		.scope	= SCOPE_USER
+	},
+
 	/* Create Test User */
 	{
 		.ep	= TEST_CU_CREATE_INDIVIDUAL,
