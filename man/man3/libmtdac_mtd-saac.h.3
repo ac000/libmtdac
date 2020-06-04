@@ -1,0 +1,62 @@
+.TH libmtdac_mtd-saac.h 3 "June 1, 2020" "libmtdac 0.9.0" "libmtdac_mtd-saac.h"
+
+.SH NAME
+libmtdac_mtd-saac.h \- Make Tax Digital \- Self Assessment Accounts API
+
+.SH SYNOPSIS
+#include <libmtdac/mtd-saac.h>
+
+.SH DESCRIPTION
+These functions are for working with the UK's HMRC Make Tax Digital Self
+Assessment Accounts API.
+
+.SH FUNCTIONS
+
+.nf
+.BI "int mtd_saac_get_balance(char **" buf ");"
+
+.RS +4
+.BR mtd_saac_get_balance (3)
+.RE
+
+.BI "int mtd_saac_list_transactions(const char *" query_string ", char **" buf ");"
+
+.RS +4
+.BR mtd_saac_list_transactions (3)
+.RE
+
+.BI "int mtd_saac_get_transaction(const char *" trid ", char **" buf ");"
+
+.RS +4
+.BR mtd_saac_get_transaction (3)
+.RE
+
+.BI "int mtd_saac_list_charges(const char *" query_string ", char **" buf ");"
+
+.RS +4
+.BR mtd_saac_list_charges (3)
+.RE
+
+.BI "int mtd_saac_get_charge(const char *" trid ", char **" buf ");"
+
+.RS +4
+.BR mtd_saac_get_charge (3)
+.RE
+
+.BI "int mtd_saac_list_payments(const char *" query_string ", char **" buf ");
+
+.RS +4
+.BR mtd_saac_list_payments (3)
+.RE
+
+.BI "int mtd_saac_get_payment(const char *" pyid ", char **" buf ");"
+
+.RS +4
+.BR mtd_saac_get_payment (3)
+.RE
+.ni
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3)
