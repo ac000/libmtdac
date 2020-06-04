@@ -98,6 +98,23 @@ As a general rule :-
 	}
 ```
 
+- comments should be C style not C++/C99
+
+  for single line comments
+
+```C
+	/* This is a single line comment */
+```
+
+  for multi-line comments
+
+```C
+	/*
+	 * This is a multi
+	 * line comment
+	 */
+```
+
 - variable declarations should be at the beginning of a code block, not
   interspersed in the middle
 
