@@ -25,7 +25,7 @@ extern int mtd_ic_get_taxable_income(const char *cid, char **buf);
 extern int mtd_ic_get_income_tax_nics_calc(const char *cid, char **buf);
 extern int mtd_ic_get_calculation_meta(const char *cid, char **buf);
 extern int mtd_ic_trigger_calculation(const char *src_file, char **buf);
-extern int mtd_ic_list_calculations(char **buf);
+extern int mtd_ic_list_calculations(const char *query_string, char **buf);
 
 #pragma GCC visibility pop
 

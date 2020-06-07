@@ -85,10 +85,10 @@ int mtd_ic_trigger_calculation(const char *src_file, char **buf)
 
 /*
  * [GET ]
- * /individuals/calculations/{nino}/self-assessment
+ * /individuals/calculations/{nino}/self-assessment[?taxYear=YYYY-YY]
  */
-int mtd_ic_list_calculations(char **buf)
+int mtd_ic_list_calculations(const char *query_string, char **buf)
 {
 	return do_ep(IC_LIST_CALCULATIONS, API_VER,
-		     NULL, NULL, buf, (const char *)NULL);
+		     NULL, NULL, buf, query_string, (char *)NULL);
 }

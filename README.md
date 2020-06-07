@@ -374,7 +374,7 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 #### mtd\_ic\_list\_calculations
 
-    int mtd_ic_list_calculations(char **buf)
+    int mtd_ic_list_calculations(const char *query_string, char **buf)
 
 #### mtd\_ic\_trigger\_calculation
 

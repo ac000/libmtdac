@@ -356,7 +356,7 @@ static const struct _endpoint {
 	/* Individual Calculations */
 	{
 		.ep	= IC_LIST_CALCULATIONS,
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment",
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{optional_query_params}",
 		.method	= M_GET,
 		.scope	= SCOPE_USER
 	},
