@@ -1,6 +1,6 @@
 Name:		libmtdac
-Version:	0.9.0
-Release:	2%{?dist}
+Version:	0.10.0
+Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
 Group:		System Environment/Libraries
@@ -47,6 +47,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Sun Jun 07 2020 Andrew Clayton <andrew@digital-domain.net> - 0.10.0-1
+- mtd_ic_list_calculations() should take a query_string (API break)
 
 * Mon Jun 01 2020 Andrew Clayton <andrew@digital-domain.net> - 0.9.0-2
 - Specfile fix, be sure to install all header files
