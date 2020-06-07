@@ -1,0 +1,139 @@
+.TH MTD_BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS 3 "June 1, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_bsas_se_update_summary_adjustments \- update a self-employment Business
+Source Adjustable Summary
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-bsas.h>
+.PP
+.nf
+.BI "int mtd_bsas_se_update_summary_adjustments(const char *" src_file ",
+.BI "                                           const char *" bid ", char **" buf );
+.ni
+
+.SH DESCRIPTION
+
+This function is part of the UK's HMRC Make Tax Digital Business Source
+Adjustable Summaries API.
+.PP
+This function allows a developer to provide accounting adjustments against a
+specified Business Source Adjustable Summary (BSAS) using its unique
+identifier. The BSAS ID (\fBbid\fP) used must be for a self-employment business
+that has not been previously adjusted.
+
+.TP 4
+.B src_file
+This is a file containing the JSON payload to send. E.g
+.PP
+.RS 4
+Scenario: Full Expenses
+.PP
+.RE
+.RS 8
+.EX
+{
+    "income": {
+        "turnover": 1000.49,
+        "other": 1000.49
+    },
+    "expenses": {
+        "costOfGoodsBought": -1000.49,
+        "cisPaymentsToSubcontractors": 1000.49,
+        "staffCosts": 1000.49,
+        "travelCosts": 1000.49,
+        "premisesRunningCosts": 1000.49,
+        "maintenanceCosts": -1000.49,
+        "adminCosts": 1000.49,
+        "advertisingCosts": 1000.49,
+        "businessEntertainmentCosts": 1000.49,
+        "interest": 1000.49,
+        "financialCharges": 1000.49,
+        "badDebt": 1000.49,
+        "professionalFees": 1000.49,
+        "depreciation": 1000.49,
+        "other": 1000.49
+    },
+    "additions": {
+        "costOfGoodsBoughtDisallowable": 1000.49,
+        "cisPaymentsToSubcontractorsDisallowable": 1000.49,
+        "staffCostsDisallowable": 1000.49,
+        "travelCostsDisallowable": 1000.49,
+        "premisesRunningCostsDisallowable": 1000.49,
+        "maintenanceCostsDisallowable": 1000.49,
+        "adminCostsDisallowable": -1000.49,
+        "advertisingCostsDisallowable": -1000.49,
+        "businessEntertainmentCostsDisallowable": 1000.49,
+        "interestDisallowable": 1000.49,
+        "financialChargesDisallowable": 1000.49,
+        "badDebtDisallowable": 1000.49,
+        "professionalFeesDisallowable": 1000.49,
+        "depreciationDisallowable": 1000.49,
+        "otherDisallowable": 1000.49
+    }
+}
+.EE
+.RE
+
+.PP
+.RS 4
+Scenario: Consolidated Expenses
+.PP
+.RE
+.RS 8
+.EX
+{
+    "income": {
+        "turnover": 1000.49,
+        "other": 1000.49
+    },
+    "expenses": {
+        "consolidatedExpenses": -1000.49
+    }
+}
+.EE
+.RE
+
+.TP
+.B bid
+.RS 4
+This is the bsasId and is in the form
+.RE
+
+.RS 8
+^[0-9]{8}|[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+.RE
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR libmtdac-result_buffer (3)

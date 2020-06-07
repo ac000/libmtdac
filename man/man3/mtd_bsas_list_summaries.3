@@ -1,0 +1,75 @@
+.TH MTD_BSAS_LIST_SUMMARIES 3 "June 1, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_bsas_list_summaries \- list Business Source Adjustable Summaries
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-bsas.h>
+.PP
+.BI "int mtd_bsas_list_summaries(const char *" query_string ", char **" buf );
+
+.SH DESCRIPTION
+
+This function is part of the UK's HMRC Make Tax Digital Business Source
+Adjustable Summaries API.
+.PP
+This function allows a developer to generate a list of Business Source
+Adjustable Summaries (BSAS) for a given tax year. A filter can be used to
+return the BSAS for a single business or business type (see \fBquery_string\fP
+below).
+
+.TP 4
+.B query_string
+This is optional and is of the form
+.PP
+.RS 8
+[?[selfEmploymentId=XNISNNNNNNNNNNN][&[typeOfBusiness={self-employment,uk-property-non-fhl,uk-property-fhl}][&[taxYear=YYYY-YY]]]]
+.RE
+
+.RS 4
+\fBselfEmploymentId\fP is optional and is in the form
+.RE
+
+.RS 8
+^X[A-Z0-9]{1}IS[0-9]{11}$
+.RE
+
+.RS 4
+\fBtypeOfBusiness\fP is optional and is \fBone\fP of the above shown values.
+
+\fBtaxYear\fP is an optional tax year.
+.RE
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR libmtdac-result_buffer (3)
