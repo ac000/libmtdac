@@ -1,0 +1,60 @@
+.TH MTD_IC_GET_TAXABLE_INCOME 3 "June 7, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_ic_get_taxable_income \- retrieve self assessment tax calculation taxable
+income
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-ic.h>
+.PP
+.BI "int mtd_ic_get_taxable_income(const char *" cid ", char **" buf );
+
+.SH DESCRIPTION
+
+This function allows developers to retrieve the taxable income that has been
+used in the self assessment tax calculation for a given NINO and Calculation
+ID (see \fBcid\fp below).
+
+.TP 4
+.B cid
+.RS 4
+This is the calculationId and is in the form
+.RE
+
+.RS 8
+^[0-9]{8}|[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+.RE
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR libmtdac-result_buffer (3)
