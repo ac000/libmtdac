@@ -1,0 +1,59 @@
+.TH MTD_SAAC_LIST_PAYMENTS 3 "June 7, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_saac_list_payments \- list self assessment payments
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-saac.h>
+.PP
+.BI "int mtd_saac_list_payments(const char *" query_string ", char **" buf );
+
+.SH DESCRIPTION
+
+This function allows a developer to retrieve a list of payments for a given
+date range (see \fBquery_string\fP below).
+
+.TP 4
+.B query_string
+This is required and is in the form
+.PP
+.RS 8
+\fB?from=YYYY-MM-DD&to=YYYY-MM-DD\fP
+.RE
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH NOTES
+This is only available in the \fBTest API\fP
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR libmtdac-result_buffer (3)
