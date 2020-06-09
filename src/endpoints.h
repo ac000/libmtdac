@@ -9,10 +9,6 @@
 #ifndef _ENDPOINTS_H_
 #define _ENDPOINTS_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #define URL_LEN			1024
 
 /*
@@ -148,9 +144,5 @@ extern int (*ep_set_oauther(enum endpoint ep))(void);
 extern char *ep_get_token(enum endpoint ep);
 extern char *ep_make_url(enum endpoint ep, const char * const params[],
 			 char *url);
-
-#ifdef __cplusplus
-} /* extern "C" */
-#endif
 
 #endif /* _ENDPOINTS_H_ */

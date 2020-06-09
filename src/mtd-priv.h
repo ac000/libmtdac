@@ -1,17 +1,13 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * mtd-prix.h - Make Tax Digital
+ * mtd-priv.h - Make Tax Digital
  *
  * Copyright (C) 2020	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _MTD_PRIV_H_
 #define _MTD_PRIV_H_
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define BASE_URL		"https://test-api.service.hmrc.gov.uk"
 
@@ -29,8 +25,5 @@ enum app_conn_type {
 	MTD_ACT_OTHER_VIA_SERVER,
 };
 
-#ifdef __cplusplus
-} /* extern "C" */
-#endif
 
 #endif /* _MTD_PRIV_H_ */

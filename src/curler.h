@@ -16,10 +16,6 @@
 
 #include "endpoints.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 enum http_method {
 	M_OPTIONS = 0,
 	M_GET,
@@ -74,9 +70,5 @@ extern int do_post(struct curl_ctx *ctx, const char *src_file,
 		   const char *data, char **buf);
 extern int do_delete(struct curl_ctx *ctx, char **buf);
 extern int do_get(struct curl_ctx *ctx, char **buf);
-
-#ifdef __cplusplus
-} /* extern "C" */
-#endif
 
 #endif /* _CURLER_H_ */

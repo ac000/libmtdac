@@ -11,14 +11,6 @@
 
 #include "curler.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 extern void set_anti_fraud_hdrs(struct curl_ctx *ctx);
-
-#ifdef __cplusplus
-} /* extern "C" */
-#endif
 
 #endif /* _FPH_H_ */
