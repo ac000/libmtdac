@@ -15,11 +15,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-enum log_level {
-	MTD_LOG_ERR = 0,
-	MTD_LOG_INFO,
-	MTD_LOG_DEBUG,
-};
+#include "mtd-priv.h"
 
 static const struct logger {
 	const enum log_level log_level;
@@ -33,7 +29,7 @@ static const struct logger {
 #define logger(log_level, fmt, ...) \
 	_logger((const char *)__func__, log_level, fmt, ##__VA_ARGS__)
 
-extern enum log_level mtd_log_level;
+extern __thread struct mtd_ctx mtd_ctx;
 static inline void _logger(const char *func, enum log_level log_level,
 			   const char *fmt, ...)
 {
@@ -42,7 +38,7 @@ static inline void _logger(const char *func, enum log_level log_level,
 	va_list ap;
 	FILE *out = log_level == MTD_LOG_ERR ? stderr : stdout;
 
-	if (log_level > mtd_log_level)
+	if (log_level > mtd_ctx.log_level)
 		return;
 
 	va_start(ap, fmt);

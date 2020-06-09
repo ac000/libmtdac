@@ -28,11 +28,10 @@
 #include "curler.h"
 #include "logger.h"
 
-int mtd_opts;
-
-enum app_conn_type mtd_app_conn_type = MTD_ACT_OTHER_DIRECT;
-
-enum log_level mtd_log_level = MTD_LOG_ERR;
+__thread struct mtd_ctx mtd_ctx = {
+	.app_conn_type	= MTD_ACT_OTHER_DIRECT,
+	.log_level	= MTD_LOG_ERR,
+};
 
 static char *gen_uuid(char *buf)
 {
@@ -116,7 +115,7 @@ static int check_config_dir(void)
 
 void mtd_global_init(void)
 {
-	return;
+	curl_global_init(CURL_GLOBAL_ALL);
 }
 
 int mtd_init(int flags)
@@ -125,14 +124,15 @@ int mtd_init(int flags)
 	if (flags & ~(MTD_OPT_ALL))
 		return MTD_ERR_UNKNOWN_FLAGS;
 
-	mtd_opts = flags;
+	mtd_ctx.opts = flags;
 
 	if (flags & MTD_OPT_LOG_INFO)
-		mtd_log_level = MTD_LOG_INFO;
+		mtd_ctx.log_level = MTD_LOG_INFO;
 	else if (flags & MTD_OPT_LOG_DEBUG)
-		mtd_log_level = MTD_LOG_DEBUG;
+		mtd_ctx.log_level = MTD_LOG_DEBUG;
 
-	curl_global_init(CURL_GLOBAL_ALL);
+	if (flags & MTD_OPT_GLOBAL_INIT)
+		curl_global_init(CURL_GLOBAL_ALL);
 
 	check_config_dir();
 

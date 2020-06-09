@@ -22,6 +22,7 @@
 #include <jansson.h>
 
 #include "mtd.h"
+#include "mtd-priv.h"
 #include "curler.h"
 #include "endpoints.h"
 #include "auth.h"
@@ -87,8 +88,6 @@ static const struct http_method_str {
 	{ M_TRACE, "TRACE" },
 	{ M_CONNECT, "CONNECT" },
 };
-
-extern unsigned mtd_log_level;
 
 static inline const char *http_status_code2str(enum http_status_code sc)
 {
@@ -245,6 +244,7 @@ static const char *get_user_agent(char *ua)
 	return ua;
 }
 
+extern __thread struct mtd_ctx mtd_ctx;
 static int curl_perform(struct curl_ctx *ctx)
 {
 	int ret = 0;
@@ -286,7 +286,7 @@ static int curl_perform(struct curl_ctx *ctx)
 
 	curl_easy_setopt(curl, CURLOPT_USERAGENT, get_user_agent(ua));
 
-	if (mtd_log_level == MTD_LOG_DEBUG)
+	if (mtd_ctx.log_level == MTD_LOG_DEBUG)
 		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
 	res = curl_easy_perform(curl);

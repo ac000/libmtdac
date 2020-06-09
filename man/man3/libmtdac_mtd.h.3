@@ -106,8 +106,9 @@ In a single-threaded application you can skip calling this function and pass
 .br
 
 .RS
-You should call this function at program startup. Passing in one or more of
-the above \fBMTD_OPT_\fP values OR'd (\fB|\fP) together.
+You should call this function once in each thread where libmtdac is to be used.
+Passing in one or more of the above \fBMTD_OPT_\fP values OR'd (\fB|\fP)
+together.
 .RE
 
 .BI "void mtd_deinit(void);"

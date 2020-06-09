@@ -78,6 +78,9 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     int mtd_init(int flags)
 
+   This function should be called once in each thread where *libmtdac* is to be
+   used.
+
    *flags* can currently be one of the following to specify the desired log
    level (defaults to MTD\_OPT\_LOG\_ERR)
 

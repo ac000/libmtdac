@@ -25,5 +25,16 @@ enum app_conn_type {
 	MTD_ACT_OTHER_VIA_SERVER,
 };
 
+enum log_level {
+	MTD_LOG_ERR = 0,
+	MTD_LOG_INFO,
+	MTD_LOG_DEBUG,
+};
+
+struct mtd_ctx {
+	int opts;
+	enum app_conn_type app_conn_type;
+	enum log_level log_level;
+};
 
 #endif /* _MTD_PRIV_H_ */

@@ -6,6 +6,8 @@
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */
 
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -361,21 +363,20 @@ static char *get_device_id(char *buf)
 	return buf;
 }
 
-extern int mtd_opts;
-extern enum app_conn_type mtd_app_conn_type;
+extern __thread struct mtd_ctx mtd_ctx;
 void set_anti_fraud_hdrs(struct curl_ctx *ctx)
 {
 	CURL *curl;
 	char buf[BUF_SZ];
 
-	if (!(mtd_opts & MTD_OPT_SND_ANTI_FRAUD_HDRS))
+	if (!(mtd_ctx.opts & MTD_OPT_SND_ANTI_FRAUD_HDRS))
 		return;
 
 	curl = curl_easy_init();
 
 	curl_add_hdr(ctx, "Gov-Client-Device-ID: %s", get_device_id(buf));
 
-	switch (mtd_app_conn_type) {
+	switch (mtd_ctx.app_conn_type) {
 	case MTD_ACT_MOBILE_APP_DIRECT:
 	case MTD_ACT_DESKTOP_APP_DIRECT:
 	case MTD_ACT_MOBILE_APP_VIA_SERVER:
