@@ -63,6 +63,17 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
 ### Initialisation functions
 
+#### mtd\_global\_init - initialise the library (globally)
+
+    void mtd_global_init(void)
+
+   This function should be called before any other threads are running. In
+   a non-threaded application you can skip this function and pass
+
+       MTD_OPT_GLOBAL_INIT
+
+   to mtd\_init() instead.
+
 #### mtd\_init - initialise the library
 
     int mtd_init(int flags)
@@ -85,6 +96,10 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
         MTD_OPT_ACT_BATCH_PROCESS_DIRECT
         MTD_OPT_ACT_OTHER_DIRECT
         MTD_OPT_ACT_OTHER_VIA_SERVER
+
+   in a single-threaded application, when not calling mtd\_global\_init()
+
+       MTD_OPT_GLOBAL_INIT
 
    when using one of the above, you should also set
 

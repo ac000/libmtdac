@@ -58,6 +58,13 @@ These set the desired log level. Defaults to \fBMTD_OPT_LOG_ERR\fP
 These set the application connection method. \fBOne\fP of these should be set.
 .RE
 
+#define \fBMTD_OPT_GLOBAL_INIT\fP
+
+.RS
+Can be passed to \fBmtd_init()\fP, in single threaded applications, instead of
+calling \fBmtd_global_init()\fP
+.RE
+
 #define \fBMTD_OPT_SND_ANTI_FRAUD_HDRS\fP
 
 .RS
@@ -84,6 +91,16 @@ enum mtd_error {
 };
 
 .SH Functions
+
+.BI "void mtd_global_init(void);"
+.br
+
+.RS
+This function should be called \fBbefore\fP any other threads are running.
+.PP
+In a single-threaded application you can skip calling this function and pass
+\fBMTD_OPT_GLOBAL_INIT\fP to \fPmtd_init()\fP instead.
+.RE
 
 .BI "int mtd_init(int " flags ");"
 .br
@@ -124,5 +141,7 @@ client_secret.
 This is for creating the nino.json file which stores the users National
 Insurance Number.
 .RE
+
+.SH NOTES
 
 The JSON files mentioned above are stored under \fI~/.config/libmtdac/\fP

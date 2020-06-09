@@ -114,6 +114,11 @@ static int check_config_dir(void)
 	return -1;
 }
 
+void mtd_global_init(void)
+{
+	return;
+}
+
 int mtd_init(int flags)
 {
 	/* Check for unknown flags */

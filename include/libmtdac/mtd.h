@@ -34,6 +34,8 @@ extern "C" {
 
 #define MTD_OPT_SND_ANTI_FRAUD_HDRS		0x10000000
 
+#define MTD_OPT_GLOBAL_INIT			0x40000000
+
 #define MTD_OPT_PRODUCTION_API			0x80000000
 
 #define MTD_OPT_ALL \
@@ -49,6 +51,7 @@ extern "C" {
 	MTD_OPT_ACT_OTHER_DIRECT | \
 	MTD_OPT_ACT_OTHER_VIA_SERVER | \
 	MTD_OPT_SND_ANTI_FRAUD_HDRS | \
+	MTD_OPT_GLOBAL_INIT | \
 	MTD_OPT_PRODUCTION_API
 
 enum mtd_error {
@@ -62,6 +65,7 @@ enum mtd_error {
 
 #pragma GCC visibility push(default)
 
+extern void mtd_global_init(void);
 extern int mtd_init(int flags);
 extern void mtd_deinit(void);
 extern int mtd_init_auth(void);
