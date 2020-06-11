@@ -314,6 +314,7 @@ static int curl_perform(struct curl_ctx *ctx)
 static int set_headers(struct curl_ctx *ctx)
 {
 	int err = MTD_ERR_NONE;
+	const char * const *hdrs;
 
 	if (!strstr(ctx->url, "/oauth/token")) {
 		err = curl_add_hdr(ctx, ctx->mtd_api_ver);
@@ -338,6 +339,19 @@ static int set_headers(struct curl_ctx *ctx)
 
 		if (err)
 			return MTD_ERR_OS;
+	}
+
+	/* Add any user supplied headers */
+	if (!mtd_ctx.hdrs)
+		return err;
+
+	hdrs = mtd_ctx.hdrs;
+	while (*hdrs) {
+		err = curl_add_hdr(ctx, *(hdrs++));
+		if (err) {
+			err = MTD_ERR_OS;
+			break;
+		}
 	}
 
 	return err;

@@ -128,6 +128,14 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
 
     void mtd_deinit(void)
 
+#### mtd\_hdrs\_add - add extra headers
+
+    void mtd_hdrs_add(const char * const hdrs[])
+
+#### mtd\_hdrs\_reset - clear extra headers
+
+    void mtd_hdrs_reset(void)
+
 
 ### Make Tax Digital - Self-Assessment API functions
 

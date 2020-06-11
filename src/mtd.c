@@ -113,6 +113,16 @@ static int check_config_dir(void)
 	return -1;
 }
 
+void mtd_hdrs_add(const char * const hdrs[])
+{
+	mtd_ctx.hdrs = hdrs;
+}
+
+void mtd_hdrs_reset(void)
+{
+	mtd_ctx.hdrs = NULL;
+}
+
 void mtd_global_init(void)
 {
 	curl_global_init(CURL_GLOBAL_ALL);

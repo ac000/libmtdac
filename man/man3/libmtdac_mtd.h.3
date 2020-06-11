@@ -143,6 +143,18 @@ This is for creating the nino.json file which stores the users National
 Insurance Number.
 .RE
 
+.BI "void mtd_hdrs_add(const char *" hdrs );
+
+.RS
+This is for adding extra HTTP headers to be sent.
+.RE
+
+.BI "void mtd_hdrs_reset(void);"
+
+.RS
+This is for clearing any extra HTTP headers that were set.
+.RE
+
 .SH NOTES
 
 The JSON files mentioned above are stored under \fI~/.config/libmtdac/\fP
