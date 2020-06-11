@@ -93,7 +93,6 @@ int oauther_refresh_access_token(void)
 	result = json_object_get(root, "result");
 	json_dump_file(result, path, JSON_INDENT(4));
 	json_decref(array);
-	json_decref(result);
 
 out_free:
 	free(buf);
