@@ -1,0 +1,40 @@
+.TH MTD_INIT_CONFIG 3 "June 1, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_init_config \- initialise config
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd.h>
+.PP
+.BI "int mtd_init_config(void);"
+
+.SH DESCRIPTION
+
+This function is used to create an initial \fI~/.config/libmtdac/config.json\fP
+file that contains the users \fIclient_id\fP & \fIclient_secret\fP.
+.PP
+This will prompt the user to enter the above tokens after which the config file
+will be created.
+.PP
+This should just be called once during an initial setup routine.
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH FILES
+.I ~/.config/libmtdac/config.json
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3)

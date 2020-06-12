@@ -1,0 +1,107 @@
+.TH MTD_INIT 3 "June 12, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_init \- per-instance/thread initialisation
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd.h>
+.PP
+.BI "int mtd_init(int " flags );
+
+.SH DESCRIPTION
+
+This function should be called once in each thread (or program) where libmtdac
+is to be used.
+.PP
+\fIflags\fP is a bitwise OR of one or more of the following
+
+.TP 4
+.B MTD_OPT_LOG_ERR
+This sets the log level to ERROR (the default)
+
+.TP
+.B MTD_OPT_LOG_INFO
+This sets the log level to INFO
+
+.TP
+.B MTD_OPT_LOG_DEBUG
+This sets the log level to DEBUG
+
+.PP
+At most, only one of those should be set.
+
+.TP 4
+.B MTD_OPT_ACT_MOBILE_APP_DIRECT
+Installed mobile application connecting directly to HMRC
+
+.TP
+.B MTD_OPT_ACT_DESKTOP_APP_DIRECT
+Installed desktop application connecting directly to HMRC
+
+.TP
+.B MTD_OPT_ACT_MOBILE_APP_VIA_SERVER
+Installed mobile application connecting through intermediary servers to HMRC
+
+.TP
+.B MTD_OPT_ACT_DESKTOP_APP_VIA_SERVER
+Installed desktop application connecting through intermediary servers to HMRC
+
+.TP
+.B MTD_OPT_ACT_WEB_APP_VIA_SERVER
+Web application connecting through intermediary servers to HMRC
+
+.TP
+.B MTD_OPT_ACT_BATCH_PROCESS_DIRECT
+Batch process connecting directly to HMRC
+
+.TP
+.B MTD_OPT_ACT_OTHER_DIRECT
+The application connects directly to HMRC but the method does not fit into the
+architectures described above (the default).
+
+.TP
+.B MTD_OPT_ACT_OTHER_VIA_SERVER
+The application connects through intermediary servers to HMRC but the method
+does not fit into the architectures described above.
+
+.PP
+The above MTD_OPT_ACT_ flags specify the application connection type, this is
+used by the Fraud Prevention Headers. Currently only
+\fBMTD_OPT_ACT_OTHER_DIRECT\fP does anything.
+
+.TP 4
+.B MTD_OPT_GLOBAL_INIT
+Can be used in a non-threaded application instead of calling
+.BR mtd_global_init (3)
+
+.TP
+.B MTD_OPT_SND_ANTI_FRAUD_HDRS
+Used to tell libmtdac to send \fBFraud Prevention Headers\fP. This is
+disabled by default as it's currently not required with the Self-Assessment
+API and it sends some possibly sensitive information such as; local IP
+addresses, mac addresses, OS username and a unique device ID created by
+libmtdac. See src/fph.c
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_OS
+There was an OS level failure
+
+.TP
+.B MTD_ERR_UNKNOWN_FLAGS
+One or more of the supplied flags weren't recognised
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR mtd_global_init (3),
+.BR mtd_deinit (3)

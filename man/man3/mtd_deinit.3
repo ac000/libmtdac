@@ -1,0 +1,26 @@
+.TH MTD_DEINIT 3 "June 1, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_deinit \- library cleanup
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd.h>
+.PP
+.BI "void mtd_deinit(void);"
+
+.SH DESCRIPTION
+
+This function should be called once \fBall\fP uses of libmtdac have finished.
+
+.SH ERRORS
+
+None. This function always succeeds.
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR mtd_global_init (3),
+.BR mtd_init (3)

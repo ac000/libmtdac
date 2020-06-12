@@ -1,0 +1,45 @@
+.TH MTD_INIT_AUTH 3 "June 1, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_init_auth \- authorise library with HMRC account
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd.h>
+.PP
+.BI "int mtd_init_auth(void);"
+
+.SH DESCRIPTION
+
+This function is used to authorise the library with the users HMRC account.
+.PP
+It will load the HMRC site in a new browser tab for the user to login and then
+accept the specified access scopes.
+.PP
+It will prompt the user for the \fBauthorisation code\fP that is shown to the
+user after completing the above step.
+.PP
+Once the user has entered the code it will create a
+\fI~/.config/libmtdac/oauth.json\fP file.
+.PP
+This should just be called once during an initial setup routine.
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH FILES
+.I ~/.config/libmtdac/oauth.json
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3)
