@@ -100,10 +100,6 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
         MTD_OPT_ACT_OTHER_DIRECT
         MTD_OPT_ACT_OTHER_VIA_SERVER
 
-   in a single-threaded application, when not calling mtd\_global\_init()
-
-       MTD_OPT_GLOBAL_INIT
-
    when using one of the above, you should also set
 
         MTD_OPT_SND_ANTI_FRAUD_HDRS
@@ -111,6 +107,10 @@ An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.
    however you should read
    [Fraud Prevention Headers](#fraud-prevention-headers) to understand the
    possible privacy implications.
+
+   in a single-threaded application, when not calling mtd\_global\_init()
+
+        MTD_OPT_GLOBAL_INIT
 
 #### mtd\_init\_auth - initialise oauth.json
 
