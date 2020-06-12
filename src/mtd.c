@@ -110,7 +110,7 @@ static int check_config_dir(void)
 	logger(MTD_LOG_ERR, "mkdir %s: %s\n", path,
 	       strerror_r(errno, errbuf, sizeof(errbuf)));
 
-	return -1;
+	return MTD_ERR_OS;
 }
 
 void mtd_hdrs_add(const char * const hdrs[])
@@ -130,6 +130,8 @@ void mtd_global_init(void)
 
 int mtd_init(int flags)
 {
+	int err;
+
 	/* Check for unknown flags */
 	if (flags & ~(MTD_OPT_ALL))
 		return MTD_ERR_UNKNOWN_FLAGS;
@@ -144,7 +146,9 @@ int mtd_init(int flags)
 	if (flags & MTD_OPT_GLOBAL_INIT)
 		curl_global_init(CURL_GLOBAL_ALL);
 
-	check_config_dir();
+	err = check_config_dir();
+	if (err)
+		return err;
 
 	return MTD_ERR_NONE;
 }
