@@ -427,10 +427,6 @@ static int do_put_post(struct curl_ctx *ctx, const char *src_file,
 
 	*buf = NULL;
 
-	ctx->http_method = http_method;
-	ctx->write_cb = curl_writeb_cb;
-	ctx->curl_buf = calloc(1, sizeof(struct curl_buf));
-
 	if (src_file) {
 		err = stat(src_file, &sb);
 		if (err) {
@@ -444,6 +440,10 @@ static int do_put_post(struct curl_ctx *ctx, const char *src_file,
 		ctx->post_data = data;
 		ctx->post_size = strlen(data);
 	}
+
+	ctx->http_method = http_method;
+	ctx->write_cb = curl_writeb_cb;
+	ctx->curl_buf = calloc(1, sizeof(struct curl_buf));
 
 	err = do_curl(ctx);
 	if (ctx->res_buf)
