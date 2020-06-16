@@ -27,6 +27,12 @@ enum http_method {
 	M_CONNECT,
 };
 
+enum content_type {
+	CONTENT_TYPE_NONE = 0,
+	CONTENT_TYPE_URL_ENCODED,
+	CONTENT_TYPE_JSON,
+};
+
 struct curl_buf {
 	char *buf;
 	size_t len;
@@ -59,6 +65,8 @@ struct curl_ctx {
 
 	const char *post_data;
 	size_t post_size;
+
+	enum content_type content_type;
 
 	long status_code;
 };

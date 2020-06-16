@@ -65,6 +65,8 @@ enum mtd_error {
 
 #pragma GCC visibility push(default)
 
+extern void mtd_unset_src_data(void);
+extern void mtd_set_src_data(const void *buf, size_t len);
 extern void mtd_hdrs_add(const char * const hdrs[]);
 extern void mtd_hdrs_reset(void);
 extern void mtd_global_init(void);

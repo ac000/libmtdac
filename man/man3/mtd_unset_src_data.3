@@ -1,0 +1,27 @@
+.TH MTD_UNSET_SRC_DATA 3 "June 16, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_unset_src_data \- reset the json post data buffer
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd.h>
+.PP
+.BI "void mtd_unset_src_data(void);"
+
+.SH DESCRIPTION
+
+This is used to reset/clear the json data buffer that was set via
+.BR mtd_set_src_data (3).
+This will then allow to use files again.
+
+.SH ERRORS
+
+None. This function always succeeds.
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR mtd_set_src_data (3)

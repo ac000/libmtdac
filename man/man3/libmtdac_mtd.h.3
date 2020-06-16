@@ -1,4 +1,4 @@
-.TH libmtdac_mtd.h 3 "June 1, 2020" "libmtdac 0.9.0" "libmtdac_mtd.h"
+.TH libmtdac_mtd.h 3 "June 16, 2020" "libmtdac 0.9.0" "libmtdac_mtd.h"
 
 .SH NAME
 libmtdac_mtd.h \- Core types / defines
@@ -153,6 +153,20 @@ This is for adding extra HTTP headers to be sent.
 
 .RS
 This is for clearing any extra HTTP headers that were set.
+.RE
+
+.BI "void mtd_set_src_data(const void *" buf ", size_t " len );
+
+.RS
+This is used to set a buffer containing the JSON payload data rather than using
+a file.
+.RE
+
+.BI "void mtd_unset_src_data(void);"
+
+.RS
+This is used to cleat/reset a JSON payload buffer, so you can go back to using
+files.
 .RE
 
 .SH NOTES

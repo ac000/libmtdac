@@ -322,11 +322,16 @@ static int set_headers(struct curl_ctx *ctx)
 			return MTD_ERR_OS;
 	}
 
-	if (ctx->post_data)
-		err = curl_add_hdr(ctx, "Content-Type: "
-				   "application/x-www-form-urlencoded");
-        else
+	switch (ctx->content_type) {
+	case CONTENT_TYPE_URL_ENCODED:
+		err = curl_add_hdr(ctx, "Content-Type: application/x-www-form-urlencoded");
+		break;
+	case CONTENT_TYPE_JSON:
 		err = curl_add_hdr(ctx, "Content-Type: application/json");
+		break;
+	default:
+		break;
+	}
 	if (err)
 		return MTD_ERR_OS;
 
@@ -407,10 +412,16 @@ retry_curl:
 			fclose(ctx->src_file);
 			ctx->src_file = NULL;
 			ctx->src_size = 0;
+		} else if (ctx->post_data) {
+			ctx->post_data = NULL;
+			ctx->post_size = 0;
 		}
 		ctx->url = ctx->location;
 		ctx->http_method = M_GET;
-		goto retry_curl;
+		ctx->content_type = CONTENT_TYPE_NONE;
+		curl_slist_free_all(ctx->hdrs);
+		ctx->hdrs = NULL;
+		goto curl_again;
 	} else if (ctx->status_code >= 300) {
 		return MTD_ERR_REQUEST;
 	}
@@ -427,7 +438,17 @@ static int do_put_post(struct curl_ctx *ctx, const char *src_file,
 
 	*buf = NULL;
 
-	if (src_file) {
+	ctx->content_type = CONTENT_TYPE_JSON;
+	/*
+	 * The data check needs to come *first* so ->post_data
+	 * doesn't get overridden with mtd_ctx.src_data when
+	 * refreshing access tokens.
+	 */
+	if (data) {
+		ctx->post_data = data;
+		ctx->post_size = strlen(data);
+		ctx->content_type = CONTENT_TYPE_URL_ENCODED;
+	} else if (src_file) {
 		err = stat(src_file, &sb);
 		if (err) {
 			logger(MTD_LOG_ERR, "couldn't stat() %s\n", src_file);
@@ -436,9 +457,9 @@ static int do_put_post(struct curl_ctx *ctx, const char *src_file,
 		ctx->src_file = fopen(src_file, "r");
 		ctx->src_size = sb.st_size;
 		ctx->read_cb = curl_readfp_cb;
-	} else if (data) {
-		ctx->post_data = data;
-		ctx->post_size = strlen(data);
+	} else if (mtd_ctx.src_data) {
+		ctx->post_data = mtd_ctx.src_data;
+		ctx->post_size = mtd_ctx.src_data_len;
 	}
 
 	ctx->http_method = http_method;

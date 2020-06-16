@@ -124,6 +124,12 @@
 
     void mtd_hdrs_reset(void)
 
+#### mtd\_set\_src\_data - set a buffer containing the json payload
+
+    void mtd_set_src_data(const void *buf, size_t len)
+
+#### mtd\_unset\_src\_data - reset/clear the json payload buffer
+
 
 ### Make Tax Digital - Self-Assessment API functions
 

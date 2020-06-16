@@ -113,6 +113,18 @@ static int check_config_dir(void)
 	return MTD_ERR_OS;
 }
 
+void mtd_unset_src_data(void)
+{
+	mtd_ctx.src_data = NULL;
+	mtd_ctx.src_data_len = 0;
+}
+
+void mtd_set_src_data(const void *buf, size_t len)
+{
+	mtd_ctx.src_data = buf;
+	mtd_ctx.src_data_len = len;
+}
+
 void mtd_hdrs_add(const char * const hdrs[])
 {
 	mtd_ctx.hdrs = hdrs;
