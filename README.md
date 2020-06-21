@@ -23,7 +23,7 @@ libmtdac only has a couple of direct dependencies, *libcurl* & *jansson*
 
 On Red Hat/Fedora/etc you will need the
 
-    libcurl{,-devel)
+    libcurl{,-devel}
     jansson{,-devel}
 
 packages.
