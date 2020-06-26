@@ -1,4 +1,4 @@
-.TH libmtdac_mtd.h 3 "June 16, 2020" "libmtdac 0.9.0" "libmtdac_mtd.h"
+.TH libmtdac_mtd.h 3 "June 21, 2020" "libmtdac 0.12.0" "libmtdac_mtd.h"
 
 .SH NAME
 libmtdac_mtd.h \- Core types / defines
@@ -81,7 +81,7 @@ By default libmtdac uses the \fBtest\fP API. Setting this will make it use the
 .SH Errors
 
 enum mtd_error {
-        \fBMTD_ERR_NONE\fP = 0,
+        \fBMTD_ERR_NONE\fP,
         \fBMTD_ERR_OS\fP,
         \fBMTD_ERR_REQUEST\fP,
         \fBMTD_ERR_CURL\fP,
@@ -89,6 +89,46 @@ enum mtd_error {
         \fBMTD_ERR_UNKNOWN_FLAGS\fP,
 .br
 };
+
+.SH Data Source
+
+For requests that send (POST/PUT) data to an endpoint, the source for this data
+is defined via the following interface
+
+enum mtd_data_src_type {
+        \fBMTD_DATA_SRC_FILE\fP,
+        \fBMTD_DATA_SRC_BUF\fP,
+        \fBMTD_DATA_SRC_FP\fP,
+        \fBMTD_DATA_SRC_FD\fP,
+.br
+};
+
+typedef union mtd_data_src {
+        const void *buf;
+        const char *file;
+        FILE       *fp;
+        int         fd;
+.br
+} mtd_data_src_t;
+
+struct mtd_dsrc_ctx {
+        mtd_data_src_t         data_src;
+        size_t                 data_len;
+
+        enum mtd_data_src_type src_type;
+.br
+};
+
+You define a \fIstruct mtd_dsrc_ctx\fP and set \fIdata_src\fP to either a
+buffer that contains the data, a filename of a file containing the data, a
+stdio \fIFILE *\fP pointer or a file descriptor of an already opened file
+containing the data to send.
+
+You then set \fIsrc_type\fP to the appropriate \fIenum mtd_data_src_type\fP
+value.
+
+In the case of using a buffer you also need to set the length in bytes of the
+data in the buffer via \fIdata_len\fP.
 
 .SH Functions
 
@@ -153,20 +193,6 @@ This is for adding extra HTTP headers to be sent.
 
 .RS
 This is for clearing any extra HTTP headers that were set.
-.RE
-
-.BI "void mtd_set_src_data(const void *" buf ", size_t " len );
-
-.RS
-This is used to set a buffer containing the JSON payload data rather than using
-a file.
-.RE
-
-.BI "void mtd_unset_src_data(void);"
-
-.RS
-This is used to cleat/reset a JSON payload buffer, so you can go back to using
-files.
 .RE
 
 .SH NOTES

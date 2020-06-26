@@ -17,18 +17,19 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
-extern int mtd_il_lc_update_loss_order(const char *src_file, char **buf);
-extern int mtd_il_lc_update_loss_type(const char *src_file, const char *cid,
-				      char **buf);
+extern int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
+				       char **buf);
+extern int mtd_il_lc_update_loss_type(const struct mtd_dsrc_ctx *dsctx,
+				      const char *cid, char **buf);
 extern int mtd_il_lc_delete_loss(const char *cid, char **buf);
 extern int mtd_il_lc_get_loss(const char *cid, char **buf);
-extern int mtd_il_lc_create_loss(const char *src_file, char **buf);
+extern int mtd_il_lc_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf);
 extern int mtd_il_lc_list_loses(const char *query_string, char **buf);
-extern int mtd_il_bf_update_loss_amnt(const char *src_file, const char *lid,
-				      char **buf);
+extern int mtd_il_bf_update_loss_amnt(const struct mtd_dsrc_ctx *dsctx,
+				      const char *lid, char **buf);
 extern int mtd_il_bf_delete_loss(const char *lid, char **buf);
 extern int mtd_il_bf_get_loss(const char *lid, char **buf);
-extern int mtd_il_bf_create_loss(const char *src_file, char **buf);
+extern int mtd_il_bf_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf);
 extern int mtd_il_bf_list_loses(const char *query_string, char **buf);
 
 #pragma GCC visibility pop

@@ -9,6 +9,8 @@
 #ifndef _MTD_H_
 #define _MTD_H_
 
+#include <stdio.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -63,10 +65,29 @@ enum mtd_error {
 	MTD_ERR_UNKNOWN_FLAGS,
 };
 
+enum mtd_data_src_type {
+	MTD_DATA_SRC_FILE = 0,
+	MTD_DATA_SRC_BUF,
+	MTD_DATA_SRC_FP,
+	MTD_DATA_SRC_FD,
+};
+
+typedef union mtd_data_src {
+	const void *buf;
+	const char *file;
+	FILE *fp;
+	int fd;
+} mtd_data_src_t;
+
+struct mtd_dsrc_ctx {
+	mtd_data_src_t data_src;
+	size_t data_len;
+
+	enum mtd_data_src_type src_type;
+};
+
 #pragma GCC visibility push(default)
 
-extern void mtd_unset_src_data(void);
-extern void mtd_set_src_data(const void *buf, size_t len);
 extern void mtd_hdrs_add(const char * const hdrs[]);
 extern void mtd_hdrs_reset(void);
 extern void mtd_global_init(void);

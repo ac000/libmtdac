@@ -17,21 +17,21 @@
  * [PUT ]
  * /individuals/losses/{nino}/loss-claims/order
  */
-int mtd_il_lc_update_loss_order(const char *src_file, char **buf)
+int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx, char **buf)
 {
 	return do_ep(IL_LC_UPDATE_LOSS_ORDER, API_VER,
-		     src_file, NULL, buf, (char *)NULL);
+		     dsctx, buf, (char *)NULL);
 }
 
 /*
  * [POST]
  * /individuals/losses/{nino}/loss-claims/{claimId}/change-type-of-claim
  */
-int mtd_il_lc_update_loss_type(const char *src_file, const char *cid,
-			       char **buf)
+int mtd_il_lc_update_loss_type(const struct mtd_dsrc_ctx *dsctx,
+			       const char *cid, char **buf)
 {
 	return do_ep(IL_LC_UPDATE_LOSS_TYPE, API_VER,
-		     src_file, NULL, buf, cid, (char *)NULL);
+		     dsctx, buf, cid, (char *)NULL);
 }
 
 /*
@@ -58,10 +58,10 @@ int mtd_il_lc_get_loss(const char *cid, char **buf)
  * [POST]
  * /individuals/losses/{nino}/loss-claims
  */
-int mtd_il_lc_create_loss(const char *src_file, char **buf)
+int mtd_il_lc_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf)
 {
 	return do_ep(IL_LC_CREATE_LOSS, API_VER,
-		     src_file, NULL, buf, (char *)NULL);
+		     dsctx, buf, (char *)NULL);
 }
 
 /*
@@ -84,11 +84,11 @@ int mtd_il_lc_list_loses(const char *query_string, char **buf)
  * [POST]
  * /individuals/losses/{nino}/brought-forward-losses/{lossId}/change-loss-amount
  */
-int mtd_il_bf_update_loss_amnt(const char *src_file, const char *lid,
-			       char **buf)
+int mtd_il_bf_update_loss_amnt(const struct mtd_dsrc_ctx *dsctx,
+			       const char *lid, char **buf)
 {
 	return do_ep(IL_BF_UPDATE_LOSS_AMNT, API_VER,
-		     src_file, NULL, buf, lid, (char *)NULL);
+		     dsctx, buf, lid, (char *)NULL);
 }
 
 /*
@@ -115,10 +115,10 @@ int mtd_il_bf_get_loss(const char *lid, char **buf)
  * [POST]
  * /individuals/losses/{nino}/brought-forward-losses
  */
-int mtd_il_bf_create_loss(const char *src_file, char **buf)
+int mtd_il_bf_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf)
 {
 	return do_ep(IL_BF_CREATE_LOSS, API_VER,
-		     src_file, NULL, buf, (char *)NULL);
+		     dsctx, buf, (char *)NULL);
 }
 
 /*

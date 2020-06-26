@@ -35,6 +35,7 @@ static const struct _endpoint {
 	const enum endpoint ep;
 	const char *tmpl;
 	const enum http_method method;
+	const enum content_type ctype;
 	const enum oauth_scope scope;
 } endpoints[] = {
 	/* Self-Assessment - Self-Employment */
@@ -48,6 +49,7 @@ static const struct _endpoint {
 		.ep	= SA_SE_CREATE_SELF_EMPLOYMENT,
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -72,6 +74,7 @@ static const struct _endpoint {
 		.ep	= SA_SE_CREATE_PERIOD,
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -84,6 +87,7 @@ static const struct _endpoint {
 		.ep	= SA_SE_UPDATE_PERIOD,
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods/{periodId}",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -96,12 +100,14 @@ static const struct _endpoint {
 		.ep	= SA_SE_UPDATE_ANNUAL_SUMMARY,
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/{taxYear}",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
 		.ep	= SA_SE_SUBMIT_END_OF_PERIOD_STATEMENT,
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -121,6 +127,7 @@ static const struct _endpoint {
 		.ep	= SA_PB_CREATE_PROPERTY,
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -139,6 +146,7 @@ static const struct _endpoint {
 		.ep	= SA_PB_CREATE_NON_FHL_PERIOD,
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/periods",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -151,6 +159,7 @@ static const struct _endpoint {
 		.ep	= SA_PB_UPDATE_NON_FHL_PERIOD,
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/periods/{periodId}",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -163,6 +172,7 @@ static const struct _endpoint {
 		.ep	= SA_PB_UPDATE_NON_FHL_ANNUAL_SUMMARY,
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/{taxYear}",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -175,6 +185,7 @@ static const struct _endpoint {
 		.ep	= SA_PB_CREATE_FHL_PERIOD,
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -187,6 +198,7 @@ static const struct _endpoint {
 		.ep	= SA_PB_UPDATE_FHL_PERIOD,
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods/{periodId}",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -199,12 +211,14 @@ static const struct _endpoint {
 		.ep	= SA_PB_UPDATE_FHL_ANNUAL_SUMMARY,
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/{taxYear}",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
 		.ep	= SA_PB_SUBMIT_END_OF_PERIOD_STATEMENT,
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/end-of-period-statements/from/{start}/to/{end}",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -224,6 +238,7 @@ static const struct _endpoint {
 		.ep	= SA_DI_UPDATE_ANNUAL_SUMMARY,
 		.tmpl	= "/self-assessment/ni/{nino}/dividends/{taxYear}",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	/* Self-Assessment - Savings Accounts */
@@ -237,6 +252,7 @@ static const struct _endpoint {
 		.ep	= SA_SA_CREATE_ACCOUNT,
 		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -255,6 +271,7 @@ static const struct _endpoint {
 		.ep	= SA_SA_UPDATE_ANNUAL_SUMMARY,
 		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	/* Self-Assessment - Charitable Giving */
@@ -268,6 +285,7 @@ static const struct _endpoint {
 		.ep	= SA_CG_UPDATE_CHARITABLE_GIVING,
 		.tmpl	= "/self-assessment/ni/{nino}/charitable-giving/{taxYear}",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	/* Self-Assessment - Tax Calculations - EOL Jul 2020 */
@@ -275,6 +293,7 @@ static const struct _endpoint {
 		.ep	= SA_TC_CALCULATE,
 		.tmpl	= "/self-assessment/ni/{nino}/calculations",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -294,12 +313,14 @@ static const struct _endpoint {
 		.ep	= SA_CR_INTENT_TO_CRYSTALLISE,
 		.tmpl	= "/self-assessment/ni/{nino}/{taxYear}/intent-to-crystallise",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
 		.ep	= SA_CR_CRYSTALLISE,
 		.tmpl	= "/self-assessment/ni/{nino}/{taxYear}/crystallisation",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -364,6 +385,7 @@ static const struct _endpoint {
 		.ep	= IC_TRIGGER_CALCULATION,
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -414,6 +436,7 @@ static const struct _endpoint {
 		.ep	= IL_BF_CREATE_LOSS,
 		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -432,6 +455,7 @@ static const struct _endpoint {
 		.ep	= IL_BF_UPDATE_LOSS_AMNT,
 		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}/change-loss-amount",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	/* Individual Loses - Loss Claims */
@@ -445,6 +469,7 @@ static const struct _endpoint {
 		.ep	= IL_LC_CREATE_LOSS,
 		.tmpl	= "/individuals/losses/{nino}/loss-claims",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -463,12 +488,14 @@ static const struct _endpoint {
 		.ep	= IL_LC_UPDATE_LOSS_TYPE,
 		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}/change-type-of-claim",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
 		.ep	= IL_LC_UPDATE_LOSS_ORDER,
 		.tmpl	= "/individuals/losses/{nino}/loss-claims/order",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 
@@ -505,6 +532,7 @@ static const struct _endpoint {
 		.ep	= BSAS_TRIGGER_SUMMARY,
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/trigger",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -523,6 +551,7 @@ static const struct _endpoint {
 		.ep	= BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS,
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 	{
@@ -541,6 +570,7 @@ static const struct _endpoint {
 		.ep	= BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS,
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 
@@ -549,18 +579,21 @@ static const struct _endpoint {
 		.ep	= TEST_CU_CREATE_INDIVIDUAL,
 		.tmpl	= "/create-test-user/individuals",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_APPLICATION
 	},
 	{
 		.ep	= TEST_CU_CREATE_ORGANISATION,
 		.tmpl	= "/create-test-user/organisations",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_APPLICATION
 	},
 	{
 		.ep	= TEST_CU_CREATE_AGENT,
 		.tmpl	= "/create-test-user/agents",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_APPLICATION
 	},
 	{
@@ -583,6 +616,7 @@ static const struct _endpoint {
 		.ep	= TEST_NI_CREATE_ANNUAL_SUMMARY,
 		.tmpl	= "/national-insurance-test-support/sa/{utr}/annual-summary/{taxYear}",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_APPLICATION
 	},
 
@@ -591,24 +625,27 @@ static const struct _endpoint {
 		.ep	= OA_REFRESH_TOKEN,
 		.tmpl	= "/oauth/token",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_URL_ENCODED,
 		.scope	= SCOPE_NONE
 	},
 	{
 		.ep	= OA_EXCHANGE_AUTH_CODE,
 		.tmpl	= "/oauth/token",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_URL_ENCODED,
 		.scope	= SCOPE_NONE
 	},
 	{
 		.ep	= OA_APPLICATION_TOKEN,
 		.tmpl	= "/oauth/token",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_URL_ENCODED,
 		.scope	= SCOPE_NONE
 	},
 };
 
-int do_ep(enum endpoint ep, const char *api_ver, const char *file,
-	  const char *data, char **buf, ...)
+int do_ep(enum endpoint ep, const char *api_ver,
+	  const struct mtd_dsrc_ctx *dsctx, char **buf, ...)
 {
 	va_list ap;
 	struct curl_ctx ctx = { 0 };
@@ -633,14 +670,19 @@ int do_ep(enum endpoint ep, const char *api_ver, const char *file,
 	ctx.mtd_api_ver = api_ver;
 	ctx.endpoint = ep;
 	ctx.params = params;
+	ctx.content_type = endpoints[ep].ctype;
+	ctx.http_method = endpoints[ep].method;
+	ctx.dsctx = dsctx;
 
-	switch (endpoints[ep].method) {
+	*buf = NULL;
+
+	switch (ctx.http_method) {
 	case M_GET:
 		return do_get(&ctx, buf);
 	case M_POST:
-		return do_post(&ctx, file, data, buf);
+		return do_post(&ctx, buf);
 	case M_PUT:
-		return do_put(&ctx, file, data, buf);
+		return do_put(&ctx, buf);
 	case M_DELETE:
 		return do_delete(&ctx, buf);
 	default:

@@ -1,4 +1,4 @@
-.TH MTD_BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS 3 "June 1, 2020" "" "libmtdac"
+.TH MTD_BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS 3 "June 21, 2020" "" "libmtdac"
 
 .SH NAME
 
@@ -10,7 +10,7 @@ Source Adjustable Summary
 .B #include <libmtdac/mtd-bsas.h>
 .PP
 .nf
-.BI "int mtd_bsas_se_update_summary_adjustments(const char *" src_file ",
+.BI "int mtd_bsas_se_update_summary_adjustments(const struct mtd_dsrc_ctx *" dsctx ",
 .BI "                                           const char *" bid ", char **" buf );
 .ni
 
@@ -25,8 +25,10 @@ identifier. The BSAS ID (\fBbid\fP) used must be for a self-employment business
 that has not been previously adjusted.
 
 .TP 4
-.B src_file
-This is a file containing the JSON payload to send. E.g
+.B dsctx
+This points to either a buffer, filename, file pointer or file descriptor that
+contains the JSON payload to be sent. See
+.BR mtd_dsrc_ctx (3)
 .PP
 .RS 4
 Scenario: Full Expenses
@@ -136,4 +138,5 @@ There was an OS level failure
 
 .BR libmtdac (3),
 .BR libmtdac_mtd.h (3),
+.BR mtd_dsrc_ctx (3),
 .BR libmtdac-result_buffer (3)

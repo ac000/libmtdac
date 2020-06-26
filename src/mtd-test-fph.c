@@ -20,5 +20,5 @@
 int mtd_test_fph_validate(char **buf)
 {
 	return do_ep(TEST_FPH_VALIDATE, API_VER,
-		     NULL, NULL, buf, (char *)NULL);
+		     NULL, buf, (char *)NULL);
 }

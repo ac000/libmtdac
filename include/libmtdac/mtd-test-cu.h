@@ -18,9 +18,12 @@ extern "C" {
 #pragma GCC visibility push(default)
 
 extern int mtd_test_cu_list_services(char **buf);
-extern int mtd_test_cu_create_agent(const char *src_file, char **buf);
-extern int mtd_test_cu_create_organisation(const char *src_file, char **buf);
-extern int mtd_test_cu_create_individual(const char *src_file, char **buf);
+extern int mtd_test_cu_create_agent(const struct mtd_dsrc_ctx *dsctx,
+				    char **buf);
+extern int mtd_test_cu_create_organisation(const struct mtd_dsrc_ctx *dsctx,
+					   char **buf);
+extern int mtd_test_cu_create_individual(const struct mtd_dsrc_ctx *dsctx,
+					 char **buf);
 
 #pragma GCC visibility pop
 

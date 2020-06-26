@@ -113,18 +113,6 @@ static int check_config_dir(void)
 	return MTD_ERR_OS;
 }
 
-void mtd_unset_src_data(void)
-{
-	mtd_ctx.src_data = NULL;
-	mtd_ctx.src_data_len = 0;
-}
-
-void mtd_set_src_data(const void *buf, size_t len)
-{
-	mtd_ctx.src_data = buf;
-	mtd_ctx.src_data_len = len;
-}
-
 void mtd_hdrs_add(const char * const hdrs[])
 {
 	mtd_ctx.hdrs = hdrs;
@@ -173,7 +161,7 @@ void mtd_deinit(void)
 extern char **environ;
 int mtd_init_auth(void)
 {
-	struct curl_ctx ctx = { 0 };
+	struct mtd_dsrc_ctx dsctx;
 	char *client_id = load_token("client_id", FT_CONFIG);
 	char *client_secret = load_token("client_secret", FT_CONFIG);
 	const char *args[3];
@@ -227,8 +215,10 @@ int mtd_init_auth(void)
 		 "&code=%s&redirect_uri=urn:ietf:wg:oauth:2.0:oob",
 		 client_secret, client_id, auth_code);
 
-	ctx.endpoint = OA_EXCHANGE_AUTH_CODE;
-	err = do_post(&ctx, NULL, data, &buf);
+	dsctx.data_src.buf = data;
+	dsctx.data_len = strlen(data);
+	dsctx.src_type = MTD_DATA_SRC_BUF;
+	err = do_ep(OA_EXCHANGE_AUTH_CODE, NULL, &dsctx, &buf, (char *)NULL);
 	if (err)
 		goto out_free;
 

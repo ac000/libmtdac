@@ -1,6 +1,7 @@
 1. [API](#api)
   * [Library version](#library-version)
   * [Errors](#errors)
+  * [Data Source](#data-source)
   * [Initialisation functions](#initialisation-functions)
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
     - [Self-Assessment - Self-Employment](#self-assessment---self-employment)
@@ -40,13 +41,50 @@
 ### Errors
 
     enum mtd_error {
-	    MTD_ERR_NONE = 0,
+	    MTD_ERR_NONE,
 	    MTD_ERR_OS,
 	    MTD_ERR_REQUEST,
 	    MTD_ERR_CURL,
 	    MTD_ERR_NEEDS_AUTHORISATION,
 	    MTD_ERR_UNKNOWN_FLAGS,
     };
+
+
+### Data Source
+
+For requests that send (POST/PUT) data to an endpoint, the source for this data
+is defined via the following interface
+
+    enum mtd_data_src_type {
+            MTD_DATA_SRC_FILE,
+            MTD_DATA_SRC_BUF,
+            MTD_DATA_SRC_FP,
+            MTD_DATA_SRC_FD,
+    };
+
+    typedef union mtd_data_src {
+            const void *buf;
+            const char *file;
+            FILE *fp;
+            int fd;
+    } mtd_data_src_t;
+
+    struct mtd_dsrc_ctx {
+            mtd_data_src_t data_src;
+            size_t data_len;
+
+            enum mtd_data_src_type src_type;
+    };
+
+You define a *struct mtd_dsrc_ctx* and set *data_src* to either a buffer that
+contains the data, a filename of a file containing the data, a *stdio FILE*
+pointer or a file descriptor of an already opened file containing the data to
+send.
+
+You then set *src_type* to the appropriate *enum mtd_data_src_type* value.
+
+In the case of using a buffer you also need to set the length in bytes of the
+data in the buffer via *data_len*
 
 
 ### Initialisation functions
@@ -124,12 +162,6 @@
 
     void mtd_hdrs_reset(void)
 
-#### mtd\_set\_src\_data - set a buffer containing the json payload
-
-    void mtd_set_src_data(const void *buf, size_t len)
-
-#### mtd\_unset\_src\_data - reset/clear the json payload buffer
-
 
 ### Make Tax Digital - Self-Assessment API functions
 
@@ -143,7 +175,8 @@
 
 #### mtd\_sa\_se\_create\_employment
 
-    int mtd_sa_se_create_employment(const char *src_file, char **buf)
+    int mtd_sa_se_create_employment(const struct mtd_dsrc_ctx *dsctx,
+                                    char **buf)
 
 #### mtd\_sa\_se\_get\_employment
 
@@ -159,8 +192,8 @@
 
 #### mtd\_sa\_se\_create\_period
 
-    int mtd_sa_se_create_period(const char *src_file, const char *seid,
-                                char **buf)
+    int mtd_sa_se_create_period(const struct mtd_dsrc_ctx *dsctx,
+                                const char *seid, char **buf)
 
 #### mtd\_sa\_se\_get\_period
 
@@ -169,8 +202,9 @@
 
 #### mtd\_sa\_se\_update\_period
 
-    int mtd_sa_se_update_period(const char *src_file, const char *seid,
-                                const char *period_id, char **buf)
+    int mtd_sa_se_update_period(const struct mtd_dsrc_ctx *dsctx,
+                                const char *seid, const char *period_id,
+                                char **buf)
 
 #### mtd\_sa\_se\_get\_annual\_summary
 
@@ -179,13 +213,13 @@
 
 #### mtd\_sa\_se\_update\_annual\_summary
 
-    int mtd_sa_se_update_annual_summary(const char *src_file,
+    int mtd_sa_se_update_annual_summary(const struct mtd_dsrc_ctx *dsctx,
                                         const char *seid,
                                         const char *tax_year, char **buf)
 
 #### mtd\_sa\_se\_submit\_end\_of\_period\_statement
 
-    int mtd_sa_se_submit_end_of_period_statement(const char *src_file,
+    int mtd_sa_se_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
                                                  const char *seid,
                                                  const char *start,
                                                  const char *end,
@@ -205,7 +239,8 @@
 
 #### mtd\_sa\_pb\_create\_property
 
-    int mtd_sa_pb_create_property(const char *src_file, char **buf)
+    int mtd_sa_pb_create_property(const struct mtd_dsrc_ctx *dsctx,
+                                  char **buf)
 
 #### mtd\_sa\_pb\_list\_obligations
 
@@ -217,7 +252,8 @@
 
 #### mtd\_sa\_pb\_create\_non\_fhl\_period
 
-    int mtd_sa_pb_create_non_fhl_period(const char *src_file, char **buf)
+    int mtd_sa_pb_create_non_fhl_period(const struct mtd_dsrc_ctx *dsctx,
+                                        char **buf)
 
 #### mtd\_sa\_pb\_get\_non\_fhl\_period
 
@@ -225,7 +261,7 @@
 
 #### mtd\_sa\_pb\_update\_non\_fhl\_period
 
-    int mtd_sa_pb_update_non_fhl_period(const char *src_file,
+    int mtd_sa_pb_update_non_fhl_period(const struct mtd_dsrc_ctx *dsctx,
                                         const char *pid, char **buf)
 
 #### mtd\_sa\_pb\_get\_non\_fhl\_annual\_summary
@@ -235,7 +271,7 @@
 
 #### mtd\_sa\_pb\_update\_non\_fhl\_annual\_summary
 
-    int mtd_sa_pb_update_non_fhl_annual_summary(const char *src_file,
+    int mtd_sa_pb_update_non_fhl_annual_summary(const struct mtd_dsrc_ctx *dsctx,
                                                 const char *tax_year,
                                                 char **buf)
 
@@ -245,7 +281,8 @@
 
 #### mtd\_sa\_pb\_create\_fhl\_period
 
-    int mtd_sa_pb_create_fhl_period(const char *src_file, char **buf)
+    int mtd_sa_pb_create_fhl_period(const struct mtd_dsrc_ctx *dsctx,
+                                    char **buf)
 
 #### mtd\_sa\_pb\_get\_fhl\_period
 
@@ -253,8 +290,8 @@
 
 #### mtd\_sa\_pb\_update\_fhl\_period
 
-    int mtd_sa_pb_update_fhl_period(const char *src_file, const char *pid,
-                                    char **buf)
+    int mtd_sa_pb_update_fhl_period(const struct mtd_dsrc_ctx *dsctx,
+                                    const char *pid, char **buf)
 
 #### mtd\_sa\_pb\_get\_fhl\_annual\_summary
 
@@ -262,13 +299,13 @@
 
 #### mtd\_sa\_pb\_update\_fhl\_annual\_summary
 
-    int mtd_sa_pb_update_fhl_annual_summary(const char *src_file,
+    int mtd_sa_pb_update_fhl_annual_summary(const struct mtd_dsrc_ctx *dsctx,
                                             const char *tax_year,
                                             char **buf)
 
 #### mtd\_sa\_pb\_submit\_end\_of\_period\_statement
 
-    int mtd_sa_pb_submit_end_of_period_statement(const char *src_file,
+    int mtd_sa_pb_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
                                                  const char *start,
                                                  const char *end,
                                                  char **buf)
@@ -287,7 +324,7 @@
 
 #### mtd\_sa\_di\_update\_annual\_summary
 
-    int mtd_sa_di_update_annual_summary(const char *src_file,
+    int mtd_sa_di_update_annual_summary(const struct mtd_dsrc_ctx *dsctx,
                                         const char *tax_year, char **buf)
 
 #### Self-Assessment - Savings Accounts
@@ -298,7 +335,7 @@
 
 #### mtd\_sa\_sa\_create\_account
 
-    int mtd_sa_sa_create_account(const char *src_file, char **buf)
+    int mtd_sa_sa_create_account(const struct mtd_dsrc_ctx *dsctx, char **buf)
 
 #### mtd\_sa\_sa\_get\_account
 
@@ -311,8 +348,9 @@
 
 #### mtd\_sa\_sa\_update\_annual\_summary
 
-    int mtd_sa_sa_update_annual_summary(const char *src_file, const char *said,
-                                        const char *tax_year, char **buf)
+    int mtd_sa_sa_update_annual_summary(const struct mtd_dsrc_ctx *dsctx,
+                                        const char *said, const char *tax_year,
+                                        char **buf)
 
 #### Self-Assessment - Charitable Giving
 
@@ -322,14 +360,14 @@
 
 #### mtd\_sa\_cg\_update\_charitable\_giving
 
-    int mtd_sa_cg_update_charitable_giving(const char *src_file,
+    int mtd_sa_cg_update_charitable_giving(const struct mtd_dsrc_ctx *dsctx,
                                            const char *tax_year, char **buf)
 
 #### Self-Assessment - Tax Calculations
 
 #### mtd\_sa\_tc\_calculate - [EOL July 2020]
 
-    int mtd_sa_tc_calculate(const char *src_file, char **buf)
+    int mtd_sa_tc_calculate(const struct mtd_dsrc_ctx *dsctx, char **buf)
 
 #### int mtd\_sa\_tc\_get\_calculation - [EOL July 2020]
 
@@ -347,8 +385,8 @@
 
 #### mtd\_sa\_cr\_crystallise
 
-    int mtd_sa_cr_crystallise(const char *src_file, const char *tax_year,
-                              char **buf)
+    int mtd_sa_cr_crystallise(const struct mtd_dsrc_ctx *dsctx,
+                              const char *tax_year, char **buf)
 
 #### mtd\_sa\_cr\_list\_obligations
 
@@ -398,7 +436,8 @@
 
 #### mtd\_ic\_trigger\_calculation
 
-    int mtd_ic_trigger_calculation(const char *src_file, char **buf)
+    int mtd_ic_trigger_calculation(const struct mtd_dsrc_ctx *dsctx,
+                                   char **buf)
 
 #### mtd\_ic\_get\_calculation\_meta
 
@@ -437,7 +476,7 @@
 
 #### mtd\_il\_bf\_create\_loss
 
-    int mtd_il_bf_create_loss(const char *src_file, char **buf)
+    int mtd_il_bf_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf)
 
 #### mtd\_il\_bf\_get\_loss
 
@@ -449,8 +488,8 @@
 
 #### mtd\_il\_bf\_update\_loss\_amnt
 
-    int mtd_il_bf_update_loss_amnt(const char *src_file, const char *lid,
-                                   char **buf)
+    int mtd_il_bf_update_loss_amnt(const struct mtd_dsrc_ctx *dsctx,
+                                   const char *lid, char **buf)
 
 #### Individual Loses - Loss Claims
 
@@ -460,7 +499,7 @@
 
 #### mtd\_il\_lc\_create\_loss
 
-    int mtd_il_lc_create_loss(const char *src_file, char **buf)
+    int mtd_il_lc_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf)
 
 #### mtd\_il\_lc\_get\_loss
 
@@ -472,12 +511,13 @@
 
 #### mtd\_il\_lc\_update\_loss\_type
 
-    int mtd_il_lc_update_loss_type(const char *src_file, const char *cid,
-                                   char **buf)
+    int mtd_il_lc_update_loss_type(const struct mtd_dsrc_ctx *dsctx,
+                                   const char *cid, char **buf)
 
 #### mtd\_il\_lc\_update\_loss\_order
 
-    int mtd_il_lc_update_loss_order(const char *src_file, char **buf)
+    int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
+                                    char **buf)
 
 
 ### Make Tax Digital - National Insurance API functions
@@ -513,7 +553,7 @@
 
 #### mtd\_bsas\_trigger\_summary
 
-    int mtd_bsas_trigger_summary(const char *src_file, char **buf)
+    int mtd_bsas_trigger_summary(const struct mtd_dsrc_ctx *dsctx, char **buf)
 
 #### Business Source Adjustable Summary - Self-Employment
 
@@ -524,12 +564,12 @@
 
 #### mtd\_bsas\_se\_list\_summary\_adjustments
 
-    int mtd_bsas_se_update_summary_adjustments(const char *src_file,
+    int mtd_bsas_se_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
                                                const char *bid, char **buf
 
 #### mtd\_bsas\_se\_update\_summary\_adjustments
 
-    int mtd_bsas_se_update_summary_adjustments(const char *src_file,
+    int mtd_bsas_se_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
                                                const char *bid, char **buf)
 
 #### Business Source Adjustable Summary - UK Property Business
@@ -545,7 +585,7 @@
 
 #### mtd\_bsas\_pb\_update\_summary\_adjustments
 
-    int mtd_bsas_pb_update_summary_adjustments(const char *src_file,
+    int mtd_bsas_pb_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
                                                const char *bid, char **buf)
 
 
@@ -555,15 +595,17 @@
 
 ### mtd\_test\_cu\_create\_individual
 
-    int mtd_test_cu_create_individual(const char *src_file, char **buf)
+    int mtd_test_cu_create_individual(const struct mtd_dsrc_ctx *dsctx,
+                                      char **buf)
 
 ### mtd\_test\_cu\_create\_organisation
 
-    int mtd_test_cu_create_organisation(const char *src_file, char **buf)
+    int mtd_test_cu_create_organisation(const struct mtd_dsrc_ctx *dsctx,
+                                        char **buf)
 
 ### mtd\_test\_cu\_create\_agent
 
-    int mtd_test_cu_create_agent(const char *src_file, char **buf)
+    int mtd_test_cu_create_agent(const struct mtd_dsrc_ctx *dsctx, char **buf)
 
 ### mtd\_test\_cu\_list\_services
 
@@ -576,8 +618,9 @@
 
 #### mtd\_test\_ni\_create\_annual\_summary
 
-    mtd_test_ni_create_annual_summary(const char *src_file, const char *utr,
-                                      const char *tax_year, char **buf)
+    mtd_test_ni_create_annual_summary(const struct mtd_dsrc_ctx *dsctx,
+                                      const char *utr, const char *tax_year,
+                                      char **buf)
 
 
 ### Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]

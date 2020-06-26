@@ -1,0 +1,186 @@
+.TH mtd_dsrc_ctx 3 "June 21, 2020" "libmtdac 0.12.0" "libmtdac overview"
+
+.SH NAME
+mtd_dsrc_ctx \- describes the source for the JSON payload to be sent
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd.h>
+
+.SH STRUCTURES
+
+.EX
+enum mtd_data_src_type {
+        \fBMTD_DATA_SRC_FILE\fP = 0,
+        \fBMTD_DATA_SRC_BUF\fP,
+        \fBMTD_DATA_SRC_FP\fP,
+        \fBMTD_DATA_SRC_FD\fP,
+};
+
+typedef union mtd_data_src {
+        const void              *buf;
+        const char              *file;
+        FILE                    *fp;
+        int                      fd;
+} mtd_data_src_t;
+
+struct mtd_dsrc_ctx {
+        mtd_data_src_t          data_src;
+        size_t                  data_len;
+
+        enum mtd_data_src_type  src_type;
+};
+.EE
+
+.SH DESCRIPTION
+
+This is used to define the source of the JSON payload data to be sent to
+POST/PUT endpoints that require a request body.
+.PP
+You define a \fIstruct mtd_dsrc_ctx\fP and set \fIdata_src\fP to either a
+buffer that contains the data, a filename of a file containing the data, a
+stdio \fIFILE *\fP pointer or a file descriptor of an already opened file
+containing the data to send.
+.PP
+You then set \fIsrc_type\fP to the appropriate \fIenum mtd_data_src_type\fP
+value.
+.PP
+In the case of using a buffer you also need to set the length in bytes of the
+data in the buffer via \fIdata_len\fP.
+
+.SH EXAMPLE
+
+Examples showing the four use cases, error checking omitted for brevity.
+
+.SS Specifying a filename
+\&
+.EX
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <libmtdac/mtd-sa.h>
+
+int main(int argc, char *argv[])
+{
+        struct mtd_dsrc_ctx dsctx;
+        char *buf;
+
+        mtd_init(MTD_OPT_GLOBAL_INIT);
+
+        dsctx.data_src.file = argv[1];
+        dsctx.src_type = MTD_DATA_SRC_FILE;
+
+        mtd_sa_tc_calculate(&dsctx, &buf);
+        printf("%s\\n", buf);
+
+        free(buf);
+        mtd_deinit();
+
+        exit(EXIT_SUCCESS);
+}
+.EE
+
+.SS Using a buffer
+\&
+.EX
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <libmtdac/mtd-sa.h>
+
+int main(void)
+{
+        struct mtd_dsrc_ctx dsctx;
+        char json[1024];
+        char *buf;
+        int len;
+
+        mtd_init(MTD_OPT_GLOBAL_INIT);
+
+        len = snprintf(json, sizeof(json), "{ \\"taxYear\\": \\"2017-18\\"}");
+
+        dsctx.data_src.buf = json;
+        dsctx.data_len = len;
+        dsctx.src_type = MTD_DATA_SRC_BUF;
+
+        mtd_sa_tc_calculate(&dsctx, &buf);
+        printf("%s\\n", buf);
+
+        free(buf);
+        mtd_deinit();
+
+        exit(EXIT_SUCCESS);
+}
+.EE
+
+.SS Using a FILE *
+\&
+.EX
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <libmtdac/mtd-sa.h>
+
+int main(int argc, char *argv[])
+{
+        struct mtd_dsrc_ctx dsctx;
+        FILE *fp;
+        char *buf;
+
+        mtd_init(MTD_OPT_GLOBAL_INIT);
+        fp = fopen(argv[1], "re");
+
+        dsctx.data_src.fp = fp;
+        dsctx.src_type = MTD_DATA_SRC_FP;
+
+        mtd_sa_tc_calculate(&dsctx, &buf);
+        printf("%s\\n", buf);
+
+        free(buf);
+        fclose(fp);
+        mtd_deinit();
+
+        exit(EXIT_SUCCESS);
+}
+.EE
+
+.SS Using a file descriptor
+\&
+.EX
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#include <libmtdac/mtd-sa.h>
+
+int main(int argc, char *argv[])
+{
+        struct mtd_dsrc_ctx dsctx;
+        int fd;
+        char *buf;
+
+        mtd_init(MTD_OPT_GLOBAL_INIT);
+        fd = open(argv[1], O_RDONLY);
+
+        dsctx.data_src.fd = fd;
+        dsctx.src_type = MTD_DATA_SRC_FD;
+
+        mtd_sa_tc_calculate(&dsctx, &buf);
+        printf("%s\\n", buf);
+
+        free(buf);
+        close(fd);
+        mtd_deinit();
+
+        exit(EXIT_SUCCESS);
+}
+.EE
+
+.SH SEE ASO
+
+.BR libmtdac (3)
+.BR libmtdac_mtd.h (3)
+.BR libmtdac-result_buffer (3)

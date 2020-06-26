@@ -15,6 +15,7 @@
 
 #include <jansson.h>
 
+#include "mtd.h"
 #include "auth.h"
 #include "mtd-priv.h"
 #include "curler.h"
@@ -62,7 +63,7 @@ char *load_token(const char *which, enum file_type type)
 
 int oauther_refresh_access_token(void)
 {
-	struct curl_ctx ctx = { 0 };
+	struct mtd_dsrc_ctx dsctx;
 	char data[4096];
 	char path[PATH_MAX];
 	char *buf;
@@ -78,8 +79,10 @@ int oauther_refresh_access_token(void)
 		 "client_secret=%s&client_id=%s&grant_type=refresh_token"
 		 "&refresh_token=%s", client_secret, client_id, refresh_token);
 
-	ctx.endpoint = OA_REFRESH_TOKEN;
-	err = do_post(&ctx, NULL, data, &buf);
+	dsctx.data_src.buf = data;
+	dsctx.data_len = strlen(data);
+	dsctx.src_type = MTD_DATA_SRC_BUF;
+	err = do_ep(OA_REFRESH_TOKEN, NULL, &dsctx, &buf, (char *)NULL);
 	if (err) {
 		logger(MTD_LOG_ERR, "%s\n", buf);
 		goto out_free;
@@ -105,7 +108,7 @@ out_free:
 
 int oauther_get_application_token(void)
 {
-	struct curl_ctx ctx = { 0 };
+	struct mtd_dsrc_ctx dsctx;
 	char data[4096];
 	char path[PATH_MAX];
 	char *buf;
@@ -120,8 +123,10 @@ int oauther_get_application_token(void)
 		 "client_secret=%s&client_id=%s&grant_type=client_credentials",
 		 client_secret, client_id);
 
-	ctx.endpoint = OA_APPLICATION_TOKEN;
-	err = do_post(&ctx, NULL, data, &buf);
+	dsctx.data_src.buf = data;
+	dsctx.data_len = strlen(data);
+	dsctx.src_type = MTD_DATA_SRC_BUF;
+	err = do_ep(OA_APPLICATION_TOKEN, NULL, &dsctx, &buf, (char *)NULL);
 	if (err) {
 		logger(MTD_LOG_ERR, "%s\n", buf);
 		goto out_free;

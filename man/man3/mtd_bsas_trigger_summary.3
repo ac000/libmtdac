@@ -1,4 +1,4 @@
-.TH MTD_BSAS_TRIGGER_SUMMARY 3 "June 1, 2020" "" "libmtdac"
+.TH MTD_BSAS_TRIGGER_SUMMARY 3 "June 21, 2020" "" "libmtdac"
 
 .SH NAME
 
@@ -8,7 +8,10 @@ mtd_bsas_trigger_summary \- generate an end of accounting period Business Source
 
 .B #include <libmtdac/mtd-bsas.h>
 .PP
-.BI "int mtd_bsas_trigger_summary(const char *" src_file ", char **" buf );
+.nf
+.BI "int mtd_bsas_trigger_summary(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "                             char **" buf );
+.ni
 
 .SH DESCRIPTION
 
@@ -22,8 +25,10 @@ specified business for a given accounting period.
 A BSAS must be generated before accounting adjustments are entered.
 
 .TP 4
-.B src_file
-This is a file containing the JSON payload to send. E.g
+.B dsctx
+This points to either a buffer, filename, file pointer or file descriptor that
+contains the JSON payload to be sent. See
+.BR mtd_dsrc_ctx (3)
 .PP
 .RS 4
 Scenario: Self-employment Trigger
@@ -89,4 +94,5 @@ There was an OS level failure
 
 .BR libmtdac (3),
 .BR libmtdac_mtd.h (3),
+.BR mtd_dsrc_ctx (3),
 .BR libmtdac-result_buffer (3)

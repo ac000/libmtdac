@@ -17,9 +17,10 @@
  * [POST]
  * /national-insurance-test-support/sa/{utr}/annual-summary/{taxYear}
  */
-int mtd_test_ni_create_annual_summary(const char *src_file, const char *utr,
-				      const char *tax_year, char **buf)
+int mtd_test_ni_create_annual_summary(const struct mtd_dsrc_ctx *dsctx,
+				      const char *utr, const char *tax_year,
+				      char **buf)
 {
 	return do_ep(TEST_NI_CREATE_ANNUAL_SUMMARY, API_VER,
-		     src_file, NULL, buf, utr, tax_year, (char *)NULL);
+		     dsctx, buf, utr, tax_year, (char *)NULL);
 }

@@ -168,7 +168,7 @@ static void curl_ctx_free(const struct curl_ctx *ctx)
 	free(ctx->res_buf);
 	curl_slist_free_all(ctx->hdrs);
 
-	if (ctx->src_file)
+	if (ctx->src_file && ctx->dsctx->src_type == MTD_DATA_SRC_FILE)
 		fclose(ctx->src_file);
 }
 
@@ -429,40 +429,63 @@ retry_curl:
 	return MTD_ERR_NONE;
 }
 
-static int do_put_post(struct curl_ctx *ctx, const char *src_file,
-		       const char *data, char **buf,
-		       enum http_method http_method)
+static int do_put_post(struct curl_ctx *ctx, char **buf)
 {
 	int err;
-	struct stat sb;
 
-	*buf = NULL;
-
-	ctx->content_type = CONTENT_TYPE_JSON;
 	/*
-	 * The data check needs to come *first* so ->post_data
-	 * doesn't get overridden with mtd_ctx.src_data when
-	 * refreshing access tokens.
+	 * Handle endpoints that are a POST/PUT request but do not
+	 * send any data such as SA_CR_INTENT_TO_CRYSTALLISE
 	 */
-	if (data) {
-		ctx->post_data = data;
-		ctx->post_size = strlen(data);
-		ctx->content_type = CONTENT_TYPE_URL_ENCODED;
-	} else if (src_file) {
-		err = stat(src_file, &sb);
-		if (err) {
-			logger(MTD_LOG_ERR, "couldn't stat() %s\n", src_file);
+	if (!ctx->dsctx)
+		goto out_do_curl;
+
+	switch (ctx->dsctx->src_type) {
+	case MTD_DATA_SRC_FILE:
+		ctx->src_file = fopen(ctx->dsctx->data_src.file, "re");
+		if (!ctx->src_file) {
+			logger(MTD_LOG_ERR, "couldn't open file %s\n",
+			       ctx->src_file);
 			return MTD_ERR_OS;
 		}
-		ctx->src_file = fopen(src_file, "r");
-		ctx->src_size = sb.st_size;
-		ctx->read_cb = curl_readfp_cb;
-	} else if (mtd_ctx.src_data) {
-		ctx->post_data = mtd_ctx.src_data;
-		ctx->post_size = mtd_ctx.src_data_len;
+		break;
+	case MTD_DATA_SRC_FD:
+		ctx->src_file = fdopen(ctx->dsctx->data_src.fd, "re");
+		break;
+	case MTD_DATA_SRC_FP:
+		ctx->src_file = ctx->dsctx->data_src.fp;
+		break;
+	case MTD_DATA_SRC_BUF:
+		ctx->post_data = ctx->dsctx->data_src.buf;
+		ctx->post_size = ctx->dsctx->data_len;
+		break;
 	}
 
-	ctx->http_method = http_method;
+	switch (ctx->dsctx->src_type) {
+	case MTD_DATA_SRC_FILE:
+	case MTD_DATA_SRC_FD:
+	case MTD_DATA_SRC_FP: {
+		struct stat sb;
+
+		if (!ctx->src_file &&
+		    ctx->dsctx->src_type != MTD_DATA_SRC_FILE) {
+			logger(MTD_LOG_ERR, "couldn't open file\n");
+			return MTD_ERR_OS;
+		}
+
+		err = fstat(fileno(ctx->src_file), &sb);
+		if (err) {
+			logger(MTD_LOG_ERR, "couldn't stat() file\n");
+			return MTD_ERR_OS;
+		}
+		ctx->src_size = sb.st_size;
+		ctx->read_cb = curl_readfp_cb;
+	}
+	default:
+		break;
+	}
+
+out_do_curl:
 	ctx->write_cb = curl_writeb_cb;
 	ctx->curl_buf = calloc(1, sizeof(struct curl_buf));
 
@@ -475,26 +498,20 @@ static int do_put_post(struct curl_ctx *ctx, const char *src_file,
 	return err;
 }
 
-int do_put(struct curl_ctx *ctx, const char *src_file, const char *data,
-	   char **buf)
+int do_put(struct curl_ctx *ctx, char **buf)
 {
-	return do_put_post(ctx, src_file, data, buf, M_PUT);
+	return do_put_post(ctx, buf);
 }
 
-int do_post(struct curl_ctx *ctx, const char *src_file, const char *data,
-	    char **buf)
+int do_post(struct curl_ctx *ctx, char **buf)
 {
-	return do_put_post(ctx, src_file, data, buf, M_POST);
+	return do_put_post(ctx, buf);
 }
 
-int do_get_delete(struct curl_ctx *ctx, char **buf,
-		  enum http_method http_method)
+int do_get_delete(struct curl_ctx *ctx, char **buf)
 {
 	int err;
 
-	*buf = NULL;
-
-	ctx->http_method = http_method;
 	ctx->write_cb = curl_writeb_cb;
 	ctx->curl_buf = calloc(1, sizeof(struct curl_buf));
 
@@ -509,10 +526,10 @@ int do_get_delete(struct curl_ctx *ctx, char **buf,
 
 int do_delete(struct curl_ctx *ctx, char **buf)
 {
-	return do_get_delete(ctx, buf, M_DELETE);
+	return do_get_delete(ctx, buf);
 }
 
 int do_get(struct curl_ctx *ctx, char **buf)
 {
-	return do_get_delete(ctx, buf, M_GET);
+	return do_get_delete(ctx, buf);
 }

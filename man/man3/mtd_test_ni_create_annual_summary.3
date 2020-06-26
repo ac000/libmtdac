@@ -1,4 +1,4 @@
-.TH MTD_TEST_NI_CREATE_ANNUAL_SUMMARY 3 "June 1, 2020" "" "libmtdac"
+.TH MTD_TEST_NI_CREATE_ANNUAL_SUMMARY 3 "June 21, 2020" "" "libmtdac"
 
 .SH NAME
 
@@ -9,7 +9,7 @@ mtd_test_ni_create_annual_summary \- create national insurance summary test data
 .B #include <libmtdac/mtd-test-ni.h>
 .PP
 .nf
-.BI "int mtd_test_ni_create_annual_summary(const char *" src_file ",
+.BI "int mtd_test_ni_create_annual_summary(const struct mtd_dsrc_ctx *" dsctx ",
 .BI "                                      const char *" utr ",
 .BI "                                      const char *" tax_year ", char **" buf );
 .ni
@@ -19,8 +19,11 @@ mtd_test_ni_create_annual_summary \- create national insurance summary test data
 This function lets you create National Insurance contributions test data.
 
 .TP 4
-.B src_file
-This is a file containing the JSON payload to send. E.g
+.B dsctx
+This points to either a buffer, filename, file pointer or file descriptor that
+contains the JSON payload to be sent. See
+.BR mtd_dsrc_ctx (3).
+The JSON should look like
 .PP
 .RS 8
 .EX
@@ -97,4 +100,5 @@ There was an OS level failure
 
 .BR libmtdac (3),
 .BR libmtdac_mtd.h (3),
+.BR mtd_dsrc_ctx (3),
 .BR libmtdac-result_buffer (3)

@@ -36,8 +36,6 @@ struct mtd_ctx {
 	enum app_conn_type app_conn_type;
 	enum log_level log_level;
 	const char * const *hdrs;
-	const void *src_data;
-	size_t src_data_len;
 };
 
 #endif /* _MTD_PRIV_H_ */

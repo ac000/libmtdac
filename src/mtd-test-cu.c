@@ -20,35 +20,36 @@
 int mtd_test_cu_list_services(char **buf)
 {
 	return do_ep(TEST_CU_LIST_SERVICES, API_VER,
-		     NULL, NULL, buf, (char *)NULL);
+		     NULL, buf, (char *)NULL);
 }
 
 /*
  * [POST]
  * /create-test-user/agents
  */
-int mtd_test_cu_create_agent(const char *src_file, char **buf)
+int mtd_test_cu_create_agent(const struct mtd_dsrc_ctx *dsctx, char **buf)
 {
 	return do_ep(TEST_CU_CREATE_AGENT, API_VER,
-		     src_file, NULL, buf, (char *)NULL);
+		     dsctx, buf, (char *)NULL);
 }
 
 /*
  * [POST]
  * /create-test-user/organisations
  */
-int mtd_test_cu_create_organisation(const char *src_file, char **buf)
+int mtd_test_cu_create_organisation(const struct mtd_dsrc_ctx *dsctx,
+				    char **buf)
 {
 	return do_ep(TEST_CU_CREATE_ORGANISATION, API_VER,
-		     src_file, NULL, buf, (char *)NULL);
+		     dsctx, buf, (char *)NULL);
 }
 
 /*
  * [POST]
  * /create-test-user/individuals
  */
-int mtd_test_cu_create_individual(const char *src_file, char **buf)
+int mtd_test_cu_create_individual(const struct mtd_dsrc_ctx *dsctx, char **buf)
 {
 	return do_ep(TEST_CU_CREATE_INDIVIDUAL, API_VER,
-		     src_file, NULL, buf, (char *)NULL);
+		     dsctx, buf, (char *)NULL);
 }

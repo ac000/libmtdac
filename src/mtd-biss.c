@@ -20,7 +20,7 @@
 int mtd_biss_get_property(const char *query_string, char **buf)
 {
 	return do_ep(BISS_GET_PROPERTY, API_VER,
-		     NULL, NULL, buf, query_string, (char *)NULL);
+		     NULL, buf, query_string, (char *)NULL);
 }
 
 /*
@@ -30,5 +30,5 @@ int mtd_biss_get_property(const char *query_string, char **buf)
 int mtd_biss_get_self_employment(const char *query_string, char **buf)
 {
 	return do_ep(BISS_GET_SELF_EMPLOYMNET, API_VER,
-		     NULL, NULL, buf, query_string, (char *)NULL);
+		     NULL, buf, query_string, (char *)NULL);
 }

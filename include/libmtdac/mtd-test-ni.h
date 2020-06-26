@@ -17,7 +17,7 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
-extern int mtd_test_ni_create_annual_summary(const char *src_file,
+extern int mtd_test_ni_create_annual_summary(const struct mtd_dsrc_ctx *dsctx,
 					     const char *utr,
 					     const char *tax_year, char **buf);
 

@@ -17,11 +17,11 @@
  * [POST]
  * /individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust
  */
-int mtd_bsas_pb_update_summary_adjustments(const char *src_file,
+int mtd_bsas_pb_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
 					   const char *bid, char **buf)
 {
 	return do_ep(BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS, API_VER,
-		     src_file, NULL, buf, bid, (char *)NULL);
+		     dsctx, buf, bid, (char *)NULL);
 }
 /*
  * [GET ]
@@ -30,7 +30,7 @@ int mtd_bsas_pb_update_summary_adjustments(const char *src_file,
 int mtd_bsas_pb_list_summary_adjustments(const char *bid, char **buf)
 {
 	return do_ep(BSAS_PB_LIST_SUMMARY_ADJUSTMENTS, API_VER,
-		     NULL, NULL, buf, bid, (char *)NULL);
+		     NULL, buf, bid, (char *)NULL);
 }
 
 /*
@@ -41,18 +41,18 @@ int mtd_bsas_pb_get_summary(const char *bid, const char *query_string,
 			    char **buf)
 {
 	return do_ep(BSAS_PB_GET_SUMMARY, API_VER,
-		     NULL, NULL, buf, bid, query_string, (char *)NULL);
+		     NULL, buf, bid, query_string, (char *)NULL);
 }
 
 /*
  * [POST]
  * /individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust
  */
-int mtd_bsas_se_update_summary_adjustments(const char *src_file,
+int mtd_bsas_se_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
 					   const char *bid, char **buf)
 {
 	return do_ep(BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS, API_VER,
-		     src_file, NULL, buf, bid, (char *)NULL);
+		     dsctx, buf, bid, (char *)NULL);
 }
 /*
  * [GET ]
@@ -61,7 +61,7 @@ int mtd_bsas_se_update_summary_adjustments(const char *src_file,
 int mtd_bsas_se_list_summary_adjustments(const char *bid, char **buf)
 {
 	return do_ep(BSAS_SE_LIST_SUMMARY_ADJUSTMENTS, API_VER,
-		     NULL, NULL, buf, bid, (char *)NULL);
+		     NULL, buf, bid, (char *)NULL);
 }
 
 /*
@@ -72,17 +72,17 @@ int mtd_bsas_se_get_summary(const char *bid, const char *query_string,
 			    char **buf)
 {
 	return do_ep(BSAS_SE_GET_SUMMARY, API_VER,
-		     NULL, NULL, buf, bid, query_string, (char *)NULL);
+		     NULL, buf, bid, query_string, (char *)NULL);
 }
 
 /*
  * [POST]
  * /individuals/self-assessment/adjustable-summary/{nino}/trigger
  */
-int mtd_bsas_trigger_summary(const char *src_file, char **buf)
+int mtd_bsas_trigger_summary(const struct mtd_dsrc_ctx *dsctx, char **buf)
 {
 	return do_ep(BSAS_TRIGGER_SUMMARY, API_VER,
-		     src_file, NULL, buf, (char *)NULL);
+		     dsctx, buf, (char *)NULL);
 }
 
 /*
@@ -92,5 +92,5 @@ int mtd_bsas_trigger_summary(const char *src_file, char **buf)
 int mtd_bsas_list_summaries(const char *query_string, char **buf)
 {
 	return do_ep(BSAS_LIST_SUMMARIES, API_VER,
-		     NULL, NULL, buf, query_string, (char *)NULL);
+		     NULL, buf, query_string, (char *)NULL);
 }

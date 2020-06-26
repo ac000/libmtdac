@@ -17,17 +17,18 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
-extern int mtd_bsas_pb_update_summary_adjustments(const char *src_file,
+extern int mtd_bsas_pb_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
 						  const char *bid, char **buf);
 extern int mtd_bsas_pb_list_summary_adjustments(const char *bid, char **buf);
 extern int mtd_bsas_pb_get_summary(const char *bid, const char *query_string,
 				   char **buf);
-extern int mtd_bsas_se_update_summary_adjustments(const char *src_file,
+extern int mtd_bsas_se_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
 						  const char *bid, char **buf);
 extern int mtd_bsas_se_list_summary_adjustments(const char *bid, char **buf);
 extern int mtd_bsas_se_get_summary(const char *bid, const char *query_string,
 				   char **buf);
-extern int mtd_bsas_trigger_summary(const char *src_file, char **buf);
+extern int mtd_bsas_trigger_summary(const struct mtd_dsrc_ctx *dsctx,
+				    char **buf);
 extern int mtd_bsas_list_summaries(const char *query_string, char **buf);
 
 #pragma GCC visibility pop

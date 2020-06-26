@@ -9,7 +9,10 @@ given tax year
 
 .B #include <libmtdac/mtd-ic.h>
 .PP
-.BI "int mtd_ic_trigger_calculation(const char *src_file, char **buf);
+.nf
+.BI "int mtd_ic_trigger_calculation(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "                               char **" buf );
+.ni
 
 .SH DESCRIPTION
 
@@ -27,8 +30,11 @@ The result of the calculation can be seen using the
 function.
 
 .TP 4
-.B src_file
-This is a file containing the JSON payload to send. E.g
+.B dsctx
+This points to either a buffer, filename, file pointer or file descriptor that
+contains the JSON payload to be sent. See
+.BR mtd_dsrc_ctx (3).
+The JSON should look like
 .PP
 .RS 8
 .EX
@@ -68,6 +74,7 @@ There was an OS level failure
 
 .BR libmtdac (3),
 .BR libmtdac_mtd.h (3),
+.BR mtd_dsrc_ctx (3),
 .BR libmtdac-result_buffer (3),
 .BR mtd_ic_get_calculation_meta (3),
 .BR mtd_sa_se_update_period (3),

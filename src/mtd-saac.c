@@ -20,7 +20,7 @@
 int mtd_saac_get_payment(const char *pyid, char **buf)
 {
 	return do_ep(SAAC_GET_PAYMENT, API_VER,
-		     NULL, NULL, buf, pyid, (char *)NULL);
+		     NULL, buf, pyid, (char *)NULL);
 }
 
 /*
@@ -30,7 +30,7 @@ int mtd_saac_get_payment(const char *pyid, char **buf)
 int mtd_saac_list_payments(const char *query_string, char **buf)
 {
 	return do_ep(SAAC_LIST_PAYMENTS, API_VER,
-		     NULL, NULL, buf, query_string, (char *)NULL);
+		     NULL, buf, query_string, (char *)NULL);
 }
 
 /*
@@ -40,7 +40,7 @@ int mtd_saac_list_payments(const char *query_string, char **buf)
 int mtd_saac_get_charge(const char *trid, char **buf)
 {
 	return do_ep(SAAC_GET_CHARGE, API_VER,
-		     NULL, NULL, buf, trid, (char *)NULL);
+		     NULL, buf, trid, (char *)NULL);
 }
 
 /*
@@ -50,7 +50,7 @@ int mtd_saac_get_charge(const char *trid, char **buf)
 int mtd_saac_list_charges(const char *query_string, char **buf)
 {
 	return do_ep(SAAC_LIST_CHARGES, API_VER,
-		     NULL, NULL, buf, query_string, (char *)NULL);
+		     NULL, buf, query_string, (char *)NULL);
 }
 
 /*
@@ -60,7 +60,7 @@ int mtd_saac_list_charges(const char *query_string, char **buf)
 int mtd_saac_get_transaction(const char *trid, char **buf)
 {
 	return do_ep(SAAC_GET_TRANSACTION, API_VER,
-		     NULL, NULL, buf, trid, (char *)NULL);
+		     NULL, buf, trid, (char *)NULL);
 }
 
 /*
@@ -70,7 +70,7 @@ int mtd_saac_get_transaction(const char *trid, char **buf)
 int mtd_saac_list_transactions(const char *query_string, char **buf)
 {
 	return do_ep(SAAC_LIST_TRANSACTIONS, API_VER,
-		     NULL, NULL, buf, query_string, (char *)NULL);
+		     NULL, buf, query_string, (char *)NULL);
 }
 
 /*
@@ -80,5 +80,5 @@ int mtd_saac_list_transactions(const char *query_string, char **buf)
 int mtd_saac_get_balance(char **buf)
 {
 	return do_ep(SAAC_GET_BALANCE, API_VER,
-		     NULL, NULL, buf, (char *)NULL);
+		     NULL, buf, (char *)NULL);
 }

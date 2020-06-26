@@ -1,4 +1,4 @@
-.TH MTD_TEST_CU_CREATE_AGENT 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_TEST_CU_CREATE_AGENT 3 "June 21, 2020" "" "libmtdac"
 
 .SH NAME
 
@@ -8,7 +8,10 @@ mtd_test_cu_create_agent \- create a test user which is an agent
 
 .B #include <libmtdac/mtd-test-cu.h>
 .PP
-.BI "mtd_test_cu_create_agent(const char *" src_file ", char **" buf );
+.nf
+.BI "int mtd_test_cu_create_agent(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "                             char **" buf );
+.ni
 
 .SH DESCRIPTION
 
@@ -17,8 +20,11 @@ caller can specify the required service enrolments in the request body. If no
 request body is supplied, the test user is created with no service enrolments.
 
 .TP 4
-.B src_file
-This is a file containing the JSON payload to send. E.g
+.B dsctx
+This points to either a buffer, filename, file pointer or file descriptor that
+contains the JSON payload to be sent. See
+.BR mtd_dsrc_ctx (3).
+The Json should look like
 .PP
 .RS 8
 .EX
@@ -60,4 +66,5 @@ There was an OS level failure
 
 .BR libmtdac (3),
 .BR libmtdac_mtd.h (3),
+.BR mtd_dsrc_ctx (3),
 .BR libmtdac-result_buffer (3)

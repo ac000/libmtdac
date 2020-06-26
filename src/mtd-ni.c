@@ -21,5 +21,5 @@ int mtd_ni_get_annual_summary(const char *utr, const char *tax_year,
 			      char **buf)
 {
 	return do_ep(NI_GET_ANNUAL_SUMMARY, API_VER,
-		     NULL, NULL, buf, utr, tax_year, (char *)NULL);
+		     NULL, buf, utr, tax_year, (char *)NULL);
 }
