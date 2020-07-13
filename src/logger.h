@@ -30,6 +30,7 @@ static const struct logger {
 	_logger((const char *)__func__, log_level, fmt, ##__VA_ARGS__)
 
 extern __thread struct mtd_ctx mtd_ctx;
+__attribute__((format(printf, 3, 4)))
 static inline void _logger(const char *func, enum log_level log_level,
 			   const char *fmt, ...)
 {
