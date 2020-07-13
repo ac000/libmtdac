@@ -445,7 +445,7 @@ static int do_put_post(struct curl_ctx *ctx, char **buf)
 		ctx->src_file = fopen(ctx->dsctx->data_src.file, "re");
 		if (!ctx->src_file) {
 			logger(MTD_LOG_ERR, "couldn't open file %s\n",
-			       ctx->src_file);
+			       ctx->dsctx->data_src.file);
 			return MTD_ERR_OS;
 		}
 		break;
