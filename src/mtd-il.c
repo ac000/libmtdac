@@ -16,11 +16,16 @@
 /*
  * [PUT ]
  * /individuals/losses/{nino}/loss-claims/order
+ *
+ * Optional query string:
+ *
+ *      ?taxYear=YYYY-YY
  */
-int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx, char **buf)
+int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
+				const char *query_string, char **buf)
 {
 	return do_ep(IL_LC_UPDATE_LOSS_ORDER, API_VER,
-		     dsctx, buf, (char *)NULL);
+		     dsctx, buf, query_string, (char *)NULL);
 }
 
 /*

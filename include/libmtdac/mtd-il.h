@@ -18,7 +18,7 @@ extern "C" {
 #pragma GCC visibility push(default)
 
 extern int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
-				       char **buf);
+				       const char *query_string, char **buf);
 extern int mtd_il_lc_update_loss_type(const struct mtd_dsrc_ctx *dsctx,
 				      const char *cid, char **buf);
 extern int mtd_il_lc_delete_loss(const char *cid, char **buf);

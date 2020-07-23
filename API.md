@@ -517,6 +517,7 @@ data in the buffer via *data_len*
 #### mtd\_il\_lc\_update\_loss\_order
 
     int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
+                                    const char *query_string,
                                     char **buf)
 
 
