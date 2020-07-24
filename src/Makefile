@@ -3,7 +3,7 @@ LIBNAME = libmtdac
 GIT_VERSION  = \"$(shell git describe --long --dirty 2> /dev/null || cat ../.version)\"
 
 SOVER	= 0
-VERSION = $(SOVER).12.0
+VERSION = $(SOVER).13.0
 
 DEPDIR  := .d
 $(shell mkdir -p $(DEPDIR) >/dev/null)
