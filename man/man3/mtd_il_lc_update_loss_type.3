@@ -1,0 +1,69 @@
+.TH MTD_IL_LC_UPDATE_LOSS_TYPE 3 "June 7, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_il_lc_update_loss_type \- update an individual loss claim type
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-il.h>
+.PP
+.nf
+.BI "int mtd_il_lc_update_loss_type(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "                               const char *" cid ", char **" buf );
+.ni
+
+.SH DESCRIPTION
+
+This function allows developers to change the type of claim for an existing
+loss claim.
+
+.TP 4
+.B dsctx
+This points to either a buffer, filename, file pointer or file descriptor that
+contains the JSON payload to be sent. See
+.BR mtd_dsrc_ctx (3)
+
+.PP
+
+.TP
+.B cid
+.RS 4
+This is the claim ID of the loss to be updated and is in the form
+.RE
+
+.RS 8
+^[A-Za-z0-9]{15}$
+.RE
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR libmtdac-result_buffer (3)

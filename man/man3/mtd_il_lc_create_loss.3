@@ -1,0 +1,60 @@
+.TH MTD_IL_LC_CREATE_LOSS 3 "June 7, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_il_lc_create_loss \- create individual loss claims
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-il.h>
+.PP
+.nf
+.BI "int mtd_il_lc_create_loss(const struct mtd_dsrc_ctx *" dsctx ", char **" buf );
+.ni
+
+.SH DESCRIPTION
+
+This function allows developers to create a Loss Claim against an income source
+for a specific tax year. Claims cannot be made until after the End of Period
+Statement.
+
+.TP 4
+.B dsctx
+This points to either a buffer, filename, file pointer or file descriptor that
+contains the JSON payload to be sent. See
+.BR mtd_dsrc_ctx (3)
+
+.PP
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR mtd_dsrc_ctx (3),
+.BR libmtdac-result_buffer (3)

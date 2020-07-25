@@ -1,0 +1,100 @@
+.TH MTD_IL_LC_UPDATE_LOSS_ORDER 3 "June 7, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_il_lc_update_loss_order \- update individual loss claims order
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-il.h>
+.PP
+.nf
+.BI "int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "                                const char *" query_string ", char **" buf );
+.ni
+
+.SH DESCRIPTION
+
+This function allows developers to change the sequence in which certain losses
+are used.
+.PP
+.BI NOTE:
+This is only available in the test environment.
+
+.TP 4
+.B dsctx
+This points to either a buffer, filename, file pointer or file descriptor that
+contains the JSON payload to be sent. See
+.BR mtd_dsrc_ctx (3)
+.PP
+.RS 4
+E.g
+.RE
+.PP
+.RS 8
+.EX
+{
+    "claimType": "carry-sideways",
+    "listOfLossClaims": [
+        {
+            "id": "1234567890ABCDE",
+            "sequence": 2
+        },
+        {
+            "id": "1234567890ABDE0",
+            "sequence": 3
+        },
+        {
+            "id": "1234567890ABEF1",
+            "sequence": 1
+        }
+    ]
+}
+.EE
+.RE
+
+.PP
+
+.TP
+.B query_string
+.RS 4
+This is an optional (can be NULL) query string that specifies the tax year to
+operate on. It is of the following form
+
+.RE
+
+.RS 8
+?taxYear=YYYY-YY
+.RE
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR libmtdac-result_buffer (3)

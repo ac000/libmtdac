@@ -1,0 +1,64 @@
+.TH MTD_IL_BF_DELETE_LOSS 3 "June 7, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_il_bf_delete_loss \- delete an individual brought forward loss
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-il.h>
+.PP
+.BI "int mtd_il_bf_delete_loss(const char *" lid ", char **" buf );
+
+.SH DESCRIPTION
+
+This function allows developers to delete an existing brought forward loss.
+.PP
+You should be aware that where a loss has been used as part of a successful
+crystallisation activity, deletion will be blocked and an error code will be
+returned in the JSON result buffer.
+.PP
+In such a case, the you can amend the loss amount to zero. If you want to
+delete any details, you need to create a new account for that business.
+
+.TP 4
+.B lid
+.RS 4
+This is the loss ID of the loss to be deleted and is in the form
+.RE
+
+.RS 8
+^[A-Za-z0-9]{15}$
+.RE
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR libmtdac-result_buffer (3)
