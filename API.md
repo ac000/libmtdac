@@ -184,7 +184,8 @@ data in the buffer via *data_len*
 
 #### mtd\_sa\_se\_list\_obligations
 
-    int mtd_sa_se_list_obligations(const char *seid, char **buf)
+    int mtd_sa_se_list_obligations(const char *seid, const char *query_string,
+                                   char **buf)
 
 #### mtd\_sa\_se\_list\_periods
 

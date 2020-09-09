@@ -97,7 +97,8 @@ extern int mtd_sa_se_get_period(const char *seid, const char *period_id,
 extern int mtd_sa_se_create_period(const struct mtd_dsrc_ctx *dsctx,
 				   const char *seid, char **buf);
 extern int mtd_sa_se_list_periods(const char *seid, char **buf);
-extern int mtd_sa_se_list_obligations(const char *seid, char **buf);
+extern int mtd_sa_se_list_obligations(const char *seid,
+				      const char *query_string, char **buf);
 extern int mtd_sa_se_get_employment(const char *seid, char **buf);
 extern int mtd_sa_se_create_employment(const struct mtd_dsrc_ctx *dsctx,
 				       char **buf);

@@ -60,7 +60,7 @@ static const struct _endpoint {
 	},
 	{
 		.ep	= SA_SE_LIST_OBLIGATIONS,
-		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/obligations",
+		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/obligations/{optional_query_params}",
 		.method	= M_GET,
 		.scope	= SCOPE_USER
 	},

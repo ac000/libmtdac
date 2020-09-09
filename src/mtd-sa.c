@@ -445,12 +445,13 @@ int mtd_sa_se_list_periods(const char *seid, char **buf)
 
 /*
  * [GET ]
- * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/obligations
+ * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/obligations[?[from=YYYY-MM-DD][&[to=YYYY-MM-DD]]]
  */
-int mtd_sa_se_list_obligations(const char *seid, char **buf)
+int mtd_sa_se_list_obligations(const char *seid, const char *query_string,
+			       char **buf)
 {
 	return do_ep(SA_SE_LIST_OBLIGATIONS, API_VER,
-		     NULL, buf, seid, (char *)NULL);
+		     NULL, buf, seid, query_string, (char *)NULL);
 }
 
 /*
