@@ -493,7 +493,7 @@ static const struct _endpoint {
 	},
 	{
 		.ep	= IL_LC_UPDATE_LOSS_ORDER,
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/order",
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/order/{optional_query_params}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
