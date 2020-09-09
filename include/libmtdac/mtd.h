@@ -16,7 +16,7 @@ extern "C" {
 #endif
 
 #define LIBMTDAC_MAJOR_VERSION		 0
-#define LIBMTDAC_MINOR_VERSION		13
+#define LIBMTDAC_MINOR_VERSION		14
 #define LIBMTDAC_MICRO_VERSION		 0
 
 /* MTD_OPT_* - option flags for mtd_init() */
