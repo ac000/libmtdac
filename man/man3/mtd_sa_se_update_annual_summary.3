@@ -1,0 +1,77 @@
+.TH MTD_SA_SE_UPDATE_ANNUAL_SUMMARY 3 "June 7, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_sa_se_update_annual_summary \- update a self-employment annual summary for
+a tax year
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-sa.h>
+.PP
+.nf
+.BI "int mtd_sa_se_update_annual_summary(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "                                    const char *" seid ",
+.BI "                                    const char *" tax_year ",
+.BI "                                    char **" buf );
+.ni
+
+.SH DESCRIPTION
+
+This function allows a developer to update a self-employment annual summary
+for a given tax year, (see \fBseid\fP & \fPtax_year\fP below).
+
+.TP 4
+.B dsctx
+This points to either a buffer, filename, file pointer or file descriptor that
+contains the JSON payload to be sent. See
+.BR mtd_dsrc_ctx (3)
+
+.TP
+.B seid
+This is the selfEmploymentId and is in the form
+.PP
+.RS 8
+^X[A-Z0-9]{1}IS[0-9]{11}$
+.RE
+
+.TP
+.B tax_year
+This is the taxYear and is in the form
+.PP
+.RS 9
+YYYY-YY
+.RE
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR mtd_dsrc_ctx (3),
+.BR libmtdac-result_buffer (3)
