@@ -115,7 +115,8 @@ data in the buffer via *data_len*
         MTD_OPT_LOG_DEBUG
 
    it can also be OR'd with one of the following to specify the application
-   connection type. Only used when sending fraud prevention headers
+   connection type. Only used when sending fraud prevention headers. Defaults
+   to MTD\_OPT\_ACT\_OTHER\_DIRECT if not specified.
 
         MTD_OPT_ACT_MOBILE_APP_DIRECT
         MTD_OPT_ACT_DESKTOP_APP_DIRECT

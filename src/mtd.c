@@ -29,7 +29,6 @@
 #include "logger.h"
 
 __thread struct mtd_ctx mtd_ctx = {
-	.app_conn_type	= MTD_ACT_OTHER_DIRECT,
 	.log_level	= MTD_LOG_ERR,
 };
 
@@ -131,6 +130,7 @@ void mtd_global_init(void)
 int mtd_init(int flags)
 {
 	int err;
+	enum app_conn_type conn_type = MTD_ACT_OTHER_DIRECT;
 
 	/* Check for unknown flags */
 	if (flags & ~(MTD_OPT_ALL))
@@ -145,6 +145,24 @@ int mtd_init(int flags)
 
 	if (flags & MTD_OPT_GLOBAL_INIT)
 		curl_global_init(CURL_GLOBAL_ALL);
+
+	if (flags & MTD_OPT_ACT_MOBILE_APP_DIRECT)
+		conn_type = MTD_ACT_MOBILE_APP_DIRECT;
+	else if (flags & MTD_OPT_ACT_DESKTOP_APP_DIRECT)
+		conn_type = MTD_ACT_DESKTOP_APP_DIRECT;
+	else if (flags & MTD_OPT_ACT_MOBILE_APP_VIA_SERVER)
+		conn_type = MTD_ACT_MOBILE_APP_VIA_SERVER;
+	else if (flags & MTD_OPT_ACT_DESKTOP_APP_VIA_SERVER)
+		conn_type = MTD_ACT_DESKTOP_APP_VIA_SERVER;
+	else if (flags & MTD_OPT_ACT_WEB_APP_VIA_SERVER)
+		conn_type = MTD_ACT_WEB_APP_VIA_SERVER;
+	else if (flags & MTD_OPT_ACT_BATCH_PROCESS_DIRECT)
+		conn_type = MTD_ACT_BATCH_PROCESS_DIRECT;
+	else if (flags & MTD_OPT_ACT_OTHER_DIRECT)
+		conn_type = MTD_ACT_OTHER_DIRECT;
+	else if (flags & MTD_OPT_ACT_OTHER_VIA_SERVER)
+		conn_type = MTD_ACT_OTHER_VIA_SERVER;
+	mtd_ctx.app_conn_type = conn_type;
 
 	err = check_config_dir();
 	if (err)
