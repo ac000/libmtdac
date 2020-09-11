@@ -42,6 +42,7 @@ struct curl_buf {
 struct curl_ctx {
 	const char *url;
 	char *location;
+	char *x_corr_id;
 
 	const char *mtd_api_ver;
 

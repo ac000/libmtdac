@@ -145,18 +145,28 @@ static char *strchomp(char *string)
 static size_t header_cb(char *buffer, size_t size, size_t nitems,
 			void *userdata)
 {
-	if (strstr(buffer, "Location:")) {
-		struct curl_ctx *ctx = userdata;
-		char *ptr;
+	struct curl_ctx *ctx = userdata;
+	bool found_hdr = true;
+	char *hdr_val;
+	char **ptr;
+	size_t ret = nitems * size;
 
-		ptr = strchr(buffer, ' ');
-		if (!ptr)
-			goto out;
-		ctx->accepted_location = strdup(strchomp(++ptr));
-	}
+	if (strcasestr(buffer, "Location:"))
+		ptr = &ctx->accepted_location;
+	else if (strcasestr(buffer, "X-Correlationid"))
+		ptr = &ctx->x_corr_id;
+	else
+		found_hdr = false;
 
-out:
-	return nitems * size;
+	if (!found_hdr)
+		return ret;
+
+	hdr_val = strchr(buffer, ' ');
+	if (!hdr_val)
+		return ret;
+	*ptr = strdup(strchomp(++hdr_val));
+
+	return ret;
 }
 
 static void curl_ctx_free(const struct curl_ctx *ctx)
@@ -213,12 +223,13 @@ static void set_response(struct curl_ctx *ctx)
 		json_decref(loc);
 	}
 
-	new = json_pack("{s:i, s:s, s:s, s:s, s:o}",
+	new = json_pack("{s:i, s:s, s:s, s:s, s:s?, s:o?}",
 			"status_code", ctx->status_code,
 			"status_str", http_status_code2str(ctx->status_code),
 			"url", ctx->url,
 			"method", methods_str[ctx->http_method].str,
-			"result", rootbuf ? rootbuf : json_null());
+			"id", ctx->x_corr_id,
+			"result", rootbuf);
 
 	/* Cater for multiple responses in case of redirect... */
 	if (ctx->res_buf)
@@ -228,6 +239,8 @@ static void set_response(struct curl_ctx *ctx)
 	json_array_append_new(resbuf, new);
 
 	free(ctx->res_buf);
+	free(ctx->x_corr_id);
+	ctx->x_corr_id = NULL;
 	ctx->res_buf = json_dumps(resbuf, 0);
 
 	json_decref(resbuf);
