@@ -33,13 +33,16 @@
 
 #define BUF_SZ	1024
 
+static __thread struct mtd_fph_ops fph_ops;
 static __thread CURL *curl;
 
-static char *get_version(char *buf)
+static char *get_version(void)
 {
 	char ver[128];
 	char *encname;
 	char *encver;
+	char *buf;
+	int err;
 
 	encname = curl_easy_escape(curl, LIBNAME, 0);
 	snprintf(ver, sizeof(ver), "%d.%d.%d (%s)",
@@ -47,7 +50,11 @@ static char *get_version(char *buf)
 		 LIBMTDAC_MICRO_VERSION, GIT_VERSION + 1);
 	encver = curl_easy_escape(curl, ver, 0);
 
-	snprintf(buf, BUF_SZ, "%s=%s", encname, encver);
+	err = asprintf(&buf, "%s=%s", encname, encver);
+	if (err == -1) {
+		fprintf(stderr, "libmtdac/get_version: asprintf failed");
+		buf = NULL;
+	}
 
 	curl_free(encname);
 	curl_free(encver);
@@ -55,15 +62,17 @@ static char *get_version(char *buf)
 	return buf;
 }
 
-static char *get_ua(char *buf)
+static char *get_ua(void)
 {
 	struct utsname un;
+	char *buf;
 	char *encsys;
 	char *encrel;
 	char *encvendor = NULL;
 	char *encmodel = NULL;
 	char line[BUF_SZ];
 	FILE *fp;
+	int err;
 
 	uname(&un);
 	encsys = curl_easy_escape(curl, un.sysname, 0);
@@ -94,8 +103,12 @@ static char *get_ua(char *buf)
 	}
 	fclose(fp);
 
-	snprintf(buf, BUF_SZ, "%s/%s (%s/%s)", encsys, encrel, encvendor,
-		 encmodel);
+	err = asprintf(&buf, "%s/%s (%s/%s)", encsys, encrel, encvendor,
+		       encmodel);
+	if (err == -1) {
+		fprintf(stderr, "libmtdac/get_version: asprintf failed");
+		buf = NULL;
+	}
 
 	curl_free(encsys);
 	curl_free(encrel);
@@ -105,19 +118,18 @@ static char *get_ua(char *buf)
 	return buf;
 }
 
-static char *get_macs(char *buf)
+static char *get_macaddrs(void)
 {
 	struct ifaddrs *ifaddr;
 	struct ifaddrs *ifa;
 	int n;
 	int maclen = 0;
 	int err;
-
-	*buf = '\0';
+	char buf[BUF_SZ] = "\0";
 
 	err = getifaddrs(&ifaddr);
 	if (err)
-		return buf;
+		return strdup("");
 
 	for (ifa = ifaddr, n = 0; ifa != NULL; ifa = ifa->ifa_next, n++) {
 		int family;
@@ -144,7 +156,7 @@ static char *get_macs(char *buf)
 
 	freeifaddrs(ifaddr);
 
-	return buf;
+	return strdup(buf);
 }
 
 struct ip_prefix {
@@ -256,19 +268,18 @@ static bool _check_is_local_ip(const struct sockaddr *sa, int family)
 	return false;
 }
 
-static char *get_ips(char *buf)
+static char *get_ipaddrs(void)
 {
 	struct ifaddrs *ifaddr;
 	struct ifaddrs *ifa;
 	int n;
 	int iplen = 0;
 	int err;
-
-	*buf = '\0';
+	char buf[BUF_SZ] = "\0";
 
 	err = getifaddrs(&ifaddr);
 	if (err)
-		return buf;
+		return strdup("");
 
 	for (ifa = ifaddr, n = 0; ifa != NULL; ifa = ifa->ifa_next, n++) {
 		int family;
@@ -297,14 +308,21 @@ static char *get_ips(char *buf)
 
 	freeifaddrs(ifaddr);
 
-	return buf;
+	return strdup(buf);
 }
 
-static char *get_tz(char *buf)
+static char *get_tz(void)
 {
 	time_t now = time(NULL);
 	struct tm tm_res;
 	const struct tm *tm = localtime_r(&now, &tm_res);
+	char *buf;
+
+	buf = malloc(strlen("UTC+HH:MM") + 1);
+	if (!buf) {
+		fprintf(stderr, "libmtdac/get_tz: malloc failed");
+		return NULL;
+	}
 
 	/*
 	 * TZ format wants to be UTC+/-HH:MM
@@ -319,36 +337,30 @@ static char *get_tz(char *buf)
 	return buf;
 }
 
-static char *get_user(char *buf)
+static char *get_user(void)
 {
 	char *encuser;
+	char *buf;
+	int err;
 
 	encuser = curl_easy_escape(curl, getenv("USER"), 0);
-	snprintf(buf, BUF_SZ, "%s", encuser);
+	err = asprintf(&buf, "os=%s", encuser);
+	if (err == -1) {
+		fprintf(stderr, "libmtdac/get_user: asprintf failed");
+		buf = NULL;
+	}
 	curl_free(encuser);
 
 	return buf;
 }
 
-static void get_other_direct_hdrs(struct curl_ctx *ctx)
-{
-	char buf[BUF_SZ];
-
-	curl_add_hdr(ctx, "Gov-Client-Connection-Method: OTHER_DIRECT");
-
-	curl_add_hdr(ctx, "Gov-Client-User-IDs: os=%s", get_user(buf));
-	curl_add_hdr(ctx, "Gov-Client-Timezone: %s", get_tz(buf));
-	curl_add_hdr(ctx, "Gov-Client-Local-IPs: %s", get_ips(buf));
-	curl_add_hdr(ctx, "Gov-Client-MAC-Addresses: %s", get_macs(buf));
-	curl_add_hdr(ctx, "Gov-Client-User-Agent: %s", get_ua(buf));
-	curl_add_hdr(ctx, "Gov-Vendor-Version: %s", get_version(buf));
-}
-
-static char *get_device_id(char *buf)
+static char *get_device_id(void)
 {
 	char path[PATH_MAX];
 	json_t *root;
 	json_t *did;
+	char *buf;
+	int err;
 
 	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
 		 "uuid.json");
@@ -359,23 +371,45 @@ static char *get_device_id(char *buf)
 	if (!did)
 		return NULL;
 
-	snprintf(buf, BUF_SZ, "%s", json_string_value(did));
+	err = asprintf(&buf, "%s", json_string_value(did));
+	if (err == -1) {
+		fprintf(stderr, "libmtdac/get_device_id: asprintf failed");
+		buf = NULL;
+	}
 	json_decref(root);
 
 	return buf;
 }
 
+static void add_fph(struct curl_ctx *ctx, const char *hdr,
+		    char *(*get_value)(void))
+{
+	char *val = get_value();
+
+	curl_add_hdr(ctx, "%s: %s", hdr, val);
+	free(val);
+}
+
+static void get_other_direct_hdrs(struct curl_ctx *ctx)
+{
+	curl_add_hdr(ctx, "Gov-Client-Connection-Method: OTHER_DIRECT");
+
+	add_fph(ctx, "Gov-Client-Device-ID", fph_ops.fph_device_id);
+	add_fph(ctx, "Gov-Client-User-IDs", fph_ops.fph_user);
+	add_fph(ctx, "Gov-Client-Timezone", fph_ops.fph_tz);
+	add_fph(ctx, "Gov-Client-Local-IPs", fph_ops.fph_ipaddrs);
+	add_fph(ctx, "Gov-Client-MAC-Addresses", fph_ops.fph_macaddrs);
+	add_fph(ctx, "Gov-Client-User-Agent", fph_ops.fph_ua);
+	add_fph(ctx, "Gov-Vendor-Version", fph_ops.fph_version);
+}
+
 extern __thread struct mtd_ctx mtd_ctx;
 void set_anti_fraud_hdrs(struct curl_ctx *ctx)
 {
-	char buf[BUF_SZ];
-
 	if (!(mtd_ctx.opts & MTD_OPT_SND_ANTI_FRAUD_HDRS))
 		return;
 
 	curl = curl_easy_init();
-
-	curl_add_hdr(ctx, "Gov-Client-Device-ID: %s", get_device_id(buf));
 
 	switch (mtd_ctx.app_conn_type) {
 	case MTD_ACT_MOBILE_APP_DIRECT:
@@ -393,4 +427,19 @@ void set_anti_fraud_hdrs(struct curl_ctx *ctx)
 	}
 
 	curl_easy_cleanup(curl);
+}
+
+static const struct mtd_fph_ops dfl_fph_ops = {
+	.fph_device_id		= get_device_id,
+	.fph_user		= get_user,
+	.fph_tz			= get_tz,
+	.fph_ipaddrs		= get_ipaddrs,
+	.fph_macaddrs		= get_macaddrs,
+	.fph_ua			= get_ua,
+	.fph_version		= get_version,
+};
+
+void fph_init_ops(void)
+{
+	memcpy(&fph_ops, &dfl_fph_ops, sizeof(struct mtd_fph_ops));
 }

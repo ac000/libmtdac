@@ -86,6 +86,16 @@ struct mtd_dsrc_ctx {
 	enum mtd_data_src_type src_type;
 };
 
+struct mtd_fph_ops {
+	char *(*fph_device_id)(void);
+	char *(*fph_user)(void);
+	char *(*fph_tz)(void);
+	char *(*fph_ipaddrs)(void);
+	char *(*fph_macaddrs)(void);
+	char *(*fph_ua)(void);
+	char *(*fph_version)(void);
+};
+
 #pragma GCC visibility push(default)
 
 extern void mtd_hdrs_add(const char * const hdrs[]);

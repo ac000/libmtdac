@@ -25,6 +25,7 @@
 #include "mtd.h"
 #include "mtd-priv.h"
 #include "auth.h"
+#include "fph.h"
 #include "curler.h"
 #include "logger.h"
 
@@ -167,6 +168,8 @@ int mtd_init(int flags)
 	err = check_config_dir();
 	if (err)
 		return err;
+
+	fph_init_ops();
 
 	return MTD_ERR_NONE;
 }

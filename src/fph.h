@@ -12,5 +12,6 @@
 #include "curler.h"
 
 extern void set_anti_fraud_hdrs(struct curl_ctx *ctx);
+extern void fph_init_ops(void);
 
 #endif /* _FPH_H_ */
