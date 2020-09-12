@@ -33,7 +33,9 @@
 
 #define BUF_SZ	1024
 
-static char *get_version(CURL *curl, char *buf)
+static __thread CURL *curl;
+
+static char *get_version(char *buf)
 {
 	char ver[128];
 	char *encname;
@@ -53,7 +55,7 @@ static char *get_version(CURL *curl, char *buf)
 	return buf;
 }
 
-static char *get_ua(CURL *curl, char *buf)
+static char *get_ua(char *buf)
 {
 	struct utsname un;
 	char *encsys;
@@ -103,7 +105,7 @@ static char *get_ua(CURL *curl, char *buf)
 	return buf;
 }
 
-static char *get_macs(CURL *curl, char *buf)
+static char *get_macs(char *buf)
 {
 	struct ifaddrs *ifaddr;
 	struct ifaddrs *ifa;
@@ -254,7 +256,7 @@ static bool _check_is_local_ip(const struct sockaddr *sa, int family)
 	return false;
 }
 
-static char *get_ips(CURL *curl, char *buf)
+static char *get_ips(char *buf)
 {
 	struct ifaddrs *ifaddr;
 	struct ifaddrs *ifa;
@@ -317,7 +319,7 @@ static char *get_tz(char *buf)
 	return buf;
 }
 
-static char *get_user(CURL *curl, char *buf)
+static char *get_user(char *buf)
 {
 	char *encuser;
 
@@ -328,18 +330,18 @@ static char *get_user(CURL *curl, char *buf)
 	return buf;
 }
 
-static void get_other_direct_hdrs(CURL *curl, struct curl_ctx *ctx)
+static void get_other_direct_hdrs(struct curl_ctx *ctx)
 {
 	char buf[BUF_SZ];
 
 	curl_add_hdr(ctx, "Gov-Client-Connection-Method: OTHER_DIRECT");
 
-	curl_add_hdr(ctx, "Gov-Client-User-IDs: os=%s", get_user(curl, buf));
+	curl_add_hdr(ctx, "Gov-Client-User-IDs: os=%s", get_user(buf));
 	curl_add_hdr(ctx, "Gov-Client-Timezone: %s", get_tz(buf));
-	curl_add_hdr(ctx, "Gov-Client-Local-IPs: %s", get_ips(curl, buf));
-	curl_add_hdr(ctx, "Gov-Client-MAC-Addresses: %s", get_macs(curl, buf));
-	curl_add_hdr(ctx, "Gov-Client-User-Agent: %s", get_ua(curl, buf));
-	curl_add_hdr(ctx, "Gov-Vendor-Version: %s", get_version(curl, buf));
+	curl_add_hdr(ctx, "Gov-Client-Local-IPs: %s", get_ips(buf));
+	curl_add_hdr(ctx, "Gov-Client-MAC-Addresses: %s", get_macs(buf));
+	curl_add_hdr(ctx, "Gov-Client-User-Agent: %s", get_ua(buf));
+	curl_add_hdr(ctx, "Gov-Vendor-Version: %s", get_version(buf));
 }
 
 static char *get_device_id(char *buf)
@@ -366,7 +368,6 @@ static char *get_device_id(char *buf)
 extern __thread struct mtd_ctx mtd_ctx;
 void set_anti_fraud_hdrs(struct curl_ctx *ctx)
 {
-	CURL *curl;
 	char buf[BUF_SZ];
 
 	if (!(mtd_ctx.opts & MTD_OPT_SND_ANTI_FRAUD_HDRS))
@@ -385,7 +386,7 @@ void set_anti_fraud_hdrs(struct curl_ctx *ctx)
 	case MTD_ACT_BATCH_PROCESS_DIRECT:
 		break;
 	case MTD_ACT_OTHER_DIRECT:
-		get_other_direct_hdrs(curl, ctx);
+		get_other_direct_hdrs(ctx);
 		break;
 	case MTD_ACT_OTHER_VIA_SERVER:
 		break;
