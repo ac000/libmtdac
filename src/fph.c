@@ -403,15 +403,14 @@ static void get_other_direct_hdrs(struct curl_ctx *ctx)
 	add_fph(ctx, "Gov-Vendor-Version", fph_ops.fph_version);
 }
 
-extern __thread struct mtd_ctx mtd_ctx;
-void set_anti_fraud_hdrs(struct curl_ctx *ctx)
+void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx, struct curl_ctx *ctx)
 {
-	if (!(mtd_ctx.opts & MTD_OPT_SND_ANTI_FRAUD_HDRS))
+	if (!(mtd_ctx->opts & MTD_OPT_SND_ANTI_FRAUD_HDRS))
 		return;
 
 	curl = curl_easy_init();
 
-	switch (mtd_ctx.app_conn_type) {
+	switch (mtd_ctx->app_conn_type) {
 	case MTD_ACT_MOBILE_APP_DIRECT:
 	case MTD_ACT_DESKTOP_APP_DIRECT:
 	case MTD_ACT_MOBILE_APP_VIA_SERVER:

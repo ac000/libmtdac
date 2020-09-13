@@ -12,7 +12,8 @@
 #include "mtd.h"
 #include "curler.h"
 
-extern void set_anti_fraud_hdrs(struct curl_ctx *ctx);
+extern void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx,
+				struct curl_ctx *ctx);
 extern void fph_set_ops(const struct mtd_fph_ops *ops);
 extern void fph_init_ops(void);
 

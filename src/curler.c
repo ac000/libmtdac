@@ -385,7 +385,7 @@ static int do_curl(struct curl_ctx *ctx)
 	ctx->url = ep_make_url(ctx->endpoint, ctx->params, url);
 
 curl_again:
-	set_anti_fraud_hdrs(ctx);
+	set_anti_fraud_hdrs(&mtd_ctx, ctx);
 	err = set_headers(ctx);
 	if (err)
 		return err;
