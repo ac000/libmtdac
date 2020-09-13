@@ -133,6 +133,10 @@ int mtd_init(int flags)
 	int err;
 	enum app_conn_type conn_type = MTD_ACT_OTHER_DIRECT;
 
+	err = check_config_dir();
+	if (err)
+		return err;
+
 	/* Check for unknown flags */
 	if (flags & ~(MTD_OPT_ALL))
 		return MTD_ERR_UNKNOWN_FLAGS;
@@ -164,10 +168,6 @@ int mtd_init(int flags)
 	else if (flags & MTD_OPT_ACT_OTHER_VIA_SERVER)
 		conn_type = MTD_ACT_OTHER_VIA_SERVER;
 	mtd_ctx.app_conn_type = conn_type;
-
-	err = check_config_dir();
-	if (err)
-		return err;
 
 	fph_init_ops();
 
