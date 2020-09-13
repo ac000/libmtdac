@@ -63,6 +63,7 @@ enum mtd_error {
 	MTD_ERR_CURL,
 	MTD_ERR_NEEDS_AUTHORISATION,
 	MTD_ERR_UNKNOWN_FLAGS,
+	MTD_ERR_LIB_TOO_OLD,
 };
 
 enum mtd_data_src_type {
@@ -96,12 +97,16 @@ struct mtd_fph_ops {
 	char *(*fph_version)(void);
 };
 
+struct mtd_cfg {
+	const struct mtd_fph_ops *fph_ops;
+};
+
 #pragma GCC visibility push(default)
 
 extern void mtd_hdrs_add(const char * const hdrs[]);
 extern void mtd_hdrs_reset(void);
 extern void mtd_global_init(void);
-extern int mtd_init(int flags);
+extern int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 extern void mtd_deinit(void);
 extern int mtd_init_auth(void);
 extern int mtd_init_config(void);

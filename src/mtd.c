@@ -128,7 +128,7 @@ void mtd_global_init(void)
 	curl_global_init(CURL_GLOBAL_ALL);
 }
 
-int mtd_init(int flags)
+int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 {
 	int err;
 	enum app_conn_type conn_type = MTD_ACT_OTHER_DIRECT;
@@ -170,6 +170,10 @@ int mtd_init(int flags)
 	mtd_ctx.app_conn_type = conn_type;
 
 	fph_init_ops();
+
+	if (!cfg)
+		return MTD_ERR_NONE;
+	fph_set_ops(cfg->fph_ops);
 
 	return MTD_ERR_NONE;
 }

@@ -429,6 +429,27 @@ void set_anti_fraud_hdrs(struct curl_ctx *ctx)
 	curl_easy_cleanup(curl);
 }
 
+void fph_set_ops(const struct mtd_fph_ops *ops)
+{
+	if (!ops)
+		return;
+
+	if (ops->fph_device_id)
+		fph_ops.fph_device_id = ops->fph_device_id;
+	if (ops->fph_user)
+		fph_ops.fph_user = ops->fph_user;
+	if (ops->fph_tz)
+		fph_ops.fph_tz = ops->fph_tz;
+	if (ops->fph_ipaddrs)
+		fph_ops.fph_ipaddrs = ops->fph_ipaddrs;
+	if (ops->fph_macaddrs)
+		fph_ops.fph_macaddrs = ops->fph_macaddrs;
+	if (ops->fph_ua)
+		fph_ops.fph_ua = ops->fph_ua;
+	if (ops->fph_version)
+		fph_ops.fph_version = ops->fph_version;
+}
+
 static const struct mtd_fph_ops dfl_fph_ops = {
 	.fph_device_id		= get_device_id,
 	.fph_user		= get_user,

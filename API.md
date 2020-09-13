@@ -2,6 +2,8 @@
   * [Library version](#library-version)
   * [Errors](#errors)
   * [Data Source](#data-source)
+  * [Fraud Prevention Headers](#fraud-prevention-headers)
+  * [Config](#config)
   * [Initialisation functions](#initialisation-functions)
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
     - [Self-Assessment - Self-Employment](#self-assessment---self-employment)
@@ -87,6 +89,47 @@ In the case of using a buffer you also need to set the length in bytes of the
 data in the buffer via *data_len*
 
 
+### Fraud Prevention Headers
+
+    struct mtd_fph_ops {
+            char *(*fph_device_id)(void);
+            char *(*fph_user)(void);
+            char *(*fph_tz)(void);
+            char *(*fph_ipaddrs)(void);
+            char *(*fph_macaddrs)(void);
+            char *(*fph_ua)(void);
+            char *(*fph_version)(void);
+    };
+
+This can be used to override the in built functions that generate the various
+fraud prevention header values. You can set any or all of them, any that are
+set to NULL will use the appropriate inbuilt function.
+
+These functions should return a pointer to a dynamically allocated buffer that
+will be free(3)'d by the library.
+
+
+### Config
+
+    struct mtd_cfg {
+            const struct mtd_fph_ops *fph_ops;
+    };
+
+This is a structure that can be passed into mtd\_init() to provide/override
+configuration data.
+
+It's currently just used for overriding the fraud prevention headers. A user
+could declare a struct mtd\_fph\_ops and set various members to their own
+functions then set mtd\_cfg.fph\_ops to this structure and pass it into
+mtd\_init() e.g
+
+```C
+struct mtd_fph_ops fph_ops = { .fph_user = my_user, .fph_version = my_ver };
+struct mtd_cfg cfg = { .fph_ops = &fph_ops };
+
+err = mtd_init(flags, &cfg);
+```
+
 ### Initialisation functions
 
 #### mtd\_global\_init - initialise the library (globally)
@@ -102,7 +145,7 @@ data in the buffer via *data_len*
 
 #### mtd\_init - initialise the library
 
-    int mtd_init(int flags)
+    int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 
    This function should be called once in each thread where *libmtdac* is to be
    used.
@@ -138,6 +181,9 @@ data in the buffer via *data_len*
    in a single-threaded application, when not calling mtd\_global\_init()
 
         MTD_OPT_GLOBAL_INIT
+
+You can optionally pass in a *struct mtd_cfg*, see [Config](#config) above.
+
 
 #### mtd\_init\_auth - initialise oauth.json
 
