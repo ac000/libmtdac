@@ -29,9 +29,11 @@
 #include "curler.h"
 #include "logger.h"
 
-__thread struct mtd_ctx mtd_ctx = {
-	.log_level	= MTD_LOG_ERR,
+static const struct mtd_ctx dfl_mtd_ctx = {
+	.log_level		= MTD_LOG_ERR,
+	.app_conn_type		= MTD_ACT_OTHER_DIRECT,
 };
+__thread struct mtd_ctx mtd_ctx;
 
 static char *gen_uuid(char *buf)
 {
@@ -131,11 +133,14 @@ void mtd_global_init(void)
 int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 {
 	int err;
-	enum app_conn_type conn_type = MTD_ACT_OTHER_DIRECT;
+	enum app_conn_type *conn_type = &mtd_ctx.app_conn_type;
 
 	err = check_config_dir();
 	if (err)
 		return err;
+
+	/* initialise struct mtd_ctx to default values */
+	memcpy(&mtd_ctx, &dfl_mtd_ctx, sizeof(struct mtd_ctx));
 
 	/* Check for unknown flags */
 	if (flags & ~(MTD_OPT_ALL))
@@ -152,22 +157,19 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 		curl_global_init(CURL_GLOBAL_ALL);
 
 	if (flags & MTD_OPT_ACT_MOBILE_APP_DIRECT)
-		conn_type = MTD_ACT_MOBILE_APP_DIRECT;
+		*conn_type = MTD_ACT_MOBILE_APP_DIRECT;
 	else if (flags & MTD_OPT_ACT_DESKTOP_APP_DIRECT)
-		conn_type = MTD_ACT_DESKTOP_APP_DIRECT;
+		*conn_type = MTD_ACT_DESKTOP_APP_DIRECT;
 	else if (flags & MTD_OPT_ACT_MOBILE_APP_VIA_SERVER)
-		conn_type = MTD_ACT_MOBILE_APP_VIA_SERVER;
+		*conn_type = MTD_ACT_MOBILE_APP_VIA_SERVER;
 	else if (flags & MTD_OPT_ACT_DESKTOP_APP_VIA_SERVER)
-		conn_type = MTD_ACT_DESKTOP_APP_VIA_SERVER;
+		*conn_type = MTD_ACT_DESKTOP_APP_VIA_SERVER;
 	else if (flags & MTD_OPT_ACT_WEB_APP_VIA_SERVER)
-		conn_type = MTD_ACT_WEB_APP_VIA_SERVER;
+		*conn_type = MTD_ACT_WEB_APP_VIA_SERVER;
 	else if (flags & MTD_OPT_ACT_BATCH_PROCESS_DIRECT)
-		conn_type = MTD_ACT_BATCH_PROCESS_DIRECT;
-	else if (flags & MTD_OPT_ACT_OTHER_DIRECT)
-		conn_type = MTD_ACT_OTHER_DIRECT;
+		*conn_type = MTD_ACT_BATCH_PROCESS_DIRECT;
 	else if (flags & MTD_OPT_ACT_OTHER_VIA_SERVER)
-		conn_type = MTD_ACT_OTHER_VIA_SERVER;
-	mtd_ctx.app_conn_type = conn_type;
+		*conn_type = MTD_ACT_OTHER_VIA_SERVER;
 
 	fph_init_ops();
 
