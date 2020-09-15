@@ -115,16 +115,6 @@ static int check_config_dir(void)
 	return MTD_ERR_OS;
 }
 
-void mtd_hdrs_add(const char * const hdrs[])
-{
-	mtd_ctx.hdrs = hdrs;
-}
-
-void mtd_hdrs_reset(void)
-{
-	mtd_ctx.hdrs = NULL;
-}
-
 void mtd_global_init(void)
 {
 	curl_global_init(CURL_GLOBAL_ALL);
@@ -175,7 +165,9 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 
 	if (!cfg)
 		return MTD_ERR_NONE;
+
 	fph_set_ops(cfg->fph_ops);
+	mtd_ctx.extra_hdrs = cfg->extra_hdrs;
 
 	return MTD_ERR_NONE;
 }

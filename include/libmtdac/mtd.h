@@ -99,12 +99,11 @@ struct mtd_fph_ops {
 
 struct mtd_cfg {
 	const struct mtd_fph_ops *fph_ops;
+	const char * const *extra_hdrs;
 };
 
 #pragma GCC visibility push(default)
 
-extern void mtd_hdrs_add(const char * const hdrs[]);
-extern void mtd_hdrs_reset(void);
 extern void mtd_global_init(void);
 extern int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 extern void mtd_deinit(void);

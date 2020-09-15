@@ -113,12 +113,13 @@ will be free(3)'d by the library.
 
     struct mtd_cfg {
             const struct mtd_fph_ops *fph_ops;
+            const char * const *extra_hdrs;
     };
 
 This is a structure that can be passed into mtd\_init() to provide/override
 configuration data.
 
-It's currently just used for overriding the fraud prevention headers. A user
+Firstly, it can be used for overriding the fraud prevention headers. A user
 could declare a struct mtd\_fph\_ops and set various members to their own
 functions then set mtd\_cfg.fph\_ops to this structure and pass it into
 mtd\_init() e.g
@@ -129,6 +130,19 @@ struct mtd_cfg cfg = { .fph_ops = &fph_ops };
 
 err = mtd_init(flags, &cfg);
 ```
+
+Secondly, you can use the *extra_hdrs* member to add extra HTTP headers to be
+sent, e.g a Gov-Test-Scenario header. E.g
+
+```C
+const char *hdrs[2] = { NULL };
+struct mtd_cfg cfg = { .extra_hdrs = hdrs };
+
+hdrs[0] = getenv("MTD_CLI_HDRS");
+```
+
+*extra_hdrs* should point to a NULL terminated array of character pointers.
+
 
 ### Initialisation functions
 
@@ -200,14 +214,6 @@ You can optionally pass in a *struct mtd_cfg*, see [Config](#config) above.
 #### mtd\_deinit - de-initialise the library
 
     void mtd_deinit(void)
-
-#### mtd\_hdrs\_add - add extra headers
-
-    void mtd_hdrs_add(const char * const hdrs[])
-
-#### mtd\_hdrs\_reset - clear extra headers
-
-    void mtd_hdrs_reset(void)
 
 
 ### Make Tax Digital - Self-Assessment API functions

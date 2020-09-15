@@ -35,7 +35,7 @@ struct mtd_ctx {
 	int opts;
 	enum app_conn_type app_conn_type;
 	enum log_level log_level;
-	const char * const *hdrs;
+	const char * const *extra_hdrs;
 };
 
 #endif /* _MTD_PRIV_H_ */
