@@ -108,6 +108,10 @@ set to NULL will use the appropriate inbuilt function.
 These functions should return a pointer to a dynamically allocated buffer that
 will be free(3)'d by the library.
 
+You should probably take a quick look at the
+[Fraud Prevention Headers](README.md#fraud-prevention-headers) section of the
+**README.md** to understand the possible privacy implications.
+
 
 ### Config
 
@@ -184,13 +188,11 @@ hdrs[0] = getenv("MTD_CLI_HDRS");
         MTD_OPT_ACT_OTHER_DIRECT
         MTD_OPT_ACT_OTHER_VIA_SERVER
 
-   when using one of the above, you should also set
+   if you don't wish to send fraud prevention headers then you can set
 
-        MTD_OPT_SND_ANTI_FRAUD_HDRS
+        MTD_OPT_NO_ANTI_FRAUD_HDRS
 
-   however you should read
-   [Fraud Prevention Headers](#fraud-prevention-headers) to understand the
-   possible privacy implications.
+   however they will become mandatory for all endpoints at some point
 
    in a single-threaded application, when not calling mtd\_global\_init()
 

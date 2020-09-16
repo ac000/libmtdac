@@ -77,12 +77,9 @@ Can be used in a non-threaded application instead of calling
 .BR mtd_global_init (3)
 
 .TP
-.B MTD_OPT_SND_ANTI_FRAUD_HDRS
-Used to tell libmtdac to send \fBFraud Prevention Headers\fP. This is
-disabled by default as it's currently not required with the Self-Assessment
-API and it sends some possibly sensitive information such as; local IP
-addresses, mac addresses, OS username and a unique device ID created by
-libmtdac. See src/fph.c
+.B MTD_OPT_NO_ANTI_FRAUD_HDRS
+Used to tell libmtdac to \fBnot\fP send \fBFraud Prevention Headers\fP.
+However at some point, it will become mandatory to send them for all endpoints.
 
 .PP
 

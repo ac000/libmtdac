@@ -63,6 +63,10 @@ and a unique device id.
 
 Caveat Emptor.
 
+What is sent for each header can be overridden. See the
+[Fraud Prevention Headers](API.md#fraud-prevention-headers) section of
+**API.md** for more details.
+
 
 ## Thread safety
 
