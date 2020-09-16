@@ -8,7 +8,7 @@ mtd_init \- per-instance/thread initialisation
 
 .B #include <libmtdac/mtd.h>
 .PP
-.BI "int mtd_init(int " flags );
+.BI "int mtd_init(unsigned int " flags ", const struct mtd_cfg *" cfg );
 
 .SH DESCRIPTION
 
@@ -84,6 +84,52 @@ API and it sends some possibly sensitive information such as; local IP
 addresses, mac addresses, OS username and a unique device ID created by
 libmtdac. See src/fph.c
 
+.PP
+
+\fIcfg\fP is an optional \fIstruct mtd_cfg\fP that can be used to
+override/provide various bits of library configuration.
+
+.RS 4
+.EX
+struct mtd_cfg {
+        const struct mtd_fph_ops *fph_ops;
+        const char * const       *extra_hdrs;
+};
+.EE
+.RE
+
+\fIfph_ops\fP is a structure for setting the fraud prevention header value
+functions
+
+.RS 4
+.EX
+struct mtd_fph_ops {
+        char *(*fph_device_id)(void);
+        char *(*fph_user)(void);
+        char *(*fph_tz)(void);
+        char *(*fph_ipaddrs)(void);
+        char *(*fph_macaddrs)(void);
+        char *(*fph_ua)(void);
+        char *(*fph_version)(void);
+};
+.EE
+.RE
+
+if the fph_ops structure or any of its members are NULL then the default
+inbuilt functions are used.
+.PP
+These functions should return a dynamically allocated buffer that will be
+free(3)'s by the library.
+
+.PP
+
+\fIextra_hdrs\fP can be used to send extra HTTP headers, it should point to a
+NULL terminated array of character pointers.
+
+.PP
+
+If \fIcfg\fP is passed in as NULL, then default library values are used.
+
 .SH RETURN VALUE
 
 On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
@@ -98,6 +144,22 @@ There was an OS level failure
 .TP
 .B MTD_ERR_UNKNOWN_FLAGS
 One or more of the supplied flags weren't recognised
+
+.SH EXAMPLE
+
+.RS 4
+.EX
+
+unsigned int flags = MTD_OPT_GLOBAL_INIT | MTD_OPT_LOG_DEBUG;
+const char *hdrs[2] = { NULL };
+struct mtd_fph_ops fph_ops = { .fph_user = my_user,
+                               .fph_version = my_ver };
+struct mtd_cfg cfg = { .fph_ops = &fph_ops, .extra_hdrs = hdrs };
+
+hdrs[0] = "Gov-Test-Scenario: AGENT_NOT_SUBSCRIBED";
+err = mtd_init(flags, &cfg);
+.EE
+.RE
 
 .SH SEE ALSO
 

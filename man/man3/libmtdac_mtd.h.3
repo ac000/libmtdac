@@ -87,6 +87,7 @@ enum mtd_error {
         \fBMTD_ERR_CURL\fP,
         \fBMTD_ERR_NEEDS_AUTHORISATION\fP,
         \fBMTD_ERR_UNKNOWN_FLAGS\fP,
+        \fBMTD_ERR_LIB_TOO_OLD\fP,
 .br
 };
 
@@ -130,6 +131,50 @@ value.
 In the case of using a buffer you also need to set the length in bytes of the
 data in the buffer via \fIdata_len\fP.
 
+.SH Fruad Prevention Headers
+
+This can be used to override the inbuilt functions that set the various fraud
+prevention headers. Any or all of them can bet set, any that left as NULL will
+cause the appropriate inbuilt function to be used
+
+struct mtd_fph_ops {
+        char *(*fph_device_id)(void);
+        char *(*fph_user)(void);
+        char *(*fph_tz)(void);
+        char *(*fph_ipaddrs)(void);
+        char *(*fph_macaddrs)(void);
+        char *(*fph_ua)(void);
+        char *(*fph_version)(void);
+.br
+};
+
+.SH Config
+
+This can be used to override/provide some settings. Currently you can use this
+to override the fraud prevention header functions as described above. Just
+declare a \fBstruct mtd_fph_ops\fP as above and set it in \fBstruct mtd_cfg\fP.
+.P
+Also you can set extra HTTP headers to be sent, \fBextra_hdrs\fP should point
+to a NULL terminated array of character pointers.
+
+struct mtd_cfg {
+        const struct mtd_fph_ops *fph_ops;
+        const char * const       *extra_hdrs;
+.br
+};
+
+.SS Example
+
+.EX
+const char *hdrs[2] = { NULL };
+struct mtd_fph_ops fph_ops = { .fph_user = my_user,
+                               .fph_version = my_ver };
+struct mtd_cfg cfg = { .fph_ops = &fph_ops, .extra_hdrs = hdrs };
+
+hdrs[0] = getenv("MTD_CLI_HDRS");
+err = mtd_init(flags, &cfg);
+.EE
+
 .SH Functions
 
 .BI "void mtd_global_init(void);"
@@ -142,13 +187,14 @@ In a single-threaded application you can skip calling this function and pass
 \fBMTD_OPT_GLOBAL_INIT\fP to \fPmtd_init()\fP instead.
 .RE
 
-.BI "int mtd_init(int " flags ");"
+.BI "int mtd_init(unsigned int " flags ", const struct mtd_cfg *" cfg );
 .br
 
 .RS
 You should call this function once in each thread where libmtdac is to be used.
-Passing in one or more of the above \fBMTD_OPT_\fP values OR'd (\fB|\fP)
-together.
+\fBflags\fP is one or more of the above \fBMTD_OPT_\fP values bitwise-or'd
+together and \fBcfg\fP is an optional \fBstruct mtd_cfg\fP, if this is NULL,
+then library defaults will be used.
 .RE
 
 .BI "void mtd_deinit(void);"
@@ -181,18 +227,6 @@ client_secret.
 .RS
 This is for creating the nino.json file which stores the users National
 Insurance Number.
-.RE
-
-.BI "void mtd_hdrs_add(const char *" hdrs );
-
-.RS
-This is for adding extra HTTP headers to be sent.
-.RE
-
-.BI "void mtd_hdrs_reset(void);"
-
-.RS
-This is for clearing any extra HTTP headers that were set.
 .RE
 
 .SH NOTES
