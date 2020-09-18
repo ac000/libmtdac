@@ -288,26 +288,6 @@ static const struct _endpoint {
 		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
-	/* Self-Assessment - Tax Calculations - EOL Jul 2020 */
-	{
-		.ep	= SA_TC_CALCULATE,
-		.tmpl	= "/self-assessment/ni/{nino}/calculations",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope	= SCOPE_USER
-	},
-	{
-		.ep	= SA_TC_GET_CALCULATION,
-		.tmpl	= "/self-assessment/ni/{nino}/calculations/{calculationId}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	{
-		.ep	= SA_TC_GET_VALIDATION_MSGS,
-		.tmpl	= "/self-assessment/ni/{nino}/calculations/{calculationId}/validation-messages",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
 	/* Self-Assessment - Crystallisation */
 	{
 		.ep	= SA_CR_INTENT_TO_CRYSTALLISE,

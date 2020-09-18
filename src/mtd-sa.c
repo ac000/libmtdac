@@ -45,36 +45,6 @@ int mtd_sa_cr_intent_to_crystallise(const char *tax_year, char **buf)
 }
 
 /*
- * [GET ]
- * /self-assessment/ni/{nino}/calculations/{calculationId}/validation-messages
- */
-int mtd_sa_tc_get_validation_msgs(const char *cid, char **buf)
-{
-	return do_ep(SA_TC_GET_VALIDATION_MSGS, API_VER,
-		     NULL, buf, cid, (char *)NULL);
-}
-
-/*
- * [GET ]
- * /self-assessment/ni/{nino}/calculations/{calculationId}
- */
-int mtd_sa_tc_get_calculation(const char *cid, char **buf)
-{
-	return do_ep(SA_TC_GET_CALCULATION, API_VER,
-		     NULL, buf, cid, (char *)NULL);
-}
-
-/*
- * [POST]
- * /self-assessment/ni/{nino}/calculations
- */
-int mtd_sa_tc_calculate(const struct mtd_dsrc_ctx *dsctx, char **buf)
-{
-	return do_ep(SA_TC_CALCULATE, API_VER,
-		     dsctx, buf, (char *)NULL);
-}
-
-/*
  * [PUT ]
  * /self-assessment/ni/{nino}/charitable-giving/{taxYear}
  */

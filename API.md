@@ -11,7 +11,6 @@
     - [Self-Assessment - Dividends Income](#self-assessment---dividends-income)
     - [Self-Assessment - Savings Accounts](#self-assessment---savings-accounts)
     - [Self-Assessment - Charitable Giving](#self-assessment---charitable-giving)
-    - [Self-Assessment - Tax Calculations](#self-assessment---tax-calculations)
     - [Self-Assessment - Crystallisation](#self-assessment---crystallisation)
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
   * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
@@ -418,20 +417,6 @@ You can optionally pass in a *struct mtd_cfg*, see [Config](#config) above.
 
     int mtd_sa_cg_update_charitable_giving(const struct mtd_dsrc_ctx *dsctx,
                                            const char *tax_year, char **buf)
-
-#### Self-Assessment - Tax Calculations
-
-#### mtd\_sa\_tc\_calculate - [EOL July 2020]
-
-    int mtd_sa_tc_calculate(const struct mtd_dsrc_ctx *dsctx, char **buf)
-
-#### int mtd\_sa\_tc\_get\_calculation - [EOL July 2020]
-
-    int mtd_sa_tc_get_calculation(const char *cid, char **buf)
-
-#### mtd\_sa\_tc\_get\_validation\_msgs - [EOL July 2020]
-
-    int mtd_sa_tc_get_validation_msgs(const char *cid, char **buf)
 
 #### Self-Assessment - Crystallisation
 
