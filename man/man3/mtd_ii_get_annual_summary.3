@@ -1,0 +1,67 @@
+.TH MTD_II_GET_ANNUAL_SUMMARY 3 "September 20, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_ii_get_annual_summary \- fetches an individual’s annual income summary for
+the given tax year
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-ii.h>
+.PP
+.nf
+.BI "int mtd_ii_get_annual_summary(const char *" utr ", const char *" tax_year ",
+.BI "                              char **" buf );
+.ni
+
+.SH DESCRIPTION
+
+This function allows developers to retrieve an individual’s income summary for
+the specified tax year.
+
+.TP 4
+.B utr
+.RS 4
+The 10 digit self-assessment Unique Tax Reference for the individual.
+.RE
+
+.TP
+.B tax_year
+.RS 4
+This is the taxYear and is in the form
+.PP
+.RS 8
+YYYY-YY
+.RE
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR libmtdac-result_buffer (3)
