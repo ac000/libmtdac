@@ -479,6 +479,14 @@ static const struct _endpoint {
 		.scope	= SCOPE_USER
 	},
 
+	/* Individual Employment */
+	{
+		.ep	= IE_GET_ANNUAL_SUMMARY,
+		.tmpl	= "/individual-employment/sa/{utr}/annual-summary/{taxYear}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+
 	/* Individual Income */
 	{
 		.ep	= II_GET_ANNUAL_SUMMARY,

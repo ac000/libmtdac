@@ -1,0 +1,27 @@
+.TH libmtdac_mtd-ie.h 3 "September 20, 2020" "libmtdac 0.16.0" "libmtdac_mtd-ie.h"
+
+.SH NAME
+libmtdac_mtd-ie.h \- Make Tax Digital \- Individual Employment API
+
+.SH SYNOPSIS
+.B #include <libmtdac/mtd-ie.h>
+
+.SH DESCRIPTION
+These functions are for working with the UK's HMRC Make Tax Digital
+Individual Employment API.
+
+.SH FUNCTIONS
+
+.nf
+.BI "int mtd_ie_get_annual_summary(const char *" utr ", const char *" tax_year ",
+.BI "                              char **" buf ");
+
+.RS +4
+.BR mtd_ie_get_annual_summary (3)
+.RE
+.ni
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3)
