@@ -725,7 +725,7 @@ int mtd_il_lc_update_loss_type(const struct mtd_dsrc_ctx *dsctx,
                                const char *cid, char **buf);
 ```
 
-#### mtd\_il\_lc\_update\_loss\_order
+#### mtd\_il\_lc\_update\_loss\_order [test-only]
 
 ```C
 int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
