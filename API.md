@@ -24,6 +24,7 @@
   * [Make Tax Digital - Business Source Adjustable Summary API functions](#make-tax-digital---business-source-adjustable-summary-api-functions)
     - [Business Source Adjustable Summary - Self-Employment](#business-source-adjustable-summary---self-employment)
     - [Business Source Adjustable Summary - UK Property Business](#business-source-adjustable-summary---uk-property-business)
+  * [Make Tax Digital - VAT API functions](#make-tax-digital---vat-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
   * [Make Tax Digital - National Insurance Test Support API functions [test-only]](#make-tax-digital---national-insurance-test-support-api-functions-test-only)
   * [Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]](#make-tax-digital---test-fraud-prevention-headers-api-functions-test-only)
@@ -858,6 +859,48 @@ int mtd_bsas_pb_list_summary_adjustments(const char *bid, char **buf);
 ```C
 int mtd_bsas_pb_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
                                            const char *bid, char **buf);
+```
+
+
+### Make Tax Digital - VAT API functions
+
+```C
+#include <libmtdac/mtd-vat.h>
+```
+
+### mtd\_vat\_list\_obligations
+
+```C
+int mtd_vat_list_obligations(const char *vrn, const char *query_string,
+                             char **buf);
+```
+
+### mtd\_vat\_submit\_period
+
+```C
+int mtd_vat_submit_period(const struct mtd_dsrc_ctx *dsctx, const char *vrn,
+                          char **buf);
+```
+
+### mtd\_vat\_get\_period
+
+```C
+int mtd_vat_get_period(const char *vrn, const char *period_key, char **buf);
+```
+
+### mtd\_vat\_list\_liabilities
+
+```C
+int mtd_vat_list_liabilities(const char *vrn, const char *query_string,
+                             char **buf);
+```
+
+
+### mtd\_vat\_list\_payments
+
+```C
+int mtd_vat_list_payments(const char *vrn, const char *query_string,
+                          char **buf);
 ```
 
 

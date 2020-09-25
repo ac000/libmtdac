@@ -570,6 +570,39 @@ static const struct _endpoint {
 		.scope	= SCOPE_USER
 	},
 
+	/* VAT */
+	{
+		.ep	= VAT_LIST_OBLIGATIONS,
+		.tmpl	= "/organisations/vat/{vrn}/obligations/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	{
+		.ep	= VAT_SUBMIT_PERIOD,
+		.tmpl	= "/organisations/vat/{vrn}/returns",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+	{
+		.ep	= VAT_GET_PERIOD,
+		.tmpl	= "/organisations/vat/{vrn}/returns/{periodKey}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	{
+		.ep	= VAT_LIST_LIABILITIES,
+		.tmpl	= "/organisations/vat/{vrn}/liabilities/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	{
+		.ep	= VAT_LIST_PAYMENTS,
+		.tmpl	= "/organisations/vat/{vrn}/payments/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+
 	/* Create Test User */
 	{
 		.ep	= TEST_CU_CREATE_INDIVIDUAL,
