@@ -177,6 +177,13 @@ void mtd_deinit(void)
 	curl_global_cleanup();
 }
 
+static const char * const api_scopes[] = {
+	"write:self-assessment",
+	"read:self-assessment",
+	"read:national-insurance",
+	(const char *)NULL
+};
+
 extern char **environ;
 int mtd_init_auth(void)
 {
@@ -184,15 +191,18 @@ int mtd_init_auth(void)
 	char *client_id = load_token("client_id", FT_CONFIG);
 	char *client_secret = load_token("client_secret", FT_CONFIG);
 	const char *args[3];
+	const char * const *scope;
 	char auth_code[41];
 	char *buf;
 	char data[4096];
+	char url[2048];
 	char path[PATH_MAX];
 	char *s;
 	json_t *array;
 	json_t *root;
 	json_t *result;
 	pid_t child_pid;
+	int len;
 	int err;
 
 	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
@@ -213,7 +223,14 @@ int mtd_init_auth(void)
 	getchar();
 
 	args[0] = "xdg-open";
-	args[1] = BASE_URL "/oauth/authorize?response_type=code&client_id=TlQLDx2MSRpl6KAkgVeL4CaeXkAa&scope=write:self-assessment+read:self-assessment+read:national-insurance&redirect_uri=urn:ietf:wg:oauth:2.0:oob";
+	len = snprintf(url, sizeof(url),
+		       "%s/oauth/authorize?response_type=code&client_id=%s&scope=", BASE_URL, client_id);
+	for (scope = api_scopes; *scope != NULL; scope++)
+		len += snprintf(url + len, sizeof(url) - len, "%s+", *scope);
+	url[--len] = '\0';
+	snprintf(url + len, sizeof(url) - len,
+		 "&redirect_uri=urn:ietf:wg:oauth:2.0:oob");
+	args[1] = url;
 	args[2] = (const char *)NULL;
 	posix_spawnp(&child_pid, args[0], NULL, NULL, (char * const *)args,
 		     environ);
