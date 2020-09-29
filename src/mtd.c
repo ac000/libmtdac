@@ -10,9 +10,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <spawn.h>
 #include <linux/limits.h>
@@ -28,6 +30,8 @@
 #include "fph.h"
 #include "curler.h"
 #include "logger.h"
+
+#define MTD_CONFIG_DIR_FMT	".config/libmtdac/%s"
 
 static const struct mtd_ctx dfl_mtd_ctx = {
 	.log_level		= MTD_LOG_ERR,
@@ -62,8 +66,7 @@ static int generate_device_id(void)
 	json_t *new;
 	int err;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
-		 "uuid.json");
+	snprintf(path, sizeof(path), "%s/uuid.json", mtd_ctx.config_dir);
 
 	err = stat(path, &sb);
 	if (!err) {
@@ -93,23 +96,77 @@ static int generate_device_id(void)
 	return 0;
 }
 
-static int check_config_dir(void)
+static int mkdir_p(int dirfd, const char *path, mode_t mode)
+{
+	char *dir;
+	char *ptr;
+	char mdir[4096] = "\0";
+	int ret = 0;
+
+	if (strlen(path) >= sizeof(mdir)) {
+		errno = ENAMETOOLONG;
+		return -1;
+	}
+
+	if (*path == '/')
+		strcat(mdir, "/");
+
+	dir = strdup(path);
+	ptr = dir;
+	for (;;) {
+		char *token;
+
+		token = strsep(&dir, "/");
+		if (!token)
+			break;
+
+		strcat(mdir, token);
+		ret = mkdirat(dirfd, mdir, mode);
+		if (ret == -1 && errno != EEXIST) {
+			ret = -1;
+			break;
+		}
+		strcat(mdir, "/");
+	}
+	free(ptr);
+
+	return ret;
+}
+
+static int check_config_dir(bool is_production)
 {
 	char path[PATH_MAX];
 	char errbuf[129];
+	char *home_dir;
+	char *cfg_dir;
 	struct stat sb;
+	int dfd;
 	int err;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT, getenv("HOME"));
-	err = stat(path, &sb);
+	home_dir = getenv("HOME");
+	if (!home_dir)
+		return MTD_ERR_OS;
+
+	dfd = open(home_dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
+	if (dfd == -1)
+		return MTD_ERR_OS;
+
+	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT,
+		 is_production ? "prod-api" : "test-api");
+	err = asprintf(&cfg_dir, "%s/%s", home_dir, path);
+	if (err == -1)
+		return MTD_ERR_OS;
+	mtd_ctx.config_dir = cfg_dir;
+
+	err = fstatat(dfd, path, &sb, 0);
 	if (!err)
 		return 0;
 
-	err = mkdir(path, 0777);
+	err = mkdir_p(dfd, path, 0777);
 	if (!err)
 		return 0;
 
-	logger(MTD_LOG_ERR, "mkdir %s: %s\n", path,
+	logger(MTD_LOG_ERR, "mkdirat %s/%s: %s\n", getenv("HOME"), path,
 	       strerror_r(errno, errbuf, sizeof(errbuf)));
 
 	return MTD_ERR_OS;
@@ -125,18 +182,17 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 	int err;
 	enum app_conn_type *conn_type = &mtd_ctx.app_conn_type;
 
-	err = check_config_dir();
-	if (err)
-		return err;
-
 	/* initialise struct mtd_ctx to default values */
 	memcpy(&mtd_ctx, &dfl_mtd_ctx, sizeof(struct mtd_ctx));
 
 	/* Check for unknown flags */
 	if (flags & ~(MTD_OPT_ALL))
 		return MTD_ERR_UNKNOWN_FLAGS;
-
 	mtd_ctx.opts = flags;
+
+	err = check_config_dir(flags & MTD_OPT_PRODUCTION_API);
+	if (err)
+		return err;
 
 	if (flags & MTD_OPT_LOG_INFO)
 		mtd_ctx.log_level = MTD_LOG_INFO;
@@ -175,6 +231,8 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 void mtd_deinit(void)
 {
 	curl_global_cleanup();
+
+	free((char *)mtd_ctx.config_dir);
 }
 
 static const char * const api_scopes[] = {
@@ -209,8 +267,7 @@ int mtd_init_auth(void)
 	int len;
 	int err;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
-		 "oauth.json");
+	snprintf(path, sizeof(path), "%s/oauth.json", mtd_ctx.config_dir);
 
 	printf("You need to authorise libmtdac to have read/write access to "
 	       "your Self\nAssessment information.\n");
@@ -288,8 +345,7 @@ int mtd_init_nino(void)
 	char *s;
 	json_t *new;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
-		 "nino.json");
+	snprintf(path, sizeof(path), "%s/nino.json", mtd_ctx.config_dir);
 
 	printf("Enter your 'NINO'          > ");
 	s = fgets(nino, sizeof(nino) - 1, stdin);
@@ -319,8 +375,7 @@ int mtd_init_config(void)
 	json_t *new;
 	int err;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
-		 "config.json");
+	snprintf(path, sizeof(path), "%s/config.json", mtd_ctx.config_dir),
 
 	printf("Enter your 'client_id'     > ");
 	s = fgets(client_id, sizeof(client_id) - 1, stdin);

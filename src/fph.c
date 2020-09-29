@@ -36,6 +36,8 @@
 static __thread struct mtd_fph_ops fph_ops;
 static __thread CURL *curl;
 
+extern __thread struct mtd_ctx mtd_ctx;
+
 static char *get_version(void)
 {
 	char ver[128];
@@ -363,8 +365,7 @@ static char *get_device_id(void)
 	char *buf;
 	int err;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
-		 "uuid.json");
+	snprintf(path, sizeof(path), "%s/uuid.json", mtd_ctx.config_dir);
 	root = json_load_file(path, 0, NULL);
 	if (!root)
 		return NULL;

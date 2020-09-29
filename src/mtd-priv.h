@@ -11,9 +11,6 @@
 
 #define BASE_URL		"https://test-api.service.hmrc.gov.uk"
 
-#define MTD_CONFIG_DIR_FMT	"%s/.config/libmtdac"
-#define MTD_CONFIG_FMT		MTD_CONFIG_DIR_FMT "/%s"
-
 enum app_conn_type {
 	MTD_ACT_MOBILE_APP_DIRECT = 0,
 	MTD_ACT_DESKTOP_APP_DIRECT,
@@ -36,6 +33,7 @@ struct mtd_ctx {
 	enum app_conn_type app_conn_type;
 	enum log_level log_level;
 	const char * const *extra_hdrs;
+	const char *config_dir;
 };
 
 #endif /* _MTD_PRIV_H_ */

@@ -21,6 +21,8 @@
 #include "curler.h"
 #include "logger.h"
 
+extern __thread struct mtd_ctx mtd_ctx;
+
 char *load_token(const char *which, enum file_type type)
 {
 	char path[PATH_MAX];
@@ -45,7 +47,7 @@ char *load_token(const char *which, enum file_type type)
 		break;
 	}
 
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"), file);
+	snprintf(path, sizeof(path), "%s/%s", mtd_ctx.config_dir, file);
 
 	root = json_load_file(path, 0, &error);
 	if (!root) {
@@ -88,8 +90,7 @@ int oauther_refresh_access_token(void)
 		goto out_free;
 	}
 
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
-		 "oauth.json");
+	snprintf(path, sizeof(path), "%s/oauth.json", mtd_ctx.config_dir);
 
 	array = json_loads(buf, 0, NULL);
 	root = json_array_get(array, 0);
@@ -132,8 +133,8 @@ int oauther_get_application_token(void)
 		goto out_free;
 	}
 
-	snprintf(path, sizeof(path), MTD_CONFIG_FMT, getenv("HOME"),
-		 "oauth-application.json");
+	snprintf(path, sizeof(path), "%s/oauth-application.json",
+		 mtd_ctx.config_dir);
 
 	array = json_loads(buf, 0, NULL);
 	root = json_array_get(array, 0);

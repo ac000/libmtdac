@@ -12,7 +12,7 @@ mtd_init_nino \- initialise national insurance number
 
 .SH DESCRIPTION
 
-This function is used to create an initial \fI~/.config/libmtdac/nino.json\fP
+This function is used to create an initial \fI~/.config/libmtdac/{prod,test}-api/nino.json\fP
 file that contains the users \fININO\fP (National Insurance Number).
 .PP
 This will prompt the user to enter their NINO after which the file will be
@@ -32,7 +32,7 @@ code is returned.
 There was an OS level failure
 
 .SH FILES
-.I ~/.config/libmtdac/nino.json
+.I ~/.config/libmtdac/{prod,test}-api/nino.json
 
 .SH SEE ALSO
 
