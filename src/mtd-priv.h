@@ -9,8 +9,6 @@
 #ifndef _MTD_PRIV_H_
 #define _MTD_PRIV_H_
 
-#define BASE_URL		"https://test-api.service.hmrc.gov.uk"
-
 enum app_conn_type {
 	MTD_ACT_MOBILE_APP_DIRECT = 0,
 	MTD_ACT_DESKTOP_APP_DIRECT,
@@ -34,6 +32,7 @@ struct mtd_ctx {
 	enum log_level log_level;
 	const char * const *extra_hdrs;
 	const char *config_dir;
+	const char *api_url;
 };
 
 #endif /* _MTD_PRIV_H_ */

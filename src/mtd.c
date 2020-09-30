@@ -31,11 +31,15 @@
 #include "curler.h"
 #include "logger.h"
 
+#define TEST_API_URL		"https://test-api.service.hmrc.gov.uk"
+#define PROD_API_URL		"https://api.service.hmrc.gov.uk"
+
 #define MTD_CONFIG_DIR_FMT	".config/libmtdac/%s"
 
 static const struct mtd_ctx dfl_mtd_ctx = {
 	.log_level		= MTD_LOG_ERR,
 	.app_conn_type		= MTD_ACT_OTHER_DIRECT,
+	.api_url		= TEST_API_URL,
 };
 __thread struct mtd_ctx mtd_ctx;
 
@@ -194,6 +198,9 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 	if (err)
 		return err;
 
+	if (flags & MTD_OPT_PRODUCTION_API)
+		mtd_ctx.api_url = PROD_API_URL;
+
 	if (flags & MTD_OPT_LOG_INFO)
 		mtd_ctx.log_level = MTD_LOG_INFO;
 	else if (flags & MTD_OPT_LOG_DEBUG)
@@ -285,7 +292,7 @@ int mtd_init_auth(void)
 
 	args[0] = "xdg-open";
 	len = snprintf(url, sizeof(url),
-		       "%s/oauth/authorize?response_type=code&client_id=%s&scope=", BASE_URL, client_id);
+		       "%s/oauth/authorize?response_type=code&client_id=%s&scope=", mtd_ctx.api_url, client_id);
 	for (scope = api_scopes; *scope != NULL; scope++)
 		len += snprintf(url + len, sizeof(url) - len, "%s+", *scope);
 	url[--len] = '\0';

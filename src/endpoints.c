@@ -743,6 +743,7 @@ char *ep_get_token(enum endpoint ep)
 	}
 }
 
+extern __thread struct mtd_ctx mtd_ctx;
 char *ep_make_url(enum endpoint ep, const char * const params[], char *url)
 {
 	char *nino = NULL;
@@ -754,7 +755,7 @@ char *ep_make_url(enum endpoint ep, const char * const params[], char *url)
 	string = strdup(endpoints[ep].tmpl + 1); /* skip past first '/' */
 	ptr = string;
 
-	len = snprintf(url, URL_LEN + 1, BASE_URL);
+	len = snprintf(url, URL_LEN + 1, mtd_ctx.api_url);
 
 	if (strstr(string,  "{nino}"))
 		nino = load_token("nino", FT_NINO);
