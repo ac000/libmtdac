@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	0.15.0
+Version:	0.16.0
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -14,7 +14,7 @@ BuildRequires:	glibc-devel curl-devel jansson-devel
 %description
 libmtdac is a library for interfacing with the UK's HMRC Make Tax Digital API.
 
-Currently just supports the Self-Assessment API
+Currently just supports the Self-Assessment & VAT APIs
 
 
 %prep
@@ -47,6 +47,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Wed Sep 30 2020 Andrew Clayton <andrew@digital-domain.net> - 0.16.0-1
+- Add support for more endpoints; Individual Income/Employment, VAT
+- Can now use the production API
+- Re-work config directory
 
 * Wed Sep 16 2020 Andrew Clayton <andrew@digital-domain.net> - 0.15.0-1
 - Some API updates (API break)
