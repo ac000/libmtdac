@@ -149,31 +149,31 @@ static int check_config_dir(bool is_production)
 
 	home_dir = getenv("HOME");
 	if (!home_dir)
-		return MTD_ERR_OS;
+		return -MTD_ERR_OS;
 
 	dfd = open(home_dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (dfd == -1)
-		return MTD_ERR_OS;
+		return -MTD_ERR_OS;
 
 	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT,
 		 is_production ? "prod-api" : "test-api");
 	err = asprintf(&cfg_dir, "%s/%s", home_dir, path);
 	if (err == -1)
-		return MTD_ERR_OS;
+		return -MTD_ERR_OS;
 	mtd_ctx.config_dir = cfg_dir;
 
 	err = fstatat(dfd, path, &sb, 0);
 	if (!err)
-		return 0;
+		return MTD_ERR_NONE;
 
 	err = mkdir_p(dfd, path, 0777);
 	if (!err)
-		return 0;
+		return MTD_ERR_NONE;
 
 	logger(MTD_LOG_ERR, "mkdirat %s/%s: %s\n", getenv("HOME"), path,
 	       strerror_r(errno, errbuf, sizeof(errbuf)));
 
-	return MTD_ERR_OS;
+	return -MTD_ERR_OS;
 }
 
 void mtd_global_init(void)
@@ -191,7 +191,7 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 
 	/* Check for unknown flags */
 	if (flags & ~(MTD_OPT_ALL))
-		return MTD_ERR_UNKNOWN_FLAGS;
+		return -MTD_ERR_UNKNOWN_FLAGS;
 	mtd_ctx.opts = flags;
 
 	err = check_config_dir(flags & MTD_OPT_PRODUCTION_API);
@@ -306,7 +306,7 @@ int mtd_init_auth(void)
 	printf("\nEnter authorisation code > ");
 	s = fgets(auth_code, sizeof(auth_code) - 1, stdin);
 	if (!s) {
-		err = MTD_ERR_OS;
+		err = -MTD_ERR_OS;
 		goto out_free;
 	}
 	auth_code[strlen(auth_code) - 1] = '\0';
@@ -357,7 +357,7 @@ int mtd_init_nino(void)
 	printf("Enter your 'NINO'          > ");
 	s = fgets(nino, sizeof(nino) - 1, stdin);
 	if (!s)
-		return MTD_ERR_OS;
+		return -MTD_ERR_OS;
 	nino[strlen(nino) - 1] = '\0';
 
 	new = json_pack("{s:s}", "nino", nino);
@@ -387,13 +387,13 @@ int mtd_init_config(void)
 	printf("Enter your 'client_id'     > ");
 	s = fgets(client_id, sizeof(client_id) - 1, stdin);
 	if (!s)
-		return MTD_ERR_OS;
+		return -MTD_ERR_OS;
 	client_id[strlen(client_id) - 1] = '\0';
 
 	printf("Enter your 'client_secret' > ");
 	s = fgets(client_secret, sizeof(client_secret) - 1, stdin);
 	if (!s)
-		return MTD_ERR_OS;
+		return -MTD_ERR_OS;
 	client_secret[strlen(client_secret) - 1] = '\0';
 
 	new = json_pack("{s:s, s:s}", "client_id", client_id,
@@ -409,7 +409,7 @@ int mtd_init_config(void)
 
 	err = generate_device_id();
 	if (err)
-		return MTD_ERR_OS;
+		return -MTD_ERR_OS;
 
 	return MTD_ERR_NONE;
 }

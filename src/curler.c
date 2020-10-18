@@ -306,7 +306,7 @@ static int curl_perform(struct curl_ctx *ctx)
 	if (res != CURLE_OK) {
 		logger(MTD_LOG_ERR, "curl_easy_perform(): %s\n",
 		       curl_easy_strerror(res));
-		ret = MTD_ERR_CURL;
+		ret = -MTD_ERR_CURL;
 	}
 	curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &ctx->status_code);
 	if (ctx->status_code == SEE_OTHER) {
@@ -332,7 +332,7 @@ static int set_headers(struct curl_ctx *ctx)
 	if (!strstr(ctx->url, "/oauth/token")) {
 		err = curl_add_hdr(ctx, ctx->mtd_api_ver);
 		if (err)
-			return MTD_ERR_OS;
+			return -MTD_ERR_OS;
 	}
 
 	switch (ctx->content_type) {
@@ -346,7 +346,7 @@ static int set_headers(struct curl_ctx *ctx)
 		break;
 	}
 	if (err)
-		return MTD_ERR_OS;
+		return -MTD_ERR_OS;
 
 	if (!strstr(ctx->url, "/oauth/token")) {
 		char *access_token = ep_get_token(ctx->endpoint);
@@ -356,7 +356,7 @@ static int set_headers(struct curl_ctx *ctx)
 		free(access_token);
 
 		if (err)
-			return MTD_ERR_OS;
+			return -MTD_ERR_OS;
 	}
 
 	/* Add any user supplied headers */
@@ -367,7 +367,7 @@ static int set_headers(struct curl_ctx *ctx)
 	while (*hdrs) {
 		err = curl_add_hdr(ctx, *(hdrs++));
 		if (err) {
-			err = MTD_ERR_OS;
+			err = -MTD_ERR_OS;
 			break;
 		}
 	}
@@ -393,7 +393,7 @@ curl_again:
 retry_curl:
 	err = curl_perform(ctx);
 	if (err) {
-		return MTD_ERR_CURL;
+		return -MTD_ERR_CURL;
 	} else if (ctx->status_code == UNAUTHORIZED && !refreshed_token) {
 		if (strstr(ctx->curl_buf->buf, "INVALID_CREDENTIALS")) {
 			logger(MTD_LOG_INFO, "INVALID_CREDENTIALS: "
@@ -417,7 +417,7 @@ retry_curl:
 		goto retry_curl;
 	} else if (ctx->status_code == BAD_REQUEST && refreshed_token) {
 		if (strstr(ctx->curl_buf->buf, "invalid_request"))
-			return MTD_ERR_NEEDS_AUTHORISATION;
+			return -MTD_ERR_NEEDS_AUTHORISATION;
 	} else if (ctx->status_code == SEE_OTHER) {
 		logger(MTD_LOG_INFO, "Performing re-direct: GET %s\n",
 		       ctx->location);
@@ -436,7 +436,7 @@ retry_curl:
 		ctx->hdrs = NULL;
 		goto curl_again;
 	} else if (ctx->status_code >= 300) {
-		return MTD_ERR_REQUEST;
+		return -MTD_ERR_REQUEST;
 	}
 
 	return MTD_ERR_NONE;
@@ -459,7 +459,7 @@ static int do_put_post(struct curl_ctx *ctx, char **buf)
 		if (!ctx->src_file) {
 			logger(MTD_LOG_ERR, "couldn't open file %s\n",
 			       ctx->dsctx->data_src.file);
-			return MTD_ERR_OS;
+			return -MTD_ERR_OS;
 		}
 		break;
 	case MTD_DATA_SRC_FD:
@@ -483,13 +483,13 @@ static int do_put_post(struct curl_ctx *ctx, char **buf)
 		if (!ctx->src_file &&
 		    ctx->dsctx->src_type != MTD_DATA_SRC_FILE) {
 			logger(MTD_LOG_ERR, "couldn't open file\n");
-			return MTD_ERR_OS;
+			return -MTD_ERR_OS;
 		}
 
 		err = fstat(fileno(ctx->src_file), &sb);
 		if (err) {
 			logger(MTD_LOG_ERR, "couldn't stat() file\n");
-			return MTD_ERR_OS;
+			return -MTD_ERR_OS;
 		}
 		ctx->src_size = sb.st_size;
 		ctx->read_cb = curl_readfp_cb;

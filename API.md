@@ -58,6 +58,8 @@ enum mtd_error {
 };
 ```
 
+Apart form *MTD_ERR_NONE* these errors are returned as **-**MTD\_ERR_...
+
 ### Data Source
 
 For requests that send (POST/PUT) data to an endpoint, the source for this data
