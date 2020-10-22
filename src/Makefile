@@ -21,10 +21,6 @@ POSTCOMPILE = @mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d && touch $@
 sources = $(wildcard *.c)
 objects = $(sources:.c=.o)
 
-ifeq ($(ASAN),1)
-        override ASAN = -fsanitize=address
-endif
-
 v = @
 ifeq ($V,1)
 	v =
