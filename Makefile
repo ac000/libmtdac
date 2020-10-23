@@ -1,4 +1,4 @@
-TARGETS = libmtdac
+TARGETS = libmtdac man
 
 .PHONY: all $(TARGETS)
 all: $(TARGETS)
@@ -9,6 +9,11 @@ MAKE_OPTS = --no-print-directory V=$V
 libmtdac:
 	@echo -e "Building: libmtdac"
 	@$(MAKE) $(MAKE_OPTS) -C src/
+
+.PHONY: man
+man:
+	@echo -e "Building: man-pages"
+	@$(MAKE) $(MAKE_OPTS) -C man/man3/
 
 .PHONY: rpm
 rpm:
@@ -30,6 +35,7 @@ endif
 
 .PHONY: clean
 clean:
-	@echo -e "Cleaning: libmtdac"
+	@echo -e "Cleaning: libmtdac man"
 	@$(MAKE) $(MAKE_OPTS) -C src/ clean
+	@$(MAKE) $(MAKE_OPTS) -C man/man3 clean
 	@rm -f .version

@@ -22,13 +22,14 @@ Currently just supports the Self-Assessment & VAT APIs
 
 
 %build
-make -C src/ %{?_smp_mflags}
+make %{?_smp_mflags}
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -Dp -m644 -t $RPM_BUILD_ROOT/%{_includedir}/libmtdac/ include/libmtdac/*.h
+install -Dp -m0644 -t $RPM_BUILD_ROOT/%{_includedir}/libmtdac/ include/libmtdac/*.h
 install -Dp -m0755 src/libmtdac.so.%{version} $RPM_BUILD_ROOT/%{_libdir}/libmtdac.so.%{version}
+install -Dp -m0644 -t $RPM_BUILD_ROOT/%{_mandir}/man3/ man/man3/*.gz
 cd $RPM_BUILD_ROOT/%{_libdir}
 ln -s libmtdac.so.0 libmtdac.so
 cd -
@@ -42,6 +43,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc README.md COPYING CodingStyle.md Contributing.md
+%{_mandir}/man3/*.gz
 %{_libdir}/libmtdac.*
 %{_includedir}/libmtdac/*.h
 
