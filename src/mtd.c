@@ -250,7 +250,7 @@ static const char * const api_scopes[] = {
 	"read:national-insurance",
 	"read:vat",
 	"write:vat",
-	(const char *)NULL
+	NULL
 };
 
 extern char **environ;
