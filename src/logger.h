@@ -17,13 +17,10 @@
 
 #include "mtd-priv.h"
 
-static const struct logger {
-	const enum log_level log_level;
-	const char *str;
-} logger_map[] = {
-	{ MTD_LOG_ERR, LIBNAME " ERROR" },
-	{ MTD_LOG_INFO, LIBNAME " INFO" },
-	{ MTD_LOG_DEBUG, LIBNAME " DEBUG" },
+static const char *logger_err_levels[] = {
+	[MTD_LOG_ERR]	= LIBNAME " ERROR",
+	[MTD_LOG_INFO]	= LIBNAME " INFO",
+	[MTD_LOG_DEBUG]	= LIBNAME " DEBUG",
 };
 
 #define logger(log_level, fmt, ...) \
@@ -53,7 +50,7 @@ static inline void _logger(const char *func, enum log_level log_level,
 	if (*logbuf == ' ') /* continuation line */
 		fprintf(out, "%s", logbuf);
 	else
-		fprintf(out, "[%s] %s: %s", logger_map[log_level].str, func,
+		fprintf(out, "[%s] %s: %s", logger_err_levels[log_level], func,
 			logbuf);
 
 	free(logbuf);
