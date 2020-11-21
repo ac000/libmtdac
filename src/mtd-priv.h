@@ -21,7 +21,8 @@ enum app_conn_type {
 };
 
 enum log_level {
-	MTD_LOG_ERR = 0,
+	MTD_LOG_ERRNO = 0,
+	MTD_LOG_ERR,
 	MTD_LOG_INFO,
 	MTD_LOG_DEBUG,
 };

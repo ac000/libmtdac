@@ -14,10 +14,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
+#include <errno.h>
 
 #include "mtd-priv.h"
 
+#define OPT_SP	"%s"
+#define OPT_NL	OPT_SP
+
 static const char *logger_err_levels[] = {
+	[MTD_LOG_ERRNO] = LIBNAME " ERROR",
 	[MTD_LOG_ERR]	= LIBNAME " ERROR",
 	[MTD_LOG_INFO]	= LIBNAME " INFO",
 	[MTD_LOG_DEBUG]	= LIBNAME " DEBUG",
@@ -31,29 +37,43 @@ __attribute__((format(printf, 3, 4)))
 static inline void _logger(const char *func, enum log_level log_level,
 			   const char *fmt, ...)
 {
-	int len;
-	char *logbuf;
-	va_list ap;
-	FILE *out = log_level == MTD_LOG_ERR ? stderr : stdout;
+	int e = errno;
+	char *logbuf = NULL;
+	char *errp = NULL;
+	FILE *out = log_level <= MTD_LOG_ERR ? stderr : stdout;
 
 	if (log_level > mtd_ctx.log_level)
 		return;
 
-	va_start(ap, fmt);
-	len = vasprintf(&logbuf, fmt, ap);
-	if (len == -1) {
-		va_end(ap);
-		return;
-	}
-	va_end(ap);
+	if (fmt) {
+		va_list ap;
+		int len;
 
-	if (*logbuf == ' ') /* continuation line */
+		va_start(ap, fmt);
+		len = vasprintf(&logbuf, fmt, ap);
+		if (len == -1 && logbuf) {
+			va_end(ap);
+			return;
+		}
+		va_end(ap);
+	}
+
+	if (log_level == MTD_LOG_ERRNO) {
+		char errbuf[1024] = "\0";
+
+		errp = strerror_r(errno, errbuf, sizeof(errbuf));
+	}
+
+	if (logbuf && *logbuf == ' ') /* continuation line */
 		fprintf(out, "%s", logbuf);
 	else
-		fprintf(out, "[%s] %s: %s", logger_err_levels[log_level], func,
-			logbuf);
+		fprintf(out, "[%s] %s:" OPT_SP "%s" OPT_SP "%s" OPT_NL,
+			logger_err_levels[log_level], func,
+			logbuf ? " " : "", logbuf ? logbuf : "",
+			errp ? " " : "", errp ? errp : "", errp ? "\n" : "");
 
 	free(logbuf);
+	errno = e;
 }
 
 #endif /* _LOGGER_H_ */
