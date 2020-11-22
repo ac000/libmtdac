@@ -9,6 +9,8 @@
 #ifndef _MTD_PRIV_H_
 #define _MTD_PRIV_H_
 
+#define __unused	__attribute__((unused))
+
 enum app_conn_type {
 	MTD_ACT_MOBILE_APP_DIRECT = 0,
 	MTD_ACT_DESKTOP_APP_DIRECT,

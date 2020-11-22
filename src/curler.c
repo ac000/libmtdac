@@ -16,6 +16,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <fcntl.h>
+#include <poll.h>
+#include <errno.h>
 
 #include <curl/curl.h>
 
@@ -257,6 +262,18 @@ static const char *get_user_agent(char *ua)
 	return ua;
 }
 
+static curl_socket_t opensocket(void *clientp, curlsocktype purpose __unused,
+				struct curl_sockaddr *address __unused)
+{
+	return *(curl_socket_t *)clientp;
+}
+
+static int sockopt_cb(void *clientp __unused, curl_socket_t curlfd __unused,
+		      curlsocktype purpose __unused)
+{
+	return CURL_SOCKOPT_ALREADY_CONNECTED;
+}
+
 extern __thread struct mtd_ctx mtd_ctx;
 static int curl_perform(struct curl_ctx *ctx)
 {
@@ -266,6 +283,11 @@ static int curl_perform(struct curl_ctx *ctx)
 	CURLcode res;
 
 	curl = curl_easy_init();
+
+	/* Use the already connected socket */
+	curl_easy_setopt(curl, CURLOPT_OPENSOCKETFUNCTION, opensocket);
+	curl_easy_setopt(curl, CURLOPT_OPENSOCKETDATA, &ctx->sockfd);
+	curl_easy_setopt(curl, CURLOPT_SOCKOPTFUNCTION, sockopt_cb);
 
 	if (ctx->hdrs)
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, ctx->hdrs);
@@ -375,6 +397,102 @@ static int set_headers(struct curl_ctx *ctx)
 	return err;
 }
 
+static int try_connect(const struct addrinfo *ai)
+{
+	int ret;
+	int err;
+	int sockfd;
+	int optval;
+	int flags = SOCK_NONBLOCK|SOCK_CLOEXEC;
+	socklen_t optlen = sizeof(optval);
+	struct pollfd pfd;
+
+	sockfd = socket(ai->ai_family, ai->ai_socktype | flags,
+			ai->ai_protocol);
+
+	ret = connect(sockfd, ai->ai_addr, ai->ai_addrlen);
+	if (ret == -1 && errno != EINPROGRESS) {
+		logger(MTD_LOG_ERRNO, NULL);
+		close(sockfd);
+		return ret;
+	}
+
+	pfd.fd = sockfd;
+	pfd.events = POLLOUT;
+do_poll:
+	err = poll(&pfd, 1, 10000 /* 10s */);
+	if (err <= 0) {
+		switch (err) {
+		case 0:
+			logger(MTD_LOG_ERR, "Connection timed out\n");
+			break;
+		case -1:
+			if (errno == EINTR)
+				goto do_poll;
+
+			logger(MTD_LOG_ERRNO, NULL);
+			break;
+		}
+
+		close(sockfd);
+		return -1;
+	}
+
+	err = getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &optval, &optlen);
+	if (err || optval != 0) {
+		if (!err) {
+			/* We want the error from the connect() */
+			errno = optval;
+		}
+
+		logger(MTD_LOG_ERRNO, NULL);
+		close(sockfd);
+		return -1;
+	}
+
+	/* Set socket back to blocking mode */
+	flags = fcntl(sockfd, F_GETFL, 0);
+	flags &= ~SOCK_NONBLOCK;
+	ret = fcntl(sockfd, F_SETFL, flags);
+	if (ret == -1) {
+		logger(MTD_LOG_ERRNO, NULL);
+		close(sockfd);
+		return -1;
+	}
+
+	return sockfd;
+}
+
+static int do_connect(const struct mtd_ctx *ctx)
+{
+	const char *host = ctx->api_url + 8; /* skip past 'https://' */
+	struct addrinfo hints;
+	struct addrinfo *res;
+	struct addrinfo *rp;
+	int sfd = -1;
+	int err;
+
+	memset(&hints, 0, sizeof(struct addrinfo));
+	hints.ai_family = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_protocol = IPPROTO_TCP;
+
+	err = getaddrinfo(host, "443", &hints, &res);
+	if (err) {
+		logger(MTD_LOG_ERR, "getaddrinfo: %s\n", gai_strerror(err));
+		return err;
+	}
+
+	for (rp = res; rp != NULL; rp = rp->ai_next) {
+		sfd = try_connect(rp);
+		if (sfd > -1)
+			break;
+	}
+	freeaddrinfo(res);
+
+	return sfd;
+}
+
 static int do_curl(struct curl_ctx *ctx)
 {
 	int err;
@@ -385,12 +503,15 @@ static int do_curl(struct curl_ctx *ctx)
 	ctx->url = ep_make_url(ctx->endpoint, ctx->params, url);
 
 curl_again:
+	ctx->sockfd = do_connect(&mtd_ctx);
+	if (ctx->sockfd < 0)
+		return -MTD_ERR_OS;
+
 	set_anti_fraud_hdrs(&mtd_ctx, ctx);
 	err = set_headers(ctx);
 	if (err)
 		return err;
 
-retry_curl:
 	err = curl_perform(ctx);
 	if (err) {
 		return -MTD_ERR_CURL;
@@ -410,11 +531,12 @@ retry_curl:
 	} else if (ctx->status_code == TOO_MANY_REQUESTS) {
 		logger(MTD_LOG_INFO, "TOO_MANY_REQUESTS. "
 		       "Sleeping 1s before retrying request...\n");
+		curl_slist_free_all(ctx->hdrs);
+		ctx->hdrs = NULL;
 		*ctx->curl_buf->buf = '\0';
 		ctx->curl_buf->len = 0;
 		sleep(1);
-		/* no need to re-add headers... */
-		goto retry_curl;
+		goto curl_again;
 	} else if (ctx->status_code == BAD_REQUEST && refreshed_token) {
 		if (strstr(ctx->curl_buf->buf, "invalid_request"))
 			return -MTD_ERR_NEEDS_AUTHORISATION;
