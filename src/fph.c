@@ -38,6 +38,11 @@ static __thread CURL *curl;
 
 extern __thread struct mtd_ctx mtd_ctx;
 
+static char *get_license_id(void)
+{
+	return NULL;
+}
+
 static char *get_version(void)
 {
 	char ver[128];
@@ -62,6 +67,11 @@ static char *get_version(void)
 	curl_free(encver);
 
 	return buf;
+}
+
+static char *get_multi_factpr(void)
+{
+	return NULL;
 }
 
 static char *get_ua(void)
@@ -314,6 +324,43 @@ static char *get_ipaddrs(void)
 	return strdup(buf);
 }
 
+static __thread int libcurl_sockfd;
+static char *get_src_port(void)
+{
+	struct sockaddr_storage ss;
+	socklen_t addrlen = sizeof(ss);
+	char port[6];
+
+	getsockname(libcurl_sockfd, (struct sockaddr *)&ss, &addrlen);
+	getnameinfo((struct sockaddr *)&ss, addrlen, NULL, 0, port,
+		    sizeof(port), NI_NUMERICHOST|NI_NUMERICSERV);
+
+	return strdup(port);
+}
+
+static char *get_vendor_fwd(void)
+{
+	return NULL;
+}
+
+static char *get_vendor_ip(void)
+{
+	return NULL;
+}
+
+static char *get_src_addr(void)
+{
+	struct sockaddr_storage ss;
+	socklen_t addrlen = sizeof(ss);
+	char host[INET6_ADDRSTRLEN];
+
+	getsockname(libcurl_sockfd, (struct sockaddr *)&ss, &addrlen);
+	getnameinfo((struct sockaddr *)&ss, addrlen, host, sizeof(host), NULL,
+		    0, NI_NUMERICHOST|NI_NUMERICSERV);
+
+	return strdup(host);
+}
+
 static char *get_tz(void)
 {
 	time_t now = time(NULL);
@@ -388,8 +435,27 @@ static void add_fph(struct curl_ctx *ctx, const char *hdr,
 {
 	char *val = get_value();
 
-	curl_add_hdr(ctx, "%s: %s", hdr, val);
+	curl_add_hdr(ctx, "%s:%s%s", hdr, val ? " " : "", val ? val : "");
 	free(val);
+}
+
+static void get_other_server_hdrs(struct curl_ctx *ctx)
+{
+	curl_add_hdr(ctx, "Gov-Client-Connection-Method: OTHER_SERVER");
+
+	add_fph(ctx, "Gov-Client-Public-IP", fph_ops.fph_srcip);
+	add_fph(ctx, "Gov-Client-Public-Port", fph_ops.fph_srcport);
+	add_fph(ctx, "Gov-Client-Device-ID", fph_ops.fph_device_id);
+	add_fph(ctx, "Gov-Client-User-IDs", fph_ops.fph_user);
+	add_fph(ctx, "Gov-Client-Timezone", fph_ops.fph_tz);
+	add_fph(ctx, "Gov-Client-Local-IPs", fph_ops.fph_ipaddrs);
+	add_fph(ctx, "Gov-Client-MAC-Addresses", fph_ops.fph_macaddrs);
+	add_fph(ctx, "Gov-Client-User-Agent", fph_ops.fph_ua);
+	add_fph(ctx, "Gov-Client-Multi-Factor", fph_ops.fph_multi_factor);
+	add_fph(ctx, "Gov-Vendor-License-IDs", fph_ops.fph_license_id);
+	add_fph(ctx, "Gov-Vendor-Version", fph_ops.fph_version);
+	add_fph(ctx, "Gov-Vendor-Public-IP", fph_ops.fph_vendor_ip);
+	add_fph(ctx, "Gov-Vendor-Forwarded", fph_ops.fph_vendor_fwd);
 }
 
 static void get_other_direct_hdrs(struct curl_ctx *ctx)
@@ -412,6 +478,8 @@ void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx, struct curl_ctx *ctx)
 
 	curl = curl_easy_init();
 
+	libcurl_sockfd = ctx->sockfd;
+
 	switch (mtd_ctx->app_conn_type) {
 	case MTD_ACT_MOBILE_APP_DIRECT:
 	case MTD_ACT_DESKTOP_APP_DIRECT:
@@ -424,6 +492,7 @@ void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx, struct curl_ctx *ctx)
 		get_other_direct_hdrs(ctx);
 		break;
 	case MTD_ACT_OTHER_VIA_SERVER:
+		get_other_server_hdrs(ctx);
 		break;
 	}
 
@@ -445,8 +514,20 @@ void fph_set_ops(const struct mtd_fph_ops *ops)
 		fph_ops.fph_ipaddrs = ops->fph_ipaddrs;
 	if (ops->fph_macaddrs)
 		fph_ops.fph_macaddrs = ops->fph_macaddrs;
+	if (ops->fph_srcip)
+		fph_ops.fph_srcip = ops->fph_srcip;
+	if (ops->fph_srcport)
+		fph_ops.fph_srcport = ops->fph_srcport;
+	if (ops->fph_vendor_ip)
+		fph_ops.fph_vendor_ip = ops->fph_vendor_ip;
+	if (ops->fph_vendor_fwd)
+		fph_ops.fph_vendor_fwd = ops->fph_vendor_fwd;
 	if (ops->fph_ua)
 		fph_ops.fph_ua = ops->fph_ua;
+	if (ops->fph_multi_factor)
+		fph_ops.fph_multi_factor = ops->fph_multi_factor;
+	if (ops->fph_license_id)
+		fph_ops.fph_license_id = ops->fph_license_id;
 	if (ops->fph_version)
 		fph_ops.fph_version = ops->fph_version;
 }
@@ -457,7 +538,13 @@ static const struct mtd_fph_ops dfl_fph_ops = {
 	.fph_tz			= get_tz,
 	.fph_ipaddrs		= get_ipaddrs,
 	.fph_macaddrs		= get_macaddrs,
+	.fph_srcip		= get_src_addr,
+	.fph_srcport		= get_src_port,
+	.fph_vendor_ip		= get_vendor_ip,
+	.fph_vendor_fwd		= get_vendor_fwd,
 	.fph_ua			= get_ua,
+	.fph_multi_factor	= get_multi_factpr,
+	.fph_license_id		= get_license_id,
 	.fph_version		= get_version,
 };
 

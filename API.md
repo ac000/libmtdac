@@ -108,7 +108,13 @@ struct mtd_fph_ops {
         char *(*fph_tz)(void);
         char *(*fph_ipaddrs)(void);
         char *(*fph_macaddrs)(void);
+        char *(*fph_srcip)(void);
+        char *(*fph_srcport)(void);
+        char *(*fph_vendor_ip)(void);
+        char *(*fph_vendor_fwd)(void);
         char *(*fph_ua)(void);
+        char *(*fph_multi_factor)(void);
+        char *(*fph_license_id)(void);
         char *(*fph_version)(void);
 };
 ```
