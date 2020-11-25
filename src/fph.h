@@ -14,7 +14,7 @@
 
 extern void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx,
 				struct curl_ctx *ctx);
-extern void fph_set_ops(const struct mtd_fph_ops *ops);
-extern void fph_init_ops(void);
+extern void fph_set_ops(enum app_conn_type conn_type,
+			const struct mtd_fph_ops *ops);
 
 #endif /* _FPH_H_ */

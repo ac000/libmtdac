@@ -224,12 +224,11 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 	else if (flags & MTD_OPT_ACT_OTHER_VIA_SERVER)
 		*conn_type = MTD_ACT_OTHER_VIA_SERVER;
 
-	fph_init_ops();
-
 	if (!cfg)
 		return MTD_ERR_NONE;
 
-	fph_set_ops(cfg->fph_ops);
+	fph_set_ops(mtd_ctx.app_conn_type, cfg->fph_ops);
+
 	mtd_ctx.extra_hdrs = cfg->extra_hdrs;
 
 	return MTD_ERR_NONE;

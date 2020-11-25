@@ -33,12 +33,148 @@
 
 #define BUF_SZ	1024
 
+enum {
+	FPH_C_PUBLIC_IP		= 0x1,
+	FPH_C_PUBLIC_PORT	= 0x2,
+	FPH_C_DEV_ID		= 0x4,
+	FPH_C_USER_ID		= 0x8,
+	FPH_C_TZ		= 0x10,
+	FPH_C_LOCAL_IP		= 0x20,
+	FPH_C_MAC_ADDR		= 0x40,
+	FPH_C_UA		= 0x80,
+	FPH_C_MULTI_FACTOR	= 0x100,
+	FPH_C_SCREENS		= 0x200,
+	FPH_C_WINDOW_SZ		= 0x400,
+	FPH_C_BROWSER_PLUGINS	= 0x800,
+	FPH_C_BROWSER_JS_UA	= 0x1000,
+	FPH_C_BROWSER_DNT	= 0x2000,
+	FPH_V_VERSION		= 0x100000,
+	FPH_V_LICENSE_ID	= 0x200000,
+	FPH_V_PUBLIC_IP		= 0x400000,
+	FPH_V_FWD		= 0x800000,
+};
+
+#define _FPH_COMMON \
+	FPH_C_DEV_ID	   | \
+	FPH_C_USER_ID	   | \
+	FPH_C_TZ	   | \
+	FPH_C_LOCAL_IP	   | \
+	FPH_C_MAC_ADDR	   | \
+	FPH_C_UA	   | \
+	FPH_C_MULTI_FACTOR | \
+	FPH_V_VERSION	   | \
+	FPH_V_LICENSE_ID
+
+#define _FPH_COMMON_DESKTOP \
+	_FPH_COMMON	| \
+	FPH_C_SCREENS	| \
+	FPH_C_WINDOW_SZ
+
+#define FPH_DESKTOP_APP_DIRECT		_FPH_COMMON_DESKTOP
+
+#define FPH_DESKTOP_APP_VIA_SERVER \
+	FPH_C_PUBLIC_IP	    | \
+	FPH_C_PUBLIC_PORT   | \
+	_FPH_COMMON_DESKTOP | \
+	FPH_V_PUBLIC_IP	    | \
+	FPH_V_FWD
+
+#define FPH_WEB_APP_VIA_SERVER \
+	((FPH_DESKTOP_APP_VIA_SERVER) & ~FPH_C_MAC_ADDR & ~FPH_C_UA)	| \
+	FPH_C_BROWSER_PLUGINS						| \
+	FPH_C_BROWSER_JS_UA						| \
+	FPH_C_BROWSER_DNT
+
+#define FPH_MOBILE_APP_DIRECT		FPH_DESKTOP_APP_DIRECT
+
+#define FPH_MOBILE_APP_VIA_SERVER	FPH_DESKTOP_APP_VIA_SERVER
+
+#define FPH_BATCH_PROCESS_DIRECT \
+	(_FPH_COMMON) & ~FPH_C_MULTI_FACTOR
+
+#define FPH_OTHER_DIRECT		_FPH_COMMON
+
+#define FPH_OTHER_VIA_SERVER \
+	FPH_C_PUBLIC_IP	  | \
+	FPH_C_PUBLIC_PORT | \
+	_FPH_COMMON	  | \
+	FPH_V_PUBLIC_IP	  | \
+	FPH_V_FWD
+
+static const struct _fph_type_map {
+	const unsigned int fph;
+	const char *str;
+} fph_type_map[] = {
+	[MTD_ACT_MOBILE_APP_DIRECT] = {
+		.fph	= FPH_MOBILE_APP_DIRECT,
+		.str	= "MOBILE_APP_DIRECT"
+	},
+	[MTD_ACT_DESKTOP_APP_DIRECT] = {
+		.fph	= FPH_DESKTOP_APP_DIRECT,
+		.str	= "DESKTOP_APP_DIRECT"
+	},
+	[MTD_ACT_MOBILE_APP_VIA_SERVER] = {
+		.fph	= FPH_MOBILE_APP_VIA_SERVER,
+		.str	= "MOBILE_APP_VIA_SERVER"
+	},
+	[MTD_ACT_DESKTOP_APP_VIA_SERVER] = {
+		.fph	= FPH_DESKTOP_APP_VIA_SERVER,
+		.str	= "DESKTOP_APP_VIA_SERVER"
+	},
+	[MTD_ACT_WEB_APP_VIA_SERVER] = {
+		.fph	= FPH_WEB_APP_VIA_SERVER,
+		.str	= "WEB_APP_VIA_SERVER"
+	},
+	[MTD_ACT_BATCH_PROCESS_DIRECT] = {
+		.fph	= FPH_BATCH_PROCESS_DIRECT,
+		.str	= "BATCH_PROCESS_DIRECT"
+	},
+	[MTD_ACT_OTHER_DIRECT] = {
+		.fph	= FPH_OTHER_DIRECT,
+		.str	= "OTHER_DIRECT"
+	},
+	[MTD_ACT_OTHER_VIA_SERVER] = {
+		.fph	= FPH_OTHER_VIA_SERVER,
+		.str	= "OTHER_VIA_SERVER"
+	},
+};
+
 static __thread struct mtd_fph_ops fph_ops;
 static __thread CURL *curl;
 
 extern __thread struct mtd_ctx mtd_ctx;
 
 static char *get_license_id(void)
+{
+	return NULL;
+}
+
+static char *get_multi_factor(void)
+{
+	return NULL;
+}
+
+static char *get_screens(void)
+{
+	return NULL;
+}
+
+static char *get_window_sz(void)
+{
+	return NULL;
+}
+
+static char *get_browser_plugins(void)
+{
+	return NULL;
+}
+
+static char *get_browser_js_ua(void)
+{
+	return NULL;
+}
+
+static char *get_browser_dnt(void)
 {
 	return NULL;
 }
@@ -67,11 +203,6 @@ static char *get_version(void)
 	curl_free(encver);
 
 	return buf;
-}
-
-static char *get_multi_factpr(void)
-{
-	return NULL;
 }
 
 static char *get_ua(void)
@@ -332,10 +463,29 @@ static char *get_src_port(void)
 	char port[6];
 
 	getsockname(libcurl_sockfd, (struct sockaddr *)&ss, &addrlen);
+	if (_check_is_local_ip((struct sockaddr *)&ss, ss.ss_family))
+		return NULL;
+
 	getnameinfo((struct sockaddr *)&ss, addrlen, NULL, 0, port,
 		    sizeof(port), NI_NUMERICHOST|NI_NUMERICSERV);
 
 	return strdup(port);
+}
+
+static char *get_src_addr(void)
+{
+	struct sockaddr_storage ss;
+	socklen_t addrlen = sizeof(ss);
+	char host[INET6_ADDRSTRLEN];
+
+	getsockname(libcurl_sockfd, (struct sockaddr *)&ss, &addrlen);
+	if (_check_is_local_ip((struct sockaddr *)&ss, ss.ss_family))
+		return NULL;
+
+	getnameinfo((struct sockaddr *)&ss, addrlen, host, sizeof(host), NULL,
+		    0, NI_NUMERICHOST|NI_NUMERICSERV);
+
+	return strdup(host);
 }
 
 static char *get_vendor_fwd(void)
@@ -346,19 +496,6 @@ static char *get_vendor_fwd(void)
 static char *get_vendor_ip(void)
 {
 	return NULL;
-}
-
-static char *get_src_addr(void)
-{
-	struct sockaddr_storage ss;
-	socklen_t addrlen = sizeof(ss);
-	char host[INET6_ADDRSTRLEN];
-
-	getsockname(libcurl_sockfd, (struct sockaddr *)&ss, &addrlen);
-	getnameinfo((struct sockaddr *)&ss, addrlen, host, sizeof(host), NULL,
-		    0, NI_NUMERICHOST|NI_NUMERICSERV);
-
-	return strdup(host);
 }
 
 static char *get_tz(void)
@@ -433,42 +570,31 @@ static char *get_device_id(void)
 static void add_fph(struct curl_ctx *ctx, const char *hdr,
 		    char *(*get_value)(void))
 {
-	char *val = get_value();
+	char *val;
 
-	curl_add_hdr(ctx, "%s:%s%s", hdr, val ? " " : "", val ? val : "");
+	if (!get_value)
+		return;	/* Skip this header */
+
+	val = get_value();
+	/*
+	 * For cases where we have no suitable header value we need to
+	 * send an empty header. However, libcurl by default will just
+	 * exclude any such headers.
+	 *
+	 * You can however force it to send an empty header by using
+	 * the form
+	 *
+	 *     Empty-Header;
+	 *
+	 * note the ';' and there shouldn't be trailing space after
+	 * it...
+	 *
+	 * So that's what the below slighty convoluted format specifier
+	 * does.
+	 */
+	curl_add_hdr(ctx, "%s%s%s%s", hdr, val ? ":" : ";", val ? " " : "",
+		     val ? val : "");
 	free(val);
-}
-
-static void get_other_server_hdrs(struct curl_ctx *ctx)
-{
-	curl_add_hdr(ctx, "Gov-Client-Connection-Method: OTHER_SERVER");
-
-	add_fph(ctx, "Gov-Client-Public-IP", fph_ops.fph_srcip);
-	add_fph(ctx, "Gov-Client-Public-Port", fph_ops.fph_srcport);
-	add_fph(ctx, "Gov-Client-Device-ID", fph_ops.fph_device_id);
-	add_fph(ctx, "Gov-Client-User-IDs", fph_ops.fph_user);
-	add_fph(ctx, "Gov-Client-Timezone", fph_ops.fph_tz);
-	add_fph(ctx, "Gov-Client-Local-IPs", fph_ops.fph_ipaddrs);
-	add_fph(ctx, "Gov-Client-MAC-Addresses", fph_ops.fph_macaddrs);
-	add_fph(ctx, "Gov-Client-User-Agent", fph_ops.fph_ua);
-	add_fph(ctx, "Gov-Client-Multi-Factor", fph_ops.fph_multi_factor);
-	add_fph(ctx, "Gov-Vendor-License-IDs", fph_ops.fph_license_id);
-	add_fph(ctx, "Gov-Vendor-Version", fph_ops.fph_version);
-	add_fph(ctx, "Gov-Vendor-Public-IP", fph_ops.fph_vendor_ip);
-	add_fph(ctx, "Gov-Vendor-Forwarded", fph_ops.fph_vendor_fwd);
-}
-
-static void get_other_direct_hdrs(struct curl_ctx *ctx)
-{
-	curl_add_hdr(ctx, "Gov-Client-Connection-Method: OTHER_DIRECT");
-
-	add_fph(ctx, "Gov-Client-Device-ID", fph_ops.fph_device_id);
-	add_fph(ctx, "Gov-Client-User-IDs", fph_ops.fph_user);
-	add_fph(ctx, "Gov-Client-Timezone", fph_ops.fph_tz);
-	add_fph(ctx, "Gov-Client-Local-IPs", fph_ops.fph_ipaddrs);
-	add_fph(ctx, "Gov-Client-MAC-Addresses", fph_ops.fph_macaddrs);
-	add_fph(ctx, "Gov-Client-User-Agent", fph_ops.fph_ua);
-	add_fph(ctx, "Gov-Vendor-Version", fph_ops.fph_version);
 }
 
 void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx, struct curl_ctx *ctx)
@@ -480,56 +606,32 @@ void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx, struct curl_ctx *ctx)
 
 	libcurl_sockfd = ctx->sockfd;
 
-	switch (mtd_ctx->app_conn_type) {
-	case MTD_ACT_MOBILE_APP_DIRECT:
-	case MTD_ACT_DESKTOP_APP_DIRECT:
-	case MTD_ACT_MOBILE_APP_VIA_SERVER:
-	case MTD_ACT_DESKTOP_APP_VIA_SERVER:
-	case MTD_ACT_WEB_APP_VIA_SERVER:
-	case MTD_ACT_BATCH_PROCESS_DIRECT:
-		break;
-	case MTD_ACT_OTHER_DIRECT:
-		get_other_direct_hdrs(ctx);
-		break;
-	case MTD_ACT_OTHER_VIA_SERVER:
-		get_other_server_hdrs(ctx);
-		break;
-	}
+	curl_add_hdr(ctx, "Gov-Client-Connection-Method: %s",
+		     fph_type_map[mtd_ctx->app_conn_type].str);
+
+	add_fph(ctx, "Gov-Client-Public-IP", fph_ops.fph_srcip);
+	add_fph(ctx, "Gov-Client-Public-Port", fph_ops.fph_srcport);
+	add_fph(ctx, "Gov-Client-Device-ID", fph_ops.fph_device_id);
+	add_fph(ctx, "Gov-Client-User-IDs", fph_ops.fph_user);
+	add_fph(ctx, "Gov-Client-Timezone", fph_ops.fph_tz);
+	add_fph(ctx, "Gov-Client-Screens", fph_ops.fph_screens);
+	add_fph(ctx, "Gov-Client-Window-Size", fph_ops.fph_window_sz);
+	add_fph(ctx, "Gov-Client-Browser-Plugins",
+		fph_ops.fph_browser_plugins);
+	add_fph(ctx, "Gov-Client-Browser-JS-User-Agent",
+		fph_ops.fph_browser_js_ua);
+	add_fph(ctx, "Gov-Client-Browser-Do-Not-Track",
+		fph_ops.fph_browser_dnt);
+	add_fph(ctx, "Gov-Client-Local-IPs", fph_ops.fph_ipaddrs);
+	add_fph(ctx, "Gov-Client-MAC-Addresses", fph_ops.fph_macaddrs);
+	add_fph(ctx, "Gov-Client-User-Agent", fph_ops.fph_ua);
+	add_fph(ctx, "Gov-Client-Multi-Factor", fph_ops.fph_multi_factor);
+	add_fph(ctx, "Gov-Vendor-License-IDs", fph_ops.fph_license_id);
+	add_fph(ctx, "Gov-Vendor-Version", fph_ops.fph_version);
+	add_fph(ctx, "Gov-Vendor-Public-IP", fph_ops.fph_vendor_ip);
+	add_fph(ctx, "Gov-Vendor-Forwarded", fph_ops.fph_vendor_fwd);
 
 	curl_easy_cleanup(curl);
-}
-
-void fph_set_ops(const struct mtd_fph_ops *ops)
-{
-	if (!ops)
-		return;
-
-	if (ops->fph_device_id)
-		fph_ops.fph_device_id = ops->fph_device_id;
-	if (ops->fph_user)
-		fph_ops.fph_user = ops->fph_user;
-	if (ops->fph_tz)
-		fph_ops.fph_tz = ops->fph_tz;
-	if (ops->fph_ipaddrs)
-		fph_ops.fph_ipaddrs = ops->fph_ipaddrs;
-	if (ops->fph_macaddrs)
-		fph_ops.fph_macaddrs = ops->fph_macaddrs;
-	if (ops->fph_srcip)
-		fph_ops.fph_srcip = ops->fph_srcip;
-	if (ops->fph_srcport)
-		fph_ops.fph_srcport = ops->fph_srcport;
-	if (ops->fph_vendor_ip)
-		fph_ops.fph_vendor_ip = ops->fph_vendor_ip;
-	if (ops->fph_vendor_fwd)
-		fph_ops.fph_vendor_fwd = ops->fph_vendor_fwd;
-	if (ops->fph_ua)
-		fph_ops.fph_ua = ops->fph_ua;
-	if (ops->fph_multi_factor)
-		fph_ops.fph_multi_factor = ops->fph_multi_factor;
-	if (ops->fph_license_id)
-		fph_ops.fph_license_id = ops->fph_license_id;
-	if (ops->fph_version)
-		fph_ops.fph_version = ops->fph_version;
 }
 
 static const struct mtd_fph_ops dfl_fph_ops = {
@@ -540,15 +642,46 @@ static const struct mtd_fph_ops dfl_fph_ops = {
 	.fph_macaddrs		= get_macaddrs,
 	.fph_srcip		= get_src_addr,
 	.fph_srcport		= get_src_port,
+	.fph_screens		= get_screens,
+	.fph_window_sz		= get_window_sz,
+	.fph_browser_plugins	= get_browser_plugins,
+	.fph_browser_js_ua	= get_browser_js_ua,
+	.fph_browser_dnt	= get_browser_dnt,
 	.fph_vendor_ip		= get_vendor_ip,
 	.fph_vendor_fwd		= get_vendor_fwd,
 	.fph_ua			= get_ua,
-	.fph_multi_factor	= get_multi_factpr,
+	.fph_multi_factor	= get_multi_factor,
 	.fph_license_id		= get_license_id,
 	.fph_version		= get_version,
 };
 
-void fph_init_ops(void)
+#define SET_FPH_FUNC(f, m) \
+	fph_type & f ? (ops && ops->m ? ops->m : dfl_fph_ops.m) : NULL;
+void fph_set_ops(enum app_conn_type conn_type, const struct mtd_fph_ops *ops)
 {
-	memcpy(&fph_ops, &dfl_fph_ops, sizeof(struct mtd_fph_ops));
+	unsigned int fph_type = fph_type_map[conn_type].fph;
+
+	fph_ops.fph_device_id = SET_FPH_FUNC(FPH_C_DEV_ID, fph_device_id);
+	fph_ops.fph_user = SET_FPH_FUNC(FPH_C_USER_ID, fph_user);
+	fph_ops.fph_tz = SET_FPH_FUNC(FPH_C_TZ, fph_tz);
+	fph_ops.fph_ipaddrs = SET_FPH_FUNC(FPH_C_LOCAL_IP, fph_ipaddrs);
+	fph_ops.fph_macaddrs = SET_FPH_FUNC(FPH_C_MAC_ADDR, fph_macaddrs);
+	fph_ops.fph_srcip = SET_FPH_FUNC(FPH_C_PUBLIC_IP, fph_srcip);
+	fph_ops.fph_srcport = SET_FPH_FUNC(FPH_C_PUBLIC_PORT, fph_srcport);
+	fph_ops.fph_screens = SET_FPH_FUNC(FPH_C_SCREENS, fph_screens);
+	fph_ops.fph_window_sz = SET_FPH_FUNC(FPH_C_WINDOW_SZ, fph_window_sz);
+	fph_ops.fph_browser_plugins = SET_FPH_FUNC(FPH_C_BROWSER_PLUGINS,
+						   fph_browser_plugins);
+	fph_ops.fph_browser_js_ua = SET_FPH_FUNC(FPH_C_BROWSER_JS_UA,
+						 fph_browser_js_ua);
+	fph_ops.fph_browser_dnt = SET_FPH_FUNC(FPH_C_BROWSER_DNT,
+					       fph_browser_dnt);
+	fph_ops.fph_vendor_ip = SET_FPH_FUNC(FPH_V_PUBLIC_IP, fph_vendor_ip);
+	fph_ops.fph_vendor_fwd = SET_FPH_FUNC(FPH_V_FWD, fph_vendor_fwd);
+	fph_ops.fph_ua = SET_FPH_FUNC(FPH_C_UA, fph_ua);
+	fph_ops.fph_multi_factor = SET_FPH_FUNC(FPH_C_MULTI_FACTOR,
+						fph_multi_factor);
+	fph_ops.fph_license_id = SET_FPH_FUNC(FPH_V_LICENSE_ID,
+					      fph_license_id);
+	fph_ops.fph_version = SET_FPH_FUNC(FPH_V_VERSION, fph_version);
 }
