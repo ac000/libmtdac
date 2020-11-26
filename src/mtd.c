@@ -261,7 +261,7 @@ int mtd_init_auth(void)
 	const char *args[3];
 	const char * const *scope;
 	char auth_code[41];
-	char *buf;
+	char *buf = NULL;
 	char data[4096];
 	char url[2048];
 	char path[PATH_MAX];
