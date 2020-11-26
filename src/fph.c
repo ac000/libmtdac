@@ -30,6 +30,7 @@
 #include "mtd.h"
 #include "mtd-priv.h"
 #include "curler.h"
+#include "logger.h"
 
 #define BUF_SZ	1024
 
@@ -195,7 +196,7 @@ static char *get_version(void)
 
 	err = asprintf(&buf, "%s=%s", encname, encver);
 	if (err == -1) {
-		fprintf(stderr, "libmtdac/get_version: asprintf failed");
+		logger(MTD_LOG_ERRNO, "asprintf:");
 		buf = NULL;
 	}
 
@@ -249,7 +250,7 @@ static char *get_ua(void)
 	err = asprintf(&buf, "%s/%s (%s/%s)", encsys, encrel, encvendor,
 		       encmodel);
 	if (err == -1) {
-		fprintf(stderr, "libmtdac/get_version: asprintf failed");
+		logger(MTD_LOG_ERRNO, "asprintf:");
 		buf = NULL;
 	}
 
@@ -507,7 +508,7 @@ static char *get_tz(void)
 
 	buf = malloc(strlen("UTC+HH:MM") + 1);
 	if (!buf) {
-		fprintf(stderr, "libmtdac/get_tz: malloc failed");
+		logger(MTD_LOG_ERRNO, "malloc:");
 		return NULL;
 	}
 
@@ -533,7 +534,7 @@ static char *get_user(void)
 	encuser = curl_easy_escape(curl, getenv("USER"), 0);
 	err = asprintf(&buf, "os=%s", encuser);
 	if (err == -1) {
-		fprintf(stderr, "libmtdac/get_user: asprintf failed");
+		logger(MTD_LOG_ERRNO, "asprintf:");
 		buf = NULL;
 	}
 	curl_free(encuser);
@@ -559,7 +560,7 @@ static char *get_device_id(void)
 
 	err = asprintf(&buf, "%s", json_string_value(did));
 	if (err == -1) {
-		fprintf(stderr, "libmtdac/get_device_id: asprintf failed");
+		logger(MTD_LOG_ERRNO, "asprintf:");
 		buf = NULL;
 	}
 	json_decref(root);
