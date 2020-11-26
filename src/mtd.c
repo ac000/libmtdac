@@ -43,6 +43,41 @@ static const struct mtd_ctx dfl_mtd_ctx = {
 };
 __thread struct mtd_ctx mtd_ctx;
 
+char *mtd_percent_encode(const char *str, ssize_t len)
+{
+	char *p = (char *)str;
+	char *buf;
+	char *p2;
+	size_t buflen;
+
+	buflen = ((len < 0 ? (ssize_t)strlen(str) : len) * 3) + 1;
+	buf = malloc(buflen);
+	if (!buf) {
+		logger(MTD_LOG_ERRNO, "malloc:");
+		return NULL;
+	}
+	p2 = buf;
+
+	while (*p) {
+		switch (*p) {
+		case ' ':	case '\n':	case '\r':	case '!':
+		case '*':	case '\'':	case '(':	case ')':
+		case ';':	case ':':	case '@':	case '&':
+		case '=':	case '+':	case '$':	case ',':
+		case '/':	case '?':	case '#':	case '[':
+		case ']':	case '%':
+			p2 += sprintf(p2, "%%%02X", *p);
+			break;
+		default:
+			*(p2++) = *p;
+		}
+		p++;
+	}
+	*p2 = '\0';
+
+	return buf;
+}
+
 static char *gen_uuid(char *buf)
 {
 	FILE *fp;

@@ -255,6 +255,12 @@ int mtd_init_nino(void);
 void mtd_deinit(void);
 ```
 
+#### mtd\_percent\_encode - percent encode a string
+
+```C
+char *mtd_percent_encode(const char *str, ssize_t len);
+```
+
 ### Make Tax Digital - Self-Assessment API functions
 
 ```C

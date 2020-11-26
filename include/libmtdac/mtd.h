@@ -121,6 +121,7 @@ extern void mtd_deinit(void);
 extern int mtd_init_auth(void);
 extern int mtd_init_config(void);
 extern int mtd_init_nino(void);
+extern char *mtd_percent_encode(const char *str, ssize_t len);
 
 #pragma GCC visibility pop
 

@@ -23,8 +23,6 @@
 #include <linux/if_packet.h>
 #include <linux/limits.h>
 
-#include <curl/curl.h>
-
 #include <jansson.h>
 
 #include "mtd.h"
@@ -141,7 +139,6 @@ static const struct _fph_type_map {
 };
 
 static __thread struct mtd_fph_ops fph_ops;
-static __thread CURL *curl;
 
 extern __thread struct mtd_ctx mtd_ctx;
 
@@ -188,11 +185,11 @@ static char *get_version(void)
 	char *buf;
 	int err;
 
-	encname = curl_easy_escape(curl, LIBNAME, 0);
+	encname = mtd_percent_encode(LIBNAME, -1);
 	snprintf(ver, sizeof(ver), "%d.%d.%d (%s)",
 		 LIBMTDAC_MAJOR_VERSION, LIBMTDAC_MINOR_VERSION,
 		 LIBMTDAC_MICRO_VERSION, GIT_VERSION + 1);
-	encver = curl_easy_escape(curl, ver, 0);
+	encver = mtd_percent_encode(ver, -1);
 
 	err = asprintf(&buf, "%s=%s", encname, encver);
 	if (err == -1) {
@@ -200,8 +197,8 @@ static char *get_version(void)
 		buf = NULL;
 	}
 
-	curl_free(encname);
-	curl_free(encver);
+	free(encname);
+	free(encver);
 
 	return buf;
 }
@@ -219,8 +216,8 @@ static char *get_ua(void)
 	int err;
 
 	uname(&un);
-	encsys = curl_easy_escape(curl, un.sysname, 0);
-	encrel = curl_easy_escape(curl, un.release, 0);
+	encsys = mtd_percent_encode(un.sysname, -1);
+	encrel = mtd_percent_encode(un.release, -1);
 
 	fp = fopen("/proc/cpuinfo", "re");
 	while (fgets(line, sizeof(line), fp)) {
@@ -232,14 +229,14 @@ static char *get_ua(void)
 		if (ptr && !encvendor) {
 			ptr = strchr(line, ':');
 			if (ptr)
-				encvendor = curl_easy_escape(curl, ptr + 2, 0);
+				encvendor = mtd_percent_encode(ptr + 2, -1);
 		}
 
 		ptr = strstr(line, "model name");
 		if (ptr && !encmodel) {
 			ptr = strchr(line, ':');
 			if (ptr)
-				encmodel = curl_easy_escape(curl, ptr + 2, 0);
+				encmodel = mtd_percent_encode(ptr + 2, -1);
 		}
 
 		if (encvendor && encmodel)
@@ -254,10 +251,10 @@ static char *get_ua(void)
 		buf = NULL;
 	}
 
-	curl_free(encsys);
-	curl_free(encrel);
-	curl_free(encvendor);
-	curl_free(encmodel);
+	free(encsys);
+	free(encrel);
+	free(encvendor);
+	free(encmodel);
 
 	return buf;
 }
@@ -291,10 +288,10 @@ static char *get_macaddrs(void)
 		ph = ((struct sockaddr_ll *)ifa->ifa_addr)->sll_addr;
 		snprintf(mac, sizeof(mac), "%02x:%02x:%02x:%02x:%02x:%02x",
 			 ph[0], ph[1], ph[2], ph[3], ph[4], ph[5]);
-		encmac = curl_easy_escape(curl, mac, 0);
+		encmac = mtd_percent_encode(mac, -1);
 		maclen += snprintf(buf + maclen, BUF_SZ - maclen, "%s,",
 				   encmac);
-		curl_free(encmac);
+		free(encmac);
 	}
 	buf[maclen - 1] = '\0';	/* trim trailing ',' */
 
@@ -445,9 +442,9 @@ static char *get_ipaddrs(void)
 			    family == AF_INET ? sizeof(struct sockaddr_in) :
 						sizeof(struct sockaddr_in6),
 			    ip, sizeof(ip), NULL, 0, NI_NUMERICHOST);
-		encip = curl_easy_escape(curl, ip, 0);
+		encip = mtd_percent_encode(ip, -1);
 		iplen += snprintf(buf + iplen, BUF_SZ - iplen, "%s,", encip);
-		curl_free(encip);
+		free(encip);
 	}
 	buf[iplen - 1] = '\0';	/* trim trailing ',' */
 
@@ -531,13 +528,13 @@ static char *get_user(void)
 	char *buf;
 	int err;
 
-	encuser = curl_easy_escape(curl, getenv("USER"), 0);
+	encuser = mtd_percent_encode(getenv("USER"), -1);
 	err = asprintf(&buf, "os=%s", encuser);
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf:");
 		buf = NULL;
 	}
-	curl_free(encuser);
+	free(encuser);
 
 	return buf;
 }
@@ -603,8 +600,6 @@ void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx, struct curl_ctx *ctx)
 	if (mtd_ctx->opts & MTD_OPT_NO_ANTI_FRAUD_HDRS)
 		return;
 
-	curl = curl_easy_init();
-
 	libcurl_sockfd = ctx->sockfd;
 
 	curl_add_hdr(ctx, "Gov-Client-Connection-Method: %s",
@@ -631,8 +626,6 @@ void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx, struct curl_ctx *ctx)
 	add_fph(ctx, "Gov-Vendor-Version", fph_ops.fph_version);
 	add_fph(ctx, "Gov-Vendor-Public-IP", fph_ops.fph_vendor_ip);
 	add_fph(ctx, "Gov-Vendor-Forwarded", fph_ops.fph_vendor_fwd);
-
-	curl_easy_cleanup(curl);
 }
 
 static const struct mtd_fph_ops dfl_fph_ops = {

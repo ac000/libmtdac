@@ -1,0 +1,37 @@
+.TH MTD_PERCENT_ENCODE 3 "November 26, 2020" "" "libmtdac"
+
+.SH NAME
+
+mtd_percent_encode \- percent encode a string
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd.h>
+.PP
+.BI "char *mtd_percent_encode(const char *" str ", ssize_t " len );
+
+.SH DESCRIPTION
+
+This function percent encodes the given string.
+
+.TP 4
+.B str
+A pointer to a buffer containing the string to be encoded.
+
+.TP
+.B len
+The length of the string pointed to by \fBstr\fP. Use \fB-1\fP for len to be
+taken as strlen(str).
+
+.SH RETURN VALUE
+
+On success, a pointer to a dynamically allocated buffer containing the encoded
+string, which should be \fBfree(2)\fP'd when finished with.
+.PP
+On error, NULL is returned. The only way this fails is if there was
+insufficient memory to allocate the new buffer.
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3)
