@@ -182,6 +182,7 @@ static char *get_version(void)
 	char ver[128];
 	char *encname;
 	char *encver;
+	char *ver_cli = NULL;
 	char *buf;
 	int err;
 
@@ -191,7 +192,11 @@ static char *get_version(void)
 		 LIBMTDAC_MICRO_VERSION, GIT_VERSION + 1);
 	encver = mtd_percent_encode(ver, -1);
 
-	err = asprintf(&buf, "%s=%s", encname, encver);
+	if (fph_ops.fph_version_cli)
+		ver_cli = fph_ops.fph_version_cli();
+
+	err = asprintf(&buf, "%s=%s%s%s", encname, encver, ver_cli ? "&" : "",
+		       ver_cli ? ver_cli : "");
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf:");
 		buf = NULL;
@@ -199,6 +204,7 @@ static char *get_version(void)
 
 	free(encname);
 	free(encver);
+	free(ver_cli);
 
 	return buf;
 }
@@ -647,6 +653,7 @@ static const struct mtd_fph_ops dfl_fph_ops = {
 	.fph_multi_factor	= get_multi_factor,
 	.fph_license_id		= get_license_id,
 	.fph_version		= get_version,
+	.fph_version_cli	= NULL,
 };
 
 #define SET_FPH_FUNC(f, m) \
@@ -678,4 +685,5 @@ void fph_set_ops(enum app_conn_type conn_type, const struct mtd_fph_ops *ops)
 	fph_ops.fph_license_id = SET_FPH_FUNC(FPH_V_LICENSE_ID,
 					      fph_license_id);
 	fph_ops.fph_version = SET_FPH_FUNC(FPH_V_VERSION, fph_version);
+	fph_ops.fph_version_cli = SET_FPH_FUNC(FPH_V_VERSION, fph_version_cli);
 }

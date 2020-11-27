@@ -106,6 +106,7 @@ struct mtd_fph_ops {
 	char *(*fph_multi_factor)(void);
 	char *(*fph_license_id)(void);
 	char *(*fph_version)(void);
+	char *(*fph_version_cli)(void);
 };
 
 struct mtd_cfg {
