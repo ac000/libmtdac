@@ -1,4 +1,4 @@
-.TH MTD_INIT 3 "June 12, 2020" "" "libmtdac"
+.TH MTD_INIT 3 "January 7, 2021" "0.17.0" "libmtdac"
 
 .SH NAME
 
@@ -105,8 +105,10 @@ struct mtd_fph_ops {
         char *(*fph_user)(void);
         char *(*fph_tz)(void);
         char *(*fph_ipaddrs)(void);
+        char *(*fph_ipaddrs_ip)(void);
         char *(*fph_macaddrs)(void);
         char *(*fph_srcip)(void);
+        char *(*fph_srcip_ts)(void);
         char *(*fph_srcport)(void);
         char *(*fph_screens)(void);
         char *(*fph_window_sz)(void);
@@ -118,6 +120,7 @@ struct mtd_fph_ops {
         char *(*fph_ua)(void);
         char *(*fph_multi_factor)(void);
         char *(*fph_license_id)(void);
+        char *(*fph_prod_name)(void);
         char *(*fph_version)(void);
         char *(*fph_version_cli)(void);
 };

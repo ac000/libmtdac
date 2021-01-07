@@ -107,8 +107,10 @@ struct mtd_fph_ops {
         char *(*fph_user)(void);
         char *(*fph_tz)(void);
         char *(*fph_ipaddrs)(void);
+        char *(*fph_ipaddrs_ts)(void);
         char *(*fph_macaddrs)(void);
         char *(*fph_srcip)(void);
+        char *(*fph_srcip_ts)(void);
         char *(*fph_srcport)(void);
         char *(*fph_screens)(void);
         char *(*fph_window_sz)(void);
@@ -122,6 +124,7 @@ struct mtd_fph_ops {
         char *(*fph_license_id)(void);
         char *(*fph_version)(void);
         char *(*fph_version_cli)(void);
+        char *(*fph_prod_name)(void);
 };
 ```
 

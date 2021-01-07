@@ -3,7 +3,7 @@
 /*
  * fph.c - Make Tax Digital - Fraud Prevention Headers
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #define _GNU_SOURCE
@@ -47,10 +47,13 @@ enum {
 	FPH_C_BROWSER_PLUGINS	= 0x800,
 	FPH_C_BROWSER_JS_UA	= 0x1000,
 	FPH_C_BROWSER_DNT	= 0x2000,
+	FPH_C_LOCAL_IP_TS	= 0x4000,
+	FPH_C_PUBLIC_IP_TS	= 0x8000,
 	FPH_V_VERSION		= 0x100000,
 	FPH_V_LICENSE_ID	= 0x200000,
 	FPH_V_PUBLIC_IP		= 0x400000,
 	FPH_V_FWD		= 0x800000,
+	FPH_V_PROD_NAME		= 0x1000000,
 };
 
 #define _FPH_COMMON \
@@ -58,11 +61,13 @@ enum {
 	FPH_C_USER_ID	   | \
 	FPH_C_TZ	   | \
 	FPH_C_LOCAL_IP	   | \
+	FPH_C_LOCAL_IP_TS  | \
 	FPH_C_MAC_ADDR	   | \
 	FPH_C_UA	   | \
 	FPH_C_MULTI_FACTOR | \
 	FPH_V_VERSION	   | \
-	FPH_V_LICENSE_ID
+	FPH_V_LICENSE_ID   | \
+	FPH_V_PROD_NAME
 
 #define _FPH_COMMON_DESKTOP \
 	_FPH_COMMON	| \
@@ -73,6 +78,7 @@ enum {
 
 #define FPH_DESKTOP_APP_VIA_SERVER \
 	FPH_C_PUBLIC_IP	    | \
+	FPH_C_PUBLIC_IP_TS  | \
 	FPH_C_PUBLIC_PORT   | \
 	_FPH_COMMON_DESKTOP | \
 	FPH_V_PUBLIC_IP	    | \
@@ -94,10 +100,11 @@ enum {
 #define FPH_OTHER_DIRECT		_FPH_COMMON
 
 #define FPH_OTHER_VIA_SERVER \
-	FPH_C_PUBLIC_IP	  | \
-	FPH_C_PUBLIC_PORT | \
-	_FPH_COMMON	  | \
-	FPH_V_PUBLIC_IP	  | \
+	FPH_C_PUBLIC_IP	   | \
+	FPH_C_PUBLIC_IP_TS | \
+	FPH_C_PUBLIC_PORT  | \
+	_FPH_COMMON	   | \
+	FPH_V_PUBLIC_IP	   | \
 	FPH_V_FWD
 
 static const struct _fph_type_map {
@@ -173,6 +180,11 @@ static char *get_browser_js_ua(void)
 }
 
 static char *get_browser_dnt(void)
+{
+	return NULL;
+}
+
+static char *get_prod_name(void)
 {
 	return NULL;
 }
@@ -492,6 +504,32 @@ static char *get_src_addr(void)
 	return strdup(host);
 }
 
+static char *get_ip_ts(void)
+{
+	struct timespec now;
+	struct tm res;
+	char strtime[32];
+
+	/*
+	 * The timestamp wants to be in the following format
+	 *
+	 *     yyyy-MM-ddThh:mm:ss.sssZ
+	 *
+	 * E.g
+	 *
+	 *     2020-09-21T10:30:05.123Z
+	 *
+	 * We need to use clock_gettime(2) to get > second resolution
+	 */
+	clock_gettime(CLOCK_REALTIME, &now);
+	gmtime_r(&now.tv_sec, &res);
+	strftime(strtime, sizeof(strtime), "%FT%T.", &res);
+	snprintf(strtime + strlen(strtime), sizeof(strtime), "%ldZ",
+		 now.tv_nsec / 1000000L);
+
+	return strdup(strtime);
+}
+
 static char *get_vendor_fwd(void)
 {
 	return NULL;
@@ -612,6 +650,7 @@ void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx, struct curl_ctx *ctx)
 		     fph_type_map[mtd_ctx->app_conn_type].str);
 
 	add_fph(ctx, "Gov-Client-Public-IP", fph_ops.fph_srcip);
+	add_fph(ctx, "Gov-Client-Public-IP-Timestamp", fph_ops.fph_srcip_ts);
 	add_fph(ctx, "Gov-Client-Public-Port", fph_ops.fph_srcport);
 	add_fph(ctx, "Gov-Client-Device-ID", fph_ops.fph_device_id);
 	add_fph(ctx, "Gov-Client-User-IDs", fph_ops.fph_user);
@@ -625,10 +664,12 @@ void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx, struct curl_ctx *ctx)
 	add_fph(ctx, "Gov-Client-Browser-Do-Not-Track",
 		fph_ops.fph_browser_dnt);
 	add_fph(ctx, "Gov-Client-Local-IPs", fph_ops.fph_ipaddrs);
+	add_fph(ctx, "Gov-Client-Local-IPs-Timestamp", fph_ops.fph_ipaddrs_ts);
 	add_fph(ctx, "Gov-Client-MAC-Addresses", fph_ops.fph_macaddrs);
 	add_fph(ctx, "Gov-Client-User-Agent", fph_ops.fph_ua);
 	add_fph(ctx, "Gov-Client-Multi-Factor", fph_ops.fph_multi_factor);
 	add_fph(ctx, "Gov-Vendor-License-IDs", fph_ops.fph_license_id);
+	add_fph(ctx, "Gov-Vendor-Product-Name", fph_ops.fph_prod_name);
 	add_fph(ctx, "Gov-Vendor-Version", fph_ops.fph_version);
 	add_fph(ctx, "Gov-Vendor-Public-IP", fph_ops.fph_vendor_ip);
 	add_fph(ctx, "Gov-Vendor-Forwarded", fph_ops.fph_vendor_fwd);
@@ -639,8 +680,10 @@ static const struct mtd_fph_ops dfl_fph_ops = {
 	.fph_user		= get_user,
 	.fph_tz			= get_tz,
 	.fph_ipaddrs		= get_ipaddrs,
+	.fph_ipaddrs_ts		= get_ip_ts,
 	.fph_macaddrs		= get_macaddrs,
 	.fph_srcip		= get_src_addr,
+	.fph_srcip_ts		= get_ip_ts,
 	.fph_srcport		= get_src_port,
 	.fph_screens		= get_screens,
 	.fph_window_sz		= get_window_sz,
@@ -652,6 +695,7 @@ static const struct mtd_fph_ops dfl_fph_ops = {
 	.fph_ua			= get_ua,
 	.fph_multi_factor	= get_multi_factor,
 	.fph_license_id		= get_license_id,
+	.fph_prod_name		= get_prod_name,
 	.fph_version		= get_version,
 	.fph_version_cli	= NULL,
 };
@@ -666,8 +710,11 @@ void fph_set_ops(enum app_conn_type conn_type, const struct mtd_fph_ops *ops)
 	fph_ops.fph_user = SET_FPH_FUNC(FPH_C_USER_ID, fph_user);
 	fph_ops.fph_tz = SET_FPH_FUNC(FPH_C_TZ, fph_tz);
 	fph_ops.fph_ipaddrs = SET_FPH_FUNC(FPH_C_LOCAL_IP, fph_ipaddrs);
+	fph_ops.fph_ipaddrs_ts = SET_FPH_FUNC(FPH_C_LOCAL_IP_TS,
+					      fph_ipaddrs_ts);
 	fph_ops.fph_macaddrs = SET_FPH_FUNC(FPH_C_MAC_ADDR, fph_macaddrs);
 	fph_ops.fph_srcip = SET_FPH_FUNC(FPH_C_PUBLIC_IP, fph_srcip);
+	fph_ops.fph_srcip_ts = SET_FPH_FUNC(FPH_C_PUBLIC_IP_TS, fph_srcip_ts);
 	fph_ops.fph_srcport = SET_FPH_FUNC(FPH_C_PUBLIC_PORT, fph_srcport);
 	fph_ops.fph_screens = SET_FPH_FUNC(FPH_C_SCREENS, fph_screens);
 	fph_ops.fph_window_sz = SET_FPH_FUNC(FPH_C_WINDOW_SZ, fph_window_sz);
@@ -684,6 +731,7 @@ void fph_set_ops(enum app_conn_type conn_type, const struct mtd_fph_ops *ops)
 						fph_multi_factor);
 	fph_ops.fph_license_id = SET_FPH_FUNC(FPH_V_LICENSE_ID,
 					      fph_license_id);
+	fph_ops.fph_prod_name = SET_FPH_FUNC(FPH_V_PROD_NAME, fph_prod_name);
 	fph_ops.fph_version = SET_FPH_FUNC(FPH_V_VERSION, fph_version);
 	fph_ops.fph_version_cli = SET_FPH_FUNC(FPH_V_VERSION, fph_version_cli);
 }

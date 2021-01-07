@@ -1,4 +1,4 @@
-.TH libmtdac_mtd.h 3 "June 21, 2020" "libmtdac 0.12.0" "libmtdac_mtd.h"
+.TH libmtdac_mtd.h 3 "January 7, 2021" "libmtdac 0.17.0" "libmtdac_mtd.h"
 
 .SH NAME
 libmtdac_mtd.h \- Core types / defines
@@ -142,8 +142,10 @@ struct mtd_fph_ops {
         char *(*fph_user)(void);
         char *(*fph_tz)(void);
         char *(*fph_ipaddrs)(void);
+        char *(*fph_ipaddrs_ts)(void);
         char *(*fph_macaddrs)(void);
         char *(*fph_srcip)(void);
+        char *(*fph_srcip_ts)(void);
         char *(*fph_srcport)(void);
         char *(*fph_screens)(void);
         char *(*fph_window_sz)(void);
@@ -155,6 +157,7 @@ struct mtd_fph_ops {
         char *(*fph_ua)(void);
         char *(*fph_multi_factor)(void);
         char *(*fph_license_id)(void);
+        char *(*fph_prod_name)(void);
         char *(*fph_version)(void);
         char *(*fph_version_cli)(void);
 .br
