@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	0.16.0
+Version:	0.17.0
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -49,6 +49,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Thu Jan 07 2021 Andrew Clayton <andrew@digital-domain.net> - 0.17.0-1
+- Cleanups & fixes
+- Various fraud prevention header work
 
 * Wed Sep 30 2020 Andrew Clayton <andrew@digital-domain.net> - 0.16.0-1
 - Add support for more endpoints; Individual Income/Employment, VAT
