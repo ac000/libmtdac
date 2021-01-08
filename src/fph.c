@@ -38,8 +38,8 @@ enum fph_hdr {
 	FPH_C_DEV_ID		= 0x4,
 	FPH_C_USER_ID		= 0x8,
 	FPH_C_TZ		= 0x10,
-	FPH_C_LOCAL_IP		= 0x20,
-	FPH_C_MAC_ADDR		= 0x40,
+	FPH_C_LOCAL_IPS		= 0x20,
+	FPH_C_MAC_ADDRS		= 0x40,
 	FPH_C_UA		= 0x80,
 	FPH_C_MULTI_FACTOR	= 0x100,
 	FPH_C_SCREENS		= 0x200,
@@ -47,7 +47,7 @@ enum fph_hdr {
 	FPH_C_BROWSER_PLUGINS	= 0x800,
 	FPH_C_BROWSER_JS_UA	= 0x1000,
 	FPH_C_BROWSER_DNT	= 0x2000,
-	FPH_C_LOCAL_IP_TS	= 0x4000,
+	FPH_C_LOCAL_IPS_TS	= 0x4000,
 	FPH_C_PUBLIC_IP_TS	= 0x8000,
 	FPH_V_VERSION		= 0x100000,
 	FPH_V_LICENSE_ID	= 0x200000,
@@ -60,9 +60,9 @@ enum fph_hdr {
 	FPH_C_DEV_ID	   | \
 	FPH_C_USER_ID	   | \
 	FPH_C_TZ	   | \
-	FPH_C_LOCAL_IP	   | \
-	FPH_C_LOCAL_IP_TS  | \
-	FPH_C_MAC_ADDR	   | \
+	FPH_C_LOCAL_IPS	   | \
+	FPH_C_LOCAL_IPS_TS  | \
+	FPH_C_MAC_ADDRS	   | \
 	FPH_C_UA	   | \
 	FPH_C_MULTI_FACTOR | \
 	FPH_V_VERSION	   | \
@@ -85,7 +85,7 @@ enum fph_hdr {
 	FPH_V_FWD
 
 #define FPH_WEB_APP_VIA_SERVER \
-	((FPH_DESKTOP_APP_VIA_SERVER) & ~FPH_C_MAC_ADDR & ~FPH_C_UA)	| \
+	((FPH_DESKTOP_APP_VIA_SERVER) & ~FPH_C_MAC_ADDRS & ~FPH_C_UA)	| \
 	FPH_C_BROWSER_PLUGINS						| \
 	FPH_C_BROWSER_JS_UA						| \
 	FPH_C_BROWSER_DNT
@@ -155,8 +155,8 @@ static const struct _fph_hdr_map {
 	FPH_HINF(FPH_C_DEV_ID, "Gov-Client-Device-ID"),
 	FPH_HINF(FPH_C_USER_ID, "Gov-Client-User-IDs"),
 	FPH_HINF(FPH_C_TZ, "Gov-Client-Timezone"),
-	FPH_HINF(FPH_C_LOCAL_IP, "Gov-Client-Local-IPs"),
-	FPH_HINF(FPH_C_MAC_ADDR, "Gov-Client-MAC-Addresses"),
+	FPH_HINF(FPH_C_LOCAL_IPS, "Gov-Client-Local-IPs"),
+	FPH_HINF(FPH_C_MAC_ADDRS, "Gov-Client-MAC-Addresses"),
 	FPH_HINF(FPH_C_UA, "Gov-Client-User-Agent"),
 	FPH_HINF(FPH_C_MULTI_FACTOR, "Gov-Client-Multi-Factor"),
 	FPH_HINF(FPH_C_SCREENS, "Gov-Client-Screens"),
@@ -164,7 +164,7 @@ static const struct _fph_hdr_map {
 	FPH_HINF(FPH_C_BROWSER_PLUGINS, "Gov-Client-Browser-Plugins"),
 	FPH_HINF(FPH_C_BROWSER_JS_UA, "Gov-Client-Browser-JS-User-Agent"),
 	FPH_HINF(FPH_C_BROWSER_DNT, "Gov-Client-Browser-Do-Not-Track"),
-	FPH_HINF(FPH_C_LOCAL_IP_TS, "Gov-Client-Local-IPs-Timestamp"),
+	FPH_HINF(FPH_C_LOCAL_IPS_TS, "Gov-Client-Local-IPs-Timestamp"),
 	FPH_HINF(FPH_C_PUBLIC_IP_TS, "Gov-Client-Public-IP-Timestamp"),
 	FPH_HINF(FPH_V_VERSION, "Gov-Vendor-Version"),
 	FPH_HINF(FPH_V_LICENSE_ID, "Gov-Vendor-License-IDs"),
@@ -652,9 +652,9 @@ static char *(*lookup_fph_func(const enum fph_hdr hdr))(void)
 		return f->fph_user;
 	case FPH_C_TZ:
 		return f->fph_tz;
-	case FPH_C_LOCAL_IP:
+	case FPH_C_LOCAL_IPS:
 		return f->fph_ipaddrs;
-	case FPH_C_MAC_ADDR:
+	case FPH_C_MAC_ADDRS:
 		return f->fph_macaddrs;
 	case FPH_C_UA:
 		return f->fph_ua;
@@ -670,7 +670,7 @@ static char *(*lookup_fph_func(const enum fph_hdr hdr))(void)
 		return f->fph_browser_js_ua;
 	case FPH_C_BROWSER_DNT:
 		return f->fph_browser_dnt;
-	case FPH_C_LOCAL_IP_TS:
+	case FPH_C_LOCAL_IPS_TS:
 		return f->fph_ipaddrs_ts;
 	case FPH_C_PUBLIC_IP_TS:
 		return f->fph_srcip_ts;
@@ -751,9 +751,9 @@ void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx, struct curl_ctx *ctx)
 	add_fph(ctx, FPH_C_BROWSER_PLUGINS);
 	add_fph(ctx, FPH_C_BROWSER_JS_UA);
 	add_fph(ctx, FPH_C_BROWSER_DNT);
-	add_fph(ctx, FPH_C_LOCAL_IP);
-	add_fph(ctx, FPH_C_LOCAL_IP_TS);
-	add_fph(ctx, FPH_C_MAC_ADDR);
+	add_fph(ctx, FPH_C_LOCAL_IPS);
+	add_fph(ctx, FPH_C_LOCAL_IPS_TS);
+	add_fph(ctx, FPH_C_MAC_ADDRS);
 	add_fph(ctx, FPH_C_UA);
 	add_fph(ctx, FPH_C_MULTI_FACTOR);
 	add_fph(ctx, FPH_V_LICENSE_ID);
@@ -798,9 +798,9 @@ void fph_set_ops(enum app_conn_type conn_type, const struct mtd_fph_ops *ops)
 	SET_FPH_FUNC(FPH_C_DEV_ID, fph_device_id);
 	SET_FPH_FUNC(FPH_C_USER_ID, fph_user);
 	SET_FPH_FUNC(FPH_C_TZ, fph_tz);
-	SET_FPH_FUNC(FPH_C_LOCAL_IP, fph_ipaddrs);
-	SET_FPH_FUNC(FPH_C_LOCAL_IP_TS, fph_ipaddrs_ts);
-	SET_FPH_FUNC(FPH_C_MAC_ADDR, fph_macaddrs);
+	SET_FPH_FUNC(FPH_C_LOCAL_IPS, fph_ipaddrs);
+	SET_FPH_FUNC(FPH_C_LOCAL_IPS_TS, fph_ipaddrs_ts);
+	SET_FPH_FUNC(FPH_C_MAC_ADDRS, fph_macaddrs);
 	SET_FPH_FUNC(FPH_C_PUBLIC_IP, fph_srcip);
 	SET_FPH_FUNC(FPH_C_PUBLIC_IP_TS, fph_srcip_ts);
 	SET_FPH_FUNC(FPH_C_PUBLIC_PORT, fph_srcport);
