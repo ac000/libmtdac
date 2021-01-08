@@ -290,8 +290,9 @@ static char *get_ua(void)
 	}
 	fclose(fp);
 
-	err = asprintf(&buf, "%s/%s (%s/%s)", encsys, encrel, encvendor,
-		       encmodel);
+	err = asprintf(&buf,
+		       "os-family=%s&os-version=%s&device-manufacturer=%s&device-model=%s",
+		       encsys, encrel, encvendor, encmodel);
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf:");
 		buf = NULL;
