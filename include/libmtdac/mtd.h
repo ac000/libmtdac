@@ -87,6 +87,29 @@ struct mtd_dsrc_ctx {
 	enum mtd_data_src_type src_type;
 };
 
+#define MTD_FPH_CLI_PUBLIC_IP			fph_srcip
+#define MTD_FPH_CLI_PUBLIC_PORT			fph_srcport
+#define MTD_FPH_CLI_DEV_ID			fph_device_id
+#define MTD_FPH_CLI_USER_ID			fph_user
+#define MTD_FPH_CLI_TZ				fph_tz
+#define MTD_FPH_CLI_LOCAL_IPS			fph_ipaddrs
+#define MTD_FPH_CLI_MAC_ADDRS			fph_macaddrs
+#define MTD_FPH_CLI_UA				fph_ua
+#define MTD_FPH_CLI_MULTI_FACTOR		fph_multi_factor
+#define MTD_FPH_CLI_SCREENS			fph_screens
+#define MTD_FPH_CLI_WINDOW_SZ			fph_window_sz
+#define MTD_FPH_CLI_BROWSER_PLUGINS		fph_browser_plugins
+#define MTD_FPH_CLI_BROWSER_JS_UA		fph_browser_js_ua
+#define MTD_FPH_CLI_BROWSER_DNT			fph_browser_dnt
+#define MTD_FPH_CLI_LOCAL_IPS_TS		fph_ipaddrs_ts
+#define MTD_FPH_CLI_PUBLIC_IP_TS		fph_srcip_ts
+#define MTD_FPH_VEN_VERSION			fph_version
+#define MTD_FPH_VEN_VERSION_CLI			fph_version_cli
+#define MTD_FPH_VEN_LICENSE_ID			fph_license_id
+#define MTD_FPH_VEN_PUBLIC_IP			fph_vendor_ip
+#define MTD_FPH_VEN_FWD				fph_vendor_fwd
+#define MTD_FPH_VEN_PROD_NAME			fph_prod_name
+
 struct mtd_fph_ops {
 	char *(*fph_device_id)(void);
 	char *(*fph_user)(void);

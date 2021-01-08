@@ -131,11 +131,55 @@ value.
 In the case of using a buffer you also need to set the length in bytes of the
 data in the buffer via \fIdata_len\fP.
 
-.SH Fruad Prevention Headers
+.SH Fraud Prevention Headers
 
 This can be used to override the inbuilt functions that set the various fraud
 prevention headers. Any or all of them can bet set, any that left as NULL will
 cause the appropriate inbuilt function to be used
+
+#define \fBMTD_FPH_CLI_PUBLIC_IP\fP               fph_srcip
+.br
+#define \fBMTD_FPH_CLI_PUBLIC_PORT\fP             fph_srcport
+.br
+#define \fBMTD_FPH_CLI_DEV_ID\fP                  fph_device_id
+.br
+#define \fBMTD_FPH_CLI_USER_ID\fP                 fph_user
+.br
+#define \fBMTD_FPH_CLI_TZ\fP                      fph_tz
+.br
+#define \fBMTD_FPH_CLI_LOCAL_IPS\fP               fph_ipaddrs
+.br
+#define \fBMTD_FPH_CLI_MAC_ADDRS\fP               fph_macaddrs
+.br
+#define \fBMTD_FPH_CLI_UA\fP                      fph_ua
+.br
+#define \fBMTD_FPH_CLI_MULTI_FACTOR\fP            fph_multi_factor
+.br
+#define \fBMTD_FPH_CLI_SCREENS\fP                 fph_screens
+.br
+#define \fBMTD_FPH_CLI_WINDOW_SZ\fP               fph_window_sz
+.br
+#define \fBMTD_FPH_CLI_BROWSER_PLUGINS\fP         fph_browser_plugins
+.br
+#define \fBMTD_FPH_CLI_BROWSER_JS_UA\fP           fph_browser_js_ua
+.br
+#define \fBMTD_FPH_CLI_BROWSER_DNT\fP             fph_browser_dnt
+.br
+#define \fBMTD_FPH_CLI_LOCAL_IPS_TS\fP            fph_ipaddrs_ts
+.br
+#define \fBMTD_FPH_CLI_PUBLIC_IP_TS\fP            fph_srcip_ts
+.br
+#define \fBMTD_FPH_VEN_VERSION\fP                 fph_version
+.br
+#define \fBMTD_FPH_VEN_VERSION_CLI\fP             fph_version_cli
+.br
+#define \fBMTD_FPH_VEN_LICENSE_ID\fP              fph_license_id
+.br
+#define \fBMTD_FPH_VEN_PUBLIC_IP\fP               fph_vendor_ip
+.br
+#define \fBMTD_FPH_VEN_FWD\fP                     fph_vendor_fwd
+.br
+#define \fBMTD_FPH_VEN_PROD_NAME\fP               fph_prod_name
 
 struct mtd_fph_ops {
         char *(*fph_device_id)(void);
