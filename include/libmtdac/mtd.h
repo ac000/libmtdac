@@ -87,6 +87,8 @@ struct mtd_dsrc_ctx {
 	enum mtd_data_src_type src_type;
 };
 
+#define MTD_FPH_SET_FUNC(s, m, f)	s.m = f
+
 #define MTD_FPH_CLI_PUBLIC_IP			fph_srcip
 #define MTD_FPH_CLI_PUBLIC_PORT			fph_srcport
 #define MTD_FPH_CLI_DEV_ID			fph_device_id

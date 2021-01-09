@@ -137,6 +137,10 @@ This can be used to override the inbuilt functions that set the various fraud
 prevention headers. Any or all of them can bet set, any that left as NULL will
 cause the appropriate inbuilt function to be used
 
+.nf
+#define \fBMTD_FPH_SET_FUNC(s, m, f)\p
+.ni
+.P
 #define \fBMTD_FPH_CLI_PUBLIC_IP\fP               fph_srcip
 .br
 #define \fBMTD_FPH_CLI_PUBLIC_PORT\fP             fph_srcport
@@ -226,9 +230,23 @@ struct mtd_cfg {
 
 .EX
 const char *hdrs[2] = { NULL };
-struct mtd_fph_ops fph_ops = { .fph_user = my_user,
-                               .fph_version = my_ver };
-struct mtd_cfg cfg = { .fph_ops = &fph_ops, .extra_hdrs = hdrs };
+const struct mtd_fph_ops fph_ops = { .fph_user = my_user,
+                                     .fph_version = my_ver };
+const struct mtd_cfg cfg = { .fph_ops = &fph_ops, .extra_hdrs = hdrs };
+
+hdrs[0] = getenv("MTD_CLI_HDRS");
+err = mtd_init(flags, &cfg);
+.EE
+
+You can also use the MTD_FPH_SET_FUNC() macro, e.g
+
+.EX
+const char *hdrs[2] = { NULL };
+struct mtd_fph_ops fph_ops = { NULL };
+const struct mtd_cfg cfg = { .fph_ops = &fph_ops, .extra_hdrs = hdrs };
+
+MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_CLI_USER_ID, my_user);
+MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_VEN_VERSION, my_ver);
 
 hdrs[0] = getenv("MTD_CLI_HDRS");
 err = mtd_init(flags, &cfg);

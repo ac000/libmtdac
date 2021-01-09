@@ -102,6 +102,10 @@ data in the buffer via *data_len*
 ### Fraud Prevention Headers
 
 ```C
+#define MTD_FPH_SET_FUNC(s, m, f)
+```
+
+```C
 #define MTD_FPH_CLI_PUBLIC_IP                   fph_srcip
 #define MTD_FPH_CLI_PUBLIC_PORT                 fph_srcport
 #define MTD_FPH_CLI_DEV_ID                      fph_device_id
@@ -189,6 +193,20 @@ const struct mtd_cfg cfg = { .fph_ops = &fph_ops };
 
 err = mtd_init(flags, &cfg);
 ```
+
+You can also use the MTD\_FPH\_SET\_FUNC() macro, e.g
+
+```C
+struct mtd_fph_ops fph_ops = { NULL };
+const struct mtd_cfg cfg = { .fph_ops = &fph_ops };
+
+MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_CLI_USER_ID, my_user);
+MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_VEN_VERSION, my_ver);
+```
+
+The macro takes a struct mtd\_fph\_ops, the name of the structure member to
+set (here we use the defined macro names, but you can use either) and the
+function to set it to.
 
 Secondly, you can use the *extra_hdrs* member to add extra HTTP headers to be
 sent, e.g a Gov-Test-Scenario header. E.g
