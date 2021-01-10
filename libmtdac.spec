@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	0.17.0
+Version:	0.18.0
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -49,6 +49,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Sun Jan 10 2021 Andrew Clayton <andrew@digital-domain.net> - 0.18.0-1
+- Cleanups
+- Fix the Gov-Client-User-Agent for version 3.0 of the FPH API.
 
 * Thu Jan 07 2021 Andrew Clayton <andrew@digital-domain.net> - 0.17.0-1
 - Cleanups & fixes
