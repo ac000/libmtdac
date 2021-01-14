@@ -246,7 +246,8 @@ static void set_response(struct curl_ctx *ctx)
 	free(ctx->res_buf);
 	free(ctx->x_corr_id);
 	ctx->x_corr_id = NULL;
-	ctx->res_buf = json_dumps(resbuf, 0);
+	ctx->res_buf = json_dumps(resbuf,
+				  JSON_INDENT(4)|JSON_REAL_PRECISION(16));
 
 	json_decref(resbuf);
 }
