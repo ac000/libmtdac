@@ -50,7 +50,15 @@ char *load_token(const char *which, enum file_type type)
 	snprintf(path, sizeof(path), "%s/%s", mtd_ctx.config_dir, file);
 
 	root = json_load_file(path, 0, &error);
-	if (!root) {
+	if (!root && type != FT_AUTH_APPLICATION) {
+		/*
+		 * Don't bother displaying this error message for the
+		 * auth-application.json file as this can just be
+		 * re-created.
+		 *
+		 * This will happen for instance on a fresh setup with no
+		 * config files and creating a test user.
+		 */
 		logger(MTD_LOG_ERR, "json_load_file: %s\n", error.text);
 		return NULL;
 	}
