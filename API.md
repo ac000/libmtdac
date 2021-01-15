@@ -17,7 +17,6 @@
   * [Make Tax Digital - Individual Loses API functions](#make-tax-digital---individual-loses-api-functions)
     - [Individual Loses - Brought Forward](#individual-loses---brought-forward)
     - [Individual Loses - Loss Claims](#individual-loses---loss-claims)
-  * [Make Tax Digital - Individual Income API functions](#make-tax-digital---individual-income-api-functions)
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Business Income Source Summary API functions](#make-tax-digital---business-income-source-summary-api-functions)
   * [Make Tax Digital - Business Source Adjustable Summary API functions](#make-tax-digital---business-source-adjustable-summary-api-functions)
@@ -797,20 +796,6 @@ int mtd_il_lc_update_loss_type(const struct mtd_dsrc_ctx *dsctx,
 int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
                                 const char *query_string,
                                 char **buf);
-```
-
-
-### Make Tax Digital - Individual Income API functions
-
-```C
-#include <libmtdac/mtd-ii.h>
-```
-
-#### mtd\_ii\_get\_annual\_summary
-
-```C
-int mtd_ii_get_annual_summary(const char *utr, const char *tax_year,
-                              char **buf);
 ```
 
 
