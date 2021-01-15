@@ -3,7 +3,7 @@
 /*
  * mtd-il.c - Make Tax Digital - Individual Loses API
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #include <stddef.h>
@@ -46,7 +46,7 @@ int mtd_il_lc_update_loss_type(const struct mtd_dsrc_ctx *dsctx,
 int mtd_il_lc_delete_loss(const char *cid, char **buf)
 {
 	return do_ep(IL_LC_DELETE_LOSS, API_VER,
-		     NULL, NULL, buf, cid, (char *)NULL);
+		     NULL, buf, cid, (char *)NULL);
 }
 
 /*
@@ -56,7 +56,7 @@ int mtd_il_lc_delete_loss(const char *cid, char **buf)
 int mtd_il_lc_get_loss(const char *cid, char **buf)
 {
 	return do_ep(IL_LC_GET_LOSS, API_VER,
-		     NULL, NULL, buf, cid, (char *)NULL);
+		     NULL, buf, cid, (char *)NULL);
 }
 
 /*
@@ -82,7 +82,7 @@ int mtd_il_lc_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf)
 int mtd_il_lc_list_loses(const char *query_string, char **buf)
 {
 	return do_ep(IL_LC_LIST_LOSES, API_VER,
-		     NULL, NULL, buf, query_string, (char *)NULL);
+		     NULL, buf, query_string, (char *)NULL);
 }
 
 /*
@@ -103,7 +103,7 @@ int mtd_il_bf_update_loss_amnt(const struct mtd_dsrc_ctx *dsctx,
 int mtd_il_bf_delete_loss(const char *lid, char **buf)
 {
 	return do_ep(IL_BF_DELETE_LOSS, API_VER,
-		     NULL, NULL, buf, lid, (char *)NULL);
+		     NULL, buf, lid, (char *)NULL);
 }
 
 /*
@@ -113,7 +113,7 @@ int mtd_il_bf_delete_loss(const char *lid, char **buf)
 int mtd_il_bf_get_loss(const char *lid, char **buf)
 {
 	return do_ep(IL_BF_GET_LOSS, API_VER,
-		     NULL, NULL, buf, lid, (char *)NULL);
+		     NULL, buf, lid, (char *)NULL);
 }
 
 /*
@@ -139,5 +139,5 @@ int mtd_il_bf_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf)
 int mtd_il_bf_list_loses(const char *query_string, char **buf)
 {
 	return do_ep(IL_BF_LIST_LOSES, API_VER,
-		     NULL, NULL, buf, query_string, (char *)NULL);
+		     NULL, buf, query_string, (char *)NULL);
 }
