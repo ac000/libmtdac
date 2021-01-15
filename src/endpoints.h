@@ -99,9 +99,6 @@ enum endpoint {
 	IL_LC_UPDATE_LOSS_TYPE,
 	IL_LC_UPDATE_LOSS_ORDER,
 
-	/* Individual Employment */
-	IE_GET_ANNUAL_SUMMARY,
-
 	/* Individual Income */
 	II_GET_ANNUAL_SUMMARY,
 
