@@ -1,0 +1,39 @@
+.TH libmtdac_mtd-id.h 3 "January 15, 2021" "libmtdac 0.19.0" "libmtdac_mtd-id.h"
+
+.SH NAME
+libmtdac_mtd-id.h \- Make Tax Digital \- Individuals Disclosures API
+
+.SH SYNOPSIS
+.B #include <libmtdac/mtd-id.h>
+
+.SH DESCRIPTION
+These functions are for working with the UK's HMRC Make Tax Digital
+Individuals Disclosures API.
+
+.SH FUNCTIONS
+
+.nf
+.BI "int mtd_id_get(const char *" tax_year ", char **" buf ");
+
+.RS +4
+.BR mtd_id_get (3)
+.RE
+
+.BI "int mtd_id_set(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "               const char *" tax_year ", char **" buf ");
+
+.RS +4
+.BR mtd_id_set (3)
+.RE
+
+.BI "int mtd_id_delete(const char *" tax_year ", char **" buf ");
+
+.RS +4
+.BR mtd_id_delete (3)
+.RE
+.ni
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3)

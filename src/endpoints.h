@@ -99,6 +99,11 @@ enum endpoint {
 	IL_LC_UPDATE_LOSS_TYPE,
 	IL_LC_UPDATE_LOSS_ORDER,
 
+	/* Individuals Disclosures */
+	ID_DELETE,
+	ID_SET,
+	ID_GET,
+
 	/* National Insurance */
 	NI_GET_ANNUAL_SUMMARY,
 

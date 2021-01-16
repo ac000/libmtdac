@@ -17,6 +17,7 @@
   * [Make Tax Digital - Individual Loses API functions](#make-tax-digital---individual-loses-api-functions)
     - [Individual Loses - Brought Forward](#individual-loses---brought-forward)
     - [Individual Loses - Loss Claims](#individual-loses---loss-claims)
+  * [Make Tax Digital - Individuals Disclosures API functions [test-only]](#make-tax-digital---individuals-disclosures-api-functions-test-only)
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Business Income Source Summary API functions](#make-tax-digital---business-income-source-summary-api-functions)
   * [Make Tax Digital - Business Source Adjustable Summary API functions](#make-tax-digital---business-source-adjustable-summary-api-functions)
@@ -796,6 +797,32 @@ int mtd_il_lc_update_loss_type(const struct mtd_dsrc_ctx *dsctx,
 int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
                                 const char *query_string,
                                 char **buf);
+```
+
+
+### Make Tax Digital - Individuals Disclosures API functions [test-only]
+
+```C
+#include <libmtdac/mtd-id.h>
+```
+
+#### mtd\_id\_get
+
+```C
+int mtd_id_get(const char *tax_year, char **buf);
+```
+
+#### mtd\_id\_set
+
+```C
+int mtd_id_set(const struct mtd_dsrc_ctx *dsctx, const char *tax_year,
+               char **buf);
+```
+
+#### mtd\_id\_delete
+
+```C
+int mtd_id_delete(const char *tax_year, char **buf);
 ```
 
 

@@ -411,6 +411,24 @@ static const struct _endpoint {
 		.scope	= SCOPE_USER
 	},
 
+	/* Individuals Disclosures */
+	[ID_DELETE] = {
+		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.scope	= SCOPE_USER
+	},
+	[ID_SET] = {
+		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+	[ID_GET] = {
+		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+
 	/* National Insurance */
 	[NI_GET_ANNUAL_SUMMARY] = {
 		.tmpl	= "/national-insurance/sa/{utr}/annual-summary/{taxYear}",
