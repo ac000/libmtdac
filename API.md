@@ -18,12 +18,12 @@
     - [Individual Loses - Brought Forward](#individual-loses---brought-forward)
     - [Individual Loses - Loss Claims](#individual-loses---loss-claims)
   * [Make Tax Digital - Individuals Disclosures API functions [test-only]](#make-tax-digital---individuals-disclosures-api-functions-test-only)
-  * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Business Income Source Summary API functions](#make-tax-digital---business-income-source-summary-api-functions)
   * [Make Tax Digital - Business Source Adjustable Summary API functions](#make-tax-digital---business-source-adjustable-summary-api-functions)
     - [Business Source Adjustable Summary - Self-Employment](#business-source-adjustable-summary---self-employment)
     - [Business Source Adjustable Summary - UK Property Business](#business-source-adjustable-summary---uk-property-business)
   * [Make Tax Digital - VAT API functions](#make-tax-digital---vat-api-functions)
+  * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
   * [Make Tax Digital - National Insurance Test Support API functions [test-only]](#make-tax-digital---national-insurance-test-support-api-functions-test-only)
   * [Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]](#make-tax-digital---test-fraud-prevention-headers-api-functions-test-only)
@@ -826,20 +826,6 @@ int mtd_id_delete(const char *tax_year, char **buf);
 ```
 
 
-### Make Tax Digital - National Insurance API functions
-
-```C
-#include <libmtdac/mtd-ni.h>
-```
-
-#### mtd\_ni\_get\_annual\_summary
-
-```C
-int mtd_ni_get_annual_summary(const char *utr, const char *tax_year,
-                              char **buf);
-```
-
-
 ### Make Tax Digital - Business Income Source Summary API functions
 
 ```C
@@ -964,6 +950,20 @@ int mtd_vat_list_liabilities(const char *vrn, const char *query_string,
 ```C
 int mtd_vat_list_payments(const char *vrn, const char *query_string,
                           char **buf);
+```
+
+
+### Make Tax Digital - National Insurance API functions
+
+```C
+#include <libmtdac/mtd-ni.h>
+```
+
+#### mtd\_ni\_get\_annual\_summary
+
+```C
+int mtd_ni_get_annual_summary(const char *utr, const char *tax_year,
+                              char **buf);
 ```
 
 

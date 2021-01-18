@@ -104,9 +104,6 @@ enum endpoint {
 	ID_SET,
 	ID_GET,
 
-	/* National Insurance */
-	NI_GET_ANNUAL_SUMMARY,
-
 	/* Business Income Source Summary */
 	BISS_GET_SELF_EMPLOYMNET,
 	BISS_GET_PROPERTY,
@@ -129,6 +126,9 @@ enum endpoint {
 	VAT_GET_PERIOD,
 	VAT_LIST_LIABILITIES,
 	VAT_LIST_PAYMENTS,
+
+	/* National Insurance */
+	NI_GET_ANNUAL_SUMMARY,
 
 	/* Create Test User */
 	TEST_CU_CREATE_INDIVIDUAL,

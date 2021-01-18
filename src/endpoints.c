@@ -429,13 +429,6 @@ static const struct _endpoint {
 		.scope	= SCOPE_USER
 	},
 
-	/* National Insurance */
-	[NI_GET_ANNUAL_SUMMARY] = {
-		.tmpl	= "/national-insurance/sa/{utr}/annual-summary/{taxYear}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-
 	/* Business Income Source Summary */
 	[BISS_GET_SELF_EMPLOYMNET] = {
 		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/self-employment/{query_params}",
@@ -517,6 +510,13 @@ static const struct _endpoint {
 	},
 	[VAT_LIST_PAYMENTS] = {
 		.tmpl	= "/organisations/vat/{vrn}/payments/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+
+	/* National Insurance */
+	[NI_GET_ANNUAL_SUMMARY] = {
+		.tmpl	= "/national-insurance/sa/{utr}/annual-summary/{taxYear}",
 		.method	= M_GET,
 		.scope	= SCOPE_USER
 	},
