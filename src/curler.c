@@ -303,20 +303,17 @@ static int curl_perform(struct curl_ctx *ctx)
 	if (ctx->src_file)	/* maybe we're retrying the request */
 		rewind(ctx->src_file);
 
+	if (ctx->http_method == M_PUT)
+		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
+
 	if (ctx->post_data) {
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, ctx->post_data);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, ctx->post_size);
-	} else if (ctx->http_method == M_POST) {
+	} else if (ctx->http_method == M_POST || ctx->http_method == M_PUT) {
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, NULL);
 		curl_easy_setopt(curl, CURLOPT_READFUNCTION, ctx->read_cb);
 		curl_easy_setopt(curl, CURLOPT_READDATA, ctx->src_file);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, ctx->src_size);
-	} else if (ctx->http_method == M_PUT) {
-		curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
-		curl_easy_setopt(curl, CURLOPT_READFUNCTION, ctx->read_cb);
-		curl_easy_setopt(curl, CURLOPT_READDATA, ctx->src_file);
-		curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,
-				 (curl_off_t)ctx->src_size);
 	}
 
 	/* Get the returned headers */
