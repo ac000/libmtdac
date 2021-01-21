@@ -3,7 +3,7 @@
 /*
  * curler.c
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #define _GNU_SOURCE
@@ -48,6 +48,7 @@ enum http_status_code {
 	METHOD_NOT_ALLOWED,
 	NOT_ACCEPTABLE,
 	GONE = 410,
+	REQUEST_ENTITY_TOO_LARGE = 413,
 	TOO_MANY_REQUESTS = 429,
 	INTERNAL_SERVER_ERROR = 500,
 	NOT_IMPLEMENTED,
@@ -72,6 +73,8 @@ static const struct http_status_code_entry {
 	{ METHOD_NOT_ALLOWED, "METHOD_NOT_ALLOWED", "Method Not Allowed" },
 	{ NOT_ACCEPTABLE, "NOT_ACCEPTABLE", "Not Acceptable" },
 	{ GONE, "GONE", "Gone" },
+	{ REQUEST_ENTITY_TOO_LARGE, "REQUEST_ENTITY_TOO_LARGE",
+				    "Request Entity Too Large" },
 	{ TOO_MANY_REQUESTS, "TOO_MANY_REQUESTS", "Too Many Requests" },
 	{ INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR",
 				 "Internal Server Error" },
