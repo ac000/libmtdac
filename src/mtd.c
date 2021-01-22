@@ -264,7 +264,7 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 
 	fph_set_ops(mtd_ctx.app_conn_type, cfg->fph_ops);
 
-	mtd_ctx.extra_hdrs = cfg->extra_hdrs;
+	mtd_ctx.cfg = cfg;
 
 	return MTD_ERR_NONE;
 }

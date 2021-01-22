@@ -9,6 +9,8 @@
 #ifndef _MTD_PRIV_H_
 #define _MTD_PRIV_H_
 
+#include "mtd.h"
+
 #define __unused	__attribute__((unused))
 
 enum app_conn_type {
@@ -33,9 +35,10 @@ struct mtd_ctx {
 	int opts;
 	enum app_conn_type app_conn_type;
 	enum log_level log_level;
-	const char * const *extra_hdrs;
 	const char *config_dir;
 	const char *api_url;
+
+	const struct mtd_cfg *cfg;
 };
 
 #endif /* _MTD_PRIV_H_ */

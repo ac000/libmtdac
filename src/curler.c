@@ -383,10 +383,10 @@ static int set_headers(struct curl_ctx *ctx)
 	}
 
 	/* Add any user supplied headers */
-	if (!mtd_ctx.extra_hdrs)
+	if (!mtd_ctx.cfg->extra_hdrs)
 		return err;
 
-	hdrs = mtd_ctx.extra_hdrs;
+	hdrs = mtd_ctx.cfg->extra_hdrs;
 	while (*hdrs) {
 		err = curl_add_hdr(ctx, *(hdrs++));
 		if (err) {
