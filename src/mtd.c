@@ -181,6 +181,7 @@ static int check_config_dir(bool is_production)
 	struct stat sb;
 	int dfd;
 	int err;
+	int ret = MTD_ERR_NONE;
 
 	home_dir = getenv("HOME");
 	if (!home_dir)
@@ -193,22 +194,29 @@ static int check_config_dir(bool is_production)
 	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT,
 		 is_production ? "prod-api" : "test-api");
 	err = asprintf(&cfg_dir, "%s/%s", home_dir, path);
-	if (err == -1)
-		return -MTD_ERR_OS;
+	if (err == -1) {
+		ret = -MTD_ERR_OS;
+		goto out_close;
+	}
+
 	mtd_ctx.config_dir = cfg_dir;
 
 	err = fstatat(dfd, path, &sb, 0);
 	if (!err)
-		return MTD_ERR_NONE;
+		goto out_close;
 
 	err = mkdir_p(dfd, path, 0777);
 	if (!err)
-		return MTD_ERR_NONE;
+		goto out_close;
 
+	err = -MTD_ERR_OS;
 	logger(MTD_LOG_ERR, "mkdirat %s/%s: %s\n", getenv("HOME"), path,
 	       strerror_r(errno, errbuf, sizeof(errbuf)));
 
-	return -MTD_ERR_OS;
+out_close:
+	close(dfd);
+
+	return ret;
 }
 
 void mtd_global_init(void)
