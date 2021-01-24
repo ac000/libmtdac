@@ -36,12 +36,69 @@
 
 #define MTD_CONFIG_DIR_FMT	".config/libmtdac/%s"
 
+static const struct _mtd_err_map {
+	const enum mtd_error err;
+	const char *estr;
+	const char *str;
+} mtd_err_map[] = {
+	[MTD_ERR_NONE] = {
+		.estr	= "MTD_ERR_NONE",
+		.str	= "No Error"
+	},
+	[MTD_ERR_OS] = {
+		.estr	= "MTD_ERR_OS",
+		.str	= "Operating System level error (check errno)"
+	},
+	[MTD_ERR_REQUEST] = {
+		.estr	= "MTD_ERR_REQUEST",
+		.str	= "HTTP request error"
+	},
+	[MTD_ERR_CURL] = {
+		.estr	= "MTD_ERR_CURL",
+		.str	= "Curl error"
+	},
+	[MTD_ERR_NEEDS_AUTHORISATION] = {
+		.estr	= "MTD_ERR_NEEDS_AUTHORISATION",
+		.str	= "Need to refresh the bearer token"
+	},
+	[MTD_ERR_UNKNOWN_FLAGS]	= {
+		.estr	= "MTD_ERR_UNKNOWN_FLAGS",
+		.str	= "One or more unknown flags provided"
+	},
+	[MTD_ERR_LIB_TOO_OLD] = {
+		.estr	= "MTD_ERR_LIB_TOO_OLD",
+		.str	= "Library version too old"
+	},
+
+	/* keep this last */
+	[MTD_ERR_INVALID_ERROR] = {
+		.estr	= "MTD_ERR_INVALID_ERROR",
+		.str	= "Invalid error code"
+	}
+};
+
 static const struct mtd_ctx dfl_mtd_ctx = {
 	.log_level		= MTD_LOG_ERR,
 	.app_conn_type		= MTD_ACT_OTHER_DIRECT,
 	.api_url		= TEST_API_URL,
 };
 __thread struct mtd_ctx mtd_ctx;
+
+const char *mtd_err2enum_str(int err)
+{
+	if (err > MTD_ERR_NONE || err <= -MTD_ERR_INVALID_ERROR)
+		err = -MTD_ERR_INVALID_ERROR;
+
+	return mtd_err_map[-err].estr;
+}
+
+const char *mtd_err2str(int err)
+{
+	if (err > MTD_ERR_NONE || err <= -MTD_ERR_INVALID_ERROR)
+		err = -MTD_ERR_INVALID_ERROR;
+
+	return mtd_err_map[-err].str;
+}
 
 char *mtd_percent_encode(const char *str, ssize_t len)
 {

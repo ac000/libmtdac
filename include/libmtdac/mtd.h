@@ -64,6 +64,9 @@ enum mtd_error {
 	MTD_ERR_NEEDS_AUTHORISATION,
 	MTD_ERR_UNKNOWN_FLAGS,
 	MTD_ERR_LIB_TOO_OLD,
+
+	/* keep this last */
+	MTD_ERR_INVALID_ERROR
 };
 
 enum mtd_data_src_type {
@@ -151,6 +154,8 @@ extern int mtd_init_auth(void);
 extern int mtd_init_config(void);
 extern int mtd_init_nino(void);
 extern char *mtd_percent_encode(const char *str, ssize_t len);
+extern const char *mtd_err2str(int err);
+extern const char *mtd_err2enum_str(int err);
 
 #pragma GCC visibility pop
 

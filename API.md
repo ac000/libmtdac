@@ -5,6 +5,7 @@
   * [Fraud Prevention Headers](#fraud-prevention-headers)
   * [Config](#config)
   * [Initialisation functions](#initialisation-functions)
+    - [Misc. functons](#misc-functions)
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
     - [Self-Assessment - Self-Employment](#self-assessment---self-employment)
     - [Self-Assessment - UK Property Business](#self-assessment---uk-property-business)
@@ -54,6 +55,7 @@ enum mtd_error {
         MTD_ERR_CURL,
         MTD_ERR_NEEDS_AUTHORISATION,
         MTD_ERR_UNKNOWN_FLAGS,
+        MTD_ERR_INVALID_ERROR
 };
 ```
 
@@ -301,11 +303,26 @@ int mtd_init_nino(void);
 void mtd_deinit(void);
 ```
 
+### Misc. functions
+
 #### mtd\_percent\_encode - percent encode a string
 
 ```C
 char *mtd_percent_encode(const char *str, ssize_t len);
 ```
+
+#### mtd\_err2str - get a textual description of the given error code
+
+```C
+const char *mtd_err2str(int err);
+```
+
+#### mtd\_err2enum_str - get a string version of the given error code enum
+
+```C
+const char *mtd_err2enum_str(int err);
+```
+
 
 ### Make Tax Digital - Self-Assessment API functions
 

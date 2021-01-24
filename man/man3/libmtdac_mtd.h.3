@@ -88,6 +88,7 @@ enum mtd_error {
         \fBMTD_ERR_NEEDS_AUTHORISATION\fP,
         \fBMTD_ERR_UNKNOWN_FLAGS\fP,
         \fBMTD_ERR_LIB_TOO_OLD\fP,
+        \fBMTD_ERR_INVALID_ERROR\fP
 .br
 };
 
@@ -310,6 +311,18 @@ Insurance Number.
 
 .RS
 This is for percent encoding a string.
+.RE
+
+.BI "const char *mtd_err2str(int err);"
+
+.RS
+This is for getting a textual description of the given error code.
+.RE
+
+.BI "const char *mtd_err2enum_str(int err);"
+
+.RS
+This is for getting a string version of the given error code enum.
 .RE
 
 .SH NOTES
