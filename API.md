@@ -55,6 +55,7 @@ enum mtd_error {
         MTD_ERR_CURL,
         MTD_ERR_NEEDS_AUTHORISATION,
         MTD_ERR_UNKNOWN_FLAGS,
+        MTD_ERR_LIB_TOO_OLD,
         MTD_ERR_INVALID_ERROR
 };
 ```
