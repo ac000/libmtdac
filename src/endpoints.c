@@ -591,6 +591,8 @@ int do_ep(enum endpoint ep, const char *api_ver,
 	const char *params[MAX_PARAMS] = { NULL };
 	int i = 0;
 
+	*buf = NULL;
+
 	va_start(ap, buf);
 	for ( ; ; i++) {
 		if (i == MAX_PARAMS) {
@@ -612,8 +614,6 @@ int do_ep(enum endpoint ep, const char *api_ver,
 	ctx.content_type = endpoints[ep].ctype;
 	ctx.http_method = endpoints[ep].method;
 	ctx.dsctx = dsctx;
-
-	*buf = NULL;
 
 	switch (ctx.http_method) {
 	case M_GET:
