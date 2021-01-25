@@ -13,6 +13,7 @@
 #include <string.h>
 #include <stdarg.h>
 
+#include "mtd.h"
 #include "mtd-priv.h"
 #include "endpoints.h"
 #include "curler.h"
@@ -596,7 +597,7 @@ int do_ep(enum endpoint ep, const char *api_ver,
 			logger(MTD_LOG_ERR, "MAX_PARAMS (%d) reached\n",
 			       MAX_PARAMS);
 			va_end(ap);
-			return -1;
+			return -MTD_ERR_OS;
 		}
 
 		params[i] = va_arg(ap, const char *);
@@ -624,7 +625,7 @@ int do_ep(enum endpoint ep, const char *api_ver,
 	case M_DELETE:
 		return do_delete(&ctx, buf);
 	default:
-		return -1;
+		return -MTD_ERR_REQUEST;
 	}
 }
 
