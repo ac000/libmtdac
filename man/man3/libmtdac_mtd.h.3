@@ -88,6 +88,8 @@ enum mtd_error {
         \fBMTD_ERR_NEEDS_AUTHORISATION\fP,
         \fBMTD_ERR_UNKNOWN_FLAGS\fP,
         \fBMTD_ERR_LIB_TOO_OLD\fP,
+        \fBMTD_ERR_CONFIG_DIR_UNSPEC\fP,
+        \fBMTD_ERR_CONFIG_DIR_INVALID\fP,
         \fBMTD_ERR_INVALID_ERROR\fP
 .br
 };
@@ -221,9 +223,16 @@ declare a \fBstruct mtd_fph_ops\fP as above and set it in \fBstruct mtd_cfg\fP.
 Also you can set extra HTTP headers to be sent, \fBextra_hdrs\fP should point
 to a NULL terminated array of character pointers.
 
+Finally, you \fBmust\fP specify the directory that libmtdac will use for its
+configuration data via \fBconfig_data\fP.
+
+Typically this would be something like \fB${HOME}/.config/${APP_NAME}\fP.
+
 struct mtd_cfg {
         const struct mtd_fph_ops *fph_ops;
         const char * const       *extra_hdrs;
+
+        const char               *config_dir;
 .br
 };
 
@@ -231,9 +240,15 @@ struct mtd_cfg {
 
 .EX
 const char *hdrs[2] = { NULL };
-const struct mtd_fph_ops fph_ops = { .fph_user = my_user,
-                                     .fph_version = my_ver };
-const struct mtd_cfg cfg = { .fph_ops = &fph_ops, .extra_hdrs = hdrs };
+const struct mtd_fph_ops fph_ops = {
+        .fph_user = my_user,
+        .fph_version = my_ver
+};
+const struct mtd_cfg cfg = {
+        .fph_ops = &fph_ops,
+        .extra_hdrs = hdrs,
+        .config_dir = "/home/foo/.config/mtd-cli"
+};
 
 hdrs[0] = getenv("MTD_CLI_HDRS");
 err = mtd_init(flags, &cfg);
@@ -244,7 +259,11 @@ You can also use the MTD_FPH_SET_FUNC() macro, e.g
 .EX
 const char *hdrs[2] = { NULL };
 struct mtd_fph_ops fph_ops = { NULL };
-const struct mtd_cfg cfg = { .fph_ops = &fph_ops, .extra_hdrs = hdrs };
+const struct mtd_cfg cfg = {
+        .fph_ops = &fph_ops,
+        .extra_hdrs = hdrs,
+        .config_dir = "/home/foo/.config/mtd-cli"
+};
 
 MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_CLI_USER_ID, my_user);
 MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_VEN_VERSION, my_ver);

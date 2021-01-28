@@ -12,8 +12,9 @@ mtd_init_config \- initialise config
 
 .SH DESCRIPTION
 
-This function is used to create an initial \fI~/.config/libmtdac/{prod,test}-api/config.json\fP
-file that contains the users \fIclient_id\fP & \fIclient_secret\fP.
+This function is used to create an initial
+\fI${CONFIG_DIR}/libmtdac/{prod,test}-api/config.json\fP file that contains
+the users \fIclient_id\fP & \fIclient_secret\fP.
 .PP
 This will prompt the user to enter the above tokens after which the config file
 will be created.
@@ -32,7 +33,7 @@ code is returned.
 There was an OS level failure
 
 .SH FILES
-.I ~/.config/libmtdac/{prod,test}-api/config.json
+.I ${CONFIG_DIR}/libmtdac/{prod,test}-api/config.json
 
 .SH SEE ALSO
 

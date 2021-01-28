@@ -64,6 +64,8 @@ enum mtd_error {
 	MTD_ERR_NEEDS_AUTHORISATION,
 	MTD_ERR_UNKNOWN_FLAGS,
 	MTD_ERR_LIB_TOO_OLD,
+	MTD_ERR_CONFIG_DIR_UNSPEC,
+	MTD_ERR_CONFIG_DIR_INVALID,
 
 	/* keep this last */
 	MTD_ERR_INVALID_ERROR
@@ -143,6 +145,8 @@ struct mtd_fph_ops {
 struct mtd_cfg {
 	const struct mtd_fph_ops *fph_ops;
 	const char * const *extra_hdrs;
+
+	const char *config_dir;
 };
 
 #pragma GCC visibility push(default)

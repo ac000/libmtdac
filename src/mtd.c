@@ -3,7 +3,7 @@
 /*
  * mtd.c - Make Tax Digital
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #define _GNU_SOURCE
@@ -33,8 +33,6 @@
 
 #define TEST_API_URL		"https://test-api.service.hmrc.gov.uk"
 #define PROD_API_URL		"https://api.service.hmrc.gov.uk"
-
-#define MTD_CONFIG_DIR_FMT	".config/libmtdac/%s"
 
 static const struct _mtd_err_map {
 	const enum mtd_error err;
@@ -68,6 +66,14 @@ static const struct _mtd_err_map {
 	[MTD_ERR_LIB_TOO_OLD] = {
 		.estr	= "MTD_ERR_LIB_TOO_OLD",
 		.str	= "Library version too old"
+	},
+	[MTD_ERR_CONFIG_DIR_UNSPEC] {
+		.estr	= "MTD_ERR_CONFIG_DIR_UNSPEC",
+		.str	= "Config directory not specified"
+	},
+	[MTD_ERR_CONFIG_DIR_INVALID] {
+		.estr	= "MTD_ERR_CONFIG_DIR_INVALID",
+		.str	= "Config directory path is invalid"
 	},
 
 	/* keep this last */
@@ -196,7 +202,7 @@ static int mkdir_p(int dirfd, const char *path, mode_t mode)
 {
 	char *dir;
 	char *ptr;
-	char mdir[4096] = "\0";
+	char mdir[PATH_MAX] = "\0";
 	int ret = 0;
 
 	if (strlen(path) >= sizeof(mdir)) {
@@ -210,47 +216,47 @@ static int mkdir_p(int dirfd, const char *path, mode_t mode)
 	dir = strdup(path);
 	ptr = dir;
 	for (;;) {
+		struct stat sb;
 		char *token;
+		int err;
 
 		token = strsep(&dir, "/");
 		if (!token)
 			break;
 
 		strcat(mdir, token);
+		strcat(mdir, "/");
+
+		err = fstatat(dirfd, mdir, &sb, 0);
+		if (!err)
+			continue;
+
 		ret = mkdirat(dirfd, mdir, mode);
 		if (ret == -1 && errno != EEXIST) {
 			ret = -1;
 			break;
 		}
-		strcat(mdir, "/");
 	}
 	free(ptr);
 
 	return ret;
 }
 
-static int check_config_dir(bool is_production)
+static int check_config_dir(const char *config_dir, bool is_production)
 {
-	char path[PATH_MAX];
 	char errbuf[129];
-	char *home_dir;
 	char *cfg_dir;
 	struct stat sb;
 	int dfd;
 	int err;
 	int ret = MTD_ERR_NONE;
 
-	home_dir = getenv("HOME");
-	if (!home_dir)
-		return -MTD_ERR_OS;
-
-	dfd = open(home_dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
+	dfd = open(config_dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (dfd == -1)
-		return -MTD_ERR_OS;
+		return -MTD_ERR_CONFIG_DIR_INVALID;
 
-	snprintf(path, sizeof(path), MTD_CONFIG_DIR_FMT,
-		 is_production ? "prod-api" : "test-api");
-	err = asprintf(&cfg_dir, "%s/%s", home_dir, path);
+	err = asprintf(&cfg_dir, "%s/libmtdac/%s", config_dir,
+		       is_production ? "prod-api" : "test-api");
 	if (err == -1) {
 		ret = -MTD_ERR_OS;
 		goto out_close;
@@ -258,16 +264,20 @@ static int check_config_dir(bool is_production)
 
 	mtd_ctx.config_dir = cfg_dir;
 
-	err = fstatat(dfd, path, &sb, 0);
+	/*
+	 * The chances are the config directory exists and we
+	 * can short cut out.
+	 */
+	err = fstatat(dfd, cfg_dir, &sb, 0);
 	if (!err)
 		goto out_close;
 
-	err = mkdir_p(dfd, path, 0777);
+	err = mkdir_p(dfd, cfg_dir, 0700);
 	if (!err)
 		goto out_close;
 
-	err = -MTD_ERR_OS;
-	logger(MTD_LOG_ERR, "mkdirat %s/%s: %s\n", getenv("HOME"), path,
+	ret = -MTD_ERR_OS;
+	logger(MTD_LOG_ERR, "mkdirat %s: %s\n", cfg_dir,
 	       strerror_r(errno, errbuf, sizeof(errbuf)));
 
 out_close:
@@ -294,7 +304,10 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 		return -MTD_ERR_UNKNOWN_FLAGS;
 	mtd_ctx.opts = flags;
 
-	err = check_config_dir(flags & MTD_OPT_PRODUCTION_API);
+	if (!cfg->config_dir)
+		return -MTD_ERR_CONFIG_DIR_UNSPEC;
+	err = check_config_dir(cfg->config_dir,
+			       flags & MTD_OPT_PRODUCTION_API);
 	if (err)
 		return err;
 

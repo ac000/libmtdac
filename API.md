@@ -56,6 +56,8 @@ enum mtd_error {
         MTD_ERR_NEEDS_AUTHORISATION,
         MTD_ERR_UNKNOWN_FLAGS,
         MTD_ERR_LIB_TOO_OLD,
+        MTD_ERR_CONFIG_DIR_UNSPEC,
+        MTD_ERR_CONFIG_DIR_INVALID,
         MTD_ERR_INVALID_ERROR
 };
 ```
@@ -177,6 +179,8 @@ You should probably take a quick look at the
 struct mtd_cfg {
         const struct mtd_fph_ops *fph_ops;
         const char * const *extra_hdrs;
+
+        const char *config_dir;
 };
 ```
 
@@ -188,10 +192,20 @@ could declare a struct mtd\_fph\_ops and set various members to their own
 functions then set mtd\_cfg.fph\_ops to this structure and pass it into
 mtd\_init() e.g
 
+Finally you **need** to specify the directory that libmtdac will use for
+its config data.
+
+Typically this would be something like *${HOME}/.config/${APP_NAME}*
+
 ```C
-const struct mtd_fph_ops fph_ops = { .fph_user = my_user,
-                                     .fph_version = my_ver };
-const struct mtd_cfg cfg = { .fph_ops = &fph_ops };
+const struct mtd_fph_ops fph_ops = {
+        .fph_user = my_user,
+        .fph_version = my_ver
+};
+const struct mtd_cfg cfg = {
+        .fph_ops = &fph_ops,
+        .config_dir = "/home/foo/.config/mtd-cli"
+};
 
 err = mtd_init(flags, &cfg);
 ```
@@ -200,7 +214,10 @@ You can also use the MTD\_FPH\_SET\_FUNC() macro, e.g
 
 ```C
 struct mtd_fph_ops fph_ops = { NULL };
-const struct mtd_cfg cfg = { .fph_ops = &fph_ops };
+const struct mtd_cfg cfg = {
+        .fph_ops = &fph_ops,
+        .config_dir = "/home/foo/.config/mtd-cli"
+};
 
 MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_CLI_USER_ID, my_user);
 MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_VEN_VERSION, my_ver);
@@ -215,7 +232,10 @@ sent, e.g a Gov-Test-Scenario header. E.g
 
 ```C
 const char *hdrs[2] = { NULL };
-const struct mtd_cfg cfg = { .extra_hdrs = hdrs };
+const struct mtd_cfg cfg = {
+        .extra_hdrs = hdrs,
+        .config_dir = "/home/foo/.config/mtd-cli"
+};
 
 hdrs[0] = getenv("MTD_CLI_HDRS");
 ```
