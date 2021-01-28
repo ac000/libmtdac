@@ -1,11 +1,12 @@
 1. [Overview](#overview)
 2. [API](#api)
 3. [Build it](#build-it)
-4. [How to use](#how-to-use)
-5. [Fraud Prevention Headers](#fraud-prevention-headers)
-6. [Thread safety](#thread-safety)
-7. [License](#license)
-8. [Contributing](#contributing)
+4. [Register with HMRC](#register-with-hmrc)
+5. [How to use](#how-to-use)
+6. [Fraud Prevention Headers](#fraud-prevention-headers)
+7. [Thread safety](#thread-safety)
+8. [License](#license)
+9. [Contributing](#contributing)
 
 ## Overview
 
@@ -43,6 +44,34 @@ structure which can be created with
     $ mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
 and the *rpmbuild* tool which can be found in the *rpm-build* package.
+
+
+## Register with HMRC
+
+Before you can actually make use of this, you will need to register the
+application with the HMRC developer hub. You can register an account
+[here](https://developer.service.hmrc.gov.uk/developer/registration).
+
+Once you've registered you can then regsiter your application by the following
+steps
+
+1. Goto https://developer.service.hmrc.gov.uk/developer/applications
+
+    Click on "Add an application to the sandbox" on the left hand side.
+
+2. Select required endpoints (can be changed later)
+
+   No harm in at least selecting all the ones marked *MTD*
+
+3. Generate and take note of the 'client\_id' & 'client\_secret'
+
+4. Click on "View your application details"
+
+5. Click on "Redirect URIs"
+
+6. Click on "Add a redirect URI"
+
+5. Paste in (minus the quotes) "urn:ietf:wg:oauth:2.0:oob"
 
 
 ## How to use
