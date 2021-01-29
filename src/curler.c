@@ -236,7 +236,7 @@ static void set_response(struct curl_ctx *ctx)
 			"status_str", http_status_code2str(ctx->status_code),
 			"url", ctx->url,
 			"method", methods_str[ctx->http_method].str,
-			"id", ctx->x_corr_id,
+			"xid", ctx->x_corr_id,
 			"result", rootbuf);
 
 	/* Cater for multiple responses in case of redirect... */
