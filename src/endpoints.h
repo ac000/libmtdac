@@ -105,7 +105,7 @@ enum endpoint {
 	ID_GET,
 
 	/* Business Income Source Summary */
-	BISS_GET_SELF_EMPLOYMNET,
+	BISS_GET_SELF_EMPLOYMENT,
 	BISS_GET_UK_PROPERTY,
 
 	/* Business Source Adjustable Summary */

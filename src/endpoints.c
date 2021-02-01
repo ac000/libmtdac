@@ -431,7 +431,7 @@ static const struct _endpoint {
 	},
 
 	/* Business Income Source Summary */
-	[BISS_GET_SELF_EMPLOYMNET] = {
+	[BISS_GET_SELF_EMPLOYMENT] = {
 		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/self-employment/{query_params}",
 		.method	= M_GET,
 		.scope	= SCOPE_USER

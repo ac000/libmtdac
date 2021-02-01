@@ -29,6 +29,6 @@ int mtd_biss_get_uk_property(const char *query_string, char **buf)
  */
 int mtd_biss_get_self_employment(const char *query_string, char **buf)
 {
-	return do_ep(BISS_GET_SELF_EMPLOYMNET, API_VER,
+	return do_ep(BISS_GET_SELF_EMPLOYMENT, API_VER,
 		     NULL, buf, query_string, (char *)NULL);
 }
