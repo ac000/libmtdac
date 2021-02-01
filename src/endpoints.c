@@ -3,7 +3,7 @@
 /*
  * endpoints.c - Make Tax Digital - Self Assessment API
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #define _GNU_SOURCE
@@ -436,7 +436,7 @@ static const struct _endpoint {
 		.method	= M_GET,
 		.scope	= SCOPE_USER
 	},
-	[BISS_GET_PROPERTY] = {
+	[BISS_GET_UK_PROPERTY] = {
 		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/uk-property/{query_params}",
 		.method	= M_GET,
 		.scope	= SCOPE_USER

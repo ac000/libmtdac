@@ -3,7 +3,7 @@
 /*
  * mtd-biss.c - Make Tax Digital - Business Income Source Summary API
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #include <stddef.h>
@@ -17,9 +17,9 @@
  * [GET ]
  * /individuals/self-assessment/income-summary/{nino}/uk-property?typeOfBusiness={uk-property-non-fhl,uk-property-fhl}[&taxYear=YYYY-YY]
  */
-int mtd_biss_get_property(const char *query_string, char **buf)
+int mtd_biss_get_uk_property(const char *query_string, char **buf)
 {
-	return do_ep(BISS_GET_PROPERTY, API_VER,
+	return do_ep(BISS_GET_UK_PROPERTY, API_VER,
 		     NULL, buf, query_string, (char *)NULL);
 }
 

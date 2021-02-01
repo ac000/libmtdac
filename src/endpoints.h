@@ -3,7 +3,7 @@
 /*
  * endpoints.h - Make Tax Digital - Self Assessment API
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #include "mtd.h"
@@ -106,7 +106,7 @@ enum endpoint {
 
 	/* Business Income Source Summary */
 	BISS_GET_SELF_EMPLOYMNET,
-	BISS_GET_PROPERTY,
+	BISS_GET_UK_PROPERTY,
 
 	/* Business Source Adjustable Summary */
 	BSAS_LIST_SUMMARIES,
