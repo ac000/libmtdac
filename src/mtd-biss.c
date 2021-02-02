@@ -15,6 +15,16 @@
 
 /*
  * [GET ]
+ * /individuals/self-assessment/income-summary/{nino}/foreign-property?businessId=&typeOfBusiness={foreign-property-fhl-eea,foreign-property}[&taxYear=YYYY-YY]
+ */
+int mtd_biss_get_foreign_property(const char *query_string, char **buf)
+{
+	return do_ep(BISS_GET_FOREIGN_PROPERTY, API_VER,
+		     NULL, buf, query_string, (char *)NULL);
+}
+
+/*
+ * [GET ]
  * /individuals/self-assessment/income-summary/{nino}/uk-property?typeOfBusiness={uk-property-non-fhl,uk-property-fhl}[&taxYear=YYYY-YY]
  */
 int mtd_biss_get_uk_property(const char *query_string, char **buf)

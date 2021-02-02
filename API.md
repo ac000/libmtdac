@@ -882,6 +882,12 @@ int mtd_biss_get_self_employment(const char *query_string, char **buf);
 int mtd_biss_get_uk_property(const char *query_string, char **buf);
 ```
 
+#### mtd\_biss\_get\_foreign\_property
+
+```C
+int mtd_biss_get_foreign_property(const char *query_string, char **buf);
+```
+
 
 ### Make Tax Digital - Business Source Adjustable Summary API functions
 

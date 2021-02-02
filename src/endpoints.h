@@ -107,6 +107,7 @@ enum endpoint {
 	/* Business Income Source Summary */
 	BISS_GET_SELF_EMPLOYMENT,
 	BISS_GET_UK_PROPERTY,
+	BISS_GET_FOREIGN_PROPERTY,
 
 	/* Business Source Adjustable Summary */
 	BSAS_LIST_SUMMARIES,

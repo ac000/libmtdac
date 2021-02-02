@@ -441,6 +441,11 @@ static const struct _endpoint {
 		.method	= M_GET,
 		.scope	= SCOPE_USER
 	},
+	[BISS_GET_FOREIGN_PROPERTY] = {
+		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/foreign-property/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
 
 	/* Business Source Adjustable Summary */
 	[BSAS_LIST_SUMMARIES] = {

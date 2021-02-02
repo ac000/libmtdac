@@ -1,0 +1,76 @@
+.TH MTD_BISS_GET_FOREIGN_PROPERTY 3 "February 2, 2021" "" "libmtdac"
+
+.SH NAME
+
+mtd_biss_get_foreign_property \- get a foreign property summary from BISS
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-biss.h>
+
+.nf
+.BI "int mtd_biss_get_foreign_property(const char *" query_string ", char **" buf ");
+.ni
+
+.SH DESCRIPTION
+
+This function is part of the UK's HMRC Make Tax Digital Business Income Source
+Summary API.
+.PP
+This function allows a developer to retrieve a running year-to-date (YTD)
+summary of the income and expenditure for a specified foreign property
+business during a tax year.
+
+.TP 4
+.B query_string
+This is required and is of the form
+.PP
+.RS 8
+\fB?businessId=&typeOfBusiness={foreign-property-fhl-eea,foreign-property}\fP[&taxYear=YYYY-YY]
+.RE
+
+.RS 4
+\fBbusinessId\fP is required and is of the from
+.RE
+.PP
+.RS 8
+^X[A-Z0-9]{1}IS[0-9]{11}$
+.RE
+
+.RS 4
+\fBtypeOfBusiness\fP is required and is \fBone\fP of the above shown values.
+
+\fBtaxYear\fP is an optional tax year.
+.RE
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR libmtdac-result_buffer (3)

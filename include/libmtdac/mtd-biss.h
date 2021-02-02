@@ -17,6 +17,7 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
+extern int mtd_biss_get_foreign_property(const char *query_string, char **buf);
 extern int mtd_biss_get_uk_property(const char *query_string, char **buf);
 extern int mtd_biss_get_self_employment(const char *query_string, char **buf);
 
