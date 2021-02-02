@@ -705,53 +705,53 @@ int mtd_saac_get_payment(const char *pyid, char **buf);
 #include <libmtdac/mtd-ic.h>
 ```
 
-#### mtd\_ic\_list\_calculations
+#### mtd\_ic\_sa\_list\_calculations
 
 ```C
-int mtd_ic_list_calculations(const char *query_string, char **buf);
+int mtd_ic_sa_list_calculations(const char *query_string, char **buf);
 ```
 
-#### mtd\_ic\_trigger\_calculation
+#### mtd\_ic\_sa\_trigger\_calculation
 
 ```C
-int mtd_ic_trigger_calculation(const struct mtd_dsrc_ctx *dsctx,
+int mtd_ic_sa_trigger_calculation(const struct mtd_dsrc_ctx *dsctx,
                                char **buf);
 ```
 
-#### mtd\_ic\_get\_calculation\_meta
+#### mtd\_ic\_sa\_get\_calculation\_meta
 
 ```C
-int mtd_ic_get_calculation_meta(const char *cid, char **buf);
+int mtd_ic_sa_get_calculation_meta(const char *cid, char **buf);
 ```
 
-#### mtd\_ic\_get\_income\_tax\_nics\_calc
+#### mtd\_ic\_sa\_get\_income\_tax\_nics\_calc
 
 ```C
-int mtd_ic_get_income_tax_nics_calc(const char *cid, char **buf);
+int mtd_ic_sa_get_income_tax_nics_calc(const char *cid, char **buf);
 ```
 
-#### mtd\_ic\_get\_taxable\_income
+#### mtd\_ic\_sa\_get\_taxable\_income
 
 ```C
-int mtd_ic_get_taxable_income(const char *cid, char **buf);
+int mtd_ic_sa_get_taxable_income(const char *cid, char **buf);
 ```
 
-#### mtd\_ic\_get\_allowances\_deductions\_reliefs
+#### mtd\_ic\_sa\_get\_allowances\_deductions\_reliefs
 
 ```C
-int mtd_ic_get_allowances_deductions_reliefs(const char *cid, char **buf);
+int mtd_ic_sa_get_allowances_deductions_reliefs(const char *cid, char **buf);
 ````
 
-#### mtd\_ic\_get\_end\_of\_year\_est
+#### mtd\_ic\_sa\_get\_end\_of\_year\_est
 
 ```C
-int mtd_ic_get_end_of_year_est(const char *cid, char **buf);
+int mtd_ic_sa_get_end_of_year_est(const char *cid, char **buf);
 ```
 
-#### mtd\_ic\_get\_messages
+#### mtd\_ic\_sa\_get\_messages
 
 ```C
-int mtd_ic_get_messages(const char *cid, char **buf);
+int mtd_ic_sa_get_messages(const char *cid, char **buf);
 ```
 
 

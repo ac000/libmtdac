@@ -307,43 +307,43 @@ static const struct _endpoint {
 	},
 
 	/* Individual Calculations */
-	[IC_LIST_CALCULATIONS] = {
+	[IC_SA_LIST_CALCULATIONS] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{optional_query_params}",
 		.method	= M_GET,
 		.scope	= SCOPE_USER
 	},
-	[IC_TRIGGER_CALCULATION] = {
+	[IC_SA_TRIGGER_CALCULATION] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
-	[IC_GET_CALCULATION_META] = {
+	[IC_SA_GET_CALCULATION_META] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}",
 		.method	= M_GET,
 		.scope	= SCOPE_USER
 	},
-	[IC_GET_INCOME_TAX_NICS_CALC] = {
+	[IC_SA_GET_INCOME_TAX_NICS_CALC] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/income-tax-nics-calculated",
 		.method	= M_GET,
 		.scope	= SCOPE_USER,
 	},
-	[IC_GET_TAXABLE_INCOME] = {
+	[IC_SA_GET_TAXABLE_INCOME] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/taxable-income",
 		.method	= M_GET,
 		.scope	= SCOPE_USER
 	},
-	[IC_GET_ALLOWANCES_DEDUCT_RELIEFS] = {
+	[IC_SA_GET_ALLOWANCES_DEDUCT_RELIEFS] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/allowances-deductions-reliefs",
 		.method	= M_GET,
 		.scope	= SCOPE_USER
 	},
-	[IC_GET_EOY_EST] = {
+	[IC_SA_GET_EOY_EST] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/end-of-year-estimate",
 		.method	= M_GET,
 		.scope	= SCOPE_USER
 	},
-	[IC_GET_MSGS] = {
+	[IC_SA_GET_MSGS] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages",
 		.method	= M_GET,
 		.scope	= SCOPE_USER

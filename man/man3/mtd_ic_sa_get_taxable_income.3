@@ -1,21 +1,21 @@
-.TH MTD_IC_GET_INCOME_TAX_NICS_CALC 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_IC_SA_GET_TAXABLE_INCOME 3 "June 7, 2020" "" "libmtdac"
 
 .SH NAME
 
-mtd_ic_get_income_tax_nics_calc \- retrieve self assessment tax calculation
-income tax and nics calculated
+mtd_ic_sa_get_taxable_income \- retrieve self assessment tax calculation
+taxable income
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd-ic.h>
 .PP
-.BI "int mtd_ic_get_income_tax_nics_calc(const char *" cid ", char **" buf );
+.BI "int mtd_ic_sa_get_taxable_income(const char *" cid ", char **" buf );
 
 .SH DESCRIPTION
 
-This function allows developers to retrieve the calculated Income Tax and
-National Insurance Contributions for a given NINO and Calculation ID (see
-\fBcid\fP below).
+This function allows developers to retrieve the taxable income that has been
+used in the self assessment tax calculation for a given NINO and Calculation
+ID (see \fBcid\fp below).
 
 .TP 4
 .B cid

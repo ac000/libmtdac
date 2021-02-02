@@ -1,26 +1,32 @@
-.TH MTD_IC_LIST_CALCULATIONS 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_IC_SA_GET_END_OF_YEAR_EST 3 "June 7, 2020" "" "libmtdac"
 
 .SH NAME
 
-mtd_ic_list_calculations \- list self assessment tax calculations
+mtd_ic_sa_get_end_of_year_est \- retrieve self assessment tax calculation end
+of year estimate
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd-ic.h>
 .PP
-.BI "int mtd_ic_list_calculations(const char *" query_string ", char **" buf );
+.BI "int mtd_ic_sa_get_end_of_year_est(const char *" cid ", char **" buf );
 
 .SH DESCRIPTION
 
-This functions allows the developer to list self assessment tax calculations
-for the supplied NINO and optional tax year (see \fBquery_string\fP below).
+This function allows developers to retrieve the end of year Income Tax and
+National Insurance contribution estimates for a given NINO and Calculation ID
+(see \fBcid\fp below).
+.PP
+Only applicable for an In-year calculation.
 
 .TP 4
-.B query_string
-This is optional and is of the form
-.PP
+.B cid
+.RS 4
+This is the calculationId and is in the form
+.RE
+
 .RS 8
-[?taxYear=YYYY-YY]
+^[0-9]{8}|[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
 .RE
 
 .TP

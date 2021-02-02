@@ -1,17 +1,17 @@
-.TH MTD_IC_TRIGGER_CALCULATION 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_IC_SA_TRIGGER_CALCULATION 3 "June 7, 2020" "" "libmtdac"
 
 .SH NAME
 
-mtd_ic_trigger_calculation \- trigger a self-assessment tax calculation for a
-given tax year
+mtd_ic_sa_trigger_calculation \- trigger a self-assessment tax calculation for
+a given tax year
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd-ic.h>
 .PP
 .nf
-.BI "int mtd_ic_trigger_calculation(const struct mtd_dsrc_ctx *" dsctx ",
-.BI "                               char **" buf );
+.BI "int mtd_ic_sa_trigger_calculation(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "                                  char **" buf );
 .ni
 
 .SH DESCRIPTION
@@ -26,7 +26,7 @@ It can take up to 5 seconds for a Calculation ID to be returned when
 triggering a tax calculation.
 .PP
 The result of the calculation can be seen using the
-.BR mtd_ic_get_calculation_meta (3)
+.BR mtd_ic_sa_get_calculation_meta (3)
 function.
 
 .TP 4
@@ -76,6 +76,6 @@ There was an OS level failure
 .BR libmtdac_mtd.h (3),
 .BR mtd_dsrc_ctx (3),
 .BR libmtdac-result_buffer (3),
-.BR mtd_ic_get_calculation_meta (3),
+.BR mtd_ic_sa_get_calculation_meta (3),
 .BR mtd_sa_se_update_period (3),
 .BR mtd_sa_se_update_annual_summary (3)

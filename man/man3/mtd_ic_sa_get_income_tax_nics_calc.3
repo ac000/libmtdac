@@ -1,25 +1,21 @@
-.TH MTD_IC_GET_CALCULATION_META 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_IC_SA_GET_INCOME_TAX_NICS_CALC 3 "June 7, 2020" "" "libmtdac"
 
 .SH NAME
 
-mtd_ic_get_calculation_meta \- retrieve self assessment tax calculation
-metadata
+mtd_ic_sa_get_income_tax_nics_calc \- retrieve self assessment tax calculation
+income tax and nics calculated
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd-ic.h>
 .PP
-.BI "int mtd_ic_get_calculation_meta(const char *" cid ", char **" buf );
+.BI "int mtd_ic_sa_get_income_tax_nics_calc(const char *" cid ", char **" buf );
 
 .SH DESCRIPTION
 
-This function allows developers to retrieve high-level calculation metadata for
-a given Calculation ID (\fBcid\fP). There will always be calculation metadata
-associated to a Calculation ID that exists within HMRC.
-.PP
-Calculation metadata is mutable and can be updated after a calculation has been
-run, an example scenario being when a crystallisation declaration has been
-accepted by HMRC.
+This function allows developers to retrieve the calculated Income Tax and
+National Insurance Contributions for a given NINO and Calculation ID (see
+\fBcid\fP below).
 
 .TP 4
 .B cid

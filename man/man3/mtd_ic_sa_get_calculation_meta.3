@@ -1,23 +1,25 @@
-.TH MTD_IC_GET_END_OF_YEAR_EST 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_IC_SA_GET_CALCULATION_META 3 "June 7, 2020" "" "libmtdac"
 
 .SH NAME
 
-mtd_ic_get_end_of_year_est \- retrieve self assessment tax calculation end of
-year estimate
+mtd_ic_sa_get_calculation_meta \- retrieve self assessment tax calculation
+metadata
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd-ic.h>
 .PP
-.BI "int mtd_ic_get_end_of_year_est(const char *" cid ", char **" buf );
+.BI "int mtd_ic_sa_get_calculation_meta(const char *" cid ", char **" buf );
 
 .SH DESCRIPTION
 
-This function allows developers to retrieve the end of year Income Tax and
-National Insurance contribution estimates for a given NINO and Calculation ID
-(see \fBcid\fp below).
+This function allows developers to retrieve high-level calculation metadata for
+a given Calculation ID (\fBcid\fP). There will always be calculation metadata
+associated to a Calculation ID that exists within HMRC.
 .PP
-Only applicable for an In-year calculation.
+Calculation metadata is mutable and can be updated after a calculation has been
+run, an example scenario being when a crystallisation declaration has been
+accepted by HMRC.
 
 .TP 4
 .B cid

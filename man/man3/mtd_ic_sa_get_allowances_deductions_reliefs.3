@@ -1,21 +1,24 @@
-.TH MTD_IC_GET_TAXABLE_INCOME 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_IC_SA_GET_ALLOWANCES_DEDUCTIONS_RELIEFS 3 "June 7, 2020" "" "libmtdac"
 
 .SH NAME
 
-mtd_ic_get_taxable_income \- retrieve self assessment tax calculation taxable
-income
+mtd_ic_sa_get_allowances_deductions_reliefs \- retrieve self assessment tax
+calculation allowances, deductions and reliefs
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd-ic.h>
 .PP
-.BI "int mtd_ic_get_taxable_income(const char *" cid ", char **" buf );
+.nf
+.BI "int mtd_ic_sa_get_allowances_deductions_reliefs(const char *" cid ",
+.BI "                                                char **" buf );
+.ni
 
 .SH DESCRIPTION
 
-This function allows developers to retrieve the taxable income that has been
-used in the self assessment tax calculation for a given NINO and Calculation
-ID (see \fBcid\fp below).
+This function allows developers to retrieve the allowances, deductions and
+reliefs that have been used in the self assessment tax calculation for a given
+NINO and Calculation ID (see \fBcid\fP below).
 
 .TP 4
 .B cid
