@@ -161,41 +161,61 @@ static char *gen_uuid(char *buf)
 
 static int generate_device_id(void)
 {
-	char path[PATH_MAX];
 	char uuid[37];
 	char *p;
 	struct stat sb;
 	json_t *new;
+	int dfd;
+	int fd;
 	int err;
+	int ret = -MTD_ERR_OS;
 
-	snprintf(path, sizeof(path), "%s/uuid.json", mtd_ctx.config_dir);
+	dfd = open(mtd_ctx.config_dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
+	if (dfd == -1)
+		return -MTD_ERR_CONFIG_DIR_INVALID;
 
-	err = stat(path, &sb);
+	err = fstatat(dfd, "uuid.json", &sb, 0);
 	if (!err) {
 		logger(MTD_LOG_INFO,
-		       "%s already exists, not overwriting\n", path);
-		return 0;
+		       "%s/uuid.json already exists, not overwriting\n",
+		       mtd_ctx.config_dir);
+		close(dfd);
+		return MTD_ERR_NONE;
 	}
-
 	if (errno != ENOENT) {
 		char errbuf[129];
 
-		logger(MTD_LOG_ERR, "stat %s: %s\n", path,
+		logger(MTD_LOG_ERR, "stat %s/uuid.json: %s\n",
+		       mtd_ctx.config_dir,
 		       strerror_r(errno, errbuf, sizeof(errbuf)));
-		return -1;
+		close(dfd);
+		return -MTD_ERR_OS;
+	}
+
+	fd = openat(dfd, "uuid.json", O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC,
+		    0600);
+	if (fd == -1) {
+		close(dfd);
+		return -MTD_ERR_OS;
 	}
 
 	p = gen_uuid(uuid);
 	if (!p) {
 		logger(MTD_LOG_ERR, "error generating UUID\n");
-		return -1;
+		goto out_close;
 	}
 
 	new = json_pack("{s:s}", "device_id", uuid);
-	json_dump_file(new, path, JSON_INDENT(4));
+	json_dumpfd(new, fd, JSON_INDENT(4));
 	json_decref(new);
 
-	return 0;
+	ret = MTD_ERR_NONE;
+
+out_close:
+	close(fd);
+	close(dfd);
+
+	return ret;
 }
 
 static int mkdir_p(int dirfd, const char *path, mode_t mode)
@@ -365,6 +385,29 @@ static const char * const api_scopes[] = {
 	NULL
 };
 
+static int write_config(const char *dir, const char *name, const json_t *json)
+{
+	int dfd;
+	int fd;
+
+	dfd = open(dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
+	if (dfd == -1)
+		return -MTD_ERR_CONFIG_DIR_INVALID;
+
+	fd = openat(dfd, name, O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC, 0600);
+	if (fd == -1) {
+		close(dfd);
+		return -MTD_ERR_OS;
+	}
+
+	json_dumpfd(json, fd, JSON_INDENT(4));
+
+	close(fd);
+	close(dfd);
+
+	return MTD_ERR_NONE;
+}
+
 extern char **environ;
 int mtd_init_auth(void)
 {
@@ -377,7 +420,6 @@ int mtd_init_auth(void)
 	char *buf = NULL;
 	char data[4096];
 	char url[2048];
-	char path[PATH_MAX];
 	char *s;
 	json_t *array;
 	json_t *root;
@@ -385,8 +427,6 @@ int mtd_init_auth(void)
 	pid_t child_pid;
 	int len;
 	int err;
-
-	snprintf(path, sizeof(path), "%s/oauth.json", mtd_ctx.config_dir);
 
 	printf("You need to authorise libmtdac to have read/write access to "
 	       "your Self\nAssessment information.\n");
@@ -438,14 +478,19 @@ int mtd_init_auth(void)
 	if (err)
 		goto out_free;
 
-	printf("\n");
-	printf("Wrote oauth.json to %s\n\n", path);
 	array = json_loads(buf, 0, NULL);
 	root = json_array_get(array, 0);
 	result = json_object_get(root, "result");
-	json_dumpf(result, stdout, JSON_INDENT(4));
-	json_dump_file(result, path, JSON_INDENT(4));
+	err = write_config(mtd_ctx.config_dir, "oauth.json", result);
+	if (err)
+		goto out_free_json;
+
 	printf("\n");
+	printf("Wrote oauth.json to %s/oauth.json\n\n", mtd_ctx.config_dir);
+	json_dumpf(result, stdout, JSON_INDENT(4));
+	printf("\n");
+
+out_free_json:
 	json_decref(array);
 	json_decref(result);
 
@@ -459,12 +504,10 @@ out_free:
 
 int mtd_init_nino(void)
 {
-	char path[PATH_MAX];
 	char nino[41];
 	char *s;
 	json_t *new;
-
-	snprintf(path, sizeof(path), "%s/nino.json", mtd_ctx.config_dir);
+	int err;
 
 	printf("Enter your 'NINO'          > ");
 	s = fgets(nino, sizeof(nino) - 1, stdin);
@@ -473,10 +516,14 @@ int mtd_init_nino(void)
 	nino[strlen(nino) - 1] = '\0';
 
 	new = json_pack("{s:s}", "nino", nino);
-	json_dump_file(new, path, JSON_INDENT(4));
+	err = write_config(mtd_ctx.config_dir, "nino.json", new);
+	if (err) {
+		json_decref(new);
+		return err;
+	}
 
 	printf("\n");
-	printf("Wrote nino.json to %s\n\n", path);
+	printf("Wrote nino.json to %s/nino.json\n\n", mtd_ctx.config_dir);
 	json_dumpf(new, stdout, JSON_INDENT(4));
 	printf("\n");
 
@@ -487,14 +534,11 @@ int mtd_init_nino(void)
 
 int mtd_init_config(void)
 {
-	char path[PATH_MAX];
 	char client_id[41];
 	char client_secret[41];
 	char *s;
 	json_t *new;
 	int err;
-
-	snprintf(path, sizeof(path), "%s/config.json", mtd_ctx.config_dir),
 
 	printf("Enter your 'client_id'     > ");
 	s = fgets(client_id, sizeof(client_id) - 1, stdin);
@@ -510,10 +554,14 @@ int mtd_init_config(void)
 
 	new = json_pack("{s:s, s:s}", "client_id", client_id,
 			"client_secret", client_secret);
-	json_dump_file(new, path, JSON_INDENT(4));
+	err = write_config(mtd_ctx.config_dir, "config.json", new);
+	if (err) {
+		json_decref(new);
+		return err;
+	}
 
 	printf("\n");
-	printf("Wrote config.json to %s\n\n", path);
+	printf("Wrote config.json to %s/config.json\n\n", mtd_ctx.config_dir);
 	json_dumpf(new, stdout, JSON_INDENT(4));
 	printf("\n");
 
