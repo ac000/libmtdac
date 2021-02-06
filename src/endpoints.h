@@ -75,7 +75,7 @@ enum endpoint {
 	SAAC_LIST_PAYMENTS,
 	SAAC_GET_PAYMENT,
 
-	/* Individual Calculations */
+	/* Individual Calculations - Self-Assessment */
 	IC_SA_LIST_CALCULATIONS,
 	IC_SA_TRIGGER_CALCULATION,
 	IC_SA_GET_CALCULATION_META,
@@ -84,6 +84,9 @@ enum endpoint {
 	IC_SA_GET_ALLOWANCES_DEDUCT_RELIEFS,
 	IC_SA_GET_EOY_EST,
 	IC_SA_GET_MSGS,
+	/* Individual Calculations - Crystallisation */
+	IC_CR_INTENT_TO_CRYSTALLISE,
+	IC_CR_CRYSTALLISE,
 
 	/* Individual Loses - Brought Forward */
 	IL_BF_LIST_LOSES,

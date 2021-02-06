@@ -1,0 +1,86 @@
+.TH MTD_IC_CR_CRYSTALLISE 3 "February 5, 2021" "" "libmtdac"
+
+.SH NAME
+
+mtd_ic_cr_crystallise \- crystallise a tax year
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd-ic.h>
+.PP
+.nf
+.BI "int mtd_ic_cr_crystallise(const struct mtd_dsrc_ctx *"dsctx ",
+.BI "                          const char *"tax_year ", char **" buf );
+.ni
+
+.SH DESCRIPTION
+
+This function allows developers to crystallise a tax year by agreeing to the
+HMRC's tax calculation.
+
+.TP 4
+.B dsctx
+This points to either a buffer, filename, file pointer or file descriptor that
+contains the JSON payload to be sent. See
+.BR mtd_dsrc_ctx (3).
+The JSON should look like
+.PP
+.RS 8
+.EX
+{
+    "calculationId": "041f7e4d-87d9-4d4a-a296-3cfbdf92f7e2"
+}
+.EE
+.RE
+
+.TP
+.B tax_year
+This is the Tax year to operate on and is in the form
+
+.RE
+
+.RS 8
+YYYY-YY
+.RE
+
+.TP
+.B buf
+.RS 4
+This is the result buffer containing the JSON result string. It should be
+\fBfree(3)\fP'd when no longer needed.
+.RE
+
+.SH RETURN VALUE
+
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+code is returned.
+
+.SH ERRORS
+
+.TP 4
+.B MTD_ERR_REQUEST
+The API request returned a status code >= 300
+
+.TP
+.B MTD_ERR_CURL
+There was a problem with the curl request itself
+
+.TP
+.B MTD_ERR_OS
+There was an OS level failure
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3),
+.BR mtd_dsrc_ctx (3),
+.BR libmtdac-result_buffer (3)
+
+.PP
+HMRC documentation for this endpoint can be found at
+.PP
+
+.in +4
+.nf
+.B https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/1.0
+.ni

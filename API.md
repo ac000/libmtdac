@@ -15,6 +15,8 @@
     - [Self-Assessment - Crystallisation](#self-assessment---crystallisation)
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
   * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
+    - [Individual Calculations - Self-Assessment](#individual-calculations---self-assessment)
+    - [Individual Calculations - Crystallisation [test-only]](#individual-calculations---crystallisation-test-only)
   * [Make Tax Digital - Individual Loses API functions](#make-tax-digital---individual-loses-api-functions)
     - [Individual Loses - Brought Forward](#individual-loses---brought-forward)
     - [Individual Loses - Loss Claims](#individual-loses---loss-claims)
@@ -705,6 +707,8 @@ int mtd_saac_get_payment(const char *pyid, char **buf);
 #include <libmtdac/mtd-ic.h>
 ```
 
+#### Individual Calculations - Self-Assessment
+
 #### mtd\_ic\_sa\_list\_calculations
 
 ```C
@@ -752,6 +756,22 @@ int mtd_ic_sa_get_end_of_year_est(const char *cid, char **buf);
 
 ```C
 int mtd_ic_sa_get_messages(const char *cid, char **buf);
+```
+
+
+#### Individual Calculations - Crystallisation [test-only]
+
+#### mtd\_ic\_cr\_intent\_to\_crystallise
+
+```C
+int mtd_ic_cr_intent_to_crystallise(const char *tax_year, char **buf);
+```
+
+#### mtd\_ic\_cr\_crystallise
+
+```C
+int mtd_ic_cr_crystallise(const struct mtd_dsrc_ctx *dsctx,
+                          const char *tax_year, char **buf);
 ```
 
 

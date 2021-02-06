@@ -306,7 +306,7 @@ static const struct _endpoint {
 		.scope	= SCOPE_USER
 	},
 
-	/* Individual Calculations */
+	/* Individual Calculations - Self-Assessment */
 	[IC_SA_LIST_CALCULATIONS] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{optional_query_params}",
 		.method	= M_GET,
@@ -346,6 +346,19 @@ static const struct _endpoint {
 	[IC_SA_GET_MSGS] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages",
 		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	/* Individual Calculations - Crystallisation */
+	[IC_CR_INTENT_TO_CRYSTALLISE] = {
+		.tmpl	= "/individuals/calculations/crystallisation/{nino}/{taxYear}/intent-to-crystallise",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope = SCOPE_USER
+	},
+	[IC_CR_CRYSTALLISE] = {
+		.tmpl	= "/individuals/calculations/crystallisation/{nino}/{taxYear}/crystallise",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 
