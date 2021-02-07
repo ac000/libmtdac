@@ -293,7 +293,7 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 
         MTD_OPT_NO_ANTI_FRAUD_HDRS
 
-   however they will become mandatory for all endpoints at some point
+   however they are mandatory...
 
    in a single-threaded application, when not calling mtd\_global\_init()
 

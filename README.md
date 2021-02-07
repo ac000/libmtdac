@@ -82,9 +82,7 @@ Include the appropriate header file(s) as described above and link with
 
 ## Fraud Prevention Headers
 
-HMRC describe various headers that should be added (currently only required
-for VAT submissions, but seems the intent is to require them for everything)
-for [Fraud Prevention](https://developer.service.hmrc.gov.uk/api-documentation/docs/fraud-prevention)
+HMRC describe various headers that must be added for [Fraud Prevention](https://developer.service.hmrc.gov.uk/api-documentation/docs/fraud-prevention)
 
 Some of the information sent in the headers contains somewhat potentially
 sensitive information, such as OS username, local IP addresses/mac addresses
