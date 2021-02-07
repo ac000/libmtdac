@@ -344,7 +344,7 @@ static const struct _endpoint {
 		.scope	= SCOPE_USER
 	},
 	[IC_SA_GET_MSGS] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages",
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages/{optional_query_params}",
 		.method	= M_GET,
 		.scope	= SCOPE_USER
 	},

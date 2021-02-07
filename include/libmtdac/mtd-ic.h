@@ -21,7 +21,8 @@ extern int mtd_ic_cr_crystallise(const struct mtd_dsrc_ctx *dsctx,
 				 const char *tax_year, char **buf);
 extern int mtd_ic_cr_intent_to_crystallise(const char *tax_year, char **buf);
 
-extern int mtd_ic_sa_get_messages(const char *cid, char **buf);
+extern int mtd_ic_sa_get_messages(const char *cid, const char *query_string,
+				  char **buf);
 extern int mtd_ic_sa_get_end_of_year_est(const char *cid, char **buf);
 extern int mtd_ic_sa_get_allowances_deductions_reliefs(const char *cid,
 						       char **buf);

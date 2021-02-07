@@ -755,7 +755,8 @@ int mtd_ic_sa_get_end_of_year_est(const char *cid, char **buf);
 #### mtd\_ic\_sa\_get\_messages
 
 ```C
-int mtd_ic_sa_get_messages(const char *cid, char **buf);
+int mtd_ic_sa_get_messages(const char *cid, const char *query_string,
+                           char **buf);
 ```
 
 
