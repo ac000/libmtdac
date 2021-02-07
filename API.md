@@ -299,7 +299,7 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 
         MTD_OPT_GLOBAL_INIT
 
-You can optionally pass in a *struct mtd_cfg*, see [Config](#config) above.
+*cfg* is as desrcibed in [Config](#config) above.
 
 
 #### mtd\_init\_auth - initialise oauth.json
