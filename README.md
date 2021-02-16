@@ -97,7 +97,8 @@ What is sent for each header can be overridden. See the
 
 ## Thread safety
 
-libmtdac should not at least be inherently thread unsafe.
+libmtdac aims to be thread safe. I.E it should be safe to call the various
+library functions (incl mtd\_init()) from multiple threads.
 
 
 ## License
