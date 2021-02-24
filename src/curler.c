@@ -34,56 +34,36 @@
 #include "fph.h"
 #include "logger.h"
 
-/* Just the HTTP status codes relevant to the MTD API */
-enum http_status_code {
-	OK = 200,
-	CREATED,
-	ACCEPTED,
-	NO_CONTENT = 204,
-	SEE_OTHER = 303,
-	BAD_REQUEST = 400,
-	UNAUTHORIZED,
-	FORBIDDEN = 403,
-	NOT_FOUND,
-	METHOD_NOT_ALLOWED,
-	NOT_ACCEPTABLE,
-	GONE = 410,
-	REQUEST_ENTITY_TOO_LARGE = 413,
-	UNSUPPORTED_MEDIA_TYPE = 415,
-	TOO_MANY_REQUESTS = 429,
-	INTERNAL_SERVER_ERROR = 500,
-	NOT_IMPLEMENTED,
-	SERVICE_UNAVAILABLE = 503,
-	GATEWAY_TIMEOUT,
-};
-
 static const struct http_status_code_entry {
-	const enum http_status_code sc;
+	const enum mtd_http_status_code sc;
 	const char *str_enum;
 	const char *str;
 } http_status_code_map[] = {
-	{ OK, "OK", "OK" },
-	{ CREATED, "CREATED", "Created" },
-	{ ACCEPTED, "ACCEPTED", "Accepted" },
-	{ NO_CONTENT, "NO_CONTENT", "No Content" },
-	{ SEE_OTHER, "SEE_OTHER", "See Other" },
-	{ BAD_REQUEST, "BAD_REQUEST", "Bad Request" },
-	{ UNAUTHORIZED, "UNAUTHORIZED", "Unauthorized" },
-	{ FORBIDDEN, "FORBIDDEN", "Forbidden" },
-	{ NOT_FOUND, "NOT_FOUND", "Not Found" },
-	{ METHOD_NOT_ALLOWED, "METHOD_NOT_ALLOWED", "Method Not Allowed" },
-	{ NOT_ACCEPTABLE, "NOT_ACCEPTABLE", "Not Acceptable" },
-	{ GONE, "GONE", "Gone" },
-	{ REQUEST_ENTITY_TOO_LARGE, "REQUEST_ENTITY_TOO_LARGE",
-				    "Request Entity Too Large" },
-	{ UNSUPPORTED_MEDIA_TYPE, "UNSUPPORTED_MEDIA_TYPE",
+	{ MTD_HTTP_OK, "OK", "OK" },
+	{ MTD_HTTP_CREATED, "CREATED", "Created" },
+	{ MTD_HTTP_ACCEPTED, "ACCEPTED", "Accepted" },
+	{ MTD_HTTP_NO_CONTENT, "NO_CONTENT", "No Content" },
+	{ MTD_HTTP_SEE_OTHER, "SEE_OTHER", "See Other" },
+	{ MTD_HTTP_BAD_REQUEST, "BAD_REQUEST", "Bad Request" },
+	{ MTD_HTTP_UNAUTHORIZED, "UNAUTHORIZED", "Unauthorized" },
+	{ MTD_HTTP_FORBIDDEN, "FORBIDDEN", "Forbidden" },
+	{ MTD_HTTP_NOT_FOUND, "NOT_FOUND", "Not Found" },
+	{ MTD_HTTP_METHOD_NOT_ALLOWED, "METHOD_NOT_ALLOWED",
+				       "Method Not Allowed" },
+	{ MTD_HTTP_NOT_ACCEPTABLE, "NOT_ACCEPTABLE", "Not Acceptable" },
+	{ MTD_HTTP_GONE, "GONE", "Gone" },
+	{ MTD_HTTP_REQUEST_ENTITY_TOO_LARGE, "REQUEST_ENTITY_TOO_LARGE",
+					     "Request Entity Too Large" },
+	{ MTD_HTTP_UNSUPPORTED_MEDIA_TYPE, "UNSUPPORTED_MEDIA_TYPE",
 				  "Unsupported Media Type" },
-	{ TOO_MANY_REQUESTS, "TOO_MANY_REQUESTS", "Too Many Requests" },
-	{ INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR",
-				 "Internal Server Error" },
-	{ NOT_IMPLEMENTED, "NOT_IMPLEMENTED", "Not Implemented" },
-	{ SERVICE_UNAVAILABLE, "SERVICE_UNAVAILABLE", "Service Unavailable" },
-	{ GATEWAY_TIMEOUT, "GATEWAY_TIMEOUT", "Gateway Timeout" },
+	{ MTD_HTTP_TOO_MANY_REQUESTS, "TOO_MANY_REQUESTS",
+				      "Too Many Requests" },
+	{ MTD_HTTP_INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR",
+					  "Internal Server Error" },
+	{ MTD_HTTP_NOT_IMPLEMENTED, "NOT_IMPLEMENTED", "Not Implemented" },
+	{ MTD_HTTP_SERVICE_UNAVAILABLE, "SERVICE_UNAVAILABLE",
+					"Service Unavailable" },
+	{ MTD_HTTP_GATEWAY_TIMEOUT, "GATEWAY_TIMEOUT", "Gateway Timeout" },
 };
 
 static const struct http_method_str {
@@ -100,7 +80,7 @@ static const struct http_method_str {
 	{ M_CONNECT, "CONNECT" },
 };
 
-static inline const char *http_status_code2str(enum http_status_code sc)
+static inline const char *http_status_code2str(enum mtd_http_status_code sc)
 {
 	int i = 0;
 	int nr = sizeof(http_status_code_map) /
@@ -224,7 +204,8 @@ static void set_response(struct curl_ctx *ctx)
 		rootbuf = json_loads(ctx->curl_buf->buf, 0, NULL);
 
 	if (ctx->accepted_location &&
-	    (ctx->status_code == ACCEPTED || ctx->status_code == CREATED)) {
+	    (ctx->status_code == MTD_HTTP_ACCEPTED ||
+	     ctx->status_code == MTD_HTTP_CREATED)) {
 		json_t *loc;
 
 		loc = json_pack("{s:s}", "location", ctx->accepted_location);
@@ -335,7 +316,7 @@ static int curl_perform(struct curl_ctx *ctx)
 		ret = -MTD_ERR_CURL;
 	}
 	curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &ctx->status_code);
-	if (ctx->status_code == SEE_OTHER) {
+	if (ctx->status_code == MTD_HTTP_SEE_OTHER) {
 		char *location;
 
 		curl_easy_getinfo(curl, CURLINFO_REDIRECT_URL, &location);
@@ -520,7 +501,8 @@ curl_again:
 	err = curl_perform(ctx);
 	if (err) {
 		return -MTD_ERR_CURL;
-	} else if (ctx->status_code == UNAUTHORIZED && !refreshed_token) {
+	} else if (ctx->status_code == MTD_HTTP_UNAUTHORIZED &&
+		   !refreshed_token) {
 		if (strstr(ctx->curl_buf->buf, "INVALID_CREDENTIALS")) {
 			logger(MTD_LOG_INFO, "INVALID_CREDENTIALS: "
 			       "Refreshing access_token\n");
@@ -533,7 +515,7 @@ curl_again:
 			logger(MTD_LOG_INFO, "Trying the request again...\n");
 			goto curl_again;
 		}
-	} else if (ctx->status_code == TOO_MANY_REQUESTS) {
+	} else if (ctx->status_code == MTD_HTTP_TOO_MANY_REQUESTS) {
 		logger(MTD_LOG_INFO, "TOO_MANY_REQUESTS. "
 		       "Sleeping 1s before retrying request...\n");
 		curl_slist_free_all(ctx->hdrs);
@@ -542,10 +524,11 @@ curl_again:
 		ctx->curl_buf->len = 0;
 		sleep(1);
 		goto curl_again;
-	} else if (ctx->status_code == BAD_REQUEST && refreshed_token) {
+	} else if (ctx->status_code == MTD_HTTP_BAD_REQUEST &&
+		   refreshed_token) {
 		if (strstr(ctx->curl_buf->buf, "invalid_request"))
 			return -MTD_ERR_NEEDS_AUTHORISATION;
-	} else if (ctx->status_code == SEE_OTHER) {
+	} else if (ctx->status_code == MTD_HTTP_SEE_OTHER) {
 		logger(MTD_LOG_INFO, "Performing re-direct: GET %s\n",
 		       ctx->location);
 		if (ctx->src_file) {

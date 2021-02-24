@@ -71,6 +71,29 @@ enum mtd_error {
 	MTD_ERR_INVALID_ERROR
 };
 
+/* Just the HTTP status codes relevant to the MTD API */
+enum mtd_http_status_code {
+	MTD_HTTP_OK = 200,
+	MTD_HTTP_CREATED,
+	MTD_HTTP_ACCEPTED,
+	MTD_HTTP_NO_CONTENT = 204,
+	MTD_HTTP_SEE_OTHER = 303,
+	MTD_HTTP_BAD_REQUEST = 400,
+	MTD_HTTP_UNAUTHORIZED,
+	MTD_HTTP_FORBIDDEN = 403,
+	MTD_HTTP_NOT_FOUND,
+	MTD_HTTP_METHOD_NOT_ALLOWED,
+	MTD_HTTP_NOT_ACCEPTABLE,
+	MTD_HTTP_GONE = 410,
+	MTD_HTTP_REQUEST_ENTITY_TOO_LARGE = 413,
+	MTD_HTTP_UNSUPPORTED_MEDIA_TYPE = 415,
+	MTD_HTTP_TOO_MANY_REQUESTS = 429,
+	MTD_HTTP_INTERNAL_SERVER_ERROR = 500,
+	MTD_HTTP_NOT_IMPLEMENTED,
+	MTD_HTTP_SERVICE_UNAVAILABLE = 503,
+	MTD_HTTP_GATEWAY_TIMEOUT,
+};
+
 enum mtd_data_src_type {
 	MTD_DATA_SRC_FILE = 0,
 	MTD_DATA_SRC_BUF,
@@ -160,6 +183,7 @@ extern int mtd_init_nino(void);
 extern char *mtd_percent_encode(const char *str, ssize_t len);
 extern const char *mtd_err2str(int err);
 extern const char *mtd_err2enum_str(int err);
+extern enum mtd_http_status_code mtd_http_status_code(const char *json);
 
 #pragma GCC visibility pop
 

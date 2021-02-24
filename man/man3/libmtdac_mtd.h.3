@@ -94,6 +94,31 @@ enum mtd_error {
 .br
 };
 
+.SH HTTP status codes
+
+enum mtd_http_status_code {
+        \fBMTD_HTTP_OK\fP,
+        \fBMTD_HTTP_CREATED\fP,
+        \fBMTD_HTTP_ACCEPTED\fP,
+        \fBMTD_HTTP_NO_CONTENT\fP,
+        \fBMTD_HTTP_SEE_OTHER\fP,
+        \fBMTD_HTTP_BAD_REQUEST\fP,
+        \fBMTD_HTTP_UNAUTHORIZED\fP,
+        \fBMTD_HTTP_FORBIDDEN\fP,
+        \fBMTD_HTTP_NOT_FOUND\fP,
+        \fBMTD_HTTP_METHOD_NOT_ALLOWED\fP,
+        \fBMTD_HTTP_NOT_ACCEPTABLE\fP,
+        \fBMTD_HTTP_GONE\fP,
+        \fBMTD_HTTP_REQUEST_ENTITY_TOO_LARGE\fP,
+        \fBMTD_HTTP_UNSUPPORTED_MEDIA_TYPE\fP,
+        \fBMTD_HTTP_TOO_MANY_REQUESTS\fP,
+        \fBMTD_HTTP_INTERNAL_SERVER_ERROR\fP,
+        \fBMTD_HTTP_NOT_IMPLEMENTED\fP,
+        \fBMTD_HTTP_SERVICE_UNAVAILABLE\fP,
+        \fBMTD_HTTP_GATEWAY_TIMEOUT\fP,
+.br
+};
+
 .SH Data Source
 
 For requests that send (POST/PUT) data to an endpoint, the source for this data
@@ -342,6 +367,14 @@ This is for getting a textual description of the given error code.
 
 .RS
 This is for getting a string version of the given error code enum.
+.RE
+
+.BI "enum mtd_http_status_code mtd_http_status_code(const char *json);"
+
+.RS
+This is to get the HTTP status code of the last request. In the case of
+multiple requests, it is likely to be the last one you are interested in
+due to a failure.
 .RE
 
 .SH NOTES

@@ -346,6 +346,37 @@ const char *mtd_err2str(int err);
 const char *mtd_err2enum_str(int err);
 ```
 
+#### mtd\_http\_status\_code - return the HTTP status code of the last request
+
+```C
+enum mtd_http_status_code mtd_http_status_code(const char *json);
+```
+
+Which returns one of the following enum values, which are mapped to the actual
+status code value
+
+```
+        MTD_HTTP_OK
+        MTD_HTTP_CREATED
+        MTD_HTTP_ACCEPTED
+        MTD_HTTP_NO_CONTENT
+        MTD_HTTP_SEE_OTHER
+        MTD_HTTP_BAD_REQUEST
+        MTD_HTTP_UNAUTHORIZED
+        MTD_HTTP_FORBIDDEN
+        MTD_HTTP_NOT_FOUND
+        MTD_HTTP_METHOD_NOT_ALLOWED
+        MTD_HTTP_NOT_ACCEPTABLE
+        MTD_HTTP_GONE
+        MTD_HTTP_REQUEST_ENTITY_TOO_LARGE
+        MTD_HTTP_UNSUPPORTED_MEDIA_TYPE
+        MTD_HTTP_TOO_MANY_REQUESTS
+        MTD_HTTP_INTERNAL_SERVER_ERROR
+        MTD_HTTP_NOT_IMPLEMENTED
+        MTD_HTTP_SERVICE_UNAVAILABLE
+        MTD_HTTP_GATEWAY_TIMEOUT
+```
+
 
 ### Make Tax Digital - Self-Assessment API functions
 
