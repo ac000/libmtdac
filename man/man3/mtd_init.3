@@ -146,18 +146,30 @@ If \fIcfg\fP is passed in as NULL, then default library values are used.
 
 .SH RETURN VALUE
 
-On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a negative error
 code is returned.
 
 .SH ERRORS
 
 .TP 4
-.B MTD_ERR_OS
+.B -MTD_ERR_OS
 There was an OS level failure
 
 .TP
-.B MTD_ERR_UNKNOWN_FLAGS
+.B -MTD_ERR_UNKNOWN_FLAGS
 One or more of the supplied flags weren't recognised
+
+.TP
+.B -MTD_ERR_CONFIG_DIR_UNSPEC
+The config directory was unspecified
+
+.TP 4
+.B -MTD_ERR_CONFIG_DIR_INVALID
+The specified config directory could not be opened
+
+.TP 4
+.B -MTD_ERR_NO_CONFIG
+No config was provided
 
 .SH EXAMPLE
 

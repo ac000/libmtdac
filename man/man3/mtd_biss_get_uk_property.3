@@ -42,22 +42,23 @@ This is the result buffer containing the JSON result string. It should be
 
 .SH RETURN VALUE
 
-On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a positive error
+On success, zero (\fBMTD_ERR_NONE\fP) is returned. On error, a negative error
 code is returned.
 
 .SH ERRORS
 
 .TP 4
-.B MTD_ERR_REQUEST
+
+.TP
+.B -MTD_ERR_OS
+There was an OS level failure
+
+.B -MTD_ERR_REQUEST
 The API request returned a status code >= 300
 
 .TP
-.B MTD_ERR_CURL
-There was a problem with the curl request itself
-
-.TP
-.B MTD_ERR_OS
-There was an OS level failure
+.B -MTD_ERR_CURL
+There was a problem with the curl request itsef
 
 .SH SEE ALSO
 
