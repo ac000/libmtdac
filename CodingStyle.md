@@ -1,5 +1,7 @@
 # Coding Style
 
+We follow the Linux kernel [coding style](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/coding-style.rst).
+
 As a general rule :-
 
 - all indentation is tabs (set to 8 char) with the exception of
@@ -75,11 +77,11 @@ As a general rule :-
 - continuation lines have the operator / comma at the end
 
 ```C
-	if (very_long_conditiont_1 ||
-	    condition_2)
+       if (very_long_conditiont_1 ||
+           condition_2)
 
-	b = a + (c + d +
-		 f + z);
+        b = a + (c + d +
+                 f + z);
 ```
 
 - switch statements with blocks are a little bit special (to avoid indenting
