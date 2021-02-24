@@ -380,6 +380,22 @@ multiple requests, it is likely to be the last one you are interested in
 due to a failure.
 .RE
 
+.BI "const char *mtd_http_status_str(const char *json);"
+
+.RS
+This is to get the HTTP status string of the last request. In the case of
+multiple requests, it is likely to be the last one you are interested in
+due to a failure.
+.RE
+
+.BI "const char *mtd_http_status_str_u(const char *json);"
+
+.RS
+This is to get the HTTP status enum string of the last request. In the case
+of multiple requests, it is likely to be the last one you are interested in
+due to a failure.
+.RE
+
 .SH NOTES
 
 The JSON files mentioned above are stored under \fI~/.config/libmtdac/{prod,test}-api/\fP

@@ -341,7 +341,7 @@ char *mtd_percent_encode(const char *str, ssize_t len);
 const char *mtd_err2str(int err);
 ```
 
-#### mtd\_err2enum_str - get a string version of the given error code enum
+#### mtd\_err2enum\_str - get a string version of the given error code enum
 
 ```C
 const char *mtd_err2enum_str(int err);
@@ -376,6 +376,18 @@ status code value
         MTD_HTTP_NOT_IMPLEMENTED
         MTD_HTTP_SERVICE_UNAVAILABLE
         MTD_HTTP_GATEWAY_TIMEOUT
+```
+
+#### mtd\_http\_status\_str\_u - return a string version of the enum
+
+```C
+const char *mtd_http_status_str_u(const char *json);
+````
+
+#### mtd\_http\_status\_str - return a string version of the status code
+
+```C
+const char *mtd_http_status_str(const char *json);
 ```
 
 

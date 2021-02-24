@@ -80,7 +80,21 @@ static const struct http_method_str {
 	{ M_CONNECT, "CONNECT" },
 };
 
-static inline const char *http_status_code2str(enum mtd_http_status_code sc)
+const char *http_status_code2str_u(enum mtd_http_status_code sc)
+{
+	int i = 0;
+	int nr = sizeof(http_status_code_map) /
+		 sizeof(http_status_code_map[0]);
+
+	for ( ; i < nr; i++) {
+		if (http_status_code_map[i].sc == sc)
+			return http_status_code_map[i].str_enum;
+	}
+
+	return "(UNKNOWN)";
+}
+
+const char *http_status_code2str(enum mtd_http_status_code sc)
 {
 	int i = 0;
 	int nr = sizeof(http_status_code_map) /

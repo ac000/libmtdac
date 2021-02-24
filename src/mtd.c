@@ -127,6 +127,43 @@ enum mtd_http_status_code mtd_http_status_code(const char *json)
 	return sc;
 }
 
+const char *mtd_http_status_str_u(const char *json)
+{
+	json_t *jarray;
+	json_t *root;
+	json_t *status;
+	enum mtd_http_status_code sc;
+	const char *str;
+
+	/* return the last status code... */
+	jarray = json_loads(json, 0, NULL);
+	root = json_array_get(jarray, json_array_size(jarray) - 1);
+	status = json_object_get(root, "status_code");
+	sc = json_integer_value(status);
+	str = http_status_code2str_u(sc);
+	json_decref(jarray);
+
+	return str;
+}
+
+const char *mtd_http_status_str(const char *json)
+{
+	json_t *jarray;
+	json_t *root;
+	json_t *status;
+	enum mtd_http_status_code sc;
+	const char *str;
+
+	/* return the last status code... */
+	jarray = json_loads(json, 0, NULL);
+	root = json_array_get(jarray, json_array_size(jarray) - 1);
+	status = json_object_get(root, "status_code");
+	sc = json_integer_value(status);
+	str = http_status_code2str(sc);
+	json_decref(jarray);
+
+	return str;
+}
 char *mtd_percent_encode(const char *str, ssize_t len)
 {
 	char *p = (char *)str;

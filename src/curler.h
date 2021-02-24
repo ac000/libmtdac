@@ -77,6 +77,8 @@ struct curl_ctx {
 	long status_code;
 };
 
+extern const char *http_status_code2str_u(enum mtd_http_status_code sc);
+extern const char *http_status_code2str(enum mtd_http_status_code sc);
 extern int curl_add_hdr(struct curl_ctx *ctx, const char *fmt, ...);
 extern int do_put(struct curl_ctx *ctx, char **buf);
 extern int do_post(struct curl_ctx *ctx, char **buf);

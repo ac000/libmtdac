@@ -1,0 +1,29 @@
+.TH MTD_HTTP_STATUS_STR_U 3 "February 24, 2021" "" "libmtdac"
+
+.SH NAME
+
+mtd_http_status_str_u \- http status code as string version of the enum
+
+.SH SYNOPSIS
+
+.B #include <libmtdac/mtd.h>
+.PP
+.BI "const char *mtd_http_status_str_u(const char *" json );
+
+.SH DESCRIPTION
+
+This function given a JSON request result buffer will return the HTTP status
+code as a string of the enum of the last request contained in the buffer.
+
+.TP 3
+.B json
+A JSON result buffer as returned by the mtd_* functions.
+
+.SH RETURN VALUE
+
+A const string of the last http request status enum string
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3)
