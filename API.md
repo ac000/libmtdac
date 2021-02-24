@@ -60,6 +60,7 @@ enum mtd_error {
         MTD_ERR_LIB_TOO_OLD,
         MTD_ERR_CONFIG_DIR_UNSPEC,
         MTD_ERR_CONFIG_DIR_INVALID,
+        MTD_ERR_NO_CONFIG,
         MTD_ERR_INVALID_ERROR
 };
 ```

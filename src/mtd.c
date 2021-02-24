@@ -75,6 +75,10 @@ static const struct _mtd_err_map {
 		.estr	= "MTD_ERR_CONFIG_DIR_INVALID",
 		.str	= "Config directory path is invalid"
 	},
+	[MTD_ERR_NO_CONFIG] = {
+		.estr	= "MTD_ERR_NO_CONFIG",
+		.str	= "No config specified"
+	},
 
 	/* keep this last */
 	[MTD_ERR_INVALID_ERROR] = {
@@ -333,6 +337,9 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 	int err;
 	enum app_conn_type *conn_type = &mtd_ctx.app_conn_type;
 
+	if (!cfg)
+		return -MTD_ERR_NO_CONFIG;
+
 	/* initialise struct mtd_ctx to default values */
 	memcpy(&mtd_ctx, &dfl_mtd_ctx, sizeof(struct mtd_ctx));
 
@@ -373,9 +380,6 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 		*conn_type = MTD_ACT_BATCH_PROCESS_DIRECT;
 	else if (flags & MTD_OPT_ACT_OTHER_VIA_SERVER)
 		*conn_type = MTD_ACT_OTHER_VIA_SERVER;
-
-	if (!cfg)
-		return MTD_ERR_NONE;
 
 	fph_set_ops(mtd_ctx.app_conn_type, cfg->fph_ops);
 
