@@ -790,11 +790,13 @@ static const struct mtd_fph_ops dfl_fph_ops = {
 };
 
 #define SET_FPH_FUNC(f, m) \
-	fph_ops.m = \
-		fph_type & f ? (ops && ops->m ? ops->m : dfl_fph_ops.m) : NULL;
+	fph_ops.m = fph_type & f ? (ops->m ? ops->m : dfl_fph_ops.m) : NULL;
 void fph_set_ops(enum app_conn_type conn_type, const struct mtd_fph_ops *ops)
 {
 	unsigned int fph_type = fph_type_map[conn_type].fph;
+
+	if (!ops)
+		return;
 
 	SET_FPH_FUNC(FPH_C_DEV_ID, MTD_FPH_CLI_DEV_ID);
 	SET_FPH_FUNC(FPH_C_USER_ID, MTD_FPH_CLI_USER_ID);
