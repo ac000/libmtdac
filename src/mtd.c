@@ -67,11 +67,11 @@ static const struct _mtd_err_map {
 		.estr	= "MTD_ERR_LIB_TOO_OLD",
 		.str	= "Library version too old"
 	},
-	[MTD_ERR_CONFIG_DIR_UNSPEC] {
+	[MTD_ERR_CONFIG_DIR_UNSPEC] = {
 		.estr	= "MTD_ERR_CONFIG_DIR_UNSPEC",
 		.str	= "Config directory not specified"
 	},
-	[MTD_ERR_CONFIG_DIR_INVALID] {
+	[MTD_ERR_CONFIG_DIR_INVALID] = {
 		.estr	= "MTD_ERR_CONFIG_DIR_INVALID",
 		.str	= "Config directory path is invalid"
 	},
