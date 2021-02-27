@@ -38,6 +38,205 @@ static const struct _endpoint {
 	const enum content_type ctype;
 	const enum oauth_scope scope;
 } endpoints[] = {
+	/* Business Income Source Summary */
+	[BISS_GET_SELF_EMPLOYMENT] = {
+		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/self-employment/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[BISS_GET_UK_PROPERTY] = {
+		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/uk-property/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[BISS_GET_FOREIGN_PROPERTY] = {
+		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/foreign-property/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+
+	/* Business Source Adjustable Summary */
+	[BSAS_LIST_SUMMARIES] = {
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/{query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[BSAS_TRIGGER_SUMMARY] = {
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/trigger",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+	[BSAS_SE_GET_SUMMARY] = {
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[BSAS_SE_LIST_SUMMARY_ADJUSTMENTS] = {
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust",
+		.method = M_GET,
+		.scope	= SCOPE_USER
+	},
+	[BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS] = {
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+	[BSAS_PB_GET_SUMMARY] = {
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[BSAS_PB_LIST_SUMMARY_ADJUSTMENTS] = {
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS] = {
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+
+	/* Individual Calculations - Self-Assessment */
+	[IC_SA_LIST_CALCULATIONS] = {
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[IC_SA_TRIGGER_CALCULATION] = {
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+	[IC_SA_GET_CALCULATION_META] = {
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[IC_SA_GET_INCOME_TAX_NICS_CALC] = {
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/income-tax-nics-calculated",
+		.method	= M_GET,
+		.scope	= SCOPE_USER,
+	},
+	[IC_SA_GET_TAXABLE_INCOME] = {
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/taxable-income",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[IC_SA_GET_ALLOWANCES_DEDUCT_RELIEFS] = {
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/allowances-deductions-reliefs",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[IC_SA_GET_EOY_EST] = {
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/end-of-year-estimate",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[IC_SA_GET_MSGS] = {
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	/* Individual Calculations - Crystallisation */
+	[IC_CR_INTENT_TO_CRYSTALLISE] = {
+		.tmpl	= "/individuals/calculations/crystallisation/{nino}/{taxYear}/intent-to-crystallise",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope = SCOPE_USER
+	},
+	[IC_CR_CRYSTALLISE] = {
+		.tmpl	= "/individuals/calculations/crystallisation/{nino}/{taxYear}/crystallise",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+
+	/* Individuals Disclosures */
+	[ID_DELETE] = {
+		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.scope	= SCOPE_USER
+	},
+	[ID_SET] = {
+		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+	[ID_GET] = {
+		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+
+	/* Individual Loses - Brought Forward */
+	[IL_BF_LIST_LOSES] = {
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[IL_BF_CREATE_LOSS] = {
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+	[IL_BF_GET_LOSS] = {
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[IL_BF_DELETE_LOSS] = {
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}",
+		.method	= M_DELETE,
+		.scope	= SCOPE_USER
+	},
+	[IL_BF_UPDATE_LOSS_AMNT] = {
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}/change-loss-amount",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+	/* Individual Loses - Loss Claims */
+	[IL_LC_LIST_LOSES] = {
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/{optional_query_params}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[IL_LC_CREATE_LOSS] = {
+		.tmpl	= "/individuals/losses/{nino}/loss-claims",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+	[IL_LC_GET_LOSS] = {
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}",
+		.method	= M_GET,
+		.scope	= SCOPE_USER
+	},
+	[IL_LC_DELETE_LOSS] = {
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}",
+		.method	= M_DELETE,
+		.scope	= SCOPE_USER
+	},
+	[IL_LC_UPDATE_LOSS_TYPE] = {
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}/change-type-of-claim",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+	[IL_LC_UPDATE_LOSS_ORDER] = {
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/order/{optional_query_params}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.scope	= SCOPE_USER
+	},
+
 	/* Self-Assessment - Self-Employment */
 	[SA_SE_LIST_SELF_EMPLOYMENTS] = {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments",
@@ -303,205 +502,6 @@ static const struct _endpoint {
 	[SAAC_GET_PAYMENT] = {
 		.tmpl	= "/accounts/self-assessment/{nino}/payments/{paymentId}",
 		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-
-	/* Individual Calculations - Self-Assessment */
-	[IC_SA_LIST_CALCULATIONS] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{optional_query_params}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[IC_SA_TRIGGER_CALCULATION] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope	= SCOPE_USER
-	},
-	[IC_SA_GET_CALCULATION_META] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[IC_SA_GET_INCOME_TAX_NICS_CALC] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/income-tax-nics-calculated",
-		.method	= M_GET,
-		.scope	= SCOPE_USER,
-	},
-	[IC_SA_GET_TAXABLE_INCOME] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/taxable-income",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[IC_SA_GET_ALLOWANCES_DEDUCT_RELIEFS] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/allowances-deductions-reliefs",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[IC_SA_GET_EOY_EST] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/end-of-year-estimate",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[IC_SA_GET_MSGS] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages/{optional_query_params}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	/* Individual Calculations - Crystallisation */
-	[IC_CR_INTENT_TO_CRYSTALLISE] = {
-		.tmpl	= "/individuals/calculations/crystallisation/{nino}/{taxYear}/intent-to-crystallise",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope = SCOPE_USER
-	},
-	[IC_CR_CRYSTALLISE] = {
-		.tmpl	= "/individuals/calculations/crystallisation/{nino}/{taxYear}/crystallise",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope	= SCOPE_USER
-	},
-
-	/* Individual Loses - Brought Forward */
-	[IL_BF_LIST_LOSES] = {
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{optional_query_params}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[IL_BF_CREATE_LOSS] = {
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope	= SCOPE_USER
-	},
-	[IL_BF_GET_LOSS] = {
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[IL_BF_DELETE_LOSS] = {
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}",
-		.method	= M_DELETE,
-		.scope	= SCOPE_USER
-	},
-	[IL_BF_UPDATE_LOSS_AMNT] = {
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}/change-loss-amount",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope	= SCOPE_USER
-	},
-	/* Individual Loses - Loss Claims */
-	[IL_LC_LIST_LOSES] = {
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/{optional_query_params}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[IL_LC_CREATE_LOSS] = {
-		.tmpl	= "/individuals/losses/{nino}/loss-claims",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope	= SCOPE_USER
-	},
-	[IL_LC_GET_LOSS] = {
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[IL_LC_DELETE_LOSS] = {
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}",
-		.method	= M_DELETE,
-		.scope	= SCOPE_USER
-	},
-	[IL_LC_UPDATE_LOSS_TYPE] = {
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}/change-type-of-claim",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope	= SCOPE_USER
-	},
-	[IL_LC_UPDATE_LOSS_ORDER] = {
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/order/{optional_query_params}",
-		.method	= M_PUT,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope	= SCOPE_USER
-	},
-
-	/* Individuals Disclosures */
-	[ID_DELETE] = {
-		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
-		.method	= M_DELETE,
-		.scope	= SCOPE_USER
-	},
-	[ID_SET] = {
-		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
-		.method	= M_PUT,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope	= SCOPE_USER
-	},
-	[ID_GET] = {
-		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-
-	/* Business Income Source Summary */
-	[BISS_GET_SELF_EMPLOYMENT] = {
-		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/self-employment/{query_params}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[BISS_GET_UK_PROPERTY] = {
-		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/uk-property/{query_params}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[BISS_GET_FOREIGN_PROPERTY] = {
-		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/foreign-property/{query_params}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-
-	/* Business Source Adjustable Summary */
-	[BSAS_LIST_SUMMARIES] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/{query_params}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[BSAS_TRIGGER_SUMMARY] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/trigger",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope	= SCOPE_USER
-	},
-	[BSAS_SE_GET_SUMMARY] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/{optional_query_params}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[BSAS_SE_LIST_SUMMARY_ADJUSTMENTS] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust",
-		.method = M_GET,
-		.scope	= SCOPE_USER
-	},
-	[BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.scope	= SCOPE_USER
-	},
-	[BSAS_PB_GET_SUMMARY] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/{optional_query_params}",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[BSAS_PB_LIST_SUMMARY_ADJUSTMENTS] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust",
-		.method	= M_GET,
-		.scope	= SCOPE_USER
-	},
-	[BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
 
