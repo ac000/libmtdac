@@ -164,6 +164,7 @@ const char *mtd_http_status_str(const char *json)
 
 	return str;
 }
+
 char *mtd_percent_encode(const char *str, ssize_t len)
 {
 	char *p = (char *)str;
