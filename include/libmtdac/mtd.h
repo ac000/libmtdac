@@ -10,6 +10,7 @@
 #define _MTD_H_
 
 #include <stdio.h>
+#include <sys/types.h>
 
 #ifdef __cplusplus
 extern "C" {
