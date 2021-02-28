@@ -172,7 +172,7 @@ char *mtd_percent_encode(const char *str, ssize_t len)
 	char *p2;
 	size_t buflen;
 
-	buflen = ((len < 0 ? (ssize_t)strlen(str) : len) * 3) + 1;
+	buflen = ((len > -1 ? (size_t)len : strlen(str)) * 3) + 1;
 	buf = malloc(buflen);
 	if (!buf) {
 		logger(MTD_LOG_ERRNO, "malloc:");
