@@ -177,47 +177,47 @@ static __thread struct mtd_fph_ops fph_ops;
 
 extern __thread struct mtd_ctx mtd_ctx;
 
-static char *get_license_id(void)
+static char *get_license_id(void *user_data __unused)
 {
 	return NULL;
 }
 
-static char *get_multi_factor(void)
+static char *get_multi_factor(void *user_data __unused)
 {
 	return NULL;
 }
 
-static char *get_screens(void)
+static char *get_screens(void *user_data __unused)
 {
 	return NULL;
 }
 
-static char *get_window_sz(void)
+static char *get_window_sz(void *user_data __unused)
 {
 	return NULL;
 }
 
-static char *get_browser_plugins(void)
+static char *get_browser_plugins(void *user_data __unused)
 {
 	return NULL;
 }
 
-static char *get_browser_js_ua(void)
+static char *get_browser_js_ua(void *user_data __unused)
 {
 	return NULL;
 }
 
-static char *get_browser_dnt(void)
+static char *get_browser_dnt(void *user_data __unused)
 {
 	return NULL;
 }
 
-static char *get_prod_name(void)
+static char *get_prod_name(void *user_data __unused)
 {
 	return NULL;
 }
 
-static char *get_version(void)
+static char *get_version(void *user_data)
 {
 	char ver[128];
 	char *encname;
@@ -233,7 +233,7 @@ static char *get_version(void)
 	encver = mtd_percent_encode(ver, -1);
 
 	if (fph_ops.fph_version_cli)
-		ver_cli = fph_ops.fph_version_cli();
+		ver_cli = fph_ops.fph_version_cli(user_data);
 
 	err = asprintf(&buf, "%s=%s%s%s", encname, encver, ver_cli ? "&" : "",
 		       ver_cli ? ver_cli : "");
@@ -249,7 +249,7 @@ static char *get_version(void)
 	return buf;
 }
 
-static char *get_ua(void)
+static char *get_ua(void *user_data __unused)
 {
 	struct utsname un;
 	char *buf;
@@ -306,7 +306,7 @@ static char *get_ua(void)
 	return buf;
 }
 
-static char *get_macaddrs(void)
+static char *get_macaddrs(void *user_data __unused)
 {
 	struct ifaddrs *ifaddr;
 	struct ifaddrs *ifa;
@@ -457,7 +457,7 @@ static bool _check_is_local_ip(const struct sockaddr *sa, int family)
 	return false;
 }
 
-static char *get_ipaddrs(void)
+static char *get_ipaddrs(void *user_data __unused)
 {
 	struct ifaddrs *ifaddr;
 	struct ifaddrs *ifa;
@@ -501,7 +501,7 @@ static char *get_ipaddrs(void)
 }
 
 static __thread int libcurl_sockfd;
-static char *get_src_port(void)
+static char *get_src_port(void *user_data __unused)
 {
 	struct sockaddr_storage ss;
 	socklen_t addrlen = sizeof(ss);
@@ -517,7 +517,7 @@ static char *get_src_port(void)
 	return strdup(port);
 }
 
-static char *get_src_addr(void)
+static char *get_src_addr(void *user_data __unused)
 {
 	struct sockaddr_storage ss;
 	socklen_t addrlen = sizeof(ss);
@@ -533,7 +533,7 @@ static char *get_src_addr(void)
 	return strdup(host);
 }
 
-static char *get_ip_ts(void)
+static char *get_ip_ts(void *user_data __unused)
 {
 	struct timespec now;
 	struct tm res;
@@ -559,17 +559,17 @@ static char *get_ip_ts(void)
 	return strdup(strtime);
 }
 
-static char *get_vendor_fwd(void)
+static char *get_vendor_fwd(void *user_data __unused)
 {
 	return NULL;
 }
 
-static char *get_vendor_ip(void)
+static char *get_vendor_ip(void *user_data __unused)
 {
 	return NULL;
 }
 
-static char *get_tz(void)
+static char *get_tz(void *user_data __unused)
 {
 	time_t now = time(NULL);
 	struct tm tm_res;
@@ -595,7 +595,7 @@ static char *get_tz(void)
 	return buf;
 }
 
-static char *get_user(void)
+static char *get_user(void *user_data __unused)
 {
 	char *encuser;
 	char *buf;
@@ -612,7 +612,7 @@ static char *get_user(void)
 	return buf;
 }
 
-static char *get_device_id(void)
+static char *get_device_id(void *user_data __unused)
 {
 	char path[PATH_MAX];
 	json_t *root;
@@ -638,7 +638,7 @@ static char *get_device_id(void)
 	return buf;
 }
 
-static char *(*lookup_fph_func(const enum fph_hdr hdr))(void)
+static char *(*lookup_fph_func(const enum fph_hdr hdr))(void *user_data)
 {
 	const struct mtd_fph_ops *f = &fph_ops;
 
@@ -695,14 +695,14 @@ static void add_fph(struct curl_ctx *ctx, const enum fph_hdr hdr)
 	int i;
 	int n;
 	char *val;
-	char *(*fph_func)(void);
+	char *(*fph_func)(void *user_data);
 	const char *hstr = NULL;
 
 	fph_func = lookup_fph_func(hdr);
 	if (!fph_func)
 		return;	/* Skip this header */
 
-	val = fph_func();
+	val = fph_func(fph_ops.user_data);
 	n = sizeof(fph_hdr_map) / sizeof(fph_hdr_map[0]);
 	for (i = 0; i < n; i++) {
 		if (fph_hdr_map[i].hdr == hdr) {
@@ -820,4 +820,6 @@ void fph_set_ops(enum app_conn_type conn_type, const struct mtd_fph_ops *ops)
 	SET_FPH_FUNC(FPH_V_PROD_NAME, MTD_FPH_VEN_PROD_NAME);
 	SET_FPH_FUNC(FPH_V_VERSION, MTD_FPH_VEN_VERSION);
 	SET_FPH_FUNC(FPH_V_VERSION, MTD_FPH_VEN_VERSION_CLI);
+
+	fph_ops.user_data = ops->user_data ? ops->user_data : NULL;
 }

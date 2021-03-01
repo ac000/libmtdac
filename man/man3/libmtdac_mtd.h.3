@@ -217,28 +217,30 @@ cause the appropriate inbuilt function to be used
 #define \fBMTD_FPH_VEN_PROD_NAME\fP               fph_prod_name
 
 struct mtd_fph_ops {
-        char *(*fph_device_id)(void);
-        char *(*fph_user)(void);
-        char *(*fph_tz)(void);
-        char *(*fph_ipaddrs)(void);
-        char *(*fph_ipaddrs_ts)(void);
-        char *(*fph_macaddrs)(void);
-        char *(*fph_srcip)(void);
-        char *(*fph_srcip_ts)(void);
-        char *(*fph_srcport)(void);
-        char *(*fph_screens)(void);
-        char *(*fph_window_sz)(void);
-        char *(*fph_browser_plugins)(void);
-        char *(*fph_browser_js_ua)(void);
-        char *(*fph_browser_dnt)(void);
-        char *(*fph_vendor_ip)(void);
-        char *(*fph_vendor_fwd)(void);
-        char *(*fph_ua)(void);
-        char *(*fph_multi_factor)(void);
-        char *(*fph_license_id)(void);
-        char *(*fph_prod_name)(void);
-        char *(*fph_version)(void);
-        char *(*fph_version_cli)(void);
+        char *(*fph_device_id)(void *user_data);
+        char *(*fph_user)(void *user_data);
+        char *(*fph_tz)(void *user_data);
+        char *(*fph_ipaddrs)(void *user_data);
+        char *(*fph_ipaddrs_ts)(void *user_data);
+        char *(*fph_macaddrs)(void *user_data);
+        char *(*fph_srcip)(void *user_data);
+        char *(*fph_srcip_ts)(void *user_data);
+        char *(*fph_srcport)(void *user_data);
+        char *(*fph_screens)(void *user_data);
+        char *(*fph_window_sz)(void *user_data);
+        char *(*fph_browser_plugins)(void *user_data);
+        char *(*fph_browser_js_ua)(void *user_data);
+        char *(*fph_browser_dnt)(void *user_data);
+        char *(*fph_vendor_ip)(void *user_data);
+        char *(*fph_vendor_fwd)(void *user_data);
+        char *(*fph_ua)(void *user_data);
+        char *(*fph_multi_factor)(void *user_data);
+        char *(*fph_license_id)(void *user_data);
+        char *(*fph_prod_name)(void *user_data);
+        char *(*fph_version)(void *user_data);
+        char *(*fph_version_cli)(void *user_data);
+
+        void *user_data;
 .br
 };
 
