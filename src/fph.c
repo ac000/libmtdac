@@ -235,8 +235,8 @@ static char *get_version(void *user_data)
 	if (fph_ops.fph_version_cli)
 		ver_cli = fph_ops.fph_version_cli(user_data);
 
-	err = asprintf(&buf, "%s=%s%s%s", encname, encver, ver_cli ? "&" : "",
-		       ver_cli ? ver_cli : "");
+	err = asprintf(&buf, "%s%s%s=%s", ver_cli ? ver_cli : "",
+		       ver_cli ? "&" : "", encname, encver);
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf:");
 		buf = NULL;
