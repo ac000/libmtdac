@@ -298,7 +298,7 @@ static const struct _endpoint {
 		.ctype	= CONTENT_TYPE_JSON,
 		.scope	= SCOPE_USER
 	},
-	[SA_SE_GET_END_OF_PERIOD_STATEMENT] = {
+	[SA_SE_GET_END_OF_PERIOD_OBLIGATIONS] = {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations/{optional_query_params}",
 		.method	= M_GET,
 		.scope	= SCOPE_USER

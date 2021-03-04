@@ -3,7 +3,7 @@
 /*
  * mtd-sa.h - Make Tax Digital - Self Assessment API
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (c) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _MTD_SA_H_
@@ -72,9 +72,9 @@ extern int mtd_sa_pb_create_property(const struct mtd_dsrc_ctx *dsctx,
 				     char **buf);
 extern int mtd_sa_pb_get_property(char **buf);
 
-extern int mtd_sa_se_get_end_of_period_statement(const char *seid,
-						 const char *query_string,
-						 char **buf);
+extern int mtd_sa_se_get_end_of_period_obligations(const char *seid,
+						   const char *query_string,
+						   char **buf);
 extern int mtd_sa_se_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
 						    const char *seid,
 						    const char *start,

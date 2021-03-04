@@ -326,10 +326,11 @@ int mtd_sa_pb_get_property(char **buf)
  *
  * 	?from=YYYY-MM-DD&to=YYYY-MM-DD
  */
-int mtd_sa_se_get_end_of_period_statement(const char *seid,
-					  const char *query_string, char **buf)
+int mtd_sa_se_get_end_of_period_obligations(const char *seid,
+					    const char *query_string,
+					    char **buf)
 {
-	return do_ep(SA_SE_GET_END_OF_PERIOD_STATEMENT, API_VER,
+	return do_ep(SA_SE_GET_END_OF_PERIOD_OBLIGATIONS, API_VER,
 		     NULL, buf, seid, query_string, (char *)NULL);
 }
 

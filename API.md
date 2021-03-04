@@ -480,12 +480,12 @@ int mtd_sa_se_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
                                              char **buf);
 ```
 
-#### mtd\_sa\_se\_get\_end\_of\_period\_statement
+#### mtd\_sa\_se\_get\_end\_of\_period\_obligations
 
 ```C
-int mtd_sa_se_get_end_of_period_statement(const char *seid,
-                                          const char *query_string,
-                                          char **buf);
+int mtd_sa_se_get_end_of_period_obligations(const char *seid,
+                                            const char *query_string,
+                                            char **buf);
 ```
 
 
