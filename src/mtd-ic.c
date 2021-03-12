@@ -11,7 +11,7 @@
 #include "mtd-ic.h"		/* for default (public) visibility */
 #include "endpoints.h"
 
-#define API_VER			"Accept: application/vnd.hmrc.1.0+json"
+#define API_VER			"Accept: application/vnd.hmrc.2.0+json"
 
 /*
  * [POST]
