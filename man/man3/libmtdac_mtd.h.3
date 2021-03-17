@@ -1,4 +1,4 @@
-.TH libmtdac_mtd.h 3 "January 7, 2021" "libmtdac 0.17.0" "libmtdac_mtd.h"
+.TH libmtdac_mtd.h 3 "March 17, 2021" "libmtdac 0.18.0" "libmtdac_mtd.h"
 
 .SH NAME
 libmtdac_mtd.h \- Core types / defines
@@ -79,6 +79,7 @@ By default libmtdac uses the \fBtest\fP API. Setting this will make it use the
 .RE
 
 .SH Errors
+.SS General library errors
 
 enum mtd_error {
         \fBMTD_ERR_NONE\fP,
@@ -96,6 +97,18 @@ enum mtd_error {
 };
 
 NOTE: Apart from MTD_ERR_NONE, these errors are returned as \fB-\fPMTD_ERR_*
+
+.SS HMRC MTD endpoint errors
+
+enum mtd_hmrc_error {
+        \fBMTD_HMRC_ERR_UNKNOWN\fP,
+        \fBMTD_HMRC_ERR_NO_MESSAGES_PRESENT\fP,
+        \fBMTD_HMRC_ERR_MATCHING_RESOURCE_NOT_FOUND\fP,
+.br
+};
+
+These represent error messages returned from the various endpoints (obviously
+only a few are currently handled).
 
 .SH HTTP status codes
 
@@ -396,6 +409,12 @@ due to a failure.
 This is to get the HTTP status enum string of the last request. In the case
 of multiple requests, it is likely to be the last one you are interested in
 due to a failure.
+.RE
+
+.BI "enum mtd_hmrc_error mtd_hmrc_error(const char *json);"
+
+.RS
+This is to check an endpoint error code.
 .RE
 
 .SH NOTES

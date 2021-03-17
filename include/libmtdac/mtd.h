@@ -73,6 +73,12 @@ enum mtd_error {
 	MTD_ERR_INVALID_ERROR
 };
 
+enum mtd_hmrc_error {
+	MTD_HMRC_ERR_UNKNOWN = 0,
+	MTD_HMRC_ERR_NO_MESSAGES_PRESENT,
+	MTD_HMRC_ERR_MATCHING_RESOURCE_NOT_FOUND,
+};
+
 /* Just the HTTP status codes relevant to the MTD API */
 enum mtd_http_status_code {
 	MTD_HTTP_OK = 200,
@@ -188,6 +194,7 @@ extern char *mtd_percent_encode(const char *str, ssize_t len);
 extern const char *mtd_err2str(int err);
 extern const char *mtd_err2enum_str(int err);
 extern enum mtd_http_status_code mtd_http_status_code(const char *json);
+extern enum mtd_hmrc_error mtd_hmrc_error(const char *json);
 
 #pragma GCC visibility pop
 

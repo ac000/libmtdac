@@ -87,6 +87,21 @@ static const struct _mtd_err_map {
 	}
 };
 
+static const struct _mtd_hmrc_err_map {
+	const enum mtd_hmrc_error err;
+	const char *str;
+} mtd_hmrc_err_map[] = {
+	[MTD_HMRC_ERR_UNKNOWN] = {
+		.str = "MTD_HMRC_ERR_UNKNOWN"
+	},
+	[MTD_HMRC_ERR_NO_MESSAGES_PRESENT] = {
+		.str = "NO_MESSAGES_PRESENT",
+	},
+	[MTD_HMRC_ERR_MATCHING_RESOURCE_NOT_FOUND] = {
+		.str = "MATCHING_RESOURCE_NOT_FOUND"
+	},
+};
+
 static const struct mtd_ctx dfl_mtd_ctx = {
 	.log_level		= MTD_LOG_ERR,
 	.app_conn_type		= MTD_ACT_OTHER_DIRECT,
@@ -163,6 +178,39 @@ const char *mtd_http_status_str(const char *json)
 	json_decref(jarray);
 
 	return str;
+}
+
+enum mtd_hmrc_error mtd_hmrc_error(const char *json)
+{
+	json_t *jarray;
+	json_t *root;
+	json_t *result;
+	json_t *code_obj;
+	const char *code;
+	int i;
+	int n = sizeof(mtd_hmrc_err_map) / sizeof(mtd_hmrc_err_map[0]);
+	enum mtd_hmrc_error err = MTD_HMRC_ERR_UNKNOWN;
+
+	jarray = json_loads(json, 0, NULL);
+	root = json_array_get(jarray, json_array_size(jarray) - 1);
+	result = json_object_get(root, "result");
+	code_obj = json_object_get(result, "code");
+	if (!code_obj)
+		goto out_free;
+
+	code = json_string_value(code_obj);
+	for (i = 0; i < n; i++) {
+		if (strcmp(mtd_hmrc_err_map[i].str, code) != 0)
+			continue;
+
+		err = i;
+		break;
+	}
+
+out_free:
+	json_decref(jarray);
+
+	return err;
 }
 
 char *mtd_percent_encode(const char *str, ssize_t len)

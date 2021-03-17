@@ -49,6 +49,8 @@
 
 ### Errors
 
+#### General library errors
+
 ```C
 enum mtd_error {
         MTD_ERR_NONE,
@@ -66,6 +68,19 @@ enum mtd_error {
 ```
 
 Apart form *MTD_ERR_NONE* these errors are returned as **-**MTD\_ERR_...
+
+#### HMRC MTD endpoint errors
+
+```C
+enum mtd_hmrc_error {
+        MTD_HMRC_ERR_UNKNOWN,
+        MTD_HMRC_ERR_NO_MESSAGES_PRESENT,
+        MTD_HMRC_ERR_MATCHING_RESOURCE_NOT_FOUND,
+};
+```
+
+These represent error messages returned from the various endpoints (obviously
+only a few are currently handled).
 
 ### Data Source
 
@@ -390,6 +405,12 @@ const char *mtd_http_status_str_u(const char *json);
 
 ```C
 const char *mtd_http_status_str(const char *json);
+```
+
+#### mtd\_hmrc\_error - return an enum representing an endpoint error code
+
+```C
+enum mtd_hmrc_error mtd_hmrc_error(const char *json);
 ```
 
 
