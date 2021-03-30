@@ -80,6 +80,11 @@ Can be used in a non-threaded application instead of calling
 Used to tell libmtdac to \fBnot\fP send \fBFraud Prevention Headers\fP.
 However these are currently mandatory.
 
+.TP
+.B MTD_OPT_SND_EMPTY_HDRS
+By default, any fraud prevention headers that have no value will not be sent.
+If you wich to send them as empty headers you can set this flag.
+
 .PP
 
 \fIcfg\fP is a \fIstruct mtd_cfg\fP that is used to override/provide various

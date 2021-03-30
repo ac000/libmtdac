@@ -690,6 +690,7 @@ static char *(*lookup_fph_func(const enum fph_hdr hdr))(void *user_data)
 	return NULL;
 }
 
+extern __thread struct mtd_ctx mtd_ctx;
 static void add_fph(struct curl_ctx *ctx, const enum fph_hdr hdr)
 {
 	int i;
@@ -703,6 +704,9 @@ static void add_fph(struct curl_ctx *ctx, const enum fph_hdr hdr)
 		return;	/* Skip this header */
 
 	val = fph_func(fph_ops.user_data);
+	if (!val && !(mtd_ctx.opts & MTD_OPT_SND_EMPTY_HDRS))
+		return;
+
 	n = sizeof(fph_hdr_map) / sizeof(fph_hdr_map[0]);
 	for (i = 0; i < n; i++) {
 		if (fph_hdr_map[i].hdr == hdr) {
@@ -711,8 +715,8 @@ static void add_fph(struct curl_ctx *ctx, const enum fph_hdr hdr)
 		}
 	}
 	/*
-	 * For cases where we have no suitable header value we need to
-	 * send an empty header. However, libcurl by default will just
+	 * For cases where we have no suitable header value we may need
+	 * to send an empty header. However, libcurl by default will just
 	 * exclude any such headers.
 	 *
 	 * You can however force it to send an empty header by using
@@ -731,15 +735,15 @@ static void add_fph(struct curl_ctx *ctx, const enum fph_hdr hdr)
 	free(val);
 }
 
-void set_anti_fraud_hdrs(const struct mtd_ctx *mtd_ctx, struct curl_ctx *ctx)
+void set_anti_fraud_hdrs(struct curl_ctx *ctx)
 {
-	if (mtd_ctx->opts & MTD_OPT_NO_ANTI_FRAUD_HDRS)
+	if (mtd_ctx.opts & MTD_OPT_NO_ANTI_FRAUD_HDRS)
 		return;
 
 	libcurl_sockfd = ctx->sockfd;
 
 	curl_add_hdr(ctx, "Gov-Client-Connection-Method: %s",
-		     fph_type_map[mtd_ctx->app_conn_type].str);
+		     fph_type_map[mtd_ctx.app_conn_type].str);
 
 	add_fph(ctx, FPH_C_PUBLIC_IP);
 	add_fph(ctx, FPH_C_PUBLIC_IP_TS);

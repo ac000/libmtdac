@@ -71,6 +71,13 @@ calling \fBmtd_global_init()\fP
 This disables the sending of Fraud Preention Headers.
 .RE
 
+#define \fBMTD_OPT_SND_EMPTY_HDRS\fP
+
+.RS
+By default, fraud prevention headers that have no value will not be sent. If
+you with to send them as empty headers, you can set the above flag.
+.RE
+
 #define \fBMTD_OPT_PRODUCTION_API\fP
 
 .RS

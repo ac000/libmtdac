@@ -507,7 +507,7 @@ curl_again:
 	if (ctx->sockfd < 0)
 		return -MTD_ERR_OS;
 
-	set_anti_fraud_hdrs(&mtd_ctx, ctx);
+	set_anti_fraud_hdrs(ctx);
 	err = set_headers(ctx);
 	if (err)
 		return err;

@@ -313,6 +313,11 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 
    however they are mandatory...
 
+   for headers that have no value, by default we will skip sending that
+   header, howwever if you wish to send an empty header you can set
+
+        MTD_OPT_SND_EMPTY_HDRS
+
    in a single-threaded application, when not calling mtd\_global\_init()
 
         MTD_OPT_GLOBAL_INIT
