@@ -61,7 +61,7 @@ enum fph_hdr {
 	FPH_C_USER_ID	   | \
 	FPH_C_TZ	   | \
 	FPH_C_LOCAL_IPS	   | \
-	FPH_C_LOCAL_IPS_TS  | \
+	FPH_C_LOCAL_IPS_TS | \
 	FPH_C_MAC_ADDRS	   | \
 	FPH_C_UA	   | \
 	FPH_C_MULTI_FACTOR | \
