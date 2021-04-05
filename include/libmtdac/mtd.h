@@ -76,9 +76,12 @@ enum mtd_error {
 };
 
 enum mtd_hmrc_error {
-	MTD_HMRC_ERR_UNKNOWN = 0,
+	MTD_HMRC_ERR_MULTIPLE = 0,
 	MTD_HMRC_ERR_NO_MESSAGES_PRESENT,
 	MTD_HMRC_ERR_MATCHING_RESOURCE_NOT_FOUND,
+
+	/* keep this last */
+	MTD_HMRC_ERR_UNKNOWN
 };
 
 /* Just the HTTP status codes relevant to the MTD API */

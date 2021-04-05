@@ -73,9 +73,10 @@ Apart form *MTD_ERR_NONE* these errors are returned as **-**MTD\_ERR_...
 
 ```C
 enum mtd_hmrc_error {
-        MTD_HMRC_ERR_UNKNOWN,
+        MTD_HMRC_ERR_MULTIPLE,
         MTD_HMRC_ERR_NO_MESSAGES_PRESENT,
         MTD_HMRC_ERR_MATCHING_RESOURCE_NOT_FOUND,
+        MTD_HMRC_ERR_UNKNOWN
 };
 ```
 
