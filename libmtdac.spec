@@ -9,7 +9,7 @@ URL:		https://github.com/ac000/libmtdac
 Source0:	libmtdac-%{version}.tar
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires:	glibc-devel curl-devel jansson-devel
+BuildRequires:	glibc-devel libcurl-devel jansson-devel
 
 %description
 libmtdac is a library for interfacing with the UK's HMRC Make Tax Digital API.
