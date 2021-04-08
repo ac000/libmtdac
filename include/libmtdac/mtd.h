@@ -80,6 +80,10 @@ enum mtd_hmrc_error {
 	MTD_HMRC_ERR_NO_MESSAGES_PRESENT,
 	MTD_HMRC_ERR_MATCHING_RESOURCE_NOT_FOUND,
 
+	/* Generic top-level errors */
+	MTD_HMRC_ERR_BUSINESS_ERROR,
+	MTD_HMRC_ERR_INVALID_REQUEST,
+
 	/* keep this last */
 	MTD_HMRC_ERR_UNKNOWN
 };

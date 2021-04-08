@@ -101,6 +101,14 @@ static const struct _mtd_hmrc_err_map {
 		.str = "MATCHING_RESOURCE_NOT_FOUND",
 	},
 
+	/* Generic top-level errors */
+	[MTD_HMRC_ERR_BUSINESS_ERROR] = {
+		.str = "BUSINESS_ERROR",
+	},
+	[MTD_HMRC_ERR_INVALID_REQUEST] = {
+		.str = "INVALID_REQUEST",
+	},
+
 	[MTD_HMRC_ERR_UNKNOWN] = {
 		.str = "MTD_HMRC_ERR_UNKNOWN",
 	}
