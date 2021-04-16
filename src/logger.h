@@ -3,7 +3,7 @@
 /*
  * logger.h - Simple logging functon
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _LOGGER_H_
@@ -51,11 +51,9 @@ static inline void _logger(const char *func, enum log_level log_level,
 
 		va_start(ap, fmt);
 		len = vasprintf(&logbuf, fmt, ap);
-		if (len == -1 && logbuf) {
-			va_end(ap);
-			return;
-		}
 		va_end(ap);
+		if (len == -1)
+			goto out_free;
 	}
 
 	if (log_level == MTD_LOG_ERRNO) {
@@ -72,8 +70,10 @@ static inline void _logger(const char *func, enum log_level log_level,
 			logbuf ? " " : "", logbuf ? logbuf : "",
 			errp ? " " : "", errp ? errp : "", errp ? "\n" : "");
 
-	free(logbuf);
 	errno = e;
+
+out_free:
+	free(logbuf);
 }
 
 #endif /* _LOGGER_H_ */
