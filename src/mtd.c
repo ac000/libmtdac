@@ -35,7 +35,6 @@
 #define PROD_API_URL		"https://api.service.hmrc.gov.uk"
 
 static const struct _mtd_err_map {
-	const enum mtd_error err;
 	const char *estr;
 	const char *str;
 } mtd_err_map[] = {
@@ -88,7 +87,6 @@ static const struct _mtd_err_map {
 };
 
 static const struct _mtd_hmrc_err_map {
-	const enum mtd_hmrc_error err;
 	const char *str;
 } mtd_hmrc_err_map[] = {
 	[MTD_HMRC_ERR_MULTIPLE] = {
