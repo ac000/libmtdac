@@ -538,8 +538,6 @@ void mtd_deinit(void)
 static const char * const api_scopes[] = {
 	"write:self-assessment",
 	"read:self-assessment",
-	"read:individual-employment",
-	"read:individual-income",
 	"read:national-insurance",
 	"read:vat",
 	"write:vat",
