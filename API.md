@@ -5,7 +5,7 @@
   * [Fraud Prevention Headers](#fraud-prevention-headers)
   * [Config](#config)
   * [Initialisation functions](#initialisation-functions)
-    - [Misc. functons](#misc-functions)
+    - [Misc. functions](#misc-functions)
   * [Make Tax Digital - Self-Assessment API functions](#make-tax-digital---self-assessment-api-functions)
     - [Self-Assessment - Self-Employment](#self-assessment---self-employment)
     - [Self-Assessment - UK Property Business](#self-assessment---uk-property-business)
@@ -317,7 +317,7 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
    however they are mandatory...
 
    for headers that have no value, by default we will skip sending that
-   header, howwever if you wish to send an empty header you can set
+   header, however if you wish to send an empty header you can set
 
         MTD_OPT_SND_EMPTY_HDRS
 
@@ -325,7 +325,7 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 
         MTD_OPT_GLOBAL_INIT
 
-*cfg* is as desrcibed in [Config](#config) above.
+*cfg* is as described in [Config](#config) above.
 
 
 #### mtd\_init\_auth - initialise oauth.json
