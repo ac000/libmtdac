@@ -1057,27 +1057,27 @@ int mtd_bsas_pb_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
 #include <libmtdac/mtd-vat.h>
 ```
 
-### mtd\_vat\_list\_obligations
+#### mtd\_vat\_list\_obligations
 
 ```C
 int mtd_vat_list_obligations(const char *vrn, const char *query_string,
                              char **buf);
 ```
 
-### mtd\_vat\_submit\_period
+#### mtd\_vat\_submit\_period
 
 ```C
 int mtd_vat_submit_period(const struct mtd_dsrc_ctx *dsctx, const char *vrn,
                           char **buf);
 ```
 
-### mtd\_vat\_get\_period
+#### mtd\_vat\_get\_period
 
 ```C
 int mtd_vat_get_period(const char *vrn, const char *period_key, char **buf);
 ```
 
-### mtd\_vat\_list\_liabilities
+#### mtd\_vat\_list\_liabilities
 
 ```C
 int mtd_vat_list_liabilities(const char *vrn, const char *query_string,
@@ -1085,7 +1085,7 @@ int mtd_vat_list_liabilities(const char *vrn, const char *query_string,
 ```
 
 
-### mtd\_vat\_list\_payments
+#### mtd\_vat\_list\_payments
 
 ```C
 int mtd_vat_list_payments(const char *vrn, const char *query_string,
@@ -1113,27 +1113,27 @@ int mtd_ni_get_annual_summary(const char *utr, const char *tax_year,
 #include <libmtdac/mtd-test-cu.h>
 ```
 
-### mtd\_test\_cu\_create\_individual
+#### mtd\_test\_cu\_create\_individual
 
 ```C
 int mtd_test_cu_create_individual(const struct mtd_dsrc_ctx *dsctx,
                                   char **buf);
 ```
 
-### mtd\_test\_cu\_create\_organisation
+#### mtd\_test\_cu\_create\_organisation
 
 ```C
 int mtd_test_cu_create_organisation(const struct mtd_dsrc_ctx *dsctx,
                                     char **buf);
 ```
 
-### mtd\_test\_cu\_create\_agent
+#### mtd\_test\_cu\_create\_agent
 
 ```C
 int mtd_test_cu_create_agent(const struct mtd_dsrc_ctx *dsctx, char **buf);
 ```
 
-### mtd\_test\_cu\_list\_services
+#### mtd\_test\_cu\_list\_services
 
 ```C
 int mtd_test_cu_list_services(char **buf);
