@@ -237,6 +237,23 @@ static const struct _endpoint {
 		.authz	= AUTHZ_USER
 	},
 
+	/* Obligations */
+	[OB_LIST_INC_AND_EXPEND_OBLIGATIONS] = {
+		.tmpl	= "/obligations/details/{nino}/income-and-expenditure/{optional_query_params}",
+		.method	= M_GET,
+		.authz	= AUTHZ_USER
+	},
+	[OB_LIST_CRYSTALLISATION_OBLIGATIONS] = {
+		.tmpl	= "/obligations/details/{nino}/crystallisation/{optional_query_params}",
+		.method	= M_GET,
+		.authz	= AUTHZ_USER
+	},
+	[OB_LIST_END_OF_PERIOD_OBLIGATIONS] = {
+		.tmpl	= "/obligations/details/{nino}/end-of-period-statement/{optional_query_params}",
+		.method	= M_GET,
+		.authz	= AUTHZ_USER
+	},
+
 	/* Self-Assessment - Self-Employment */
 	[SA_SE_LIST_SELF_EMPLOYMENTS] = {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments",

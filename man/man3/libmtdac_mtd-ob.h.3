@@ -1,0 +1,41 @@
+.TH libmtdac_mtd-ob.h 3 "July 8, 2021" "libmtdac 0.50.0" "libmtdac_mtd-ob.h"
+
+.SH NAME
+libmtdac_mtd-ob.h \- Make Tax Digital \- Obligations API
+
+.SH SYNOPSIS
+.B #include <libmtdac/mtd-ob.h>
+
+.SH DESCRIPTION
+These functions are for working with the UK's HMRC Make Tax Digital
+Obligations API.
+
+.SH FUNCTIONS
+
+.nf
+.BI "int mtd_ob_list_inc_and_expend_obligations(const char *" query_string ",
+.BI "                                           char **" buf );
+
+.RS +4
+.BR mtd_ob_list_inc_and_expend_obligations (3)
+.RE
+
+.BI "int mtd_ob_list_crystallisation_obligations(const char *" query_string ",
+.BI "                                            char **" buf );
+
+.RS +4
+.BR mtd_ob_list_crystallisation_obligations (3)
+.RE
+
+.BI "int mtd_ob_list_end_of_period_obligations(const char *" query_string ",
+.BI "                                          char **" buf );
+
+.RS +4
+.BR mtd_ob_list_end_of_period_obligations (3)
+.RE
+.ni
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3)

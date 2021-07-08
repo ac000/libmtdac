@@ -25,6 +25,7 @@
   * [Make Tax Digital - Business Source Adjustable Summary API functions](#make-tax-digital---business-source-adjustable-summary-api-functions)
     - [Business Source Adjustable Summary - Self-Employment](#business-source-adjustable-summary---self-employment)
     - [Business Source Adjustable Summary - UK Property Business](#business-source-adjustable-summary---uk-property-business)
+  * [Make Tax Digital - Obligations API functions](#make-tax-digital---obligations-api-functions)
   * [Make Tax Digital - VAT API functions](#make-tax-digital---vat-api-functions)
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
@@ -1048,6 +1049,34 @@ int mtd_bsas_pb_list_summary_adjustments(const char *bid, char **buf);
 ```C
 int mtd_bsas_pb_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
                                            const char *bid, char **buf);
+```
+
+
+### Make Tax Digital - Obligations API functions
+
+```C
+#include <libmtdac/mtd-ob.h>
+```
+
+#### mtd\_ob\_list\_inc\_and\_expend\_obligations
+
+```C
+int mtd_ob_list_inc_and_expend_obligations(const char *query_string,
+                                           char **buf);
+```
+
+#### mtd\_ob\_list\_crystallisation\_obligations
+
+```C
+int mtd_ob_list_crystallisation_obligations(const char *query_string,
+                                            char **buf);
+```
+
+#### mtd\_ob\_list\_end\_of\_period\_obligations
+
+```C
+int mtd_ob_list_end_of_period_obligations(const char *query_string,
+                                          char **buf);
 ```
 
 
