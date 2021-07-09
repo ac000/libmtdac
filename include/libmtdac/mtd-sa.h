@@ -65,7 +65,8 @@ extern int mtd_sa_pb_get_non_fhl_annual_summary(const char *tax_year,
 extern int mtd_sa_pb_update_non_fhl_period(const struct mtd_dsrc_ctx *dsctx,
 					   const char *pid, char **buf);
 extern int mtd_sa_pb_get_non_fhl_period(const char *pid, char **buf);
-extern int mtd_sa_pb_create_non_fhl_period(const struct mtd_dsrc_ctx *dsctx, char **buf);
+extern int mtd_sa_pb_create_non_fhl_period(const struct mtd_dsrc_ctx *dsctx,
+					   char **buf);
 extern int mtd_sa_pb_list_non_fhl_periods(char **buf);
 extern int mtd_sa_pb_list_obligations(char **buf);
 extern int mtd_sa_pb_create_property(const struct mtd_dsrc_ctx *dsctx,
