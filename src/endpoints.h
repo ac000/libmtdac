@@ -18,8 +18,12 @@
  * in endpoints.c
  */
 enum endpoint {
+	/* Business Details */
+	BD_LIST = 0,
+	BD_GET,
+
 	/* Business Income Source Summary */
-	BISS_GET_SELF_EMPLOYMENT = 0,
+	BISS_GET_SELF_EMPLOYMENT,
 	BISS_GET_UK_PROPERTY,
 	BISS_GET_FOREIGN_PROPERTY,
 

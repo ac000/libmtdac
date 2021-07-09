@@ -26,6 +26,7 @@
     - [Business Source Adjustable Summary - Self-Employment](#business-source-adjustable-summary---self-employment)
     - [Business Source Adjustable Summary - UK Property Business](#business-source-adjustable-summary---uk-property-business)
   * [Make Tax Digital - Obligations API functions](#make-tax-digital---obligations-api-functions)
+  * [Make Tax Digital - Business Details API functions](#make-tax-digital---business-details-api-functions)
   * [Make Tax Digital - VAT API functions](#make-tax-digital---vat-api-functions)
   * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
@@ -1077,6 +1078,25 @@ int mtd_ob_list_crystallisation_obligations(const char *query_string,
 ```C
 int mtd_ob_list_end_of_period_obligations(const char *query_string,
                                           char **buf);
+```
+
+
+### Make Tax Digital - Business Details API functions
+
+```C
+#include <libmtdac/mtd-bd.h>
+```
+
+#### mtd\_bd\_list
+
+```C
+int mtd_bd_list(char **buf);
+```
+
+#### mtd\_bd\_get
+
+```C
+int mtd_bd_get(const char *bid, char **buf);
 ```
 
 

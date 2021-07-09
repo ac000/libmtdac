@@ -38,6 +38,18 @@ static const struct _endpoint {
 	const enum content_type ctype;
 	const enum oauth_authz authz;
 } endpoints[] = {
+	/* Business Details */
+	[BD_LIST] = {
+		.tmpl	= "/individuals/business/details/{nino}/list",
+		.method	= M_GET,
+		.authz	= AUTHZ_USER
+	},
+	[BD_GET] = {
+		.tmpl	= "/individuals/business/details/{nino}/{businessId}",
+		.method	= M_GET,
+		.authz	= AUTHZ_USER
+	},
+
 	/* Business Income Source Summary */
 	[BISS_GET_SELF_EMPLOYMENT] = {
 		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/self-employment/{query_params}",
