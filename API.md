@@ -432,30 +432,11 @@ enum mtd_hmrc_error mtd_hmrc_error(const char *json);
 
 #### Self-Assessment - Self-Employment
 
-#### mtd\_sa\_se\_list\_employments
-
-```C
-int mtd_sa_se_list_employments(char **buf);
-```
-
 #### mtd\_sa\_se\_create\_employment
 
 ```C
 int mtd_sa_se_create_employment(const struct mtd_dsrc_ctx *dsctx,
                                 char **buf)
-```
-
-#### mtd\_sa\_se\_get\_employment
-
-```C
-int mtd_sa_se_get_employment(const char *seid, char **buf);
-```
-
-#### mtd\_sa\_se\_list\_obligations
-
-```C
-int mtd_sa_se_list_obligations(const char *seid, const char *query_string,
-                               char **buf);
 ```
 
 #### mtd\_sa\_se\_list\_periods
@@ -511,22 +492,7 @@ int mtd_sa_se_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
                                              char **buf);
 ```
 
-#### mtd\_sa\_se\_get\_end\_of\_period\_obligations
-
-```C
-int mtd_sa_se_get_end_of_period_obligations(const char *seid,
-                                            const char *query_string,
-                                            char **buf);
-```
-
-
 #### Self-Assessment - UK Property Business
-
-#### mtd\_sa\_pb\_get\_property
-
-```C
-int mtd_sa_pb_get_property(char **buf);
-```
 
 #### mtd\_sa\_pb\_create\_property
 
@@ -720,12 +686,6 @@ int mtd_sa_cr_intent_to_crystallise(const char *tax_year, char **buf);
 ```C
 int mtd_sa_cr_crystallise(const struct mtd_dsrc_ctx *dsctx,
                           const char *tax_year, char **buf);
-```
-
-#### mtd\_sa\_cr\_list\_obligations
-
-```C
-int mtd_sa_cr_list_obligations(const char *query_string, char **buf);
 ```
 
 

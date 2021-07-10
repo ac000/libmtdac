@@ -3,7 +3,7 @@
 /*
  * mtd-sa.c - Make Tax Digital - Self Assessment API
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (c) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #include <stddef.h>
@@ -12,16 +12,6 @@
 #include "endpoints.h"
 
 #define API_VER			"Accept: application/vnd.hmrc.2.0+json"
-
-/*
- * [GET ]
- * /self-assessment/ni/{nino}/crystallisation/obligations?from=YYYY-MM-DD&to=YYYY-MM-DD
- */
-int mtd_sa_cr_list_obligations(const char *query_string, char **buf)
-{
-	return do_ep(SA_CR_LIST_OBLIGATIONS, API_VER,
-		     NULL, buf, query_string, (char *)NULL);
-}
 
 /*
  * [POST]
@@ -309,32 +299,6 @@ int mtd_sa_pb_create_property(const struct mtd_dsrc_ctx *dsctx, char **buf)
 }
 
 /*
- * [GET ]
- * /self-assessment/ni/{nino}/uk-properties
- */
-int mtd_sa_pb_get_property(char **buf)
-{
-	return do_ep(SA_PB_GET_PROPERTY, API_VER,
-		     NULL, buf, (char *)NULL);
-}
-
-/*
- * [GET ]
- * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations
- *
- * Optional query string:
- *
- * 	?from=YYYY-MM-DD&to=YYYY-MM-DD
- */
-int mtd_sa_se_get_end_of_period_obligations(const char *seid,
-					    const char *query_string,
-					    char **buf)
-{
-	return do_ep(SA_SE_GET_END_OF_PERIOD_OBLIGATIONS, API_VER,
-		     NULL, buf, seid, query_string, (char *)NULL);
-}
-
-/*
  * [POST]
  * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}
  */
@@ -415,27 +379,6 @@ int mtd_sa_se_list_periods(const char *seid, char **buf)
 }
 
 /*
- * [GET ]
- * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/obligations[?[from=YYYY-MM-DD][&[to=YYYY-MM-DD]]]
- */
-int mtd_sa_se_list_obligations(const char *seid, const char *query_string,
-			       char **buf)
-{
-	return do_ep(SA_SE_LIST_OBLIGATIONS, API_VER,
-		     NULL, buf, seid, query_string, (char *)NULL);
-}
-
-/*
- * [GET ]
- * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}
- */
-int mtd_sa_se_get_employment(const char *seid, char **buf)
-{
-	return do_ep(SA_SE_GET_SELF_EMPLOYMENT, API_VER,
-		     NULL, buf, seid, (char *)NULL);
-}
-
-/*
  * [POST]
  * /self-assessment/ni/{nino}/self-employments
  */
@@ -443,14 +386,4 @@ int mtd_sa_se_create_employment(const struct mtd_dsrc_ctx *dsctx, char **buf)
 {
 	return do_ep(SA_SE_CREATE_SELF_EMPLOYMENT, API_VER,
 		     dsctx, buf, (char *)NULL);
-}
-
-/*
- * [GET ]
- * /self-assessment/ni/{nino}/self-employments
- */
-int mtd_sa_se_list_employments(char **buf)
-{
-	return do_ep(SA_SE_LIST_SELF_EMPLOYMENTS, API_VER,
-		     NULL, buf, (char *)NULL);
 }

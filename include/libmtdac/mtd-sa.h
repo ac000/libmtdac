@@ -17,7 +17,6 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
-extern int mtd_sa_cr_list_obligations(const char *query_string, char **buf);
 extern int mtd_sa_cr_crystallise(const struct mtd_dsrc_ctx *dsctx,
 				 const char *tax_year, char **buf);
 extern int mtd_sa_cr_intent_to_crystallise(const char *tax_year, char **buf);
@@ -71,11 +70,7 @@ extern int mtd_sa_pb_list_non_fhl_periods(char **buf);
 extern int mtd_sa_pb_list_obligations(char **buf);
 extern int mtd_sa_pb_create_property(const struct mtd_dsrc_ctx *dsctx,
 				     char **buf);
-extern int mtd_sa_pb_get_property(char **buf);
 
-extern int mtd_sa_se_get_end_of_period_obligations(const char *seid,
-						   const char *query_string,
-						   char **buf);
 extern int mtd_sa_se_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
 						    const char *seid,
 						    const char *start,
@@ -94,12 +89,8 @@ extern int mtd_sa_se_get_period(const char *seid, const char *period_id,
 extern int mtd_sa_se_create_period(const struct mtd_dsrc_ctx *dsctx,
 				   const char *seid, char **buf);
 extern int mtd_sa_se_list_periods(const char *seid, char **buf);
-extern int mtd_sa_se_list_obligations(const char *seid,
-				      const char *query_string, char **buf);
-extern int mtd_sa_se_get_employment(const char *seid, char **buf);
 extern int mtd_sa_se_create_employment(const struct mtd_dsrc_ctx *dsctx,
 				       char **buf);
-extern int mtd_sa_se_list_employments(char **buf);
 
 #pragma GCC visibility pop
 

@@ -15,29 +15,10 @@ Assessment API which itself contains several sub API's.
 .SS Self-employments
 
 .nf
-.BI "int mtd_sa_se_list_employments(char **" buf ");"
-
-.RS +4
-.BR mtd_sa_se_list_employments (3)
-.RE
-
 .BI "int mtd_sa_se_create_employment(const char *" src_file ", char **" buf ");"
 
 .RS +4
 .BR mtd_sa_se_create_employment (3)
-.RE
-
-.BI "int mtd_sa_se_get_employment(const char *" seid ", char **" buf ");"
-
-.RS +4
-.BR mtd_sa_se_get_employment (3)
-.RE
-
-.BI "int mtd_sa_se_list_obligations(const char *" seid ",
-.BI "                               const char *" query_string ", char **" buf ");"
-
-.RS +4
-.BR mtd_sa_se_list_obligations (3)
 .RE
 
 .BI "int mtd_sa_se_list_periods(const char *" seid ", char **" buf ");"
@@ -91,25 +72,11 @@ Assessment API which itself contains several sub API's.
 .RS +4
 .BR mtd_sa_se_submit_end_of_period_statement (3)
 .RE
-
-.BI "int mtd_sa_se_get_end_of_period_obligations(const char *" seid ",
-.BI "                                            const char *" query_string ",
-.BI "                                            char **" buf ");"
-
-.RS +4
-.BR mtd_sa_se_get_end_of_period_obligations (3)
-.RE
 .ni
 
 .SS UK property business
 
 .nf
-.BI "int mtd_sa_pb_get_property(char **" buf ");"
-
-.RS +4
-.BR mtd_sa_pb_get_property (3)
-.RE
-
 .BI "int mtd_sa_pb_create_property(const char *" src_file ", char **" buf ");"
 
 .RS +4
@@ -309,12 +276,6 @@ Assessment API which itself contains several sub API's.
 
 .RS +4
 .BR mtd_sa_cr_crystallise (3)
-.RE
-
-.BI "int mtd_sa_cr_list_obligations(const char *" query_string ", char **" buf ");"
-
-.RS +4
-.BR mtd_sa_cr_list_obligations (3)
 .RE
 .ni
 

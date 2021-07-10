@@ -267,25 +267,10 @@ static const struct _endpoint {
 	},
 
 	/* Self-Assessment - Self-Employment */
-	[SA_SE_LIST_SELF_EMPLOYMENTS] = {
-		.tmpl	= "/self-assessment/ni/{nino}/self-employments",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER
-	},
 	[SA_SE_CREATE_SELF_EMPLOYMENT] = {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
-	},
-	[SA_SE_GET_SELF_EMPLOYMENT] = {
-		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER
-	},
-	[SA_SE_LIST_OBLIGATIONS] = {
-		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/obligations/{optional_query_params}",
-		.method	= M_GET,
 		.authz	= AUTHZ_USER
 	},
 	[SA_SE_LIST_PERIODS] = {
@@ -327,17 +312,7 @@ static const struct _endpoint {
 		.ctype	= CONTENT_TYPE_JSON,
 		.authz	= AUTHZ_USER
 	},
-	[SA_SE_GET_END_OF_PERIOD_OBLIGATIONS] = {
-		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/obligations/{optional_query_params}",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER
-	},
 	/* Self-Assessment - UK Property Business */
-	[SA_PB_GET_PROPERTY] = {
-		.tmpl	= "/self-assessment/ni/{nino}/uk-properties",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER
-	},
 	[SA_PB_CREATE_PROPERTY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties",
 		.method	= M_POST,
@@ -489,11 +464,6 @@ static const struct _endpoint {
 		.tmpl	= "/self-assessment/ni/{nino}/{taxYear}/crystallisation",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
-	},
-	[SA_CR_LIST_OBLIGATIONS] = {
-		.tmpl	= "/self-assessment/ni/{nino}/crystallisation/obligations/{query_params}",
-		.method	= M_GET,
 		.authz	= AUTHZ_USER
 	},
 
