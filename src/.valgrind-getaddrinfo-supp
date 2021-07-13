@@ -2,9 +2,18 @@
    <insert_a_suppression_name_here>
    Memcheck:Leak
    match-leak-kinds: reachable
-   fun:malloc
+   fun:*alloc
    ...
    fun:do_dlopen
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:*alloc
+   ...
+   fun:_dl_open
 }
 
 {
@@ -14,13 +23,4 @@
    fun:malloc
    ...
    fun:getaddrinfo
-}
-
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: reachable
-   fun:calloc
-   ...
-   fun:do_dlopen
 }
