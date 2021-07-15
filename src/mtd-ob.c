@@ -15,7 +15,7 @@
 
 /*
  * [GET ]
- * /obligations/details/{nino}/end-of-period-statement[?[typeOfBusiness={self-employment,uk-property,foreign-property}][&[businessId=]][&[fromDate=YYYY-MM-DD]][&[toDate=YYYY-MM-DD]][&[status={Open,Fulfilled}]]]
+ * /obligations/details/{nino}/end-of-period-statement[?[[typeOfBusiness={self-employment,uk-property,foreign-property}][&businessId=]][&[fromDate=YYYY-MM-DD&toDate=YYYY-MM-DD]][&[status={Open,Fulfilled}]]]
  */
 int mtd_ob_list_end_of_period_obligations(const char *query_string, char **buf)
 {
@@ -36,7 +36,7 @@ int mtd_ob_list_crystallisation_obligations(const char *query_string,
 
 /*
  * [GET ]
- * /obligations/details/{nino}/income-and-expenditure[?[typeOfBusiness={self-employment,uk-property,foreign-property}][&[businessId=]][&[fromDate=YYYY-MM-DD]][&[toDate=YYYY-MM-DD]][&[status={Open,Fulfilled}]]]
+ * /obligations/details/{nino}/income-and-expenditure[?[[typeOfBusiness={self-employment,uk-property,foreign-property}][&businessId=]][&[fromDate=YYYY-MM-DD&toDate=YYYY-MM-DD]][&[status={Open,Fulfilled}]]]
  */
 int mtd_ob_list_inc_and_expend_obligations(const char *query_string,
 					   char **buf)
