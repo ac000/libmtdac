@@ -145,6 +145,20 @@ enum mtd_http_status_code {
 .br
 };
 
+.SH OAuth Scopes
+
+enum mtd_scope {
+       \fBMTD_SCOPE_RD_SA\fP,
+       \fBMTD_SCOPE_WR_SA\fP,
+       \fBMTD_SCOPE_RD_VAT\fP,
+       \fBMTD_SCOPE_WR_VAT\fP,
+       \fBMTD_SCOPE_RD_NI\fP,
+.br
+};
+
+These represent the various OAuth scopes that an application can be authorised
+for.
+
 .SH Data Source
 
 For requests that send (POST/PUT) data to an endpoint, the source for this data
@@ -355,13 +369,15 @@ Performs various cleanup. Should be called when you have finished with the
 library.
 .RE
 
-.BI "int mtd_init_auth(void);"
+.BI "int mtd_init_auth(unsigned long " scopes );
 .br
 
 .RS
 This is used to setup the oauth.json file with the OAuth access token. This
 will open the HMRC site in a new browser tab for the user to login and
 authorise the library to have access to the required resources.
+.PP
+It takes one or more \fBenum mtd_scope\fP values bitwise OR'd.
 .RE
 
 .BI "int mtd_init_config(void);"

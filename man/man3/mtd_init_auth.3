@@ -1,4 +1,4 @@
-.TH MTD_INIT_AUTH 3 "June 1, 2020" "" "libmtdac"
+.TH MTD_INIT_AUTH 3 "May 10, 2021" "" "libmtdac"
 
 .SH NAME
 
@@ -8,7 +8,7 @@ mtd_init_auth \- authorise library with HMRC account
 
 .B #include <libmtdac/mtd.h>
 .PP
-.BI "int mtd_init_auth(void);"
+.BI "int mtd_init_auth(unsigned long " scopes );
 
 .SH DESCRIPTION
 
@@ -35,6 +35,10 @@ code is returned.
 .TP 4
 .B -MTD_ERR_OS
 There was an OS level failure
+
+.TP 4
+.B -MTD_ERR_UNKNOWN_SCOPES
+No scopes or one or more provided scopes were not recognised
 
 .SH FILES
 .I ~/.config/libmtdac/{prod,test}-api/oauth.json

@@ -66,6 +66,7 @@ enum mtd_error {
 	MTD_ERR_CURL,
 	MTD_ERR_NEEDS_AUTHORISATION,
 	MTD_ERR_UNKNOWN_FLAGS,
+	MTD_ERR_UNKNOWN_SCOPES,
 	MTD_ERR_LIB_TOO_OLD,
 	MTD_ERR_CONFIG_DIR_UNSPEC,
 	MTD_ERR_CONFIG_DIR_INVALID,
@@ -109,6 +110,14 @@ enum mtd_http_status_code {
 	MTD_HTTP_NOT_IMPLEMENTED,
 	MTD_HTTP_SERVICE_UNAVAILABLE = 503,
 	MTD_HTTP_GATEWAY_TIMEOUT,
+};
+
+enum mtd_scope {
+	MTD_SCOPE_RD_SA		= 0x1,
+	MTD_SCOPE_WR_SA		= 0x2,
+	MTD_SCOPE_RD_VAT	= 0x4,
+	MTD_SCOPE_WR_VAT	= 0x8,
+	MTD_SCOPE_RD_NI		= 0x10,
 };
 
 enum mtd_data_src_type {
@@ -196,7 +205,7 @@ struct mtd_cfg {
 extern void mtd_global_init(void);
 extern int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 extern void mtd_deinit(void);
-extern int mtd_init_auth(void);
+extern int mtd_init_auth(unsigned long scopes);
 extern int mtd_init_config(void);
 extern int mtd_init_nino(void);
 extern char *mtd_percent_encode(const char *str, ssize_t len);

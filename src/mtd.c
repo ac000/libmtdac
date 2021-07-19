@@ -62,6 +62,10 @@ static const struct _mtd_err_map {
 		.estr	= "MTD_ERR_UNKNOWN_FLAGS",
 		.str	= "One or more unknown flags provided"
 	},
+	[MTD_ERR_UNKNOWN_SCOPES] = {
+		.estr	= "MTD_ERR_UNKNOWN_SCOPES",
+		.str	= "One or more unknown/invalid scopes provided"
+	},
 	[MTD_ERR_LIB_TOO_OLD] = {
 		.estr	= "MTD_ERR_LIB_TOO_OLD",
 		.str	= "Library version too old"
@@ -535,15 +539,6 @@ void mtd_deinit(void)
 	free((char *)mtd_ctx.config_dir);
 }
 
-static const char * const api_scopes[] = {
-	"write:self-assessment",
-	"read:self-assessment",
-	"read:national-insurance",
-	"read:vat",
-	"write:vat",
-	NULL
-};
-
 static int write_config(const char *dir, const char *name, const json_t *json)
 {
 	int dfd;
@@ -567,14 +562,38 @@ static int write_config(const char *dir, const char *name, const json_t *json)
 	return MTD_ERR_NONE;
 }
 
+static const struct {
+	const enum mtd_scope scope;
+	const char *str;
+} scope_map[] = {
+	{
+		.scope	= MTD_SCOPE_RD_SA,
+		.str	= "read:self-assessment"
+	}, {
+		.scope	= MTD_SCOPE_WR_SA,
+		.str	= "write:self-assessment"
+	}, {
+		.scope	= MTD_SCOPE_RD_VAT,
+		.str	= "read:vat"
+	}, {
+		.scope	= MTD_SCOPE_WR_VAT,
+		.str	= "write:vat"
+	}, {
+		.scope	= MTD_SCOPE_RD_NI,
+		.str	= "read:national-insurance"
+	},
+};
+static const unsigned long ALL_SCOPES =
+	MTD_SCOPE_RD_SA|MTD_SCOPE_WR_SA|MTD_SCOPE_RD_VAT|MTD_SCOPE_WR_VAT|
+	MTD_SCOPE_RD_NI;
+
 extern char **environ;
-int mtd_init_auth(void)
+int mtd_init_auth(unsigned long scopes)
 {
 	struct mtd_dsrc_ctx dsctx;
 	char *client_id = load_token("client_id", FT_CONFIG);
 	char *client_secret = load_token("client_secret", FT_CONFIG);
 	const char *args[3];
-	const char * const *scope;
 	char auth_code[41];
 	char *buf = NULL;
 	char data[4096];
@@ -584,8 +603,15 @@ int mtd_init_auth(void)
 	json_t *root;
 	json_t *result;
 	pid_t child_pid;
+	int n = sizeof(scope_map) / sizeof(scope_map[0]);
 	int len;
 	int err;
+
+	/* Check for unknown/invalid scopes */
+	if (scopes == 0 || scopes & ~(ALL_SCOPES)) {
+		err = -MTD_ERR_UNKNOWN_SCOPES;
+		goto out_free;
+	}
 
 	printf("You need to authorise libmtdac to have read/write access to "
 	       "your Self\nAssessment information.\n");
@@ -604,8 +630,11 @@ int mtd_init_auth(void)
 	args[0] = "xdg-open";
 	len = snprintf(url, sizeof(url),
 		       "%s/oauth/authorize?response_type=code&client_id=%s&scope=", mtd_ctx.api_url, client_id);
-	for (scope = api_scopes; *scope != NULL; scope++)
-		len += snprintf(url + len, sizeof(url) - len, "%s+", *scope);
+	for (int i = 0; i < n; i++) {
+		if (scopes & scope_map[i].scope)
+			len += snprintf(url + len, sizeof(url) - len, "%s+",
+					scope_map[i].str);
+	}
 	url[--len] = '\0';
 	snprintf(url + len, sizeof(url) - len,
 		 "&redirect_uri=urn:ietf:wg:oauth:2.0:oob");

@@ -333,8 +333,17 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 #### mtd\_init\_auth - initialise oauth.json
 
 ```C
-int mtd_init_auth(void);
+int mtd_init_auth(unsigned long scopes);
 ```
+
+This function takes a bitwise OR'd list of scopes that the application should
+be authorised for, the scopes available are
+
+        MTD_SCOPE_RD_SA
+        MTD_SCOPE_WR_SA
+        MTD_SCOPE_RD_VAT
+        MTD_SCOPE_WR_VAT
+        MTD_SCOPE_RD_NI
 
 #### mtd\_init\_config - initialise config.json
 
