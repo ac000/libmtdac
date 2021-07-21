@@ -228,7 +228,7 @@ enum mtd_hmrc_error mtd_hmrc_error(const char *json)
 	 * However you can also get an errors array that only contains
 	 * a single error and still have a top level error.
 	 *
-	 * Whetther there's just a single error or multiple errors in
+	 * Whether there's just a single error or multiple errors in
 	 * the errors array, that will be the more specific error. So
 	 * we want to check for that error first then fallback to the
 	 * top level error.
