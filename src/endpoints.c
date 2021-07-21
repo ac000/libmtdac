@@ -684,7 +684,7 @@ char *ep_make_url(enum endpoint ep, const char * const params[], char *url)
 
 	len = snprintf(url, URL_LEN + 1, "%s", mtd_ctx.api_url);
 
-	if (strstr(string,  "{nino}"))
+	if (strstr(string, "{nino}"))
 		nino = load_token("nino", FT_NINO);
 
 	for (;;) {
