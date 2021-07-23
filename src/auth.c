@@ -18,12 +18,13 @@
 #include "mtd.h"
 #include "auth.h"
 #include "mtd-priv.h"
+#include "endpoints.h"
 #include "curler.h"
 #include "logger.h"
 
 extern __thread struct mtd_ctx mtd_ctx;
 
-char *load_token(const char *which, enum file_type type)
+char *load_token(const char *which, enum file_type type, enum mtd_ep_api api)
 {
 	char path[PATH_MAX];
 	char *token;
@@ -62,7 +63,10 @@ char *load_token(const char *which, enum file_type type)
 		logger(MTD_LOG_ERR, "json_load_file: %s\n", error.text);
 		return NULL;
 	}
-	tok_obj = json_object_get(root, which);
+	tok_obj = root;
+	if (api != MTD_EP_API_NULL)
+		tok_obj = json_object_get(root, ep_api_map[api].name);
+	tok_obj = json_object_get(tok_obj, which);
 	if (!tok_obj)
 		return NULL;
 	token = strdup(json_string_value(tok_obj));
@@ -71,17 +75,18 @@ char *load_token(const char *which, enum file_type type)
 	return token;
 }
 
-int oauther_refresh_access_token(void)
+int oauther_refresh_access_token(enum mtd_ep_api api)
 {
 	struct mtd_dsrc_ctx dsctx;
 	char data[4096];
 	char path[PATH_MAX];
 	char *buf;
-	char *refresh_token = load_token("refresh_token", FT_AUTH);
-	char *client_id = load_token("client_id", FT_CONFIG);
-	char *client_secret = load_token("client_secret", FT_CONFIG);
+	char *refresh_token = load_token("refresh_token", FT_AUTH, api);
+	char *client_id = load_token("client_id", FT_CONFIG, MTD_EP_API_NULL);
+	char *client_secret = load_token("client_secret", FT_CONFIG,
+					 MTD_EP_API_NULL);
 	json_t *array;
-	json_t *root;
+	json_t *froot;
 	json_t *result;
 	int err;
 
@@ -101,10 +106,18 @@ int oauther_refresh_access_token(void)
 	snprintf(path, sizeof(path), "%s/oauth.json", mtd_ctx.config_dir);
 
 	array = json_loads(buf, 0, NULL);
-	root = json_array_get(array, 0);
-	result = json_object_get(root, "result");
-	json_dump_file(result, path, JSON_INDENT(4));
+	result = json_array_get(array, 0);
+	result = json_object_get(result, "result");
+
+	froot = json_load_file(path, 0, NULL);
+	if (froot)
+		json_object_set(froot, ep_api_map[api].name, result);
+	else
+		froot = json_pack("{s:o}", ep_api_map[api].name, result);
+
+	json_dump_file(froot, path, JSON_INDENT(4));
 	json_decref(array);
+	json_decref(froot);
 
 out_free:
 	free(buf);
@@ -115,14 +128,15 @@ out_free:
 	return err;
 }
 
-int oauther_get_application_token(void)
+int oauther_get_application_token(enum mtd_ep_api api __unused)
 {
 	struct mtd_dsrc_ctx dsctx;
 	char data[4096];
 	char path[PATH_MAX];
 	char *buf;
-	char *client_id = load_token("client_id", FT_CONFIG);
-	char *client_secret = load_token("client_secret", FT_CONFIG);
+	char *client_id = load_token("client_id", FT_CONFIG, MTD_EP_API_NULL);
+	char *client_secret = load_token("client_secret", FT_CONFIG,
+					 MTD_EP_API_NULL);
 	json_t *array;
 	json_t *root;
 	json_t *result;
@@ -158,7 +172,7 @@ out_free:
 	return err;
 }
 
-int oauther_dummy(void)
+int oauther_dummy(enum mtd_ep_api api __unused)
 {
 	return 0;
 }

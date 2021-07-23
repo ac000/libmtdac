@@ -3,7 +3,7 @@
 /*
  * curler.h
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _CURLER_H_
@@ -55,7 +55,8 @@ struct curl_ctx {
 	char *res_buf;
 	char *accepted_location;
 
-	int (*oauther)(void);
+	enum mtd_ep_api api;
+	int (*oauther)(enum mtd_ep_api);
 
 	struct curl_slist *hdrs;
 

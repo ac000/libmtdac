@@ -3,11 +3,13 @@
 /*
  * auth.h
  *
- * Copyright (C) 2020	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _AUTH_H_
 #define _AUTH_H_
+
+#include "mtd.h"
 
 enum file_type {
 	FT_AUTH = 0,
@@ -16,9 +18,10 @@ enum file_type {
 	FT_NINO,
 };
 
-extern char *load_token(const char *which, enum file_type type);
-extern int oauther_refresh_access_token(void);
-extern int oauther_get_application_token(void);
-extern int oauther_dummy(void);
+extern char *load_token(const char *which, enum file_type type,
+			enum mtd_ep_api api);
+extern int oauther_refresh_access_token(enum mtd_ep_api api);
+extern int oauther_get_application_token(enum mtd_ep_api api);
+extern int oauther_dummy(enum mtd_ep_api api);
 
 #endif /* _AUTH_H_ */

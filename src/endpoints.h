@@ -6,10 +6,10 @@
  * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
-#include "mtd.h"
-
 #ifndef _ENDPOINTS_H_
 #define _ENDPOINTS_H_
+
+#include "mtd.h"
 
 #define URL_LEN			1024
 
@@ -155,9 +155,18 @@ enum endpoint {
 	OA_APPLICATION_TOKEN,
 };
 
+static const struct mtd_ep_api_map {
+	const char *name;
+	const char *fname;
+} ep_api_map[] = {
+	[MTD_EP_API_ITSA]	= { "itsa", "Income Tax Self-Assessment" },
+	[MTD_EP_API_VAT]	= { "vat", "VAT"			 },
+	[MTD_EP_API_NI]		= { "ni", "National Insurance"		 },
+};
+
 extern int do_ep(enum endpoint ep, const char *api_ver,
 		 const struct mtd_dsrc_ctx *dsctx, char **buf, ...);
-extern int (*ep_set_oauther(enum endpoint ep))(void);
+extern int (*ep_set_oauther(enum endpoint ep))(enum mtd_ep_api);
 extern char *ep_get_token(enum endpoint ep);
 extern char *ep_make_url(enum endpoint ep, const char * const params[],
 			 char *url);

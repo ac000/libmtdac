@@ -333,11 +333,25 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 #### mtd\_init\_auth - initialise oauth.json
 
 ```C
-int mtd_init_auth(unsigned long scopes);
+int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes);
 ```
 
-This function takes a bitwise OR'd list of scopes that the application should
-be authorised for, the scopes available are
+This function takes an enum describing what API (ITSA, VAT etc) this is adding
+authorisations for, it takes one of the following
+
+        MTD_EP_API_ITSA
+        MTD_EP_API_VAT
+        MTD_EP_API_NI
+
+the above can be optionally bitwise OR'd with
+
+        MTD_EP_API_ADD
+
+which says don't reset the oauth.json file when writing it, instead add this
+OAuth as another entry.
+
+The second argument is a bitwise OR'd list of scopes that the application
+should be authorised for, the scopes available are
 
         MTD_SCOPE_RD_SA
         MTD_SCOPE_WR_SA

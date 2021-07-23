@@ -37,233 +37,274 @@ static const struct _endpoint {
 	const enum http_method method;
 	const enum content_type ctype;
 	const enum oauth_authz authz;
+	const enum mtd_ep_api api;
 } endpoints[] = {
 	/* Business Details */
 	[BD_LIST] = {
 		.tmpl	= "/individuals/business/details/{nino}/list",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[BD_GET] = {
 		.tmpl	= "/individuals/business/details/{nino}/{businessId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 
 	/* Business Income Source Summary */
 	[BISS_GET_SELF_EMPLOYMENT] = {
 		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/self-employment/{query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[BISS_GET_UK_PROPERTY] = {
 		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/uk-property/{query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[BISS_GET_FOREIGN_PROPERTY] = {
 		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/foreign-property/{query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 
 	/* Business Source Adjustable Summary */
 	[BSAS_LIST_SUMMARIES] = {
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/{query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_TRIGGER_SUMMARY] = {
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/trigger",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_SE_GET_SUMMARY] = {
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/{optional_query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_SE_LIST_SUMMARY_ADJUSTMENTS] = {
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust",
 		.method = M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS] = {
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_PB_GET_SUMMARY] = {
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/{optional_query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_PB_LIST_SUMMARY_ADJUSTMENTS] = {
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS] = {
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 
 	/* Individual Calculations - Self-Assessment */
 	[IC_SA_LIST_CALCULATIONS] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{optional_query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IC_SA_TRIGGER_CALCULATION] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IC_SA_GET_CALCULATION_META] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IC_SA_GET_INCOME_TAX_NICS_CALC] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/income-tax-nics-calculated",
 		.method	= M_GET,
 		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IC_SA_GET_TAXABLE_INCOME] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/taxable-income",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IC_SA_GET_ALLOWANCES_DEDUCT_RELIEFS] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/allowances-deductions-reliefs",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IC_SA_GET_EOY_EST] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/end-of-year-estimate",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IC_SA_GET_MSGS] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages/{optional_query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	/* Individual Calculations - Crystallisation */
 	[IC_CR_INTENT_TO_CRYSTALLISE] = {
 		.tmpl	= "/individuals/calculations/crystallisation/{nino}/{taxYear}/intent-to-crystallise",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz = AUTHZ_USER
+		.authz = AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IC_CR_CRYSTALLISE] = {
 		.tmpl	= "/individuals/calculations/crystallisation/{nino}/{taxYear}/crystallise",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 
 	/* Individuals Disclosures */
 	[ID_DELETE] = {
 		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
 		.method	= M_DELETE,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[ID_SET] = {
 		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[ID_GET] = {
 		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 
 	/* Individual Loses - Brought Forward */
 	[IL_BF_LIST_LOSES] = {
 		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{optional_query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IL_BF_CREATE_LOSS] = {
 		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IL_BF_GET_LOSS] = {
 		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IL_BF_DELETE_LOSS] = {
 		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}",
 		.method	= M_DELETE,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IL_BF_UPDATE_LOSS_AMNT] = {
 		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}/change-loss-amount",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	/* Individual Loses - Loss Claims */
 	[IL_LC_LIST_LOSES] = {
 		.tmpl	= "/individuals/losses/{nino}/loss-claims/{optional_query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IL_LC_CREATE_LOSS] = {
 		.tmpl	= "/individuals/losses/{nino}/loss-claims",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IL_LC_GET_LOSS] = {
 		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IL_LC_DELETE_LOSS] = {
 		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}",
 		.method	= M_DELETE,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IL_LC_UPDATE_LOSS_TYPE] = {
 		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}/change-type-of-claim",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[IL_LC_UPDATE_LOSS_ORDER] = {
 		.tmpl	= "/individuals/losses/{nino}/loss-claims/order/{optional_query_params}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 
 	/* Obligations */
 	[OB_LIST_INC_AND_EXPEND_OBLIGATIONS] = {
 		.tmpl	= "/obligations/details/{nino}/income-and-expenditure/{optional_query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[OB_LIST_CRYSTALLISATION_OBLIGATIONS] = {
 		.tmpl	= "/obligations/details/{nino}/crystallisation/{optional_query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[OB_LIST_END_OF_PERIOD_OBLIGATIONS] = {
 		.tmpl	= "/obligations/details/{nino}/end-of-period-statement/{optional_query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 
 	/* Self-Assessment - Self-Employment */
@@ -271,272 +312,320 @@ static const struct _endpoint {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_SE_LIST_PERIODS] = {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_SE_CREATE_PERIOD] = {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_SE_GET_PERIOD] = {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods/{periodId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_SE_UPDATE_PERIOD] = {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/periods/{periodId}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_SE_GET_ANNUAL_SUMMARY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_SE_UPDATE_ANNUAL_SUMMARY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_SE_SUBMIT_END_OF_PERIOD_STATEMENT] = {
 		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	/* Self-Assessment - UK Property Business */
 	[SA_PB_CREATE_PROPERTY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_LIST_OBLIGATIONS] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/obligations",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_LIST_NON_FHL_PERIODS] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/periods",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_CREATE_NON_FHL_PERIOD] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/periods",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_GET_NON_FHL_PERIOD] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/periods/{periodId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_UPDATE_NON_FHL_PERIOD] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/periods/{periodId}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_GET_NON_FHL_ANNUAL_SUMMARY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_UPDATE_NON_FHL_ANNUAL_SUMMARY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_LIST_FHL_PERIODS] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_CREATE_FHL_PERIOD] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_GET_FHL_PERIOD] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods/{periodId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_UPDATE_FHL_PERIOD] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/periods/{periodId}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_GET_FHL_ANNUAL_SUMMARY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_UPDATE_FHL_ANNUAL_SUMMARY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_SUBMIT_END_OF_PERIOD_STATEMENT] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/end-of-period-statements/from/{start}/to/{end}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_PB_GET_END_OF_PERIOD_STATEMENT] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/end-of-period-statements/obligations/{query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	/* Self-Assessment - Dividends Income */
 	[SA_DI_GET_ANNUAL_SUMMARY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/dividends/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_DI_UPDATE_ANNUAL_SUMMARY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/dividends/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	/* Self-Assessment - Savings Accounts */
 	[SA_SA_LIST_ACCOUNTS] = {
 		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_SA_CREATE_ACCOUNT] = {
 		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_SA_GET_ACCOUNT] = {
 		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_SA_GET_ANNUAL_SUMMARY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_SA_UPDATE_ANNUAL_SUMMARY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/savings-accounts/{savingsAccountId}/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	/* Self-Assessment - Charitable Giving */
 	[SA_CG_GET_CHARITABLE_GIVING] = {
 		.tmpl	= "/self-assessment/ni/{nino}/charitable-giving/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_CG_UPDATE_CHARITABLE_GIVING] = {
 		.tmpl	= "/self-assessment/ni/{nino}/charitable-giving/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	/* Self-Assessment - Crystallisation */
 	[SA_CR_INTENT_TO_CRYSTALLISE] = {
 		.tmpl	= "/self-assessment/ni/{nino}/{taxYear}/intent-to-crystallise",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SA_CR_CRYSTALLISE] = {
 		.tmpl	= "/self-assessment/ni/{nino}/{taxYear}/crystallisation",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 
 	/* Self-Assessment Accounts */
 	[SAAC_GET_BALANCE] = {
 		.tmpl	= "/accounts/self-assessment/{nino}/balance",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SAAC_LIST_TRANSACTIONS] ={
 		.tmpl	= "/accounts/self-assessment/{nino}/transactions/{query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SAAC_GET_TRANSACTION] = {
 		.tmpl	= "/accounts/self-assessment/{nino}/transactions/{transactionId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SAAC_LIST_CHARGES] = {
 		.tmpl	= "/accounts/self-assessment/{nino}/charges/{query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SAAC_GET_CHARGE] = {
 		.tmpl	= "/accounts/self-assessment/{nino}/charges/{transactionId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SAAC_LIST_PAYMENTS] = {
 		.tmpl	= "/accounts/self-assessment/{nino}/payments/{query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 	[SAAC_GET_PAYMENT] = {
 		.tmpl	= "/accounts/self-assessment/{nino}/payments/{paymentId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
 	},
 
 	/* VAT */
 	[VAT_LIST_OBLIGATIONS] = {
 		.tmpl	= "/organisations/vat/{vrn}/obligations/{optional_query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_VAT
 	},
 	[VAT_SUBMIT_PERIOD] = {
 		.tmpl	= "/organisations/vat/{vrn}/returns",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_VAT
 	},
 	[VAT_GET_PERIOD] = {
 		.tmpl	= "/organisations/vat/{vrn}/returns/{periodKey}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_VAT
 	},
 	[VAT_LIST_LIABILITIES] = {
 		.tmpl	= "/organisations/vat/{vrn}/liabilities/{query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_VAT
 	},
 	[VAT_LIST_PAYMENTS] = {
 		.tmpl	= "/organisations/vat/{vrn}/payments/{query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_VAT
 	},
 
 	/* National Insurance */
 	[NI_GET_ANNUAL_SUMMARY] = {
 		.tmpl	= "/national-insurance/sa/{utr}/annual-summary/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_USER
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_NI
 	},
 
 	/* Create Test User */
@@ -627,6 +716,7 @@ int do_ep(enum endpoint ep, const char *api_ver,
 
 	ctx.mtd_api_ver = api_ver;
 	ctx.endpoint = ep;
+	ctx.api = endpoints[ep].api;
 	ctx.params = params;
 	ctx.content_type = endpoints[ep].ctype;
 	ctx.http_method = endpoints[ep].method;
@@ -646,7 +736,7 @@ int do_ep(enum endpoint ep, const char *api_ver,
 	}
 }
 
-int (*ep_set_oauther(enum endpoint ep))(void)
+int (*ep_set_oauther(enum endpoint ep))(enum mtd_ep_api)
 {
 	switch (endpoints[ep].authz) {
 	case AUTHZ_USER:
@@ -662,9 +752,10 @@ char *ep_get_token(enum endpoint ep)
 {
 	switch(endpoints[ep].authz) {
 	case AUTHZ_USER:
-		return load_token("access_token", FT_AUTH);
+		return load_token("access_token", FT_AUTH, endpoints[ep].api);
 	case AUTHZ_APPLICATION:
-		return load_token("access_token", FT_AUTH_APPLICATION);
+		return load_token("access_token", FT_AUTH_APPLICATION,
+				  MTD_EP_API_NULL);
 	default:
 		return NULL;
 	}
@@ -685,7 +776,7 @@ char *ep_make_url(enum endpoint ep, const char * const params[], char *url)
 	len = snprintf(url, URL_LEN + 1, "%s", mtd_ctx.api_url);
 
 	if (strstr(string, "{nino}"))
-		nino = load_token("nino", FT_NINO);
+		nino = load_token("nino", FT_NINO, MTD_EP_API_NULL);
 
 	for (;;) {
 		char *token;

@@ -120,6 +120,23 @@ enum mtd_scope {
 	MTD_SCOPE_RD_NI		= 0x10,
 };
 
+enum mtd_ep_api {
+	MTD_EP_API_ITSA = 0,
+	MTD_EP_API_VAT,
+	MTD_EP_API_NI,
+
+	/*
+	 * Special value to tell we are adding more API
+	 * OAuths and _not_ to reset the oauth.json file.
+	 *
+	 * This can be bitwise OR'd with any of the above.
+	 */
+	MTD_EP_API_ADD = (1 << 29),
+
+	/* Only used internally */
+	MTD_EP_API_NULL = (1 << 30)
+};
+
 enum mtd_data_src_type {
 	MTD_DATA_SRC_FILE = 0,
 	MTD_DATA_SRC_BUF,
@@ -205,7 +222,7 @@ struct mtd_cfg {
 extern void mtd_global_init(void);
 extern int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 extern void mtd_deinit(void);
-extern int mtd_init_auth(unsigned long scopes);
+extern int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes);
 extern int mtd_init_config(void);
 extern int mtd_init_nino(void);
 extern char *mtd_percent_encode(const char *str, ssize_t len);

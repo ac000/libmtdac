@@ -1,14 +1,16 @@
-.TH MTD_INIT_AUTH 3 "May 10, 2021" "" "libmtdac"
+.TH MTD_INIT_AUTH 3 "July 20, 2021" "0.50.0" "libmtdac"
 
 .SH NAME
 
-mtd_init_auth \- authorise library with HMRC account
+mtd_init_auth \- authorise with HMRC account
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd.h>
 .PP
-.BI "int mtd_init_auth(unsigned long " scopes );
+.nf
+.BI "int mtd_init_auth(enum mtd_ep_api " api ", unsigned long " scopes ");
+.fi
 
 .SH DESCRIPTION
 
@@ -23,7 +25,59 @@ user after completing the above step.
 Once the user has entered the code it will create a
 \fI~/.config/libmtdac/{prod,test}-api/oauth.json\fP file.
 .PP
-This should just be called once during an initial setup routine.
+
+.I api
+is an enum value specifying which Make Tax Digital API this is adding
+authorisations for and is one of the following values
+.PP
+.B MTD_EP_API_ITSA
+.RS 4
+For Income TAX Self-Assessment
+.RE
+.PP
+.B MTD_EP_API_VAT
+.RS 4
+For VAT
+.RE
+.PP
+.B MTD_EP_API_NI
+.RS 4
+For National Insurance (\fBNOTE\fP: Not technically MTD and may be removed in
+the future).
+.RE
+
+.PP
+The above can optionally be bitwise OR'd with
+.PP
+\fBMTD_EP_API_ADD\fP
+.PP
+which says don't reset the oauth.json file when writing it, instead add this
+OAuth as another entry (or overwrite an existing entry without resetting the
+file).
+
+.I scopes
+is a bitwise
+.B OR
+of one or more of the following
+.PP
+.B MTD_SCOPE_RD_SA
+.br
+.B MTD_SCOPE_WR_SA
+.RS 4
+Scopes for reading and writing Self-Assessment
+.RE
+.PP
+.B MTD_SCOPE_RD_VAT
+.br
+.B MTD_SCOPE_WR_VAT
+.RS 4
+Scopes for reading and writing VAT
+.RE
+.PP
+.B MTD_SCOPE_RD_NI
+.RS 4
+Scope for reading National Insurance
+.RE
 
 .SH RETURN VALUE
 

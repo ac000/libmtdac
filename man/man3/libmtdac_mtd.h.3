@@ -1,4 +1,4 @@
-.TH libmtdac_mtd.h 3 "March 17, 2021" "libmtdac 0.18.0" "libmtdac_mtd.h"
+.TH libmtdac_mtd.h 3 "July 20, 2021" "libmtdac 0.50.0" "libmtdac_mtd.h"
 
 .SH NAME
 libmtdac_mtd.h \- Core types / defines
@@ -158,6 +158,24 @@ enum mtd_scope {
 
 These represent the various OAuth scopes that an application can be authorised
 for.
+
+.SH APIs
+
+enum mtd_ep_api {
+       \fBMTD_EP_API_ITSA\fP,
+       \fBMTD_EP_API_VAT\fP,
+       \fBMTD_EP_API_NI\fP,
+.br
+};
+
+These define the various Make Tax Digital APIs supported, they can be
+optionally bitwise OR'd with
+.PP
+\fBMTD_EP_API_ADD\fP
+.PP
+which says don't reset the oauth.json file when writing it, instead add this
+OAuth as another entry (or overwrite an existing entry without resetting the
+file).
 
 .SH Data Source
 
@@ -369,15 +387,24 @@ Performs various cleanup. Should be called when you have finished with the
 library.
 .RE
 
-.BI "int mtd_init_auth(unsigned long " scopes );
-.br
+.nf
+.BI "int mtd_init_auth(enum mtd_ep_api " api ", unsigned long " scopes ",
+.BI "                  enum mtd_rst_oauth " reset );
+.fi
 
 .RS
 This is used to setup the oauth.json file with the OAuth access token. This
 will open the HMRC site in a new browser tab for the user to login and
 authorise the library to have access to the required resources.
 .PP
-It takes one or more \fBenum mtd_scope\fP values bitwise OR'd.
+The first argument is an \fBenum mtd_ep_api\fP describing what API (ITSA, VAT
+etc) this is adding authorisations for.
+.PP
+The second argument is one or more \fBenum mtd_scope\fP values bitwise OR'd
+together, describing the scopes to be authorised.
+.PP
+The third argument is  an \fBenum mtd_rst_oauth\fP which says whether to reset
+the oauth.json file or not when writing it.
 .RE
 
 .BI "int mtd_init_config(void);"

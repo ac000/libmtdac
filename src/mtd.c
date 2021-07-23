@@ -26,6 +26,7 @@
 
 #include "mtd.h"
 #include "mtd-priv.h"
+#include "endpoints.h"
 #include "auth.h"
 #include "fph.h"
 #include "curler.h"
@@ -583,16 +584,18 @@ static const struct {
 		.str	= "read:national-insurance"
 	},
 };
-static const unsigned long ALL_SCOPES =
-	MTD_SCOPE_RD_SA|MTD_SCOPE_WR_SA|MTD_SCOPE_RD_VAT|MTD_SCOPE_WR_VAT|
-	MTD_SCOPE_RD_NI;
+#define ALL_SCOPES	(MTD_SCOPE_RD_SA|MTD_SCOPE_WR_SA|MTD_SCOPE_RD_VAT| \
+			 MTD_SCOPE_WR_VAT|MTD_SCOPE_RD_NI)
+#define RD_SCOPES	(MTD_SCOPE_RD_SA|MTD_SCOPE_RD_VAT|MTD_SCOPE_RD_NI)
+#define WR_SCOPES	(MTD_SCOPE_WR_SA|MTD_SCOPE_WR_VAT)
 
 extern char **environ;
-int mtd_init_auth(unsigned long scopes)
+int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes)
 {
 	struct mtd_dsrc_ctx dsctx;
-	char *client_id = load_token("client_id", FT_CONFIG);
-	char *client_secret = load_token("client_secret", FT_CONFIG);
+	char *client_id = load_token("client_id", FT_CONFIG, MTD_EP_API_NULL);
+	char *client_secret = load_token("client_secret", FT_CONFIG,
+					 MTD_EP_API_NULL);
 	const char *args[3];
 	char auth_code[41];
 	char *buf = NULL;
@@ -601,11 +604,15 @@ int mtd_init_auth(unsigned long scopes)
 	char *s;
 	json_t *array;
 	json_t *root;
+	json_t *froot = NULL;
 	json_t *result;
 	pid_t child_pid;
 	int n = sizeof(scope_map) / sizeof(scope_map[0]);
 	int len;
 	int err;
+	bool rd_scope = scopes & RD_SCOPES;
+	bool wr_scope = scopes & WR_SCOPES;
+	bool reset_oauth;
 
 	/* Check for unknown/invalid scopes */
 	if (scopes == 0 || scopes & ~(ALL_SCOPES)) {
@@ -613,8 +620,13 @@ int mtd_init_auth(unsigned long scopes)
 		goto out_free;
 	}
 
-	printf("You need to authorise libmtdac to have read/write access to "
-	       "your Self\nAssessment information.\n");
+	reset_oauth = !(api & MTD_EP_API_ADD);
+	api &= ~MTD_EP_API_ADD;
+
+	printf("You need to authorise libmtdac to have '%s%s%s' access to "
+	       "your\n'%s' information.\n",
+	       rd_scope ? "read" : "", rd_scope && wr_scope ? "/" : "",
+	       wr_scope ? "write" : "", ep_api_map[api].fname);
 	printf("\n");
 	printf("The HMRC authorisation endpoint will open up in a new browser "
 	       "window/tab.\n");
@@ -669,18 +681,31 @@ int mtd_init_auth(unsigned long scopes)
 	array = json_loads(buf, 0, NULL);
 	root = json_array_get(array, 0);
 	result = json_object_get(root, "result");
-	err = write_config(mtd_ctx.config_dir, "oauth.json", result);
+
+	if (!reset_oauth) {
+		char path[PATH_MAX];
+
+		snprintf(path, sizeof(path), "%s/oauth.json",
+			 mtd_ctx.config_dir);
+		froot = json_load_file(path, 0, NULL);
+		if (froot)
+			json_object_set(froot, ep_api_map[api].name, result);
+	}
+	if (!froot)
+		froot = json_pack("{s:o}", ep_api_map[api].name, result);
+
+	err = write_config(mtd_ctx.config_dir, "oauth.json", froot);
 	if (err)
 		goto out_free_json;
 
 	printf("\n");
 	printf("Wrote oauth.json to %s/oauth.json\n\n", mtd_ctx.config_dir);
-	json_dumpf(result, stdout, JSON_INDENT(4));
+	json_dumpf(froot, stdout, JSON_INDENT(4));
 	printf("\n");
 
 out_free_json:
 	json_decref(array);
-	json_decref(result);
+	json_decref(froot);
 
 out_free:
 	free(client_id);
