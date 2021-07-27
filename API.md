@@ -28,7 +28,6 @@
   * [Make Tax Digital - Obligations API functions](#make-tax-digital---obligations-api-functions)
   * [Make Tax Digital - Business Details API functions](#make-tax-digital---business-details-api-functions)
   * [Make Tax Digital - VAT API functions](#make-tax-digital---vat-api-functions)
-  * [Make Tax Digital - National Insurance API functions](#make-tax-digital---national-insurance-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
   * [Make Tax Digital - National Insurance Test Support API functions [test-only]](#make-tax-digital---national-insurance-test-support-api-functions-test-only)
   * [Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]](#make-tax-digital---test-fraud-prevention-headers-api-functions-test-only)
@@ -341,7 +340,6 @@ authorisations for, it takes one of the following
 
         MTD_EP_API_ITSA
         MTD_EP_API_VAT
-        MTD_EP_API_NI
 
 the above can be optionally bitwise OR'd with
 
@@ -357,7 +355,6 @@ should be authorised for, the scopes available are
         MTD_SCOPE_WR_SA
         MTD_SCOPE_RD_VAT
         MTD_SCOPE_WR_VAT
-        MTD_SCOPE_RD_NI
 
 #### mtd\_init\_config - initialise config.json
 
@@ -1122,20 +1119,6 @@ int mtd_vat_list_liabilities(const char *vrn, const char *query_string,
 ```C
 int mtd_vat_list_payments(const char *vrn, const char *query_string,
                           char **buf);
-```
-
-
-### Make Tax Digital - National Insurance API functions
-
-```C
-#include <libmtdac/mtd-ni.h>
-```
-
-#### mtd\_ni\_get\_annual\_summary
-
-```C
-int mtd_ni_get_annual_summary(const char *utr, const char *tax_year,
-                              char **buf);
 ```
 
 

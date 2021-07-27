@@ -1,4 +1,4 @@
-.TH MTD_INIT_AUTH 3 "July 20, 2021" "0.50.0" "libmtdac"
+.TH MTD_INIT_AUTH 3 "July 27, 2021" "0.50.0" "libmtdac"
 
 .SH NAME
 
@@ -39,12 +39,6 @@ For Income TAX Self-Assessment
 .RS 4
 For VAT
 .RE
-.PP
-.B MTD_EP_API_NI
-.RS 4
-For National Insurance (\fBNOTE\fP: Not technically MTD and may be removed in
-the future).
-.RE
 
 .PP
 The above can optionally be bitwise OR'd with
@@ -72,11 +66,6 @@ Scopes for reading and writing Self-Assessment
 .B MTD_SCOPE_WR_VAT
 .RS 4
 Scopes for reading and writing VAT
-.RE
-.PP
-.B MTD_SCOPE_RD_NI
-.RS 4
-Scope for reading National Insurance
 .RE
 
 .SH RETURN VALUE

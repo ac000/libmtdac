@@ -134,9 +134,6 @@ enum endpoint {
 	VAT_LIST_LIABILITIES,
 	VAT_LIST_PAYMENTS,
 
-	/* National Insurance */
-	NI_GET_ANNUAL_SUMMARY,
-
 	/* Create Test User */
 	TEST_CU_CREATE_INDIVIDUAL,
 	TEST_CU_CREATE_ORGANISATION,
@@ -161,7 +158,6 @@ static const struct mtd_ep_api_map {
 } ep_api_map[] = {
 	[MTD_EP_API_ITSA]	= { "itsa", "Income Tax Self-Assessment" },
 	[MTD_EP_API_VAT]	= { "vat", "VAT"			 },
-	[MTD_EP_API_NI]		= { "ni", "National Insurance"		 },
 };
 
 extern int do_ep(enum endpoint ep, const char *api_ver,

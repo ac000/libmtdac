@@ -117,13 +117,11 @@ enum mtd_scope {
 	MTD_SCOPE_WR_SA		= 0x2,
 	MTD_SCOPE_RD_VAT	= 0x4,
 	MTD_SCOPE_WR_VAT	= 0x8,
-	MTD_SCOPE_RD_NI		= 0x10,
 };
 
 enum mtd_ep_api {
 	MTD_EP_API_ITSA = 0,
 	MTD_EP_API_VAT,
-	MTD_EP_API_NI,
 
 	/*
 	 * Special value to tell we are adding more API

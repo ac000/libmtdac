@@ -620,14 +620,6 @@ static const struct _endpoint {
 		.api	= MTD_EP_API_VAT
 	},
 
-	/* National Insurance */
-	[NI_GET_ANNUAL_SUMMARY] = {
-		.tmpl	= "/national-insurance/sa/{utr}/annual-summary/{taxYear}",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_NI
-	},
-
 	/* Create Test User */
 	[TEST_CU_CREATE_INDIVIDUAL] = {
 		.tmpl	= "/create-test-user/individuals",

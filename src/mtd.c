@@ -579,14 +579,11 @@ static const struct {
 	}, {
 		.scope	= MTD_SCOPE_WR_VAT,
 		.str	= "write:vat"
-	}, {
-		.scope	= MTD_SCOPE_RD_NI,
-		.str	= "read:national-insurance"
 	},
 };
 #define ALL_SCOPES	(MTD_SCOPE_RD_SA|MTD_SCOPE_WR_SA|MTD_SCOPE_RD_VAT| \
-			 MTD_SCOPE_WR_VAT|MTD_SCOPE_RD_NI)
-#define RD_SCOPES	(MTD_SCOPE_RD_SA|MTD_SCOPE_RD_VAT|MTD_SCOPE_RD_NI)
+			 MTD_SCOPE_WR_VAT)
+#define RD_SCOPES	(MTD_SCOPE_RD_SA|MTD_SCOPE_RD_VAT)
 #define WR_SCOPES	(MTD_SCOPE_WR_SA|MTD_SCOPE_WR_VAT)
 
 extern char **environ;
