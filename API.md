@@ -29,7 +29,6 @@
   * [Make Tax Digital - Business Details API functions](#make-tax-digital---business-details-api-functions)
   * [Make Tax Digital - VAT API functions](#make-tax-digital---vat-api-functions)
   * [Make Tax Digital - Create Test User API functions [test-only]](#make-tax-digital---create-test-user-api-functions-test-only)
-  * [Make Tax Digital - National Insurance Test Support API functions [test-only]](#make-tax-digital---national-insurance-test-support-api-functions-test-only)
   * [Make Tax Digital - Test Fraud Prevention Headers API functions [test-only]](#make-tax-digital---test-fraud-prevention-headers-api-functions-test-only)
 
 ## API
@@ -1152,21 +1151,6 @@ int mtd_test_cu_create_agent(const struct mtd_dsrc_ctx *dsctx, char **buf);
 
 ```C
 int mtd_test_cu_list_services(char **buf);
-```
-
-
-### Make Tax Digital - National Insurance Test Support API functions [test-only]
-
-```C
-#include <libmtdac/mtd-test-ni.h>
-```
-
-#### mtd\_test\_ni\_create\_annual\_summary
-
-```C
-mtd_test_ni_create_annual_summary(const struct mtd_dsrc_ctx *dsctx,
-                                  const char *utr, const char *tax_year,
-                                  char **buf);
 ```
 
 

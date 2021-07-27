@@ -143,9 +143,6 @@ enum endpoint {
 	/* Test Fraud Prevention Headers */
 	TEST_FPH_VALIDATE,
 
-	/* National Insurance Test Support */
-	TEST_NI_CREATE_ANNUAL_SUMMARY,
-
 	/* OAuth */
 	OA_REFRESH_TOKEN,
 	OA_EXCHANGE_AUTH_CODE,

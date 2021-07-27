@@ -652,14 +652,6 @@ static const struct _endpoint {
 		.authz	= AUTHZ_APPLICATION
 	},
 
-	/* National Insurance Test Support */
-	[TEST_NI_CREATE_ANNUAL_SUMMARY] = {
-		.tmpl	= "/national-insurance-test-support/sa/{utr}/annual-summary/{taxYear}",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION
-	},
-
 	/* OAuth */
 	[OA_REFRESH_TOKEN] = {
 		.tmpl	= "/oauth/token",
