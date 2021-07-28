@@ -544,6 +544,8 @@ static int write_config(const char *dir, const char *name, const json_t *json)
 {
 	int dfd;
 	int fd;
+	int err;
+	int ret = MTD_ERR_NONE;
 
 	dfd = open(dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (dfd == -1)
@@ -556,12 +558,16 @@ static int write_config(const char *dir, const char *name, const json_t *json)
 		return -MTD_ERR_OS;
 	}
 
-	json_dumpfd(json, fd, JSON_INDENT(4));
+	err = json_dumpfd(json, fd, JSON_INDENT(4));
+	if (err) {
+		logger(MTD_LOG_ERR, "json_dump() returned -1\n");
+		ret = -MTD_ERR_OS;
+	}
 
 	close(fd);
 	close(dfd);
 
-	return MTD_ERR_NONE;
+	return ret;;
 }
 
 static const struct {
