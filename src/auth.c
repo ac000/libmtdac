@@ -115,7 +115,7 @@ int oauther_refresh_access_token(enum mtd_ep_api api)
 	else
 		froot = json_pack("{s:o}", ep_api_map[api].name, result);
 
-	json_dump_file(froot, path, JSON_INDENT(4));
+	write_config(mtd_ctx.config_dir, "oauth.json", froot);
 	json_decref(array);
 	json_decref(froot);
 
@@ -132,7 +132,6 @@ int oauther_get_application_token(enum mtd_ep_api api __unused)
 {
 	struct mtd_dsrc_ctx dsctx;
 	char data[4096];
-	char path[PATH_MAX];
 	char *buf;
 	char *client_id = load_token("client_id", FT_CONFIG, MTD_EP_API_NULL);
 	char *client_secret = load_token("client_secret", FT_CONFIG,
@@ -155,13 +154,10 @@ int oauther_get_application_token(enum mtd_ep_api api __unused)
 		goto out_free;
 	}
 
-	snprintf(path, sizeof(path), "%s/oauth-application.json",
-		 mtd_ctx.config_dir);
-
 	array = json_loads(buf, 0, NULL);
 	root = json_array_get(array, 0);
 	result = json_object_get(root, "result");
-	json_dump_file(result, path, JSON_INDENT(4));
+	write_config(mtd_ctx.config_dir, "oauth-application.json", result);
 	json_decref(array);
 
 out_free:

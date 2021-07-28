@@ -3,11 +3,13 @@
 /*
  * mtd-priv.h - Make Tax Digital
  *
- * Copyright (C) 2020	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _MTD_PRIV_H_
 #define _MTD_PRIV_H_
+
+#include <jansson.h>
 
 #include "mtd.h"
 
@@ -40,5 +42,7 @@ struct mtd_ctx {
 
 	const struct mtd_cfg *cfg;
 };
+
+extern int write_config(const char *dir, const char *name, const json_t *json);
 
 #endif /* _MTD_PRIV_H_ */

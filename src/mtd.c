@@ -540,7 +540,7 @@ void mtd_deinit(void)
 	free((char *)mtd_ctx.config_dir);
 }
 
-static int write_config(const char *dir, const char *name, const json_t *json)
+int write_config(const char *dir, const char *name, const json_t *json)
 {
 	int dfd;
 	int fd;
