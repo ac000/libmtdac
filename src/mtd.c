@@ -552,6 +552,7 @@ static int write_config(const char *dir, const char *name, const json_t *json)
 	fd = openat(dfd, name, O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC, 0600);
 	if (fd == -1) {
 		close(dfd);
+		logger(MTD_LOG_ERRNO, "openat");
 		return -MTD_ERR_OS;
 	}
 
