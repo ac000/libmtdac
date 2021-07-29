@@ -36,7 +36,7 @@ int mtd_ic_cr_intent_to_crystallise(const char *tax_year, char **buf)
 
 /*
  * [GET ]
- * /individuals/calculations/{nino}/self-assessment/{calculationId}/messages
+ * /individuals/calculations/{nino}/self-assessment/{calculationId}/messages[?type={info,warning,error}[[&type=...], ...]
  */
 int mtd_ic_sa_get_messages(const char *cid, const char *query_string,
 			   char **buf)
