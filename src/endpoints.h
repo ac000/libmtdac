@@ -142,6 +142,7 @@ enum endpoint {
 
 	/* Test Fraud Prevention Headers */
 	TEST_FPH_VALIDATE,
+	TEST_FPH_FEEDBACK,
 
 	/* OAuth */
 	OA_REFRESH_TOKEN,

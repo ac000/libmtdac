@@ -651,6 +651,11 @@ static const struct _endpoint {
 		.method	= M_GET,
 		.authz	= AUTHZ_APPLICATION
 	},
+	[TEST_FPH_FEEDBACK] = {
+		.tmpl	= "/test/fraud-prevention-headers/{api}/validation-feedback/{optional_query_params}",
+		.method	= M_GET,
+		.authz	= AUTHZ_APPLICATION
+	},
 
 	/* OAuth */
 	[OA_REFRESH_TOKEN] = {

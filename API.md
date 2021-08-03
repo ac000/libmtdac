@@ -1165,3 +1165,10 @@ int mtd_test_cu_list_services(char **buf);
 ```C
 int mtd_test_fph_validate(char **buf);
 ```
+
+#### mtd\_test\_fph\_feedback
+
+```C
+int mtd_test_fph_feedback(const char *api, const char *query_string,
+                          char **buf);
+```

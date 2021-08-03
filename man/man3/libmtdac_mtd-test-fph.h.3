@@ -1,4 +1,4 @@
-.TH libmtdac_mtd-test-fph.h 3 "June 1, 2020" "libmtdac 0.9.0" "libmtdac_mtd-test-fph.h"
+.TH libmtdac_mtd-test-fph.h 3 "August 3, 2021" "libmtdac 0.50.0" "libmtdac_mtd-test-fph.h"
 
 .SH NAME
 libmtdac_mtd-test-fph.h \- Make Tax Digital \- Test Fraud Prevention Headers
@@ -19,7 +19,14 @@ Prevention Headers API.
 .RS +4
 .BR mtd_test_fph_validate (3)
 .RE
-.ni
+
+.BI "int mtd_test_fph_feedback(const char *" api ", const char *" query_string ",
+.BI "                          char **" buf ");
+
+.RS +4
+.BR mtd_test_fph_feedback (3)
+.RE
+.fi
 
 .SH SEE ALSO
 
