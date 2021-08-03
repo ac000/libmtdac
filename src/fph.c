@@ -553,7 +553,7 @@ static char *get_ip_ts(void *user_data __unused)
 	clock_gettime(CLOCK_REALTIME, &now);
 	gmtime_r(&now.tv_sec, &res);
 	strftime(strtime, sizeof(strtime), "%FT%T.", &res);
-	snprintf(strtime + strlen(strtime), sizeof(strtime), "%ldZ",
+	snprintf(strtime + strlen(strtime), sizeof(strtime), "%03ldZ",
 		 now.tv_nsec / 1000000L);
 
 	return strdup(strtime);
