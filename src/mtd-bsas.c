@@ -54,6 +54,7 @@ int mtd_bsas_se_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
 	return do_ep(BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS, API_VER,
 		     dsctx, buf, bid, (char *)NULL);
 }
+
 /*
  * [GET ]
  * /individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust
