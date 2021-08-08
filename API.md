@@ -25,6 +25,7 @@
   * [Make Tax Digital - Business Source Adjustable Summary API functions](#make-tax-digital---business-source-adjustable-summary-api-functions)
     - [Business Source Adjustable Summary - Self-Employment](#business-source-adjustable-summary---self-employment)
     - [Business Source Adjustable Summary - UK Property Business](#business-source-adjustable-summary---uk-property-business)
+    - [Business Source Adjustable Summary - Foreign Property Business](#business-source-adjustable-summary---foreign-property-business)
   * [Make Tax Digital - Obligations API functions](#make-tax-digital---obligations-api-functions)
   * [Make Tax Digital - Business Details API functions](#make-tax-digital---business-details-api-functions)
   * [Make Tax Digital - VAT API functions](#make-tax-digital---vat-api-functions)
@@ -1028,6 +1029,29 @@ int mtd_bsas_pb_list_summary_adjustments(const char *bid, char **buf);
 
 ```C
 int mtd_bsas_pb_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
+                                           const char *bid, char **buf);
+```
+
+
+#### Business Source Adjustable Summary - Foreign Property Business
+
+#### mtd\_bsas\_fp\_get\_summary
+
+```C
+int mtd_bsas_fp_get_summary(const char *bid, const char *query_string,
+                            char **buf);
+```
+
+#### mtd\_bsas\_fp\_list\_summary\_adjustments
+
+```C
+int mtd_bsas_fp_list_summary_adjustments(const char *bid, char **buf);
+```
+
+#### mtd\_bsas\_fp\_update\_summary\_adjustments
+
+```C
+int mtd_bsas_fp_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
                                            const char *bid, char **buf);
 ```
 

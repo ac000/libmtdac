@@ -3,7 +3,7 @@
 /*
  * mtd-bsas.c - Make Tax Digital - Business Source Adjustable Summary API
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #include <stddef.h>
@@ -11,7 +11,38 @@
 #include "mtd-bsas.h"		/* for default (public) visibility */
 #include "endpoints.h"
 
-#define API_VER			"Accept: application/vnd.hmrc.1.0+json"
+#define API_VER			"Accept: application/vnd.hmrc.2.0+json"
+
+/*
+ * [POST]
+ * /individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{bsasId}/adjust
+ */
+int mtd_bsas_fp_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
+					   const char *bid, char **buf)
+{
+	return do_ep(BSAS_FP_UPDATE_SUMMARY_ADJUSTMENTS, API_VER,
+		     dsctx, buf, bid, (char *)NULL);
+}
+/*
+ * [GET ]
+ * /individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{bsasId}/adjust
+ */
+int mtd_bsas_fp_list_summary_adjustments(const char *bid, char **buf)
+{
+	return do_ep(BSAS_FP_LIST_SUMMARY_ADJUSTMENTS, API_VER,
+		     NULL, buf, bid, (char *)NULL);
+}
+
+/*
+ * [GET ]
+ * /individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{bsasId}[?adjustedStatus={true,false}]
+ */
+int mtd_bsas_fp_get_summary(const char *bid, const char *query_string,
+			    char **buf)
+{
+	return do_ep(BSAS_FP_GET_SUMMARY, API_VER,
+		     NULL, buf, bid, query_string, (char *)NULL);
+}
 
 /*
  * [POST]
@@ -88,7 +119,7 @@ int mtd_bsas_trigger_summary(const struct mtd_dsrc_ctx *dsctx, char **buf)
 
 /*
  * [GET ]
- * /individuals/self-assessment/adjustable-summary/{nino}[?[selfEmploymentId=][&[typeOfBusiness={self-employment,uk-property-non-fhl,uk-property-fhl}][&[taxYear=YYYY-YY]]]]
+ * /individuals/self-assessment/adjustable-summary/{nino}[?[businessId=][&[typeOfBusiness={self-employment,uk-property-non-fhl,uk-property-fhl}][&[taxYear=YYYY-YY]]]]
  */
 int mtd_bsas_list_summaries(const char *query_string, char **buf)
 {

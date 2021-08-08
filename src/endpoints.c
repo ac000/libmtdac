@@ -125,6 +125,25 @@ static const struct _endpoint {
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
+	[BSAS_FP_GET_SUMMARY] = {
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{bsasId}/{optional_query_params}",
+		.method	= M_GET,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+	[BSAS_FP_LIST_SUMMARY_ADJUSTMENTS] = {
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{bsasId}/adjust",
+		.method	= M_GET,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+	[BSAS_FP_UPDATE_SUMMARY_ADJUSTMENTS] = {
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{bsasId}/adjust",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
 
 	/* Individual Calculations - Self-Assessment */
 	[IC_SA_LIST_CALCULATIONS] = {

@@ -38,6 +38,10 @@ enum endpoint {
 	BSAS_PB_GET_SUMMARY,
 	BSAS_PB_LIST_SUMMARY_ADJUSTMENTS,
 	BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS,
+	/* Business Source Adjustable Summary - Foreign Property Business */
+	BSAS_FP_GET_SUMMARY,
+	BSAS_FP_LIST_SUMMARY_ADJUSTMENTS,
+	BSAS_FP_UPDATE_SUMMARY_ADJUSTMENTS,
 
 	/* Individual Calculations - Self-Assessment */
 	IC_SA_LIST_CALCULATIONS,
