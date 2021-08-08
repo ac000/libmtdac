@@ -119,8 +119,8 @@ every function would have at least this. This is a buffer that will contain
 the output of the query.
 
 You should follow the above argument order, Arguments corresponding to *{}*
-values (except *nino* & *selfEmploymentId*), query\_string *if* there is one
-and then the result buffer.
+values (except *nino*), query\_string *if* there is one and then the result
+buffer.
 
 The central tenet of the API support is the do\_ep() function, it has the
 following prototype
@@ -144,8 +144,8 @@ Next we have the output buffer, this is always provided.
 
 Next we have zero or more *char *\* arguments terminated by a *(char \*)NULL*.
 These represent the passed in values that get substituted in the url for the
-bits inside *{}*. Except for *nino* & *selfEmploymentId* which get passed in
-automatically. So in the above we pass in *cid* but not *nino*.
+bits inside *{}*. Except for *nino* which get passed in automatically. So in
+the above we pass in *cid* but not *nino*.
 
 Once you have the above and the enum values defined in *endpoints.h* (follow
 the ordering in there). You can now add entries to the *endpoints[]* array
