@@ -50,7 +50,8 @@ Lets take a look at the start of that file
 #include "mtd-ic.h"		/* for default (public) visibility */
 #include "endpoints.h"
 
-#define API_VER			"Accept: application/vnd.hmrc.2.0+json"
+#define VERSION		"2.0"
+#define API_VER		"Accept: application/vnd.hmrc." VERSION "+json"
 ```
 
 Should be relatively self-explanatory. The first line is the license header,
@@ -67,6 +68,8 @@ You will likely always need to include stddef.h for 'NULL'.
 Then we have a couple of internal includes, the first is the corresponding
 header file for this API (more on that later) and then we have endpoint.h for
 the definition of do\_ep().
+
+Then we define the version of the API as defined by HMRC..
 
 After that we define the functions for each API endpoint. These usually just
 make a call to do\_ep() and nothing else. E.g

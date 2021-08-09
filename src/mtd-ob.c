@@ -11,7 +11,8 @@
 #include "mtd-ob.h"		/* for default (public) visibility */
 #include "endpoints.h"
 
-#define API_VER			"Accept: application/vnd.hmrc.1.0+json"
+#define VERSION		"1.0"
+#define API_VER		"Accept: application/vnd.hmrc." VERSION "+json"
 
 /*
  * [GET ]
