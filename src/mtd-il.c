@@ -12,7 +12,7 @@
 #include "endpoints.h"
 
 #define VERSION		"1.0"
-#define API_VER		"Accept: application/vnd.hmrc." VERSIOn "+json"
+#define API_VER		"Accept: application/vnd.hmrc." VERSION "+json"
 
 /*
  * [PUT ]
