@@ -231,6 +231,14 @@ static const struct _endpoint {
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
+	/* Individuals Disclosures - Marriage Allowance */
+	[ID_MA_CREATE] = {
+		.tmpl	= "/individuals/disclosures/marriage-allowance/{nino}",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
 
 	/* Individual Loses - Brought Forward */
 	[IL_BF_LIST_LOSES] = {

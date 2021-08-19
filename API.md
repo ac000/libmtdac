@@ -20,7 +20,8 @@
   * [Make Tax Digital - Individual Loses API functions](#make-tax-digital---individual-loses-api-functions)
     - [Individual Loses - Brought Forward](#individual-loses---brought-forward)
     - [Individual Loses - Loss Claims](#individual-loses---loss-claims)
-  * [Make Tax Digital - Individuals Disclosures API functions [test-only]](#make-tax-digital---individuals-disclosures-api-functions-test-only)
+  * [Make Tax Digital - Individuals Disclosures API functions](#make-tax-digital---individuals-disclosures-api-functions)
+    - [Individuals Disclosures - Marriage Allowance](#individuals-disclosures---marriage-allowance)
   * [Make Tax Digital - Business Income Source Summary API functions](#make-tax-digital---business-income-source-summary-api-functions)
   * [Make Tax Digital - Business Source Adjustable Summary API functions](#make-tax-digital---business-source-adjustable-summary-api-functions)
     - [Business Source Adjustable Summary - Self-Employment](#business-source-adjustable-summary---self-employment)
@@ -916,7 +917,7 @@ int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
 ```
 
 
-### Make Tax Digital - Individuals Disclosures API functions [test-only]
+### Make Tax Digital - Individuals Disclosures API functions
 
 ```C
 #include <libmtdac/mtd-id.h>
@@ -939,6 +940,15 @@ int mtd_id_set(const struct mtd_dsrc_ctx *dsctx, const char *tax_year,
 
 ```C
 int mtd_id_delete(const char *tax_year, char **buf);
+```
+
+
+#### Individuals Disclosures - Marriage Allowance
+
+#### mtd\_id\_ma\_create
+
+```C
+int mtd_id_ma_create(const struct mtd_dsrc_ctx *dsctx, char **buf);
 ```
 
 

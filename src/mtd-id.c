@@ -15,6 +15,16 @@
 #define API_VER		"Accept: application/vnd.hmrc." VERSION "+json"
 
 /*
+ * [POST]
+ * /individuals/disclosures/marriage-allowance/{nino}
+ */
+int mtd_id_ma_create(const struct mtd_dsrc_ctx *dsctx, char **buf)
+{
+	return do_ep(ID_MA_CREATE, API_VER,
+		     dsctx, buf, (char *)NULL);
+}
+
+/*
  * [DELETE]
  * /individuals/disclosures/{nino}/{taxYear}
  */

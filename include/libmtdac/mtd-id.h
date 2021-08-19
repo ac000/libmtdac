@@ -17,6 +17,8 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
+extern int mtd_id_ma_create(const struct mtd_dsrc_ctx *dsctx, char **buf);
+
 extern int mtd_id_delete(const char *cid, char **buf);
 extern int mtd_id_set(const struct mtd_dsrc_ctx *dsctx, const char *tax_year,
 		      char **buf);

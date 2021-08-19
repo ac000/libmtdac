@@ -60,6 +60,8 @@ enum endpoint {
 	ID_DELETE,
 	ID_SET,
 	ID_GET,
+	/* Individuals Disclosures - Marriage Allowance */
+	ID_MA_CREATE,
 
 	/* Individual Loses - Brought Forward */
 	IL_BF_LIST_LOSES,
