@@ -110,16 +110,6 @@ int mtd_sa_di_get_annual_summary(const char *tax_year, char **buf)
 }
 
 /*
- * [GET ]
- * /self-assessment/ni/{nino}/uk-properties/end-of-period-statements/obligations?from=YYYY-MM-DD&to=YYYY-MM-DD
- */
-int mtd_sa_pb_get_end_of_period_statement(const char *query_string, char **buf)
-{
-	return do_ep(SA_PB_GET_END_OF_PERIOD_STATEMENT, API_VER,
-		     NULL, buf, query_string, (char *)NULL);
-}
-
-/*
  * [POST]
  * /self-assessment/ni/{nino}/uk-properties/end-of-period-statements/from/{start}/to/{end}
  */
@@ -255,16 +245,6 @@ int mtd_sa_pb_create_non_fhl_period(const struct mtd_dsrc_ctx *dsctx,
 int mtd_sa_pb_list_non_fhl_periods(char **buf)
 {
 	return do_ep(SA_PB_LIST_NON_FHL_PERIODS, API_VER,
-		     NULL, buf, (char *)NULL);
-}
-
-/*
- * [GET ]
- * /self-assessment/ni/{nino}/uk-properties/obligations
- */
-int mtd_sa_pb_list_obligations(char **buf)
-{
-	return do_ep(SA_PB_LIST_OBLIGATIONS, API_VER,
 		     NULL, buf, (char *)NULL);
 }
 

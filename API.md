@@ -521,12 +521,6 @@ int mtd_sa_pb_create_property(const struct mtd_dsrc_ctx *dsctx,
                               char **buf);
 ```
 
-#### mtd\_sa\_pb\_list\_obligations
-
-```C
-int mtd_sa_pb_list_obligations(char **buf);
-```
-
 #### mtd\_sa\_pb\_list\_non\_fhl\_periods
 
 ```C
@@ -615,13 +609,6 @@ int mtd_sa_pb_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
                                              const char *start,
                                              const char *end,
                                              char **buf);
-```
-
-#### mtd\_sa\_pb\_get\_end\_of\_period\_statement
-
-```C
-int mtd_sa_pb_get_end_of_period_statement(const char *query_string,
-                                          char **buf);
 ```
 
 

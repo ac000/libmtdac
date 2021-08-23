@@ -396,12 +396,6 @@ static const struct _endpoint {
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
-	[SA_PB_LIST_OBLIGATIONS] = {
-		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/obligations",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
 	[SA_PB_LIST_NON_FHL_PERIODS] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/other/periods",
 		.method	= M_GET,
@@ -484,12 +478,6 @@ static const struct _endpoint {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/end-of-period-statements/from/{start}/to/{end}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[SA_PB_GET_END_OF_PERIOD_STATEMENT] = {
-		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/end-of-period-statements/obligations/{query_params}",
-		.method	= M_GET,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
