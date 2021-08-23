@@ -12,7 +12,6 @@
     - [Self-Assessment - Dividends Income](#self-assessment---dividends-income)
     - [Self-Assessment - Savings Accounts](#self-assessment---savings-accounts)
     - [Self-Assessment - Charitable Giving](#self-assessment---charitable-giving)
-    - [Self-Assessment - Crystallisation](#self-assessment---crystallisation)
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
   * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
     - [Individual Calculations - Self-Assessment](#individual-calculations---self-assessment)
