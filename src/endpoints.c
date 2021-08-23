@@ -145,6 +145,14 @@ static const struct _endpoint {
 		.api	= MTD_EP_API_ITSA
 	},
 
+	/* Individuals Business End of Period Statement */
+	[IBEOPS_SUBMIT_END_OF_PERIOD_STATEMENT] = {
+		.tmpl	= "/individuals/business/end-of-period-statement/{nino}",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
 	/* Individual Calculations - Self-Assessment */
 	[IC_SA_LIST_CALCULATIONS] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{optional_query_params}",

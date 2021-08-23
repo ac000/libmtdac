@@ -43,6 +43,9 @@ enum endpoint {
 	BSAS_FP_LIST_SUMMARY_ADJUSTMENTS,
 	BSAS_FP_UPDATE_SUMMARY_ADJUSTMENTS,
 
+	/* Individuals Business End of Period Statement */
+	IBEOPS_SUBMIT_END_OF_PERIOD_STATEMENT,
+
 	/* Individual Calculations - Self-Assessment */
 	IC_SA_LIST_CALCULATIONS,
 	IC_SA_TRIGGER_CALCULATION,

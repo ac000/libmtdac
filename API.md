@@ -13,6 +13,7 @@
     - [Self-Assessment - Savings Accounts](#self-assessment---savings-accounts)
     - [Self-Assessment - Charitable Giving](#self-assessment---charitable-giving)
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
+  * [Make Tax Digital - Individuals Business End of Period Statement API functions](#make-tax-digital---individuals-business-end-of-period-statement-api-functions)
   * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
     - [Individual Calculations - Self-Assessment](#individual-calculations---self-assessment)
     - [Individual Calculations - Crystallisation [test-only]](#individual-calculations---crystallisation-test-only)
@@ -677,6 +678,19 @@ int mtd_sa_cg_get_charitable_giving(const char *tax_year, char **buf);
 ```C
 int mtd_sa_cg_update_charitable_giving(const struct mtd_dsrc_ctx *dsctx,
                                        const char *tax_year, char **buf);
+```
+
+
+### Make Tax Digital - Individuals Business End of Period Statement API functions
+
+```C
+#include <libmtdac/mtd-ibeops.h>
+```
+
+#### mtd\_ibeops\_submit\_eops
+
+```C
+int mtd_ibeops_submit_eops(const struct mtd_dsrc_ctx *dsctx, char **buf);
 ```
 
 
