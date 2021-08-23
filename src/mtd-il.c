@@ -11,7 +11,7 @@
 #include "mtd-il.h"		/* for default (public) visibility */
 #include "endpoints.h"
 
-#define VERSION		"1.0"
+#define VERSION		"2.0"
 #define API_VER		"Accept: application/vnd.hmrc." VERSION "+json"
 
 /*
@@ -76,7 +76,7 @@ int mtd_il_lc_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf)
  *
  * Optional query string:
  *
- *	?selfEmploymentId=&taxYear=YYYY-YY&typeOfLoss=&claimType=carry-sideways
+ *	?businessId=&taxYear=YYYY-YY&typeOfLoss=&claimType=carry-sideways
  *
  *	typeOfLoss={self-employment,uk-property-fhl,uk-property-non-fhl}
  */
@@ -133,7 +133,7 @@ int mtd_il_bf_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf)
  *
  * Optional query string:
  *
- *	?selfEmploymentId=&taxYear=YYYY-YY&typeOfLoss=
+ *	?businessId=&taxYear=YYYY-YY&typeOfLoss=
  *
  *	typeOfLoss={self-employment,uk-property-fhl,uk-property-non-fhl}
  */
