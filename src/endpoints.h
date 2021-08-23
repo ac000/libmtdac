@@ -120,9 +120,6 @@ enum endpoint {
 	/* Self-Assessment - Charitable Giving */
 	SA_CG_GET_CHARITABLE_GIVING,
 	SA_CG_UPDATE_CHARITABLE_GIVING,
-	/* Self-Assessment - Crystallisation */
-	SA_CR_INTENT_TO_CRYSTALLISE,
-	SA_CR_CRYSTALLISE,
 
 	/* Self-Assessment Accounts */
 	SAAC_GET_BALANCE,

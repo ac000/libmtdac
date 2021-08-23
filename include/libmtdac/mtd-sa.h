@@ -17,10 +17,6 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
-extern int mtd_sa_cr_crystallise(const struct mtd_dsrc_ctx *dsctx,
-				 const char *tax_year, char **buf);
-extern int mtd_sa_cr_intent_to_crystallise(const char *tax_year, char **buf);
-
 extern int mtd_sa_cg_update_charitable_giving(const struct mtd_dsrc_ctx *dsctx,
 					      const char *tax_year,
 					      char **buf);

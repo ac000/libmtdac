@@ -694,22 +694,6 @@ int mtd_sa_cg_update_charitable_giving(const struct mtd_dsrc_ctx *dsctx,
 ```
 
 
-#### Self-Assessment - Crystallisation
-
-#### mtd\_sa\_cr\_intent\_to\_crystallise
-
-```C
-int mtd_sa_cr_intent_to_crystallise(const char *tax_year, char **buf);
-```
-
-#### mtd\_sa\_cr\_crystallise
-
-```C
-int mtd_sa_cr_crystallise(const struct mtd_dsrc_ctx *dsctx,
-                          const char *tax_year, char **buf);
-```
-
-
 ### Make Tax Digital - Self-Assessment Accounts API functions [test-only]
 
 ```C

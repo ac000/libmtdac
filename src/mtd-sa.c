@@ -15,27 +15,6 @@
 #define API_VER		"Accept: application/vnd.hmrc." VERSION "+json"
 
 /*
- * [POST]
- * /self-assessment/ni/{nino}/{taxYear}/crystallisation
- */
-int mtd_sa_cr_crystallise(const struct mtd_dsrc_ctx *dsctx,
-			  const char *tax_year, char **buf)
-{
-	return do_ep(SA_CR_CRYSTALLISE, API_VER,
-		     dsctx, buf, tax_year, (char *)NULL);
-}
-
-/*
- * [POST]
- * /self-assessment/ni/{nino}/{taxYear}/intent-to-crystallise
- */
-int mtd_sa_cr_intent_to_crystallise(const char *tax_year, char **buf)
-{
-	return do_ep(SA_CR_INTENT_TO_CRYSTALLISE, API_VER,
-		     NULL, buf, tax_year, (char *)NULL);
-}
-
-/*
  * [PUT ]
  * /self-assessment/ni/{nino}/charitable-giving/{taxYear}
  */

@@ -554,21 +554,6 @@ static const struct _endpoint {
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
-	/* Self-Assessment - Crystallisation */
-	[SA_CR_INTENT_TO_CRYSTALLISE] = {
-		.tmpl	= "/self-assessment/ni/{nino}/{taxYear}/intent-to-crystallise",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[SA_CR_CRYSTALLISE] = {
-		.tmpl	= "/self-assessment/ni/{nino}/{taxYear}/crystallisation",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
 
 	/* Self-Assessment Accounts */
 	[SAAC_GET_BALANCE] = {
