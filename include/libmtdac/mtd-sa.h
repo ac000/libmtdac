@@ -36,10 +36,6 @@ extern int mtd_sa_di_update_annual_summary(const struct mtd_dsrc_ctx *dsctx,
 					   const char *tax_year, char **buf);
 extern int mtd_sa_di_get_annual_summary(const char *tax_year, char **buf);
 
-extern int mtd_sa_pb_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
-						    const char *start,
-						    const char *end,
-						    char **buf);
 extern int mtd_sa_pb_update_fhl_annual_summary(const struct mtd_dsrc_ctx *dsctx,
 					       const char *tax_year,
 					       char **buf);
@@ -64,11 +60,6 @@ extern int mtd_sa_pb_list_non_fhl_periods(char **buf);
 extern int mtd_sa_pb_create_property(const struct mtd_dsrc_ctx *dsctx,
 				     char **buf);
 
-extern int mtd_sa_se_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
-						    const char *seid,
-						    const char *start,
-						    const char *end,
-						    char **buf);
 extern int mtd_sa_se_update_annual_summary(const struct mtd_dsrc_ctx *dsctx,
 					   const char *seid,
 					   const char *tax_year, char **buf);

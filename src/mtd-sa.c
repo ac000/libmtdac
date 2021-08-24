@@ -110,19 +110,6 @@ int mtd_sa_di_get_annual_summary(const char *tax_year, char **buf)
 }
 
 /*
- * [POST]
- * /self-assessment/ni/{nino}/uk-properties/end-of-period-statements/from/{start}/to/{end}
- */
-int mtd_sa_pb_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
-					     const char *start,
-					     const char *end,
-					     char **buf)
-{
-	return do_ep(SA_PB_SUBMIT_END_OF_PERIOD_STATEMENT, API_VER,
-		     dsctx, buf, start, end, (char *)NULL);
-}
-
-/*
  * [PUT ]
  * /self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/{taxYear}
  */
@@ -256,19 +243,6 @@ int mtd_sa_pb_create_property(const struct mtd_dsrc_ctx *dsctx, char **buf)
 {
 	return do_ep(SA_PB_CREATE_PROPERTY, API_VER,
 		     dsctx, buf, (char *)NULL);
-}
-
-/*
- * [POST]
- * /self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}
- */
-int mtd_sa_se_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
-					     const char *seid,
-					     const char *start,
-					     const char *end, char **buf)
-{
-	return do_ep(SA_SE_SUBMIT_END_OF_PERIOD_STATEMENT, API_VER,
-		     dsctx, buf, seid, start, end, (char *)NULL);
 }
 
 /*

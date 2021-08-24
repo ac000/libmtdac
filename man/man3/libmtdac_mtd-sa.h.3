@@ -1,4 +1,4 @@
-.TH libmtdac_mtd-sa.h 3 "June 1, 2020" "libmtdac 0.9.0" "libmtdac_mtd-sa.h"
+.TH libmtdac_mtd-sa.h 3 "August 24, 2021" "libmtdac 0.50.0" "libmtdac_mtd-sa.h"
 
 .SH NAME
 libmtdac_mtd-sa.h \- Make Tax Digital \- Self Assessment API
@@ -62,17 +62,6 @@ Assessment API which itself contains several sub API's.
 .RS +4
 .BR mtd_sa_se_update_annual_summary (3)
 .RE
-
-.BI "int mtd_sa_se_submit_end_of_period_statement(const char *" src_file ",
-.BI "                                             const char *" seid ",
-.BI "                                             const char *" start ",
-.BI "                                             const char *" end ",
-.BI "                                             char **" buf ");"
-
-.RS +4
-.BR mtd_sa_se_submit_end_of_period_statement (3)
-.RE
-.fi
 
 .SS UK property business
 
@@ -162,15 +151,6 @@ Assessment API which itself contains several sub API's.
 
 .RS +4
 .BR mtd_sa_pb_update_fhl_annual_summary (3)
-.RE
-
-.BI "int mtd_sa_pb_submit_end_of_period_statement(const char *" src_file ",
-.BI "                                             const char *" start ",
-.BI "                                             const char *" end ",
-.BI "                                             char **" buf ");"
-
-.RS +4
-.BR mtd_sa_pb_submit_end_of_period_statement (3)
 .RE
 
 .SS Dividends income

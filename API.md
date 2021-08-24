@@ -503,15 +503,6 @@ int mtd_sa_se_update_annual_summary(const struct mtd_dsrc_ctx *dsctx,
                                     const char *tax_year, char **buf);
 ```
 
-#### mtd\_sa\_se\_submit\_end\_of\_period\_statement
-
-```C
-int mtd_sa_se_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
-                                             const char *seid,
-                                             const char *start,
-                                             const char *end,
-                                             char **buf);
-```
 
 #### Self-Assessment - UK Property Business
 
@@ -601,15 +592,6 @@ int mtd_sa_pb_get_fhl_annual_summary(const char *tax_year, char **buf);
 int mtd_sa_pb_update_fhl_annual_summary(const struct mtd_dsrc_ctx *dsctx,
                                         const char *tax_year,
                                         char **buf);
-```
-
-#### mtd\_sa\_pb\_submit\_end\_of\_period\_statement
-
-```C
-int mtd_sa_pb_submit_end_of_period_statement(const struct mtd_dsrc_ctx *dsctx,
-                                             const char *start,
-                                             const char *end,
-                                             char **buf);
 ```
 
 

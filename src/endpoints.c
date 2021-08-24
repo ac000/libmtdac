@@ -389,13 +389,6 @@ static const struct _endpoint {
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
-	[SA_SE_SUBMIT_END_OF_PERIOD_STATEMENT] = {
-		.tmpl	= "/self-assessment/ni/{nino}/self-employments/{selfEmploymentId}/end-of-period-statements/from/{start}/to/{end}",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
 	/* Self-Assessment - UK Property Business */
 	[SA_PB_CREATE_PROPERTY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties",
@@ -478,13 +471,6 @@ static const struct _endpoint {
 	[SA_PB_UPDATE_FHL_ANNUAL_SUMMARY] = {
 		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/furnished-holiday-lettings/{taxYear}",
 		.method	= M_PUT,
-		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[SA_PB_SUBMIT_END_OF_PERIOD_STATEMENT] = {
-		.tmpl	= "/self-assessment/ni/{nino}/uk-properties/end-of-period-statements/from/{start}/to/{end}",
-		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
