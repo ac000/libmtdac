@@ -120,7 +120,7 @@ enum endpoint {
 	SA_CG_GET_CHARITABLE_GIVING,
 	SA_CG_UPDATE_CHARITABLE_GIVING,
 
-	/* Self-Assessment Accounts */
+	/* Self-Assessment Accounts - Payments and Liabilities */
 	SAAC_GET_BALANCE,
 	SAAC_LIST_TRANSACTIONS,
 	SAAC_GET_TRANSACTION,
@@ -128,6 +128,10 @@ enum endpoint {
 	SAAC_GET_CHARGE,
 	SAAC_LIST_PAYMENTS,
 	SAAC_GET_PAYMENT,
+	/* Self-Assessment Accounts - Coding Out Underpayments and Debts */
+	SAAC_GET_CODING_OUT_UDA,
+	SAAC_SET_CODING_OUT_UDA,
+	SAAC_DELETE_CODING_OUT_UDA,
 
 	/* VAT */
 	VAT_LIST_OBLIGATIONS,

@@ -537,7 +537,7 @@ static const struct _endpoint {
 		.api	= MTD_EP_API_ITSA
 	},
 
-	/* Self-Assessment Accounts */
+	/* Self-Assessment Accounts - Payments and Liabilities */
 	[SAAC_GET_BALANCE] = {
 		.tmpl	= "/accounts/self-assessment/{nino}/balance",
 		.method	= M_GET,
@@ -577,6 +577,26 @@ static const struct _endpoint {
 	[SAAC_GET_PAYMENT] = {
 		.tmpl	= "/accounts/self-assessment/{nino}/payments/{paymentId}",
 		.method	= M_GET,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+	/* Self-Assessment Accounts - Coding Out Underpayments and Debts */
+	[SAAC_GET_CODING_OUT_UDA] = {
+		.tmpl	= "/accounts/self-assessment/{nino}/{taxYear}/collection/tax-code/{optional_query_params}",
+		.method	= M_GET,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+	[SAAC_SET_CODING_OUT_UDA] = {
+		.tmpl	= "/accounts/self-assessment/{nino}/{taxYear}/collection/tax-code",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+	[SAAC_DELETE_CODING_OUT_UDA] = {
+		.tmpl	= "/accounts/self-assessment/{nino}/{taxYear}/collection/tax-code",
+		.method	= M_DELETE,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},

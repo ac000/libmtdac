@@ -3,7 +3,7 @@
 /*
  * mtd-saac.h - Make Tax Digital - Self Assessment Accounts API
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _MTD_SAAC_H_
@@ -17,6 +17,10 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
+extern int mtd_saac_delete_coding_out_uda(const char *tax_year, char **buf);
+extern int mtd_saac_set_coding_out_uda(const struct mtd_dsrc_ctx *dsctx,
+				       const char *tax_year, char **buf);
+extern int mtd_saac_get_coding_out_uda(const char *tax_year, char **buf);
 extern int mtd_saac_get_payment(const char *pyid, char **buf);
 extern int mtd_saac_list_payments(const char *query_string, char **buf);
 extern int mtd_saac_get_charge(const char *trid, char **buf);

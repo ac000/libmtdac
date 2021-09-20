@@ -13,6 +13,8 @@
     - [Self-Assessment - Savings Accounts](#self-assessment---savings-accounts)
     - [Self-Assessment - Charitable Giving](#self-assessment---charitable-giving)
   * [Make Tax Digital - Self-Assessment Accounts API functions [test-only]](#make-tax-digital---self-assessment-accounts-api-functions-test-only)
+    - [Self-Assessment Accounts - Payments and Liabilities](#self-assessment-accounts---payments-and-liabilities)
+    - [Self-Assessment Accounts - Coding Out Underpayments and Debts](#self-assessment-accounts---coding-out-underpayments-and-debts)
   * [Make Tax Digital - Individuals Business End of Period Statement API functions](#make-tax-digital---individuals-business-end-of-period-statement-api-functions)
   * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
     - [Individual Calculations - Self-Assessment](#individual-calculations---self-assessment)
@@ -682,6 +684,8 @@ int mtd_ibeops_submit_eops(const struct mtd_dsrc_ctx *dsctx, char **buf);
 #include <libmtdac/mtd-saac.h>
 ```
 
+#### Self-Assessment Accounts - Payments and Liabilities
+
 #### mtd\_saac\_get\_balance
 
 ```C
@@ -722,6 +726,27 @@ int mtd_saac_list_payments(const char *query_string, char **buf);
 
 ```C
 int mtd_saac_get_payment(const char *pyid, char **buf);
+```
+
+#### Self-Assessment Accounts - Coding Out Underpayments and Debts
+
+#### mtd\_saac\_get\_coding\_out\_uda
+
+```C
+int mtd_saac_get_coding_out_uda(const char *tax_year, char **buf);
+```
+
+#### mtd\_saac\_set\_coding\_out\_uda
+
+```C
+int mtd_saac_set_coding_out_uda(const struct mtd_dsrc_ctx *dsctx,
+                                const char *tax_year, char **buf);
+```
+
+#### mtd\_saac\_delete\_coding\_out\_uda
+
+```C
+int mtd_saac_delete_coding_out_uda(const char *tax_year, char **buf);
 ```
 
 

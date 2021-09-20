@@ -3,7 +3,7 @@
 /*
  * mtd-saac.c - Make Tax Digital - Self Assessment Accounts API
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #include <stddef.h>
@@ -13,6 +13,38 @@
 
 #define VERSION		"1.0"
 #define API_VER		"Accept: application/vnd.hmrc." VERSION "+json"
+
+/*
+ * [DELETE]
+ * /accounts/self-assessment/{nino}/{taxYear}/collection/tax-code
+ */
+int mtd_saac_delete_coding_out_uda(const char *tax_year, char **buf)
+{
+	return do_ep(SAAC_DELETE_CODING_OUT_UDA, API_VER,
+		     NULL, buf, tax_year, (char *)NULL);
+}
+
+/*
+ * [PUT ]
+ * /accounts/self-assessment/{nino}/{taxYear}/collection/tax-code
+ */
+int mtd_saac_set_coding_out_uda(const struct mtd_dsrc_ctx *dsctx,
+				const char *tax_year, char **buf)
+{
+	return do_ep(SAAC_SET_CODING_OUT_UDA, API_VER,
+		     dsctx, buf, tax_year, (char *)NULL);
+}
+
+/*
+ * [GET ]
+ *
+ * /accounts/self-assessment/{nino}/{taxYear}/collection/tax-code[?source={hmrcHeld,user,latest}]
+ */
+int mtd_saac_get_coding_out_uda(const char *tax_year, char **buf)
+{
+	return do_ep(SAAC_GET_CODING_OUT_UDA, API_VER,
+		     NULL, buf, tax_year, (char *)NULL);
+}
 
 /*
  * [GET ]
