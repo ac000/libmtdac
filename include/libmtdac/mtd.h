@@ -221,7 +221,7 @@ extern void mtd_global_init(void);
 extern int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 extern void mtd_deinit(void);
 extern int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes);
-extern int mtd_init_config(void);
+extern int mtd_init_creds(void);
 extern int mtd_init_nino(void);
 extern char *mtd_percent_encode(const char *str, ssize_t len);
 extern const char *mtd_err2str(int err);

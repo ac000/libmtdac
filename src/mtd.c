@@ -749,7 +749,7 @@ int mtd_init_nino(void)
 	return MTD_ERR_NONE;
 }
 
-int mtd_init_config(void)
+int mtd_init_creds(void)
 {
 	char client_id[41];
 	char client_secret[41];

@@ -1,23 +1,23 @@
-.TH MTD_INIT_CONFIG 3 "June 1, 2020" "" "libmtdac"
+.TH MTD_INIT_CREDS 3 "September 21, 2021" "" "libmtdac"
 
 .SH NAME
 
-mtd_init_config \- initialise config
+mtd_init_creds \- initialise creds.json
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd.h>
 .PP
-.BI "int mtd_init_config(void);"
+.BI "int mtd_init_creds(void);"
 
 .SH DESCRIPTION
 
 This function is used to create an initial
-\fI${CONFIG_DIR}/libmtdac/{prod,test}-api/config.json\fP file that contains
+\fI${CONFIG_DIR}/libmtdac/{prod,test}-api/creds.json\fP file that contains
 the users \fIclient_id\fP & \fIclient_secret\fP.
 .PP
-This will prompt the user to enter the above tokens after which the config file
-will be created.
+This will prompt the user to enter the above tokens after which the file will
+be created.
 .PP
 This should just be called once during an initial setup routine.
 
@@ -33,7 +33,7 @@ code is returned.
 There was an OS level failure
 
 .SH FILES
-.I ${CONFIG_DIR}/libmtdac/{prod,test}-api/config.json
+.I ${CONFIG_DIR}/libmtdac/{prod,test}-api/creds.json
 
 .SH SEE ALSO
 

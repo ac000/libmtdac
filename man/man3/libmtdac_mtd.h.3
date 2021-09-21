@@ -1,4 +1,4 @@
-.TH libmtdac_mtd.h 3 "July 20, 2021" "libmtdac 0.50.0" "libmtdac_mtd.h"
+.TH libmtdac_mtd.h 3 "September 21, 2021" "libmtdac 0.50.0" "libmtdac_mtd.h"
 
 .SH NAME
 libmtdac_mtd.h \- Core types / defines
@@ -407,11 +407,11 @@ The third argument is  an \fBenum mtd_rst_oauth\fP which says whether to reset
 the oauth.json file or not when writing it.
 .RE
 
-.BI "int mtd_init_config(void);"
+.BI "int mtd_init_creds(void);"
 .br
 
 .RS
-This is used to setup the config.json file which contains the client_id &
+This is used to setup the creds.json file which contains the client_id &
 client_secret.
 .RE
 

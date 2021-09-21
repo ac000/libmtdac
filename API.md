@@ -359,10 +359,10 @@ should be authorised for, the scopes available are
         MTD_SCOPE_RD_VAT
         MTD_SCOPE_WR_VAT
 
-#### mtd\_init\_config - initialise config.json
+#### mtd\_init\_creds - initialise creds.json
 
 ```C
-int mtd_init_config(void);
+int mtd_init_creds(void);
 ```
 
 #### mtd\_init\_nino - initialise nino.json
