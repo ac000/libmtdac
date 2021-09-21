@@ -530,6 +530,10 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 
 	mtd_ctx.cfg = cfg;
 
+	err = generate_device_id();
+	if (err)
+		return -MTD_ERR_OS;
+
 	return MTD_ERR_NONE;
 }
 
@@ -783,10 +787,6 @@ int mtd_init_creds(void)
 	printf("\n");
 
 	json_decref(new);
-
-	err = generate_device_id();
-	if (err)
-		return -MTD_ERR_OS;
 
 	return MTD_ERR_NONE;
 }
