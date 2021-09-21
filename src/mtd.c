@@ -771,14 +771,14 @@ int mtd_init_config(void)
 
 	new = json_pack("{s:s, s:s}", "client_id", client_id,
 			"client_secret", client_secret);
-	err = write_config(mtd_ctx.config_dir, "config.json", new);
+	err = write_config(mtd_ctx.config_dir, "creds.json", new);
 	if (err) {
 		json_decref(new);
 		return err;
 	}
 
 	printf("\n");
-	printf("Wrote config.json to %s/config.json\n\n", mtd_ctx.config_dir);
+	printf("Wrote creds.json to %s/creds.json\n\n", mtd_ctx.config_dir);
 	json_dumpf(new, stdout, JSON_INDENT(4));
 	printf("\n");
 

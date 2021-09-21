@@ -41,7 +41,7 @@ char *load_token(const char *which, enum file_type type, enum mtd_ep_api api)
 		file = "oauth-application.json";
 		break;
 	case FT_CONFIG:
-		file = "config.json";
+		file = "creds.json";
 		break;
 	case FT_NINO:
 		file = "nino.json";
