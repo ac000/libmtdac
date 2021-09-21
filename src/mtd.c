@@ -597,8 +597,8 @@ extern char **environ;
 int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes)
 {
 	struct mtd_dsrc_ctx dsctx;
-	char *client_id = load_token("client_id", FT_CONFIG, MTD_EP_API_NULL);
-	char *client_secret = load_token("client_secret", FT_CONFIG,
+	char *client_id = load_token("client_id", FT_CREDS, MTD_EP_API_NULL);
+	char *client_secret = load_token("client_secret", FT_CREDS,
 					 MTD_EP_API_NULL);
 	const char *args[3];
 	char auth_code[41];

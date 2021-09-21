@@ -14,7 +14,7 @@
 enum file_type {
 	FT_AUTH = 0,
 	FT_AUTH_APPLICATION,
-	FT_CONFIG,
+	FT_CREDS,
 	FT_NINO,
 };
 

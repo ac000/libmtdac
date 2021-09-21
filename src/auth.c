@@ -40,7 +40,7 @@ char *load_token(const char *which, enum file_type type, enum mtd_ep_api api)
 	case FT_AUTH_APPLICATION:
 		file = "oauth-application.json";
 		break;
-	case FT_CONFIG:
+	case FT_CREDS:
 		file = "creds.json";
 		break;
 	case FT_NINO:
@@ -82,8 +82,8 @@ int oauther_refresh_access_token(enum mtd_ep_api api)
 	char path[PATH_MAX];
 	char *buf;
 	char *refresh_token = load_token("refresh_token", FT_AUTH, api);
-	char *client_id = load_token("client_id", FT_CONFIG, MTD_EP_API_NULL);
-	char *client_secret = load_token("client_secret", FT_CONFIG,
+	char *client_id = load_token("client_id", FT_CREDS, MTD_EP_API_NULL);
+	char *client_secret = load_token("client_secret", FT_CREDS,
 					 MTD_EP_API_NULL);
 	json_t *array;
 	json_t *froot;
@@ -133,8 +133,8 @@ int oauther_get_application_token(enum mtd_ep_api api __unused)
 	struct mtd_dsrc_ctx dsctx;
 	char data[4096];
 	char *buf;
-	char *client_id = load_token("client_id", FT_CONFIG, MTD_EP_API_NULL);
-	char *client_secret = load_token("client_secret", FT_CONFIG,
+	char *client_id = load_token("client_id", FT_CREDS, MTD_EP_API_NULL);
+	char *client_secret = load_token("client_secret", FT_CREDS,
 					 MTD_EP_API_NULL);
 	json_t *array;
 	json_t *root;
