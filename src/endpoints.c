@@ -639,36 +639,42 @@ static const struct _endpoint {
 		.tmpl	= "/create-test-user/individuals",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION
+		.authz	= AUTHZ_APPLICATION,
+		.api	= MTD_EP_API_NULL
 	},
 	[TEST_CU_CREATE_ORGANISATION] = {
 		.tmpl	= "/create-test-user/organisations",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION
+		.authz	= AUTHZ_APPLICATION,
+		.api	= MTD_EP_API_NULL
 	},
 	[TEST_CU_CREATE_AGENT] = {
 		.tmpl	= "/create-test-user/agents",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION
+		.authz	= AUTHZ_APPLICATION,
+		.api	= MTD_EP_API_NULL
 	},
 	[TEST_CU_LIST_SERVICES] = {
 		.tmpl	= "/create-test-user/services",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION
+		.authz	= AUTHZ_APPLICATION,
+		.api	= MTD_EP_API_NULL
 	},
 
 	/* Test Fraud Prevention Headers */
 	[TEST_FPH_VALIDATE] = {
 		.tmpl	= "/test/fraud-prevention-headers/validate",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION
+		.authz	= AUTHZ_APPLICATION,
+		.api	= MTD_EP_API_NULL
 	},
 	[TEST_FPH_FEEDBACK] = {
 		.tmpl	= "/test/fraud-prevention-headers/{api}/validation-feedback/{optional_query_params}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION
+		.authz	= AUTHZ_APPLICATION,
+		.api	= MTD_EP_API_NULL
 	},
 
 	/* OAuth */
@@ -676,19 +682,22 @@ static const struct _endpoint {
 		.tmpl	= "/oauth/token",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_URL_ENCODED,
-		.authz	= AUTHZ_NONE
+		.authz	= AUTHZ_NONE,
+		.api	= MTD_EP_API_NULL
 	},
 	[OA_EXCHANGE_AUTH_CODE] = {
 		.tmpl	= "/oauth/token",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_URL_ENCODED,
-		.authz	= AUTHZ_NONE
+		.authz	= AUTHZ_NONE,
+		.api	= MTD_EP_API_NULL
 	},
 	[OA_APPLICATION_TOKEN] = {
 		.tmpl	= "/oauth/token",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_URL_ENCODED,
-		.authz	= AUTHZ_NONE
+		.authz	= AUTHZ_NONE,
+		.api	= MTD_EP_API_NULL
 	},
 };
 
