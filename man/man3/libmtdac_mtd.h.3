@@ -225,8 +225,8 @@ cause the appropriate inbuilt function to be used
 
 .nf
 #define \fBMTD_FPH_SET_FUNC(s, m, f)\p
-.fi
-.P
+
+.PP
 #define \fBMTD_FPH_CLI_PUBLIC_IP\fP               fph_srcip
 .br
 #define \fBMTD_FPH_CLI_PUBLIC_PORT\fP             fph_srcport
@@ -270,6 +270,7 @@ cause the appropriate inbuilt function to be used
 #define \fBMTD_FPH_VEN_FWD\fP                     fph_vendor_fwd
 .br
 #define \fBMTD_FPH_VEN_PROD_NAME\fP               fph_prod_name
+.fi
 
 struct mtd_fph_ops {
         char *(*fph_device_id)(void *user_data);
@@ -403,7 +404,7 @@ etc) this is adding authorisations for.
 The second argument is one or more \fBenum mtd_scope\fP values bitwise OR'd
 together, describing the scopes to be authorised.
 .PP
-The third argument is  an \fBenum mtd_rst_oauth\fP which says whether to reset
+The third argument is an \fBenum mtd_rst_oauth\fP which says whether to reset
 the oauth.json file or not when writing it.
 .RE
 
@@ -422,25 +423,25 @@ This is for creating the nino.json file which stores the users National
 Insurance Number.
 .RE
 
-.BI "char *mtd_percent_encode(const char *str, ssize_t len);"
+.BI "char *mtd_percent_encode(const char *" str ", ssize_t " len );
 
 .RS
 This is for percent encoding a string.
 .RE
 
-.BI "const char *mtd_err2str(int err);"
+.BI "const char *mtd_err2str(int " err );
 
 .RS
 This is for getting a textual description of the given error code.
 .RE
 
-.BI "const char *mtd_err2enum_str(int err);"
+.BI "const char *mtd_err2enum_str(int " err );
 
 .RS
 This is for getting a string version of the given error code enum.
 .RE
 
-.BI "enum mtd_http_status_code mtd_http_status_code(const char *json);"
+.BI "enum mtd_http_status_code mtd_http_status_code(const char *" json );
 
 .RS
 This is to get the HTTP status code of the last request. In the case of
@@ -448,7 +449,7 @@ multiple requests, it is likely to be the last one you are interested in
 due to a failure.
 .RE
 
-.BI "const char *mtd_http_status_str(const char *json);"
+.BI "const char *mtd_http_status_str(const char *" json );
 
 .RS
 This is to get the HTTP status string of the last request. In the case of
@@ -456,7 +457,7 @@ multiple requests, it is likely to be the last one you are interested in
 due to a failure.
 .RE
 
-.BI "const char *mtd_http_status_str_u(const char *json);"
+.BI "const char *mtd_http_status_str_u(const char *" json );
 
 .RS
 This is to get the HTTP status enum string of the last request. In the case
@@ -464,7 +465,7 @@ of multiple requests, it is likely to be the last one you are interested in
 due to a failure.
 .RE
 
-.BI "enum mtd_hmrc_error mtd_hmrc_error(const char *json);"
+.BI "enum mtd_hmrc_error mtd_hmrc_error(const char *" json );
 
 .RS
 This is to check an endpoint error code.
