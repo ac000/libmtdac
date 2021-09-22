@@ -67,6 +67,7 @@ enum mtd_error {
         MTD_ERR_CONFIG_DIR_UNSPEC,
         MTD_ERR_CONFIG_DIR_INVALID,
         MTD_ERR_NO_CONFIG,
+        MTD_ERR_INVALID_EP_API,
         MTD_ERR_INVALID_ERROR
 };
 ```
@@ -362,7 +363,7 @@ should be authorised for, the scopes available are
 #### mtd\_init\_creds - initialise creds.json
 
 ```C
-int mtd_init_creds(void);
+int mtd_init_creds(enum mtd_ep_api api);
 ```
 
 #### mtd\_init\_nino - initialise nino.json

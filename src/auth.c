@@ -64,8 +64,28 @@ char *load_token(const char *which, enum file_type type, enum mtd_ep_api api)
 		return NULL;
 	}
 	tok_obj = root;
-	if (api != MTD_EP_API_NULL)
+	if (type == FT_CREDS && api == MTD_EP_API_NULL) {
+		/*
+		 * Just take whichever is available.
+		 *
+		 * This is for the application authenticated endpoints
+		 * such as the various test endpoints, which won't have
+		 * their own specific credentials and applications that
+		 * use itsa and or vat will subscribe to the test APIs
+		 * under the ista and/or vat credentials.
+		 *
+		 * So if an applications supports both itsa * vat via
+		 * two sets of credentials it will subscribe to the test
+		 * APIs under both sets of credentials.
+		 */
+		tok_obj = json_object_get(root,
+					  ep_api_map[MTD_EP_API_ITSA].name);
+		if (!tok_obj)
+			tok_obj = json_object_get(root,
+						  ep_api_map[MTD_EP_API_VAT].name);
+	} else if (api != MTD_EP_API_NULL) {
 		tok_obj = json_object_get(root, ep_api_map[api].name);
+	}
 	tok_obj = json_object_get(tok_obj, which);
 	if (!tok_obj)
 		return NULL;
@@ -82,9 +102,8 @@ int oauther_refresh_access_token(enum mtd_ep_api api)
 	char path[PATH_MAX];
 	char *buf;
 	char *refresh_token = load_token("refresh_token", FT_AUTH, api);
-	char *client_id = load_token("client_id", FT_CREDS, MTD_EP_API_NULL);
-	char *client_secret = load_token("client_secret", FT_CREDS,
-					 MTD_EP_API_NULL);
+	char *client_id = load_token("client_id", FT_CREDS, api);
+	char *client_secret = load_token("client_secret", FT_CREDS, api);
 	json_t *array;
 	json_t *froot;
 	json_t *result;

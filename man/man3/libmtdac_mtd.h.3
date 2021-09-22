@@ -99,6 +99,7 @@ enum mtd_error {
         \fBMTD_ERR_CONFIG_DIR_UNSPEC\fP,
         \fBMTD_ERR_CONFIG_DIR_INVALID\fP,
         \fBMTD_ERR_NO_CONFIG\fP,
+        \fBMTD_ERR_INVALID_EP_API\fP,
         \fBMTD_ERR_INVALID_ERROR\fP
 .br
 };
@@ -408,12 +409,15 @@ The third argument is an \fBenum mtd_rst_oauth\fP which says whether to reset
 the oauth.json file or not when writing it.
 .RE
 
-.BI "int mtd_init_creds(void);"
-.br
+.BI "int mtd_init_creds(enum mtd_ep_api " api );
 
 .RS
 This is used to setup the creds.json file which contains the client_id &
 client_secret.
+.PP
+The first argument is an \fBenum mtd_ep_api\fP describing what API (ITSA, VAT
+etc) this is adding credentials for.
+.PP
 .RE
 
 .BI "int mtd_init_nino(void);"

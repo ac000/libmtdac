@@ -83,6 +83,10 @@ static const struct _mtd_err_map {
 		.estr	= "MTD_ERR_NO_CONFIG",
 		.str	= "No config specified"
 	},
+	[MTD_ERR_INVALID_EP_API] = {
+		.estr	= "MTD_ERR_INVALID_EP_API",
+		.str	= "Invalid Endpoint API"
+	},
 
 	/* keep this last */
 	[MTD_ERR_INVALID_ERROR] = {
@@ -601,9 +605,8 @@ extern char **environ;
 int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes)
 {
 	struct mtd_dsrc_ctx dsctx;
-	char *client_id = load_token("client_id", FT_CREDS, MTD_EP_API_NULL);
-	char *client_secret = load_token("client_secret", FT_CREDS,
-					 MTD_EP_API_NULL);
+	char *client_id = NULL;
+	char *client_secret = NULL;
 	const char *args[3];
 	char auth_code[41];
 	char *buf = NULL;
@@ -630,6 +633,9 @@ int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes)
 
 	reset_oauth = !(api & MTD_EP_API_ADD);
 	api &= ~MTD_EP_API_ADD;
+
+	client_id = load_token("client_id", FT_CREDS, api);
+	client_secret = load_token("client_secret", FT_CREDS, api);
 
 	printf("You need to authorise libmtdac to have '%s%s%s' access to "
 	       "your\n'%s' information.\n",
@@ -753,13 +759,31 @@ int mtd_init_nino(void)
 	return MTD_ERR_NONE;
 }
 
-int mtd_init_creds(void)
+int mtd_init_creds(enum mtd_ep_api api)
 {
 	char client_id[41];
 	char client_secret[41];
+	const char *api_s;
 	char *s;
+	json_t *froot = NULL;
 	json_t *new;
+	bool reset_creds;
 	int err;
+
+	reset_creds = !(api & MTD_EP_API_ADD);
+	api &= ~MTD_EP_API_ADD;
+
+	switch (api) {
+	case MTD_EP_API_ITSA:
+		api_s = "ITSA";
+		break;
+	case MTD_EP_API_VAT:
+		api_s = "VAT";
+		break;
+	default:
+		return -MTD_ERR_INVALID_EP_API;
+	}
+	printf("\t\tEnter your credentials for the [%s] API\n\n", api_s);
 
 	printf("Enter your 'client_id'     > ");
 	s = fgets(client_id, sizeof(client_id) - 1, stdin);
@@ -775,18 +799,30 @@ int mtd_init_creds(void)
 
 	new = json_pack("{s:s, s:s}", "client_id", client_id,
 			"client_secret", client_secret);
-	err = write_config(mtd_ctx.config_dir, "creds.json", new);
+	if (!reset_creds) {
+		char path[PATH_MAX];
+
+		snprintf(path, sizeof(path), "%s/creds.json",
+			 mtd_ctx.config_dir);
+		froot = json_load_file(path, 0, NULL);
+		if (froot)
+			json_object_set_new(froot, ep_api_map[api].name, new);
+	}
+	if (!froot)
+		froot = json_pack("{s:o}", ep_api_map[api].name, new);
+
+	err = write_config(mtd_ctx.config_dir, "creds.json", froot);
 	if (err) {
-		json_decref(new);
+		json_decref(froot);
 		return err;
 	}
 
 	printf("\n");
 	printf("Wrote creds.json to %s/creds.json\n\n", mtd_ctx.config_dir);
-	json_dumpf(new, stdout, JSON_INDENT(4));
+	json_dumpf(froot, stdout, JSON_INDENT(4));
 	printf("\n");
 
-	json_decref(new);
+	json_decref(froot);
 
 	return MTD_ERR_NONE;
 }

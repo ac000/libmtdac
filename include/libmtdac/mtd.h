@@ -71,6 +71,7 @@ enum mtd_error {
 	MTD_ERR_CONFIG_DIR_UNSPEC,
 	MTD_ERR_CONFIG_DIR_INVALID,
 	MTD_ERR_NO_CONFIG,
+	MTD_ERR_INVALID_EP_API,
 
 	/* keep this last */
 	MTD_ERR_INVALID_ERROR
@@ -221,7 +222,7 @@ extern void mtd_global_init(void);
 extern int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 extern void mtd_deinit(void);
 extern int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes);
-extern int mtd_init_creds(void);
+extern int mtd_init_creds(enum mtd_ep_api api);
 extern int mtd_init_nino(void);
 extern char *mtd_percent_encode(const char *str, ssize_t len);
 extern const char *mtd_err2str(int err);
