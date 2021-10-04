@@ -798,17 +798,17 @@ char *ep_make_url(enum endpoint ep, const char * const params[], char *url)
 			break;
 
 		if (*token != '{')
-			len += snprintf(url + len, URL_LEN+1 - len, "/%s",
-					token);
+			snprintf(url + len, URL_LEN+1 - len, "/%s", token);
 		else if (strcmp(token, "{nino}") == 0)
-			len += snprintf(url + len, URL_LEN+1 - len, "/%s",
-					nino);
+			snprintf(url + len, URL_LEN+1 - len, "/%s", nino);
 		else if (strstr(token, "query_params"))
-			len += snprintf(url + len, URL_LEN+1 - len, "%s",
-					params[p] ? params[p++] : "");
+			snprintf(url + len, URL_LEN+1 - len, "%s",
+				 params[p] ? params[p++] : "");
 		else
-			len += snprintf(url + len, URL_LEN+1 - len, "/%s",
-					params[p++]);
+			snprintf(url + len, URL_LEN+1 - len, "/%s",
+				 params[p++]);
+
+		len = strlen(url);
 	}
 
 	free(string);

@@ -336,8 +336,8 @@ static char *get_macaddrs(void *user_data __unused)
 		snprintf(mac, sizeof(mac), "%02x:%02x:%02x:%02x:%02x:%02x",
 			 ph[0], ph[1], ph[2], ph[3], ph[4], ph[5]);
 		encmac = mtd_percent_encode(mac, -1);
-		maclen += snprintf(buf + maclen, BUF_SZ - maclen, "%s,",
-				   encmac);
+		snprintf(buf + maclen, BUF_SZ - maclen, "%s,", encmac);
+		maclen = strlen(buf);
 		free(encmac);
 	}
 	buf[maclen - 1] = '\0';	/* trim trailing ',' */
@@ -490,7 +490,8 @@ static char *get_ipaddrs(void *user_data __unused)
 						sizeof(struct sockaddr_in6),
 			    ip, sizeof(ip), NULL, 0, NI_NUMERICHOST);
 		encip = mtd_percent_encode(ip, -1);
-		iplen += snprintf(buf + iplen, BUF_SZ - iplen, "%s,", encip);
+		snprintf(buf + iplen, BUF_SZ - iplen, "%s,", encip);
+		iplen = strlen(buf);
 		free(encip);
 	}
 	buf[iplen - 1] = '\0';	/* trim trailing ',' */

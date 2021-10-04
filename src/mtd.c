@@ -657,9 +657,11 @@ int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes)
 	len = snprintf(url, sizeof(url),
 		       "%s/oauth/authorize?response_type=code&client_id=%s&scope=", mtd_ctx.api_url, client_id);
 	for (int i = 0; i < n; i++) {
-		if (scopes & scope_map[i].scope)
-			len += snprintf(url + len, sizeof(url) - len, "%s+",
-					scope_map[i].str);
+		if (scopes & scope_map[i].scope) {
+			snprintf(url + len, sizeof(url) - len, "%s+",
+				 scope_map[i].str);
+			len = strlen(url);
+		}
 	}
 	url[--len] = '\0';
 	snprintf(url + len, sizeof(url) - len,
