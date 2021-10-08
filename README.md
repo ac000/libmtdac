@@ -79,6 +79,12 @@ steps
 Include the appropriate header file(s) as described above and link with
 *-lmtdac* assuming you've built and installed the RPM or similar.
 
+### Examples
+
+For real world examples of usage see
+
+- [mtd-cli](https://github.com/ac000/mtd-cli)
+- [itsa](https://github.com/ac000/itsa)
 
 ## Fraud Prevention Headers
 
