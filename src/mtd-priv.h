@@ -13,7 +13,9 @@
 
 #include "mtd.h"
 
+#ifndef __unused
 #define __unused	__attribute__((unused))
+#endif
 
 enum app_conn_type {
 	MTD_ACT_MOBILE_APP_DIRECT = 0,
