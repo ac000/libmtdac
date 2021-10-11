@@ -20,11 +20,11 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <ifaddrs.h>
-#include <linux/if_packet.h>
 #include <limits.h>
 
 #include <jansson.h>
 
+#include "platform.h"
 #include "mtd.h"
 #include "mtd-priv.h"
 #include "curler.h"
@@ -253,42 +253,21 @@ static char *get_ua(void *user_data __unused)
 {
 	struct utsname un;
 	char *buf;
+	char ven[64];
+	char model[128];
 	char *encsys;
 	char *encrel;
-	char *encvendor = NULL;
-	char *encmodel = NULL;
-	char line[BUF_SZ];
-	FILE *fp;
+	char *encvendor;
+	char *encmodel;
 	int err;
 
 	uname(&un);
 	encsys = mtd_percent_encode(un.sysname, -1);
 	encrel = mtd_percent_encode(un.release, -1);
 
-	fp = fopen("/proc/cpuinfo", "re");
-	while (fgets(line, sizeof(line), fp)) {
-		char *ptr;
-
-		line[strlen(line) - 1] = '\0'; /* loose the trailing \n */
-
-		ptr = strstr(line, "vendor_id");
-		if (ptr && !encvendor) {
-			ptr = strchr(line, ':');
-			if (ptr)
-				encvendor = mtd_percent_encode(ptr + 2, -1);
-		}
-
-		ptr = strstr(line, "model name");
-		if (ptr && !encmodel) {
-			ptr = strchr(line, ':');
-			if (ptr)
-				encmodel = mtd_percent_encode(ptr + 2, -1);
-		}
-
-		if (encvendor && encmodel)
-			break;
-	}
-	fclose(fp);
+	get_mach_info(ven, sizeof(ven), model, sizeof(model));
+	encvendor = mtd_percent_encode(ven, -1);
+	encmodel = mtd_percent_encode(model, -1);
 
 	err = asprintf(&buf,
 		       "os-family=%s&os-version=%s&device-manufacturer=%s&device-model=%s",
@@ -320,21 +299,13 @@ static char *get_macaddrs(void *user_data __unused)
 		return strdup("");
 
 	for (ifa = ifaddr, n = 0; ifa != NULL; ifa = ifa->ifa_next, n++) {
-		int family;
 		char mac[18];
 		char *encmac;
-		unsigned char *ph;
 
-		if (ifa->ifa_addr == NULL)
+		err = get_ll_addr(ifa->ifa_addr, mac, sizeof(mac));
+		if (err)
 			continue;
 
-		family = ifa->ifa_addr->sa_family;
-		if (family != AF_PACKET)
-			continue;
-
-		ph = ((struct sockaddr_ll *)ifa->ifa_addr)->sll_addr;
-		snprintf(mac, sizeof(mac), "%02x:%02x:%02x:%02x:%02x:%02x",
-			 ph[0], ph[1], ph[2], ph[3], ph[4], ph[5]);
 		encmac = mtd_percent_encode(mac, -1);
 		snprintf(buf + maclen, BUF_SZ - maclen, "%s,", encmac);
 		maclen = strlen(buf);

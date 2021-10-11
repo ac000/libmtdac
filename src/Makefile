@@ -18,7 +18,9 @@ LDFLAGS = -shared -Wl,-z,now,-z,defs,-z,relro,--as-needed
 LIBS	= -lcurl -ljansson
 POSTCOMPILE = @mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d && touch $@
 
-sources = $(wildcard *.c)
+UNAME_S := $(shell uname -s | tr A-Z a-z)
+
+sources = $(wildcard platform/$(UNAME_S)/*.c platform/common/*.c *.c)
 objects = $(sources:.c=.o)
 
 v = @
@@ -40,12 +42,24 @@ $(LIBNAME): $(objects)
 	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 	$(POSTCOMPILE)
 
+platform/$(UNAME_S)/%.o: platform/$(UNAME_S)/%.c
+platform/$(UNAME_S)/%.o: platform/$(UNAME_S)/%.c $(DEPDIR)/%.d
+	@echo -e "  CC\t$@"
+	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
+	$(POSTCOMPILE)
+
+platform/common/%.o: platform/common/%.c
+platform/common/%.o: platform/common/%.c $(DEPDIR)/%.d
+	@echo -e "  CC\t$@"
+	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
+	$(POSTCOMPILE)
+
 $(DEPDIR)/%.d: ;
 .PRECIOUS: $(DEPDIR)/%.d
 
 include $(wildcard $(patsubst %,$(DEPDIR)/%.d,$(basename $(sources))))
 
 clean:
-	$(v)rm -f *.o $(LIBNAME).so*
+	$(v)rm -f *.o platform/*/*.o $(LIBNAME).so*
 	$(v)rm -f $(DEPDIR)/*
 	$(v)rmdir $(DEPDIR)

@@ -24,6 +24,7 @@
 
 #include <curl/curl.h>
 
+#include "platform.h"
 #include "mtd.h"
 #include "mtd-priv.h"
 #include "endpoints.h"
@@ -311,24 +312,6 @@ char *mtd_percent_encode(const char *str, ssize_t len)
 	return buf;
 }
 
-static char *gen_uuid(char *buf)
-{
-	FILE *fp;
-	size_t bytes_read;
-
-	fp = fopen("/proc/sys/kernel/random/uuid", "r");
-	if (!fp)
-		return NULL;
-
-	bytes_read = fscanf(fp, "%36s", buf);
-	fclose(fp);
-
-	if (bytes_read == 0)
-		return NULL;
-
-	return buf;
-}
-
 static int generate_device_id(void)
 {
 	char uuid[37];
@@ -357,7 +340,7 @@ static int generate_device_id(void)
 
 		logger(MTD_LOG_ERR, "stat %s/uuid.json: %s\n",
 		       mtd_ctx.config_dir,
-		       strerror_r(errno, errbuf, sizeof(errbuf)));
+		       x_strerror_r(errno, errbuf, sizeof(errbuf)));
 		close(dfd);
 		return -MTD_ERR_OS;
 	}
@@ -468,7 +451,7 @@ static int check_config_dir(const char *config_dir, bool is_production)
 
 	ret = -MTD_ERR_OS;
 	logger(MTD_LOG_ERR, "mkdirat %s: %s\n", cfg_dir,
-	       strerror_r(errno, errbuf, sizeof(errbuf)));
+	       x_strerror_r(errno, errbuf, sizeof(errbuf)));
 
 out_close:
 	close(dfd);

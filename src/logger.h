@@ -17,6 +17,7 @@
 #include <string.h>
 #include <errno.h>
 
+#include "platform.h"
 #include "mtd-priv.h"
 
 #define OPT_SP	"%s"
@@ -59,7 +60,7 @@ static inline void _logger(const char *func, enum log_level log_level,
 	if (log_level == MTD_LOG_ERRNO) {
 		char errbuf[1024] = "\0";
 
-		errp = strerror_r(errno, errbuf, sizeof(errbuf));
+		errp = x_strerror_r(errno, errbuf, sizeof(errbuf));
 	}
 
 	if (logbuf && *logbuf == ' ') /* continuation line */
