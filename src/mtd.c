@@ -649,10 +649,6 @@ int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes)
 	printf("Copy and paste the auth code shown on screen into the below "
 	       "prompt.\n");
 
-	printf("\n\n");
-	printf("                       Press ENTER to continue\n");
-	getchar();
-
 	args[0] = "xdg-open";
 	len = snprintf(url, sizeof(url),
 		       "%s/oauth/authorize?response_type=code&client_id=%s&scope=", mtd_ctx.api_url, client_id);
@@ -668,6 +664,14 @@ int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes)
 		 "&redirect_uri=urn:ietf:wg:oauth:2.0:oob");
 	args[1] = url;
 	args[2] = (const char *)NULL;
+
+	printf("\n");
+	printf("If a browser window doesn't pop up, you can use the below "
+	       "url.\n\n");
+	printf("  %s\n\n\n", url);
+	printf("                       Press ENTER to continue\n");
+	getchar();
+
 	posix_spawnp(&child_pid, args[0], NULL, NULL, (char * const *)args,
 		     environ);
 
