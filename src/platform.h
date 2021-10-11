@@ -9,7 +9,12 @@
 #ifndef _PLATFORM_H_
 #define _PLATFORM_H_
 
+#include <fcntl.h>
 #include <sys/socket.h>
+
+#if defined(__FreeBSD__) && !defined(O_PATH)
+#define O_PATH	0
+#endif
 
 extern char *x_strerror_r(int errnum, char *buf, size_t buflen);
 extern char *gen_uuid(char *buf);

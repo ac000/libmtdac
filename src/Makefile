@@ -18,7 +18,18 @@ LDFLAGS = -shared -Wl,-z,now,-z,defs,-z,relro,--as-needed
 LIBS	= -lcurl -ljansson
 POSTCOMPILE = @mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d && touch $@
 
+ifeq ($(CC),clang)
+        # It is quite comminn to do STRING + N, to skip N bytes of STRING
+        CFLAGS += -Wno-string-plus-int
+endif
+
 UNAME_S := $(shell uname -s | tr A-Z a-z)
+ifeq ($(UNAME_S),freebsd)
+        CFLAGS  += -I/usr/local/include
+        # Avoid linker error about undefined symbol: environ
+        LDFLAGS := $(subst defs,undefs,$(LDFLAGS))
+        LIBS    := -L/usr/local/lib $(LIBS) -luuid
+endif
 
 sources = $(wildcard platform/$(UNAME_S)/*.c platform/common/*.c *.c)
 objects = $(sources:.c=.o)
