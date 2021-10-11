@@ -24,6 +24,11 @@ There are man pages [here](https://github.com/ac000/libmtdac/tree/master/man/man
 
 ## Build it
 
+libmtdac is primarily developed under Linux but it also builds and runs under
+FreeBSD.
+
+### Linux
+
 libmtdac only has a couple of direct dependencies, *libcurl* & *jansson*
 
 On Red Hat/Fedora/etc you will need the
@@ -48,6 +53,21 @@ structure which can be created with
     $ mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
 and the *rpmbuild* tool which can be found in the *rpm-build* package.
+
+### FreeBSD
+
+As as well as curl and jansson libraries it also requires libuuid and gmake
+to build
+
+    $ sudo pkg install gmake jansson curl e2fsprogs-libuuid
+
+then build with
+
+    $ gmake
+
+or if you don't have GCC installed
+
+    $ gmake CC=clang
 
 
 ## Register with HMRC
