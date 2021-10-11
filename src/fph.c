@@ -21,7 +21,7 @@
 #include <arpa/inet.h>
 #include <ifaddrs.h>
 #include <linux/if_packet.h>
-#include <linux/limits.h>
+#include <limits.h>
 
 #include <jansson.h>
 

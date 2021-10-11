@@ -17,7 +17,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <spawn.h>
-#include <linux/limits.h>
+#include <limits.h>
 #include <errno.h>
 
 #include <jansson.h>
