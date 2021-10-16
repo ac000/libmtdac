@@ -17,10 +17,10 @@
 
 #include "mtd.h"
 #include "auth.h"
-#include "mtd-priv.h"
 #include "endpoints.h"
 #include "curler.h"
 #include "logger.h"
+#include "mtd-priv.h"
 
 extern __thread struct mtd_ctx mtd_ctx;
 

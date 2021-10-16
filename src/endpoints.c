@@ -14,11 +14,11 @@
 #include <stdarg.h>
 
 #include "mtd.h"
-#include "mtd-priv.h"
 #include "endpoints.h"
 #include "curler.h"
 #include "auth.h"
 #include "logger.h"
+#include "mtd-priv.h"
 
 #define MAX_PARAMS	7
 
