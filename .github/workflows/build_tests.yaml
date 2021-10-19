@@ -1,0 +1,99 @@
+name: Builds
+
+on:
+  push:
+    branches: master
+    paths:
+      - Makefile
+      - 'src/**'
+      - '.github/workflows/**'
+  pull_request:
+    branches: master
+    paths:
+      - Makefile
+      - 'src/**'
+      - '.github/workflows/**'
+
+jobs:
+  # GitHub Currently only supports running directly on Ubuntu,
+  # for any other Linux we need to use a container.
+
+  # CentOS 7 / glibc 2.17 / gcc 4.8.5
+  centos_7:
+    runs-on: ubuntu-latest
+
+    container:
+      image: centos:7
+
+    steps:
+      - name: Install tools/deps
+        run: yum -y install gcc make jansson-devel libcurl-devel
+
+      - uses: actions/checkout@v2
+
+      - name: make
+        # Fudge the version seeing as we don't actually have a git
+        # repository here due to needing git 2.18+. The version
+        # number is not actually important to just test the build.
+        run: CFLAGS=-Werror make GIT_VERSION=\\\"v0.0.0\\\" V=1
+
+  # CentOS 8 / glibc 2.28 / gcc 8.4.1
+  centos_8:
+    runs-on: ubuntu-latest
+
+    container:
+      image: centos:8
+
+    steps:
+      - name: Install tools/deps
+        run: yum -y install git gcc make jansson-devel libcurl-devel
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+
+      - name: make
+        run: CFLAGS=-Werror make V=1
+
+  # Debian 11 / glibc 2.31 / gcc 10.2
+  debian_11:
+    runs-on: ubuntu-latest
+
+    container:
+      image: debian:11
+
+    steps:
+      - name: Install deps
+        run: |
+          apt-get -y update
+          apt-get -y install git gcc make libjansson-dev libcurl4-openssl-dev
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+
+      - name: make
+        run: CFLAGS=-Werror make V=1
+
+  # Fedora 34 / glibc 2.33 / gcc 11.2 / clang 12.0 
+  fedora_34:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [ gcc, clang ]
+
+    container:
+      image: fedora:34
+
+    steps:
+      - name: Install tools/deps
+        run: dnf -y install git ${{ matrix.compiler }} make jansson-devel libcurl-devel
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+
+      - name: make CC=${{ matrix.compiler }}
+        run: CFLAGS=-Werror make CC=${{ matrix.compiler }} V=1
