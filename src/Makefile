@@ -10,7 +10,7 @@ $(shell mkdir -p $(DEPDIR) >/dev/null)
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
 
 CC	= gcc
-CFLAGS	= -Wall -Wextra -Wdeclaration-after-statement -Wvla -std=gnu99 -g -O2 \
+CFLAGS += -Wall -Wextra -Wdeclaration-after-statement -Wvla -std=gnu99 -g -O2 \
 	  -Wp,-D_FORTIFY_SOURCE=2 --param=ssp-buffer-size=4 -fstack-protector \
 	  -fPIC -fexceptions -fvisibility=hidden -I../include/libmtdac \
 	  -DLIBNAME=\"$(LIBNAME)\" -DGIT_VERSION=${GIT_VERSION} -pipe
