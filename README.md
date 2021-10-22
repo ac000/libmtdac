@@ -1,6 +1,7 @@
 # libmtdac
 
 ![Builds](https://github.com/ac000/libmtdac/actions/workflows/build_tests.yaml/badge.svg)
+[![FreeBSD Build Status](https://api.cirrus-ci.com/github/ac000/libmtdac.svg)](https://cirrus-ci.com/github/ac000/libmtdac)
 [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/ac000/libmtdac.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ac000/libmtdac/context:cpp)
 
 1. [Overview](#overview)
