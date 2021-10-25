@@ -73,6 +73,6 @@ $(DEPDIR)/%.d: ;
 include $(wildcard $(patsubst %,$(DEPDIR)/%.d,$(basename $(sources))))
 
 clean:
-	$(v)rm -f $(objects) $(LIBNAME).so*
+	$(v)rm -f *.o platform/*/*.o $(LIBNAME).so*
 	$(v)rm -f $(DEPDIR)/*
 	$(v)rmdir $(DEPDIR)
