@@ -6,8 +6,8 @@ freebsd_instance:
 task:
   name: freebsd_13 (clang)
   skip: "!changesInclude('.cirrus.yml', 'Makefile', 'src/**')"
-  install_script: pkg install -y gmake jansson curl e2fsprogs-libuuid
+  install_script: pkg install -y bash gmake jansson curl e2fsprogs-libuuid
   # We don't have a full repository checkout here so fudge
   # the GIT_VERSION (libmtdac version) as it's not actually
   # important what it is just to test the build.
-  script: CFLAGS=-Werror gmake CC=clang GIT_VERSION=\\\"v0.0.0\\\" V=1
+  script: .ci/freebsd-clang-build.sh

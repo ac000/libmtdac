@@ -14,7 +14,7 @@ CFLAGS += -Wall -Wextra -Wdeclaration-after-statement -Wvla -std=gnu99 -g -O2 \
 	  -Wp,-D_FORTIFY_SOURCE=2 --param=ssp-buffer-size=4 -fstack-protector \
 	  -fPIC -fexceptions -fvisibility=hidden -I../include/libmtdac \
 	  -DLIBNAME=\"$(LIBNAME)\" -DGIT_VERSION=${GIT_VERSION} -pipe
-LDFLAGS = -shared -Wl,-z,now,-z,relro,--as-needed
+LDFLAGS = -shared -Wl,-z,now,-z,relro,-z,defs,--as-needed
 LIBS	= -lcurl -ljansson
 POSTCOMPILE = @mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d && touch $@
 
@@ -24,11 +24,11 @@ ifeq ($(CC),clang)
 endif
 
 UNAME_S := $(shell uname -s | tr A-Z a-z)
-ifeq ($(UNAME_S),linux)
-        # On Linux we link with -z defs, on FreeBSD this gives
-        # a linker error about undefined symbol: environ
-        LDFLAGS := $(LDFLAGS),-z,defs
-else ifeq ($(UNAME_S),freebsd)
+ifeq ($(UNAME_S),freebsd)
+        # Don't fail the build on unresolved symbols, environ is _always_
+        # undefined. In Ci we warp the build in .ci/freebsd-clang-build.sh
+        # which will decide if the build fails or not.
+        LDFLAGS := $(LDFLAGS),--warn-unresolved-symbols
         CFLAGS  += -I/usr/local/include
         LIBS    := -L/usr/local/lib $(LIBS) -luuid
 endif
