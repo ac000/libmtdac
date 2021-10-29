@@ -43,4 +43,19 @@ then
 	exit 1
 fi
 
+# We try building the headers individually to ensure they are
+# fully self-contained.
+echo
+echo "***"
+echo "*** Checking headers..."
+echo "***"
+echo
+
+CFLAGS=-Werror gmake CC=clang GIT_VERSION=\\\"v0.0.0\\\" V=1 -C src/ hdrchk
+
+if test $? -ne 0
+then
+	exit 1
+fi
+
 exit 0
