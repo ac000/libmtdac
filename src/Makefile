@@ -7,7 +7,7 @@ VERSION = $(SOVER).50.0
 
 DEPDIR  := .d
 $(shell mkdir -p $(DEPDIR) >/dev/null)
-DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
+DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$(@F).Td
 
 CC	= gcc
 CFLAGS += -Wall -Wextra -Wdeclaration-after-statement -Wvla \
@@ -18,7 +18,7 @@ CFLAGS += -Wall -Wextra -Wdeclaration-after-statement -Wvla \
 	  -DLIBNAME=\"$(LIBNAME)\" -DGIT_VERSION=${GIT_VERSION} -pipe
 LDFLAGS = -shared -Wl,-z,now,-z,relro,-z,defs,--as-needed
 LIBS	= -lcurl -ljansson
-POSTCOMPILE = @mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d && touch $@
+POSTCOMPILE = @mv -f $(DEPDIR)/$(@F).Td $(DEPDIR)/$(@F).d && touch $@
 
 ifeq ($(CC),clang)
         # It is quite comminn to do STRING + N, to skip N bytes of STRING
@@ -52,19 +52,36 @@ $(LIBNAME): $(objects)
 	$(v)ln -sf $(LIBNAME).so.$(VERSION) $(LIBNAME).so
 
 %.o: %.c
-%.o: %.c $(DEPDIR)/%.d
+%.o: %.c $(DEPDIR)/%.o.d
 	@echo -e "  CC\t$@"
 	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 	$(POSTCOMPILE)
 
 platform/$(UNAME_S)/%.o: platform/$(UNAME_S)/%.c
-platform/$(UNAME_S)/%.o: platform/$(UNAME_S)/%.c $(DEPDIR)/%.d
+platform/$(UNAME_S)/%.o: platform/$(UNAME_S)/%.c $(DEPDIR)/%.o.d
 	@echo -e "  CC\t$@"
 	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 	$(POSTCOMPILE)
 
 platform/common/%.o: platform/common/%.c
-platform/common/%.o: platform/common/%.c $(DEPDIR)/%.d
+platform/common/%.o: platform/common/%.c $(DEPDIR)/%.o.d
+	@echo -e "  CC\t$@"
+	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
+	$(POSTCOMPILE)
+
+# Build headers to ensure they have all the required includes
+headers = $(wildcard *.h ../include/libmtdac/*.h)
+hdrobjs = $(headers:.h=.gch)
+
+hdrchk: $(hdrobjs)
+%.gch: %.h
+%.gch: %.h $(DEPDIR)/%.gch.d
+	@echo -e "  CC\t$@"
+	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
+	$(POSTCOMPILE)
+
+../include/libmtdac/%.gch: ../include/libmtdac/%.h
+../include/libmtdac/%.gch: ../include/libmtdac/%.h $(DEPDIR)/%.gch.d
 	@echo -e "  CC\t$@"
 	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 	$(POSTCOMPILE)
@@ -72,9 +89,9 @@ platform/common/%.o: platform/common/%.c $(DEPDIR)/%.d
 $(DEPDIR)/%.d: ;
 .PRECIOUS: $(DEPDIR)/%.d
 
-include $(wildcard $(patsubst %,$(DEPDIR)/%.d,$(basename $(sources))))
+include $(wildcard $(patsubst %,$(DEPDIR)/%.o.d,$(basename $(sources))) $(patsubst %,$(DEPDIR)/%.gch.d,$(basename $(headers))))
 
 clean:
-	$(v)rm -f *.o platform/*/*.o $(LIBNAME).so*
+	$(v)rm -f *.o platform/*/*.o $(hdrobjs) $(LIBNAME).so*
 	$(v)rm -f $(DEPDIR)/*
 	$(v)rmdir $(DEPDIR)

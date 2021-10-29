@@ -1,4 +1,4 @@
-TARGETS = libmtdac man
+TARGETS = libmtdac hdrchk man
 
 .PHONY: all $(TARGETS)
 all: $(TARGETS)
@@ -14,6 +14,11 @@ libmtdac:
 man:
 	@echo -e "Building: man-pages"
 	@$(MAKE) $(MAKE_OPTS) -C man/man3/
+
+.PHONY: hdrchk
+hdrchk:
+	@echo -e "Checking Headers"
+	@$(MAKE) $(MAKE_OPTS) -C src/ hdrchk
 
 .PHONY: rpm
 rpm:
