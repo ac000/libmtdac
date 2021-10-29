@@ -26,6 +26,8 @@ do
 		else
 			error=1
 		fi
+	elif [[ $line =~ "error: " ]]; then
+		error=1
 	fi
 done <<<$(CFLAGS=-Werror gmake CC=clang GIT_VERSION=\\\"v0.0.0\\\" V=1 -C src/ 3>&1 1>&2 2>&3 | tee /dev/stderr)
 
@@ -34,7 +36,8 @@ done <<<$(CFLAGS=-Werror gmake CC=clang GIT_VERSION=\\\"v0.0.0\\\" V=1 -C src/ 3
 # See https://sebthom.de/158-bash-capturing-stderr-variable/
 
 # If $error is set, we got at least one undefined symbol that
-# wasn't 'environ' so we need to fail the build.
+# wasn't 'environ' so we need to fail the build. Or we got a
+# general compilation erorr and need to fail the build.
 if test -n "$error"
 then
 	exit 1
