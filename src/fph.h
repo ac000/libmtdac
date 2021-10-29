@@ -10,6 +10,7 @@
 #define _FPH_H_
 
 #include "mtd.h"
+#include "mtd-priv.h"
 #include "curler.h"
 
 extern void set_anti_fraud_hdrs(struct curl_ctx *ctx);
