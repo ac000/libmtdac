@@ -8,6 +8,8 @@
 
 #include <stdio.h>
 
+#include "../../platform.h"
+
 char *gen_uuid(char *buf)
 {
 	FILE *fp;

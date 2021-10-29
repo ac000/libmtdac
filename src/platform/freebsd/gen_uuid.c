@@ -10,6 +10,8 @@
 
 #include <uuid/uuid.h>
 
+#include "../../platform.h"
+
 char *gen_uuid(char *buf)
 {
 	uuid_t uuid;

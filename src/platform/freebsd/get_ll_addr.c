@@ -12,6 +12,8 @@
 #include <net/if_dl.h>
 #include <ifaddrs.h>
 
+#include "../../platform.h"
+
 /*
  * Get and format a link-level (MAC) address from a 'struct sockaddr'
  * passed in from a 'struct ifaddrs' as returned from getifaddrs(3)

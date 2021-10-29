@@ -11,6 +11,8 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
+#include "../../platform.h"
+
 void get_mach_info(char *ven, size_t ven_len __unused, char *model,
 		   size_t model_len)
 {

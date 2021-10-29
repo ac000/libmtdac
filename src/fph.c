@@ -29,6 +29,7 @@
 #include "mtd-priv.h"
 #include "curler.h"
 #include "logger.h"
+#include "fph.h"
 
 #define BUF_SZ	1024
 

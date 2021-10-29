@@ -8,6 +8,8 @@
 
 #include <string.h>
 
+#include "../../platform.h"
+
 /*
  * This is a wrapper around the POSIX (XSI) version of strerror_r(3)
  * which provides the semantics of the GNU version.

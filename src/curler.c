@@ -646,7 +646,7 @@ int do_post(struct curl_ctx *ctx, char **buf)
 	return do_put_post(ctx, buf);
 }
 
-int do_get_delete(struct curl_ctx *ctx, char **buf)
+static int do_get_delete(struct curl_ctx *ctx, char **buf)
 {
 	int err;
 

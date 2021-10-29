@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "../../platform.h"
+
 void get_mach_info(char *ven, size_t ven_len, char *model, size_t model_len)
 {
 	FILE *fp;
