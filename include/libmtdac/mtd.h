@@ -228,6 +228,8 @@ extern char *mtd_percent_encode(const char *str, ssize_t len);
 extern const char *mtd_err2str(int err);
 extern const char *mtd_err2enum_str(int err);
 extern enum mtd_http_status_code mtd_http_status_code(const char *json);
+extern const char *mtd_http_status_str_u(const char *json);
+extern const char *mtd_http_status_str(const char *json);
 extern enum mtd_hmrc_error mtd_hmrc_error(const char *json);
 
 #pragma GCC visibility pop
