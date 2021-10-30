@@ -21,7 +21,7 @@ LIBS	= -lcurl -ljansson
 POSTCOMPILE = @mv -f $(DEPDIR)/$(@F).Td $(DEPDIR)/$(@F).d && touch $@
 
 ifeq ($(CC),clang)
-        # It is quite comminn to do STRING + N, to skip N bytes of STRING
+        # It is quite common to do STRING + N, to skip N bytes of STRING
         CFLAGS += -Wno-string-plus-int
 endif
 
