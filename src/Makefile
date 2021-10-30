@@ -5,6 +5,9 @@ GIT_VERSION  = \"$(shell git describe --long --dirty 2> /dev/null || cat ../.ver
 SOVER	= 0
 VERSION = $(SOVER).50.0
 
+OBJ_DIR := .objs
+$(shell mkdir -p $(OBJ_DIR) >/dev/null)
+
 DEPDIR  := .d
 $(shell mkdir -p $(DEPDIR) >/dev/null)
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$(@F).Td
@@ -35,8 +38,13 @@ ifeq ($(UNAME_S),freebsd)
         LIBS    := -L/usr/local/lib $(LIBS) -luuid
 endif
 
-sources = $(wildcard platform/$(UNAME_S)/*.c platform/common/*.c *.c)
-objects = $(sources:.c=.o)
+sources := $(wildcard platform/$(UNAME_S)/*.c platform/common/*.c *.c)
+# We just want the sources without any directory prefix to
+# make $(DEPDIR)/%.o.d work otherwise % expands out to a
+# full path. vpath is used to allow these source files to
+# be found.
+sources := $(notdir $(sources))
+objects := $(patsubst %.c,$(OBJ_DIR)/%.o,$(sources))
 
 v = @
 ifeq ($V,1)
@@ -51,47 +59,38 @@ $(LIBNAME): $(objects)
 	$(v)ln -sf $(LIBNAME).so.$(VERSION) $(LIBNAME).so.$(SOVER)
 	$(v)ln -sf $(LIBNAME).so.$(VERSION) $(LIBNAME).so
 
+# Sources are stored without directory prefix
+vpath %.c platform/$(UNAME_S):platform/common
+
 %.o: %.c
-%.o: %.c $(DEPDIR)/%.o.d
-	@echo -e "  CC\t$@"
-	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
-	$(POSTCOMPILE)
-
-platform/$(UNAME_S)/%.o: platform/$(UNAME_S)/%.c
-platform/$(UNAME_S)/%.o: platform/$(UNAME_S)/%.c $(DEPDIR)/%.o.d
-	@echo -e "  CC\t$@"
-	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
-	$(POSTCOMPILE)
-
-platform/common/%.o: platform/common/%.c
-platform/common/%.o: platform/common/%.c $(DEPDIR)/%.o.d
-	@echo -e "  CC\t$@"
+$(OBJ_DIR)/%.o: %.c $(DEPDIR)/%.o.d
+	@echo -e "  CC\t$<"
 	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 	$(POSTCOMPILE)
 
 # Build headers to ensure they have all the required includes
-headers = $(wildcard *.h ../include/libmtdac/*.h)
-hdrobjs = $(headers:.h=.gch)
+headers := $(wildcard *.h ../include/libmtdac/*.h)
+headers := $(notdir $(headers))
+hdrobjs := $(patsubst %.h,$(OBJ_DIR)/%.gch,$(headers))
+
+vpath %.h ../include/libmtdac
 
 hdrchk: $(hdrobjs)
 %.gch: %.h
-%.gch: %.h $(DEPDIR)/%.gch.d
-	@echo -e "  CC\t$@"
-	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
-	$(POSTCOMPILE)
-
-../include/libmtdac/%.gch: ../include/libmtdac/%.h
-../include/libmtdac/%.gch: ../include/libmtdac/%.h $(DEPDIR)/%.gch.d
-	@echo -e "  CC\t$@"
+$(OBJ_DIR)/%.gch: %.h $(DEPDIR)/%.gch.d
+	@echo -e "  CC\t$<"
 	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 	$(POSTCOMPILE)
 
 $(DEPDIR)/%.d: ;
 .PRECIOUS: $(DEPDIR)/%.d
 
-include $(wildcard $(patsubst %,$(DEPDIR)/%.o.d,$(basename $(sources))) $(patsubst %,$(DEPDIR)/%.gch.d,$(basename $(headers))))
+include $(wildcard $(patsubst %,$(DEPDIR)/%.o.d,$(basename $(sources))))
+include $(wildcard $(patsubst %,$(DEPDIR)/%.gch.d,$(basename $(headers))))
 
 clean:
-	$(v)rm -f *.o platform/*/*.o $(hdrobjs) $(LIBNAME).so*
+	$(v)rm -f $(LIBNAME).so*
+	$(v)rm -f $(OBJ_DIR)/*
+	$(v)rmdir $(OBJ_DIR)
 	$(v)rm -f $(DEPDIR)/*
 	$(v)rmdir $(DEPDIR)
