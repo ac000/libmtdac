@@ -75,17 +75,19 @@ jobs:
       - name: make
         run: CFLAGS=-Werror make V=1
 
-  # Fedora 34 / glibc 2.33 / gcc 11.2 / clang 12.0 
-  fedora_34:
+  # Fedora 34 / glibc 2.33 / gcc 11.2 / clang 12.0
+  # Fedora 35 / glibc 2.34 / gcc 11.2 / clang 13.0
+  fedora:
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        compiler: [ gcc, clang ]
+        os: [ 'fedora:34', 'fedora:35' ]
+        compiler: [ 'gcc', 'clang' ]
 
     container:
-      image: fedora:34
+      image: ${{ matrix.os }}
 
     steps:
       - name: Install tools/deps
