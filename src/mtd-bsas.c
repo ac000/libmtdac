@@ -24,6 +24,7 @@ int mtd_bsas_fp_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
 	return do_ep(BSAS_FP_UPDATE_SUMMARY_ADJUSTMENTS, API_VER,
 		     dsctx, buf, bid, (char *)NULL);
 }
+
 /*
  * [GET ]
  * /individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{bsasId}/adjust
@@ -55,6 +56,7 @@ int mtd_bsas_pb_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
 	return do_ep(BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS, API_VER,
 		     dsctx, buf, bid, (char *)NULL);
 }
+
 /*
  * [GET ]
  * /individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust
