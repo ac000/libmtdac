@@ -21,6 +21,7 @@
 #include <netdb.h>
 #include <fcntl.h>
 #include <poll.h>
+#include <time.h>
 #include <errno.h>
 
 #include <curl/curl.h>
@@ -209,11 +210,40 @@ int curl_add_hdr(struct curl_ctx *ctx, const char *fmt, ...)
 	return 0;
 }
 
+/*
+ * Generate a datestamp in the format (ISO 8601)
+ *
+ *     YYYY-MM-DDThh:mm:ss.sssZ
+ *
+ * e.g
+ *
+ *     2021-12-24T03:48:16.894Z
+ */
+static const char *gen_datestamp(char *buf, size_t buflen)
+{
+	struct timespec tp;
+	struct tm tm;
+	size_t len;
+
+	*buf = '\0';
+
+	clock_gettime(CLOCK_REALTIME, &tp);
+	gmtime_r(&tp.tv_sec, &tm);
+	len = strftime(buf, buflen, "%FT%T", &tm);
+	if (len == 0)
+		return buf;
+
+	snprintf(buf + len, buflen - len, ".%03ldZ", tp.tv_nsec / 1000000L);
+
+	return buf;
+}
+
 static void set_response(struct curl_ctx *ctx)
 {
 	json_t *rootbuf = NULL;
 	json_t *resbuf;
 	json_t *new;
+	char date[32];
 
 	if (ctx->curl_buf->buf && strlen(ctx->curl_buf->buf) > 0)
 		rootbuf = json_loads(ctx->curl_buf->buf, 0, NULL);
@@ -230,12 +260,13 @@ static void set_response(struct curl_ctx *ctx)
 		json_decref(loc);
 	}
 
-	new = json_pack("{s:i, s:s, s:s, s:s, s:s?, s:o?}",
+	new = json_pack("{s:i, s:s, s:s, s:s, s:s?, s:s, s:o?}",
 			"status_code", ctx->status_code,
 			"status_str", http_status_code2str(ctx->status_code),
 			"url", ctx->url,
 			"method", methods_str[ctx->http_method].str,
 			"xid", ctx->x_corr_id,
+			"date", gen_datestamp(date, sizeof(date)),
 			"result", rootbuf);
 
 	/* Cater for multiple responses in case of redirect... */
