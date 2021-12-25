@@ -64,7 +64,7 @@ vpath %.c platform/$(UNAME_S):platform/common
 
 %.o: %.c
 $(OBJ_DIR)/%.o: %.c $(DEPDIR)/%.o.d
-	@echo -e "  CC\t$<"
+	@echo -e "  CC\t$< => $@"
 	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 	$(POSTCOMPILE)
 
@@ -78,7 +78,7 @@ vpath %.h ../include/libmtdac
 hdrchk: $(hdrobjs)
 %.gch: %.h
 $(OBJ_DIR)/%.gch: %.h $(DEPDIR)/%.gch.d
-	@echo -e "  CC\t$<"
+	@echo -e "  CC\t$< => $@"
 	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 	$(POSTCOMPILE)
 
