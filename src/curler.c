@@ -219,7 +219,7 @@ int curl_add_hdr(struct curl_ctx *ctx, const char *fmt, ...)
  *
  *     2021-12-24T03:48:16.894Z
  */
-static const char *gen_datestamp(char *buf, size_t buflen)
+const char *gen_datestamp(char *buf, size_t buflen)
 {
 	struct timespec tp;
 	struct tm tm;

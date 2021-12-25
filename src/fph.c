@@ -508,9 +508,7 @@ static char *get_src_addr(void *user_data __unused)
 
 static char *get_ip_ts(void *user_data __unused)
 {
-	struct timespec now;
-	struct tm res;
-	char strtime[32];
+	char buf[32];
 
 	/*
 	 * The timestamp wants to be in the following format
@@ -520,16 +518,10 @@ static char *get_ip_ts(void *user_data __unused)
 	 * E.g
 	 *
 	 *     2020-09-21T10:30:05.123Z
-	 *
-	 * We need to use clock_gettime(2) to get > second resolution
 	 */
-	clock_gettime(CLOCK_REALTIME, &now);
-	gmtime_r(&now.tv_sec, &res);
-	strftime(strtime, sizeof(strtime), "%FT%T.", &res);
-	snprintf(strtime + strlen(strtime), sizeof(strtime), "%03ldZ",
-		 now.tv_nsec / 1000000L);
+	gen_datestamp(buf, sizeof(buf));
 
-	return strdup(strtime);
+	return strdup(buf);
 }
 
 static char *get_vendor_fwd(void *user_data __unused)
