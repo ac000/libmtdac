@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * mtd-bd.c - Make Tax Digital - Business Details API
+ * mtd-ep-bd.c - Make Tax Digital - Business Details API
  *
  * Copyright (C) 2021		Andrew Clayton <andrew@digital-domain.net>
  */

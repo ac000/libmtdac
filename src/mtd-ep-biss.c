@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * mtd-biss.c - Make Tax Digital - Business Income Source Summary API
+ * mtd-ep-biss.c - Make Tax Digital - Business Income Source Summary API
  *
  * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */

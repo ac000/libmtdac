@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * mtd-ibeops.c - Make Tax Digital - Individuals Business End of Period Statement API
+ * mtd-ep-ibeops.c - Make Tax Digital - Individuals Business End of Period Statement API
  *
  * Copyright (C) 2021		Andrew Clayton <andrew@digital-domain.net>
  */

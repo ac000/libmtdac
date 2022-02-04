@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * mtd-ob.c - Make Tax Digital - Obligations API
+ * mtd-ep-ob.c - Make Tax Digital - Obligations API
  *
  * Copyright (C) 2021		Andrew Clayton <andrew@digital-domain.net>
  */
@@ -45,4 +45,3 @@ int mtd_ob_list_inc_and_expend_obligations(const char *query_string,
 	return do_ep(OB_LIST_INC_AND_EXPEND_OBLIGATIONS, API_VER,
 		     NULL, buf, query_string, (char *)NULL);
 }
-

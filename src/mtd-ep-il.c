@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * mtd-il.c - Make Tax Digital - Individual Loses API
+ * mtd-ep-il.c - Make Tax Digital - Individual Loses API
  *
  * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */

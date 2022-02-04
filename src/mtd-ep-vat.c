@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * mtd-vat.c - Make Tax Digital - VAT API
+ * mtd-ep-vat.c - Make Tax Digital - VAT API
  *
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */

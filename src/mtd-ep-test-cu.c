@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * mtd-test-cu.c - Make Tax Digital - Create Test User API
+ * mtd-ep-test-cu.c - Make Tax Digital - Create Test User API
  *
  * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
  */

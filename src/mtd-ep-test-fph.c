@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * mtd-test-fph.c - Make Tax Digital - Test Fraud Prevention Headers API
+ * mtd-ep-test-fph.c - Make Tax Digital - Test Fraud Prevention Headers API
  *
  * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */

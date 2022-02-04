@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 
 /*
- * mtd-saac.c - Make Tax Digital - Self Assessment Accounts API
+ * mtd-ep-saac.c - Make Tax Digital - Self Assessment Accounts API
  *
  * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
  */
