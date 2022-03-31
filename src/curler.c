@@ -380,7 +380,7 @@ static int curl_perform(struct curl_ctx *ctx)
 static int set_headers(struct curl_ctx *ctx)
 {
 	int ret = MTD_ERR_NONE;
-	int err;
+	int err = 0;
 	const char * const *hdrs;
 
 	if (!strstr(ctx->url, "/oauth/token")) {
