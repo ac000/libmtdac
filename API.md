@@ -993,22 +993,14 @@ int mtd_bsas_trigger_summary(const struct mtd_dsrc_ctx *dsctx, char **buf);
 #### mtd\_bsas\_se\_get\_summary
 
 ```C
-int mtd_bsas_se_get_summary(const char *bid, const char *query_string,
-                            char **buf);
-```
-
-#### mtd\_bsas\_se\_list\_summary\_adjustments
-
-```C
-int mtd_bsas_se_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
-                                           const char *bid, char **buf);
+int mtd_bsas_se_get_summary(const char *cid, char **buf);
 ```
 
 #### mtd\_bsas\_se\_update\_summary\_adjustments
 
 ```C
 int mtd_bsas_se_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
-                                           const char *bid, char **buf);
+                                           const char *cid, char **buf);
 ```
 
 
@@ -1017,21 +1009,14 @@ int mtd_bsas_se_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
 #### mtd\_bsas\_pb\_get\_summary
 
 ```C
-int mtd_bsas_pb_get_summary(const char *bid, const char *query_string,
-                            char **buf);
-```
-
-#### mtd\_bsas\_pb\_list\_summary\_adjustments
-
-```C
-int mtd_bsas_pb_list_summary_adjustments(const char *bid, char **buf);
+int mtd_bsas_pb_get_summary(const char *cid, char **buf);
 ```
 
 #### mtd\_bsas\_pb\_update\_summary\_adjustments
 
 ```C
 int mtd_bsas_pb_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
-                                           const char *bid, char **buf);
+                                           const char *cid, char **buf);
 ```
 
 
@@ -1040,21 +1025,14 @@ int mtd_bsas_pb_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
 #### mtd\_bsas\_fp\_get\_summary
 
 ```C
-int mtd_bsas_fp_get_summary(const char *bid, const char *query_string,
-                            char **buf);
-```
-
-#### mtd\_bsas\_fp\_list\_summary\_adjustments
-
-```C
-int mtd_bsas_fp_list_summary_adjustments(const char *bid, char **buf);
+int mtd_bsas_fp_get_summary(const char *cid, char **buf);
 ```
 
 #### mtd\_bsas\_fp\_update\_summary\_adjustments
 
 ```C
 int mtd_bsas_fp_update_summary_adjustments(const struct mtd_dsrc_ctx *dsctx,
-                                           const char *bid, char **buf);
+                                           const char *cid, char **buf);
 ```
 
 

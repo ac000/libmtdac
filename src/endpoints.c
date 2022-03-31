@@ -3,7 +3,7 @@
 /*
  * endpoints.c - Make Tax Digital - Self Assessment API
  *
- * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #define _GNU_SOURCE
@@ -88,57 +88,39 @@ static const struct _endpoint {
 		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_SE_GET_SUMMARY] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/{optional_query_params}",
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{calculationId}",
 		.method	= M_GET,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
-	[BSAS_SE_LIST_SUMMARY_ADJUSTMENTS] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust",
-		.method = M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
 	[BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{bsasId}/adjust",
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{calculationId}/adjust",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_PB_GET_SUMMARY] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/{optional_query_params}",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[BSAS_PB_LIST_SUMMARY_ADJUSTMENTS] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust",
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/uk-property/{calculationId}",
 		.method	= M_GET,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{bsasId}/adjust",
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/property/{calculationId}/adjust",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_FP_GET_SUMMARY] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{bsasId}/{optional_query_params}",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[BSAS_FP_LIST_SUMMARY_ADJUSTMENTS] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{bsasId}/adjust",
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{calculationId}",
 		.method	= M_GET,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
 	[BSAS_FP_UPDATE_SUMMARY_ADJUSTMENTS] = {
-		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{bsasId}/adjust",
+		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/foreign-property/{calculationId}/adjust",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.authz	= AUTHZ_USER,

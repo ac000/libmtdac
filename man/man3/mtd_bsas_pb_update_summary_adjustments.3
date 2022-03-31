@@ -1,4 +1,4 @@
-.TH MTD_BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS 3 "June 21, 2020" "" "libmtdac"
+.TH MTD_BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS 3 "March 20, 2022" "" "libmtdac"
 
 .SH NAME
 
@@ -11,7 +11,7 @@ Business Source Adjustable Summary
 .PP
 .nf
 .BI "int mtd_bsas_pb_update_summary_adjustments(const struct mtd_dsrc_ctx *" dsctx ",
-.BI "                                           const char *" bid ", char **" buf );
+.BI "                                           const char *" cid ", char **" buf );
 .fi
 
 .SH DESCRIPTION
@@ -20,9 +20,10 @@ This function is part of the UK's HMRC Make Tax Digital Business Source
 Adjustable Summaries API.
 .PP
 This function allows a developer to provide accounting adjustments against a
-specified Business Source Adjustable Summary (BSAS) using its unique
-identifier. The BSAS ID (\fBbid\fP) used must be for a self-employment business
-that has not been previously adjusted.
+specified Business Source Accounting Summary quoting its unique identifier.
+The \fBcalculationID\fP quoted must be for a UK Property Business, and it must
+not have been adjusted previously. Only data for one property business (either
+FHL or Non-FHL) should be included in any submission.
 
 .TP 4
 .B dsctx
@@ -39,20 +40,20 @@ Scenario: Non-FHL Property with Full Expenses
 {
     "nonFurnishedHolidayLet": {
         "income": {
-            "rentIncome": 1000.49,
-            "premiumsOfLeaseGrant": 1000.49,
-            "reversePremiums": 1000.49,
-            "otherPropertyIncome": 1000.49
+            "totalRentsReceived": 1000.45,
+            "premiumsOfLeaseGrant": 1000.45,
+            "reversePremiums": 1000.45,
+            "otherPropertyIncome": 1000.45
         },
         "expenses": {
-            "premisesRunningCosts": -1000.49,
-            "repairsAndMaintenance": 1000.49,
-            "financialCosts": 1000.49,
-            "professionalFees": 1000.49,
-            "travelCosts": 1000.49,
-            "costOfServices": -1000.49,
-            "residentialFinancialCost": 1000.49,
-            "other": 1000.49
+            "premisesRunningCosts": 1000.45,
+            "repairsAndMaintenance": 1000.45,
+            "financialCosts": 1000.45,
+            "professionalFees": 1000.45,
+            "costOfServices": 1000.45,
+            "residentialFinancialCost": 1000.45,
+            "other": 1000.45,
+            "travelCosts": 1000.45
         }
     }
 }
@@ -69,14 +70,13 @@ Scenario: Non-FHL Property with Consolidated Expenses
 {
     "nonFurnishedHolidayLet": {
         "income": {
-            "rentIncome": 1000.49,
-            "premiumsOfLeaseGrant": 1000.49,
-            "reversePremiums": 1000.49,
-            "otherPropertyIncome": 1000.49
+            "totalRentsReceived": 1000.45,
+            "premiumsOfLeaseGrant": 1000.45,
+            "reversePremiums": 1000.45,
+            "otherPropertyIncome": 1000.45
         },
         "expenses": {
-            "consolidatedExpenses": 1000.49,
-            "residentialFinancialCost": 1000.49
+            "consolidatedExpenses": 1000.45
         }
     }
 }
@@ -93,16 +93,16 @@ Scenario: FHL Property with Full Expenses
 {
     "furnishedHolidayLet": {
         "income": {
-            "rentIncome": 1000.49
+            "totalRentsReceived": 1000.45
         },
         "expenses": {
-            "premisesRunningCosts": -1000.49,
-            "repairsAndMaintenance": 1000.49,
-            "financialCosts": 1000.49,
-            "professionalFees": 1000.49,
-            "travelCosts": 1000.49,
-            "costOfServices": -1000.49,
-            "other": 1000.49
+            "premisesRunningCosts": 1000.45,
+            "repairsAndMaintenance": 1000.45,
+            "financialCosts": 1000.45,
+            "professionalFees": 1000.45,
+            "costOfServices": 1000.45,
+            "other": 1000.45,
+            "travelCosts": 1000.45
         }
     }
 }
@@ -119,10 +119,10 @@ Scenario: FHL Property with Consolidated Expenses
 {
     "furnishedHolidayLet": {
         "income": {
-            "rentIncome": 1000.49
+            "totalRentsReceived": 1000.45
         },
         "expenses": {
-            "consolidatedExpenses": -1000.49
+            "consolidatedExpenses": 1000.45
         }
     }
 }
@@ -130,9 +130,9 @@ Scenario: FHL Property with Consolidated Expenses
 .RE
 
 .TP
-.B bid
+.B cid
 .RS 4
-This is the bsasId and is in the form
+This is the calculationId and is in the form
 .RE
 
 .RS 8

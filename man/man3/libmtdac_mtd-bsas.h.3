@@ -1,4 +1,4 @@
-.TH libmtdac_mtd-bsas.h 3 "August 8, 2021" "libmtdac 0.50.0" "libmtdac_mtd-bsas.h"
+.TH libmtdac_mtd-bsas.h 3 "March 30, 2022" "libmtdac 0.60.0" "libmtdac_mtd-bsas.h"
 
 .SH NAME
 libmtdac_mtd-bsas.h \- Make Tax Digital \- Business Source Adjustable Summary API
@@ -29,21 +29,14 @@ Source Adjustable Summary API.
 .SS Self-Employment
 
 .nf
-.BI "int mtd_bsas_se_get_summary(const char *" bid ", const char *" query_string ",
-.BI "                            char **" buf ");"
+.BI "int mtd_bsas_se_get_summary(const char *" cid ", char **" buf ");"
 
 .RS +4
 .BR mtd_bsas_se_get_summary (3)
 .RE
 
-.BI "int mtd_bsas_se_list_summary_adjustments(const char *" bid ", char **" buf ");"
-
-.RS +4
-.BR mtd_bsas_se_list_summary_adjustments (3)
-.RE
-
 .BI "int mtd_bsas_se_update_summary_adjustments(const char *" src_file ",
-.BI "                                           const char *" bid ", char **" buf ");"
+.BI "                                           const char *" cid ", char **" buf ");"
 
 .RS +4
 .BR mtd_bsas_se_update_summary_adjustments (3)
@@ -53,21 +46,14 @@ Source Adjustable Summary API.
 .SS UK Property Business
 
 .nf
-.BI "int mtd_bsas_pb_get_summary(const char *" bid ", const char *" query_string ",
-.BI "                            char **" buf ");"
+.BI "int mtd_bsas_pb_get_summary(const char *" cid ", char **" buf ");"
 
 .RS +4
 .BR mtd_bsas_pb_get_summary (3)
 .RE
 
-.BI "int mtd_bsas_pb_list_summary_adjustments(const char *" bid ", char **" buf ");"
-
-.RS +4
-.BR mtd_bsas_pb_list_summary_adjustments (3)
-.RE
-
 .BI "int mtd_bsas_pb_update_summary_adjustments(const char *" src_file ",
-.BI "                                           const char *" bid ", char **" buf ");"
+.BI "                                           const char *" cid ", char **" buf ");"
 
 .RS +4
 .BR mtd_bsas_pb_update_summary_adjustments (3)
@@ -77,21 +63,14 @@ Source Adjustable Summary API.
 .SS Foreign Property Business
 
 .nf
-.BI "int mtd_bsas_fp_get_summary(const char *" bid ", const char *" query_string ",
-.BI "                            char **" buf ");"
+.BI "int mtd_bsas_fp_get_summary(const char *" cid ", char **" buf ");"
 
 .RS +4
 .BR mtd_bsas_fp_get_summary (3)
 .RE
 
-.BI "int mtd_bsas_fp_list_summary_adjustments(const char *" bid ", char **" buf ");"
-
-.RS +4
-.BR mtd_bsas_fp_list_summary_adjustments (3)
-.RE
-
 .BI "int mtd_bsas_fp_update_summary_adjustments(const char *" src_file ",
-.BI "                                           const char *" bid ", char **" buf ");"
+.BI "                                           const char *" cid ", char **" buf ");"
 
 .RS +4
 .BR mtd_bsas_fp_update_summary_adjustments (3)

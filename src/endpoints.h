@@ -3,7 +3,7 @@
 /*
  * endpoints.h - Make Tax Digital - Self Assessment API
  *
- * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _ENDPOINTS_H_
@@ -32,15 +32,12 @@ enum endpoint {
 	BSAS_TRIGGER_SUMMARY,
 	/* Business Source Adjustable Summary - Self-Employment */
 	BSAS_SE_GET_SUMMARY,
-	BSAS_SE_LIST_SUMMARY_ADJUSTMENTS,
 	BSAS_SE_UPDATE_SUMMARY_ADJUSTMENTS,
 	/* Business Source Adjustable Summary - UK Property Business */
 	BSAS_PB_GET_SUMMARY,
-	BSAS_PB_LIST_SUMMARY_ADJUSTMENTS,
 	BSAS_PB_UPDATE_SUMMARY_ADJUSTMENTS,
 	/* Business Source Adjustable Summary - Foreign Property Business */
 	BSAS_FP_GET_SUMMARY,
-	BSAS_FP_LIST_SUMMARY_ADJUSTMENTS,
 	BSAS_FP_UPDATE_SUMMARY_ADJUSTMENTS,
 
 	/* Individuals Business End of Period Statement */

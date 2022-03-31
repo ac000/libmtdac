@@ -1,4 +1,4 @@
-.TH MTD_BSAS_FP_GET_SUMMARY 3 "August 8, 2021" "" "libmtdac"
+.TH MTD_BSAS_FP_GET_SUMMARY 3 "March 30, 2022" "" "libmtdac"
 
 .SH NAME
 
@@ -10,8 +10,7 @@ Adjustable Summary
 .B #include <libmtdac/mtd-bsas.h>
 .PP
 .nf
-.BI "int mtd_bsas_fp_get_summary(const char *" bid ", const char *" query_string ",
-.BI "                            char **" buf );
+.BI "int mtd_bsas_fp_get_summary(const char *" cid ", char **" buf );
 .fi
 
 .SH DESCRIPTION
@@ -20,27 +19,18 @@ This function is part of the UK's HMRC Make Tax Digital Business Source
 Adjustable Summaries API.
 .PP
 This function allows a developer to request a specific Business Source
-Adjustable Summary (BSAS) using a unique identifier. By default, when it is
-available the adjusted summary is returned. A filter can be set to specify
-whether the original or the adjusted is returned, (see \fBquery_string\fP
-below).
+Adjustable Summary for a Foreign property business EEA Furnished Holiday
+Letting (FHL) or a Non FHL Foreign property business for the given
+\fBcalculationId\fP.
 
 .TP 4
-.B bid
+.B cid
 .RS 4
-This is the bsasId and is in the form
+This is the calculationId and is in the form
 .RE
 
 .RS 8
 ^[0-9]{8}|[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
-.RE
-
-.TP
-.B query_string
-This is optional and is of the form
-.PP
-.RS 8
-[?adjustedStatus={true,false}]
 .RE
 
 .TP
