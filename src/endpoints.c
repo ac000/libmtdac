@@ -54,20 +54,8 @@ static const struct _endpoint {
 	},
 
 	/* Business Income Source Summary */
-	[BISS_GET_SELF_EMPLOYMENT] = {
-		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/self-employment/{query_params}",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[BISS_GET_UK_PROPERTY] = {
-		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/uk-property/{query_params}",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[BISS_GET_FOREIGN_PROPERTY] = {
-		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/foreign-property/{query_params}",
+	[BISS_GET_SUMMARY] = {
+		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/{typeOfBusiness}/{taxYear}/{businessId}",
 		.method	= M_GET,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA

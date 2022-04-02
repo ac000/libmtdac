@@ -950,22 +950,11 @@ int mtd_id_ma_create(const struct mtd_dsrc_ctx *dsctx, char **buf);
 #include <libmtdac/mtd-biss.h>
 ```
 
-#### mtd\_biss\_get\_self\_employment
+#### mtd\_biss\_get\_summary
 
 ```C
-int mtd_biss_get_self_employment(const char *query_string, char **buf);
-```
-
-#### mtd\_biss\_get\_uk\_property
-
-```C
-int mtd_biss_get_uk_property(const char *query_string, char **buf);
-```
-
-#### mtd\_biss\_get\_foreign\_property
-
-```C
-int mtd_biss_get_foreign_property(const char *query_string, char **buf);
+int mtd_biss_get_summary(const char *business_type, const char *tax_year,
+                         const char *bid, char **buf);
 ```
 
 

@@ -3,7 +3,7 @@
 /*
  * mtd-biss.h - Make Tax Digital - Business Income Source Summary API
  *
- * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _MTD_BISS_H_
@@ -17,9 +17,9 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
-extern int mtd_biss_get_foreign_property(const char *query_string, char **buf);
-extern int mtd_biss_get_uk_property(const char *query_string, char **buf);
-extern int mtd_biss_get_self_employment(const char *query_string, char **buf);
+extern int mtd_biss_get_summary(const char *business_type,
+				const char *tax_year, const char *bid,
+				char **buf);
 
 #pragma GCC visibility pop
 

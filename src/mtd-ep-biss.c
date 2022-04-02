@@ -3,7 +3,7 @@
 /*
  * mtd-ep-biss.c - Make Tax Digital - Business Income Source Summary API
  *
- * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #include <stddef.h>
@@ -11,35 +11,16 @@
 #include "mtd-biss.h"		/* for default (public) visibility */
 #include "endpoints.h"
 
-#define VERSION		"1.0"
+#define VERSION		"2.0"
 #define API_VER		"Accept: application/vnd.hmrc." VERSION "+json"
 
 /*
  * [GET ]
- * /individuals/self-assessment/income-summary/{nino}/foreign-property?businessId=&typeOfBusiness={foreign-property-fhl-eea,foreign-property}[&taxYear=YYYY-YY]
+ * /individuals/self-assessment/income-summary/{nino}/{typeOfBusiness}/{taxYear}/{businessId}
  */
-int mtd_biss_get_foreign_property(const char *query_string, char **buf)
+int mtd_biss_get_summary(const char *business_type, const char *tax_year,
+			 const char *bid, char **buf)
 {
-	return do_ep(BISS_GET_FOREIGN_PROPERTY, API_VER,
-		     NULL, buf, query_string, (char *)NULL);
-}
-
-/*
- * [GET ]
- * /individuals/self-assessment/income-summary/{nino}/uk-property?typeOfBusiness={uk-property-non-fhl,uk-property-fhl}[&taxYear=YYYY-YY]
- */
-int mtd_biss_get_uk_property(const char *query_string, char **buf)
-{
-	return do_ep(BISS_GET_UK_PROPERTY, API_VER,
-		     NULL, buf, query_string, (char *)NULL);
-}
-
-/*
- * [GET ]
- * /individuals/self-assessment/income-summary/{nino}/self-employment?selfEmploymentId=[&taxYear=YYYY-YY]
- */
-int mtd_biss_get_self_employment(const char *query_string, char **buf)
-{
-	return do_ep(BISS_GET_SELF_EMPLOYMENT, API_VER,
-		     NULL, buf, query_string, (char *)NULL);
+	return do_ep(BISS_GET_SUMMARY, API_VER,
+		     NULL, buf, business_type, tax_year, bid, (char *)NULL);
 }

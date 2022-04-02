@@ -1,4 +1,4 @@
-.TH libmtdac_mtd-biss.h 3 "February 2, 2021" "libmtdac 0.18.0" "libmtdac_mtd-biss.h"
+.TH libmtdac_mtd-biss.h 3 "April 2, 2022" "libmtdac 0.60.0" "libmtdac_mtd-biss.h"
 
 .SH NAME
 libmtdac_mtd-biss.h \- Make Tax Digital \- Business Income Source Summary API
@@ -13,22 +13,12 @@ Business Income Source Summary API.
 .SH FUNCTIONS
 
 .nf
-.BI "int mtd_biss_get_self_employment(const char *" query_string ", char **" buf ");"
+.BI "int mtd_biss_get_summary(const char *" business_type ",
+.BI "                         const char *" tax_year ", const char *" bid ",
+.BI "                         char **" buf ");
 
 .RS +4
-.BR mtd_biss_get_self_employment (3)
-.RE
-
-.BI "int mtd_biss_get_uk_property(const char *" query_string ", char **" buf ");"
-
-.RS +4
-.BR mtd_biss_get_uk_property (3)
-.RE
-
-.BI "int mtd_biss_get_foreign_property(const char *" query_string ", char **" buf ");
-
-.RS +4
-.BR mtd_biss_get_foreign_property (3)
+.BR mtd_biss_get_summary (3)
 .RE
 .fi
 
