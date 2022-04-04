@@ -75,6 +75,23 @@ jobs:
       - name: make
         run: CFLAGS=-Werror make V=1
 
+  alpine:
+    runs-on: ubuntu-latest
+
+    container:
+      image: alpine
+
+    steps:
+      - name: Install tools/deps
+        run: apk add build-base linux-headers git jansson-dev curl-dev
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+
+      - name: make
+        run: CFLAGS=-Werror make V=1
+
   # Fedora 34 / glibc 2.33 / gcc 11.2 / clang 12.0
   # Fedora 35 / glibc 2.34 / gcc 11.2 / clang 13.0
   fedora:
