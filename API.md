@@ -904,8 +904,7 @@ int mtd_il_lc_update_loss_type(const struct mtd_dsrc_ctx *dsctx,
 
 ```C
 int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
-                                const char *query_string,
-                                char **buf);
+                                const char *tax_year, char **buf);
 ```
 
 

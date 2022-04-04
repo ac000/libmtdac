@@ -1,4 +1,4 @@
-.TH MTD_IL_LC_UPDATE_LOSS_ORDER 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_IL_LC_UPDATE_LOSS_ORDER 3 "April 4, 2022" "" "libmtdac"
 
 .SH NAME
 
@@ -10,7 +10,7 @@ mtd_il_lc_update_loss_order \- update individual loss claims order
 .PP
 .nf
 .BI "int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *" dsctx ",
-.BI "                                const char *" query_string ", char **" buf );
+.BI "                                const char *" tax_year ", char **" buf );
 .fi
 
 .SH DESCRIPTION
@@ -34,18 +34,18 @@ E.g
 .RS 8
 .EX
 {
-    "claimType": "carry-sideways",
+    "typeOfClaim": "carry-sideways",
     "listOfLossClaims": [
         {
-            "id": "1234567890ABCDE",
+            "claimId": "1234567890ABCDE",
             "sequence": 2
         },
         {
-            "id": "1234567890ABDE0",
+            "claimId": "1234567890ABDE0",
             "sequence": 3
         },
         {
-            "id": "1234567890ABEF1",
+            "claimId": "1234567890ABEF1",
             "sequence": 1
         }
     ]
@@ -56,15 +56,13 @@ E.g
 .PP
 
 .TP
-.B query_string
+.B tax_year
 .RS 4
-This is an optional (can be NULL) query string that specifies the tax year to
-operate on. It is of the following form
-
+This is the taxYearClaimedFor and is in the form
 .RE
 
 .RS 8
-?taxYear=YYYY-YY
+YYYY-YY
 .RE
 
 .TP

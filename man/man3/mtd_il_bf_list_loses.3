@@ -1,4 +1,4 @@
-.TH MTD_IL_BF_LIST_LOSES 3 "August 23, 2021" "" "libmtdac"
+.TH MTD_IL_BF_LIST_LOSES 3 "April 3, 2022" "" "libmtdac"
 
 .SH NAME
 
@@ -20,7 +20,7 @@ losses which have incurred before joining MTD.
 This is optional and is of the form
 .PP
 .RS 8
-[?[businessId=XNISNNNNNNNNNNN][&[taxYear=YYYY-YY][&[typeOfLoss={self-employment,uk-property-fhl,uk-property-non-fhl}]]]]
+[?[businessId=XNISNNNNNNNNNNN][&[taxYearBroughtForwardFrom=YYYY-YY][&[typeOfLoss={self-employment,uk-property-fhl,uk-property-non-fhl,foreign-property-fhl-eea,foreign-property}]]]]
 .RE
 
 .RS 4
@@ -32,9 +32,27 @@ This is optional and is of the form
 .RE
 
 .RS 4
-\fBtaxYear\fP is an optional tax year.
+\fBtaxYearBroughtForwardFrom\fP is an optional tax year in the form
+.RE
 
-\fBtypeOfLoss\fP is optional and is \fBone\fP of the above shown values.
+.RS 8
+YYYY-YY
+.RE
+
+.RS 4
+\fBtypeOfLoss\fP is optional and is \fBone\fP of the following values
+.RE
+
+.RS 8
+self-employment
+.br
+uk-property-fhl
+.br
+uk-property-non-fhl
+.br
+foreign-property-fhl-eea
+.br
+foreign-property
 .RE
 
 .TP

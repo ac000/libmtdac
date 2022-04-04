@@ -1,4 +1,4 @@
-.TH MTD_IL_LC_UPDATE_LOSS_TYPE 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_IL_LC_UPDATE_LOSS_TYPE 3 "April 4, 2022" "" "libmtdac"
 
 .SH NAME
 
@@ -23,6 +23,14 @@ loss claim.
 This points to either a buffer, filename, file pointer or file descriptor that
 contains the JSON payload to be sent. See
 .BR mtd_dsrc_ctx (3)
+.PP
+.RS 8
+.EX
+{
+    "typeOfClaim": "carry-forward"
+}
+.EE
+.RE
 
 .PP
 

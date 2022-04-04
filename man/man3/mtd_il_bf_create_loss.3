@@ -1,4 +1,4 @@
-.TH MTD_IL_BF_CREATE_LOSS 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_IL_BF_CREATE_LOSS 3 "April 3, 2022" "" "libmtdac"
 
 .SH NAME
 
@@ -15,14 +15,62 @@ mtd_il_bf_create_loss \- create individual brought forward loss
 .SH DESCRIPTION
 
 This function allows developers to create a new brought forward loss which can
-be submitted against Self-employment, Self-employment class 4, UK FHL property
-and UK other (Non-FHL) property for the tax year prior to joining MTD.
+be submitted against self-employment, self-employment class 4, UK Furnished
+Holiday Let (FHL) property, UK other (Non-FHL) property, foreign property FHL
+in the European Economic Area (EEA) and foreign property for the tax year
+prior to joining MTD.
 
 .TP 4
 .B dsctx
 This points to either a buffer, filename, file pointer or file descriptor that
 contains the JSON payload to be sent. See
 .BR mtd_dsrc_ctx (3)
+.PP
+.RS 4
+Scenario: Self-Employment Request
+.PP
+.RE
+.RS 8
+.EX
+{
+    "taxYearBroughtForwardFrom": "2020-21",
+    "businessId": "XBIS12345678910",
+    "typeOfLoss": "self-employment",
+    "lossAmount": 5001.99
+}
+.EE
+.RE
+.PP
+.RE
+.RS 4
+Scenario: UK FHL Property Request
+.PP
+.RE
+.RS 8
+.EX
+{
+    "taxYearBroughtForwardFrom": "2020-21",
+    "businessId": "XPIS12345678910",
+    "typeOfLoss": "uk-property-fhl",
+    "lossAmount": 500.99
+}
+.EE
+.RE
+.PP
+.RS 4
+Scenario: Foreign Property Request
+.PP
+.RE
+.RS 8
+.EX
+{
+    "taxYearBroughtForwardFrom": "2020-21",
+    "businessId": "XFIS12345678910",
+    "typeOfLoss": "foreign-property",
+    "lossAmount": 5000.99
+}
+.EE
+.RE
 
 .PP
 

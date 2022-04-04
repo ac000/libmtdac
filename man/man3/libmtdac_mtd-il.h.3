@@ -1,4 +1,4 @@
-.TH libmtdac_mtd-il.h 3 "June 1, 2020" "libmtdac 0.9.0" "libmtdac_mtd-il.h"
+.TH libmtdac_mtd-il.h 3 "Aptil 4, 2022" "libmtdac 0.60.0" "libmtdac_mtd-il.h"
 
 .SH NAME
 libmtdac_mtd-il.h \- Make Tax Digital \- Individual Loses API
@@ -81,7 +81,8 @@ Individual Loses API.
 .BR mtd_il_lc_update_loss_type (3)
 .RE
 
-.BI "int mtd_il_lc_update_loss_order(const char *" src_file ", char **" buf ");"
+.BI "int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "                                const char *" tax_year ", char **" buf );
 
 .RS +4
 .BR mtd_il_lc_update_loss_order (3)

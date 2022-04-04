@@ -23,6 +23,53 @@ Statement.
 This points to either a buffer, filename, file pointer or file descriptor that
 contains the JSON payload to be sent. See
 .BR mtd_dsrc_ctx (3)
+.PP
+.RS 4
+Scenario: Self-Employment Claim Request
+.PP
+.RE
+.RS 8
+.EX
+{
+    "businessId": "XBIS12356589871",
+    "typeOfLoss": "self-employment",
+    "typeOfClaim": "carry-forward",
+    "taxYearClaimedFor": "2019-20"
+}
+.EE
+.RE
+
+.PP
+.RS 4
+Scenario: UK Property Claim Request
+.PP
+.RE
+.RS 8
+.EX
+{
+    "businessId": "XPIS12356589871",
+    "typeOfLoss": "uk-property-non-fhl",
+    "typeOfClaim": "carry-sideways",
+    "taxYearClaimedFor": "2019-20"
+}
+.EE
+.RE
+
+.PP
+.RS 4
+Scenario: Foreign Property Claim Request
+.PP
+.RE
+.RS 8
+.EX
+{
+    "businessId": "XFIS12356589871",
+    "typeOfLoss": "foreign-property",
+    "typeOfClaim": "carry-sideways",
+    "taxYearClaimedFor": "2019-20"
+}
+.EE
+.RE
 
 .PP
 

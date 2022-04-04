@@ -285,7 +285,7 @@ static const struct _endpoint {
 		.api	= MTD_EP_API_ITSA
 	},
 	[IL_LC_UPDATE_LOSS_ORDER] = {
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/order/{optional_query_params}",
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/order/{taxYearClaimedFor}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
 		.authz	= AUTHZ_USER,

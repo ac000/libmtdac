@@ -3,7 +3,7 @@
 /*
  * mtd-il.h - Make Tax Digital - Individual Loses API
  *
- * Copyright (C) 2020		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020, 2022	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _MTD_IL_H_
@@ -18,7 +18,7 @@ extern "C" {
 #pragma GCC visibility push(default)
 
 extern int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
-				       const char *query_string, char **buf);
+				       const char *tax_year, char **buf);
 extern int mtd_il_lc_update_loss_type(const struct mtd_dsrc_ctx *dsctx,
 				      const char *cid, char **buf);
 extern int mtd_il_lc_delete_loss(const char *cid, char **buf);

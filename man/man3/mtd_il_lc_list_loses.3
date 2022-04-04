@@ -1,4 +1,4 @@
-.TH MTD_IL_LC_LIST_LOSES 3 "August 23, 2021" "" "libmtdac"
+.TH MTD_IL_LC_LIST_LOSES 3 "April 4, 2022" "" "libmtdac"
 
 .SH NAME
 
@@ -19,7 +19,7 @@ This function allows developers to retrieve a list of all loss claims.
 This is optional and is of the form
 .PP
 .RS 8
-[?[businessId=XNISNNNNNNNNNNN][&[taxYear=YYYY-YY][&[typeOfLoss={self-employment,uk-property-fhl,uk-property-non-fhl}][&[claimType=carry-sideways]]]]]
+[?[businessId=XNISNNNNNNNNNNN][&[taxYearClaimedFor=YYYY-YY][&[typeOfLoss={self-employment,uk-property-non-fhl,foreign-property}][&[typeOfClaim=carry-sideways]]]]]
 .RE
 
 .RS 4
@@ -31,11 +31,27 @@ This is optional and is of the form
 .RE
 
 .RS 4
-\fBtaxYear\fP is an optional tax year.
+\fBtaxYearClaimedFor\fP is an optional tax year in the form
+.RE
 
-\fBtypeOfLoss\fP is optional and is \fBone\fP of the above shown values.
+.RS 8
+YYYY-YY
+.RE
 
-\fBclaimType\fP is optional and takes the value \fBcarry-sideways\fP
+.RS 4
+\fBtypeOfLoss\fP is optional and is \fBone\fP of the following values
+.RE
+
+.RS 8
+self-employment
+.br
+uk-property-non-fhl
+.br
+foreign-property
+.RE
+
+.RE 4
+\fBtypeOfClaim\fP is optional and takes the value \fBcarry-sideways\fP
 .RE
 
 .TP

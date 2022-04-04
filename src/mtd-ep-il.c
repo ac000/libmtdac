@@ -3,7 +3,7 @@
 /*
  * mtd-ep-il.c - Make Tax Digital - Individual Loses API
  *
- * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #include <stddef.h>
@@ -11,22 +11,18 @@
 #include "mtd-il.h"		/* for default (public) visibility */
 #include "endpoints.h"
 
-#define VERSION		"2.0"
+#define VERSION		"3.0"
 #define API_VER		"Accept: application/vnd.hmrc." VERSION "+json"
 
 /*
  * [PUT ]
- * /individuals/losses/{nino}/loss-claims/order
- *
- * Optional query string:
- *
- *      ?taxYear=YYYY-YY
+ * /individuals/losses/{nino}/loss-claims/order/{taxYearClaimedFor}
  */
 int mtd_il_lc_update_loss_order(const struct mtd_dsrc_ctx *dsctx,
-				const char *query_string, char **buf)
+				const char *tax_year, char **buf)
 {
 	return do_ep(IL_LC_UPDATE_LOSS_ORDER, API_VER,
-		     dsctx, buf, query_string, (char *)NULL);
+		     dsctx, buf, tax_year, (char *)NULL);
 }
 
 /*
@@ -76,9 +72,9 @@ int mtd_il_lc_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf)
  *
  * Optional query string:
  *
- *	?businessId=&taxYear=YYYY-YY&typeOfLoss=&claimType=carry-sideways
+ *	?businessId=&taxYearClaimedFor=YYYY-YY&typeOfLoss=&typeOfClaim=carry-sideways
  *
- *	typeOfLoss={self-employment,uk-property-fhl,uk-property-non-fhl}
+ *	typeOfLoss={self-employment,uk-property-non-fhl,foreign-property}
  */
 int mtd_il_lc_list_loses(const char *query_string, char **buf)
 {
@@ -133,9 +129,10 @@ int mtd_il_bf_create_loss(const struct mtd_dsrc_ctx *dsctx, char **buf)
  *
  * Optional query string:
  *
- *	?businessId=&taxYear=YYYY-YY&typeOfLoss=
+ *	?businessId=&taxYearBroughtForwardFrom=YYYY-YY&typeOfLoss=
  *
- *	typeOfLoss={self-employment,uk-property-fhl,uk-property-non-fhl}
+ *	typeOfLoss={self-employment,uk-property-fhl,uk-property-non-fhl,
+ *		    foreign-property-fhl-eea,foreign-property}
  */
 int mtd_il_bf_list_loses(const char *query_string, char **buf)
 {
