@@ -75,6 +75,7 @@ jobs:
       - name: make
         run: CFLAGS=-Werror make V=1
 
+  # Alpine Linux with musl libc and GCC
   alpine:
     runs-on: ubuntu-latest
 
