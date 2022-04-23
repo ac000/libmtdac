@@ -3,7 +3,7 @@
 /*
  * logger.h - Simple logging functon
  *
- * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _LOGGER_H_
@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include <string.h>
 #include <errno.h>
 
 #include "platform.h"
