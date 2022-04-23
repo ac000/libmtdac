@@ -3,7 +3,7 @@
 /*
  * curler.c
  *
- * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #define _GNU_SOURCE
@@ -472,13 +472,12 @@ do_poll:
 
 	err = getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &optval, &optlen);
 	if (err || optval != 0) {
+		close(sockfd);
 		if (!err) {
 			/* We want the error from the connect() */
 			errno = optval;
 		}
-
 		logger(MTD_LOG_ERRNO, NULL);
-		close(sockfd);
 		return -1;
 	}
 
