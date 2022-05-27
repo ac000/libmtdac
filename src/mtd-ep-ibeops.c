@@ -3,7 +3,7 @@
 /*
  * mtd-ep-ibeops.c - Make Tax Digital - Individuals Business End of Period Statement API
  *
- * Copyright (C) 2021		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2021 - 2022	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #include <stddef.h>
@@ -11,7 +11,7 @@
 #include "mtd-ibeops.h"		/* for default (public) visibility */
 #include "endpoints.h"
 
-#define VERSION		"1.0"
+#define VERSION		"2.0"
 #define API_VER		"Accept: application/vnd.hmrc." VERSION "+json"
 
 /*
