@@ -38,6 +38,11 @@ else
 	@rpmbuild -bb libmtdac.spec
 endif
 
+.PHONY: tags
+tags:
+	@echo -e "Generating tags..."
+	@ctags -R include/ src/
+
 .PHONY: clean
 clean:
 	@echo -e "Cleaning: libmtdac man"
