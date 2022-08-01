@@ -3,7 +3,7 @@
 /*
  * mtd-ic.h - Make Tax Digital - Individual Calculations API
  *
- * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #ifndef _MTD_IC_H_
@@ -17,21 +17,13 @@ extern "C" {
 
 #pragma GCC visibility push(default)
 
-extern int mtd_ic_cr_crystallise(const struct mtd_dsrc_ctx *dsctx,
-				 const char *tax_year, char **buf);
-extern int mtd_ic_cr_intent_to_crystallise(const char *tax_year, char **buf);
-
-extern int mtd_ic_sa_get_messages(const char *cid, const char *query_string,
+extern int mtd_ic_final_decl(const char *tax_year, const char *cid,
+			     char **buf);
+extern int mtd_ic_get_calculation(const char *tax_year, const char *cid,
 				  char **buf);
-extern int mtd_ic_sa_get_end_of_year_est(const char *cid, char **buf);
-extern int mtd_ic_sa_get_allowances_deductions_reliefs(const char *cid,
-						       char **buf);
-extern int mtd_ic_sa_get_taxable_income(const char *cid, char **buf);
-extern int mtd_ic_sa_get_income_tax_nics_calc(const char *cid, char **buf);
-extern int mtd_ic_sa_get_calculation_meta(const char *cid, char **buf);
-extern int mtd_ic_sa_trigger_calculation(const struct mtd_dsrc_ctx *dsctx,
-					 char **buf);
-extern int mtd_ic_sa_list_calculations(const char *query_string, char **buf);
+extern int mtd_ic_trigger_calculation(const char *tax_year,
+				      const char *query_string, char **buf);
+extern int mtd_ic_list_calculations(const char *query_string, char **buf);
 
 #pragma GCC visibility pop
 

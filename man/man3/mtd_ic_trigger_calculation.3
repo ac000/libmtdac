@@ -1,47 +1,59 @@
-.TH MTD_IC_SA_TRIGGER_CALCULATION 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_IC_TRIGGER_CALCULATION 3 "July 29, 2022" "" "libmtdac"
 
 .SH NAME
 
-mtd_ic_sa_trigger_calculation \- trigger a self-assessment tax calculation for
-a given tax year
+mtd_ic_trigger_calculation \- trigger a self-assessment tax calculation for a
+given tax year
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd-ic.h>
 .PP
 .nf
-.BI "int mtd_ic_sa_trigger_calculation(const struct mtd_dsrc_ctx *" dsctx ",
-.BI "                                  char **" buf );
+.BI "int mtd_ic_trigger_calculation(const char *" tax_year ,
+.BI "                               const char *" query_string ", char **" buf );
 .fi
 
 .SH DESCRIPTION
 
 This function allows the developer to trigger a self-assessment tax
-calculation for a given tax year (see \fBsrc_file\fP below). It should be
-called whenever income data is updated via
+calculation for a given tax year. It should be called whenever income data
+is updated via
 .BR mtd_sa_se_update_period (3)
 or
 .BR mtd_sa_se_update_annual_summary (3).
+.PP
+To trigger a final declaration self assessment tax calculation, you must
+supply the finalDeclaration query parameter as true,
+.PP
 It can take up to 5 seconds for a Calculation ID to be returned when
 triggering a tax calculation.
 .PP
 The result of the calculation can be seen using the
-.BR mtd_ic_sa_get_calculation_meta (3)
+.BR mtd_ic_get_calculation (3)
 function.
 
 .TP 4
-.B dsctx
-This points to either a buffer, filename, file pointer or file descriptor that
-contains the JSON payload to be sent. See
-.BR mtd_dsrc_ctx (3).
-The JSON should look like
-.PP
+.B tax_year
+.RS 4
+This is the taxYear and is in the form
+.RE
+
 .RS 8
-.EX
-{
-    "taxYear": "2017-18"
-}
-.EE
+YYYY-YY
+.RE
+
+.TP
+.B query_string
+.RS 4
+This is optional and is only used when submitting a final declaration, where
+you should use
+.PP
+.RS 4
+\fB?finalDeclaration=true\fP
+.RE
+.PP
+Though you can use it any other time if you set it to \fBfalse\fP.
 .RE
 
 .TP
@@ -76,6 +88,6 @@ There was a problem with the curl request itself
 .BR libmtdac_mtd.h (3),
 .BR mtd_dsrc_ctx (3),
 .BR libmtdac-result_buffer (3),
-.BR mtd_ic_sa_get_calculation_meta (3),
+.BR mtd_ic_get_calculation (3),
 .BR mtd_sa_se_update_period (3),
 .BR mtd_sa_se_update_annual_summary (3)

@@ -124,65 +124,27 @@ static const struct _endpoint {
 		.api	= MTD_EP_API_ITSA
 	},
 	/* Individual Calculations - Self-Assessment */
-	[IC_SA_LIST_CALCULATIONS] = {
+	[IC_LIST_CALCULATIONS] = {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{optional_query_params}",
 		.method	= M_GET,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
-	[IC_SA_TRIGGER_CALCULATION] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment",
+	[IC_TRIGGER_CALCULATION] = {
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{taxYear}/{optional_query_params}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
-	[IC_SA_GET_CALCULATION_META] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}",
+	[IC_GET_CALCULATION] = {
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{taxYear}/{calculationId}",
 		.method	= M_GET,
 		.authz	= AUTHZ_USER,
 		.api	= MTD_EP_API_ITSA
 	},
-	[IC_SA_GET_INCOME_TAX_NICS_CALC] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/income-tax-nics-calculated",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[IC_SA_GET_TAXABLE_INCOME] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/taxable-income",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[IC_SA_GET_ALLOWANCES_DEDUCT_RELIEFS] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/allowances-deductions-reliefs",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[IC_SA_GET_EOY_EST] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/end-of-year-estimate",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[IC_SA_GET_MSGS] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{calculationId}/messages/{optional_query_params}",
-		.method	= M_GET,
-		.authz	= AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	/* Individual Calculations - Crystallisation */
-	[IC_CR_INTENT_TO_CRYSTALLISE] = {
-		.tmpl	= "/individuals/calculations/crystallisation/{nino}/{taxYear}/intent-to-crystallise",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.authz = AUTHZ_USER,
-		.api	= MTD_EP_API_ITSA
-	},
-	[IC_CR_CRYSTALLISE] = {
-		.tmpl	= "/individuals/calculations/crystallisation/{nino}/{taxYear}/crystallise",
+	[IC_FINAL_DECLARATION] = {
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{taxYear}/{calculationId}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.authz	= AUTHZ_USER,

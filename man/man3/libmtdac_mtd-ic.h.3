@@ -1,7 +1,7 @@
-.TH libmtdac_mtd-ic.h 3 "June 1, 2020" "libmtdac 0.9.0" "libmtdac_mtd-ic.h"
+.TH libmtdac_mtd-ic.h 3 "July 29, 2022" "libmtdac 0.61.0" "libmtdac_mtd-ic.h"
 
 .SH NAME
-libmtdac_mtd-ic.h \- Make Tax Digital \- Individual Calculations API
+libmtdac_mtd-ic.h \- Make Tax Digital \- Individual Calculations API 3.0
 
 .SH SYNOPSIS
 .B #include <libmtdac/mtd-ic.h>
@@ -12,55 +12,38 @@ Individual Calculations API.
 
 .SH FUNCTIONS
 
+.SS TAX Calculations
+
 .nf
-.BI "int mtd_ic_sa_list_calculations(char **" buf ");"
+.BI "int mtd_ic_list_calculations(const char *" query_string ", char **" buf ");"
 
 .RS +4
-.BR mtd_ic_sa_list_calculations (3)
+.BR mtd_ic_list_calculations (3)
 .RE
 
-.BI "int mtd_ic_sa_trigger_calculation(const char *" src_file ", char **" buf ");"
+.BI "int mtd_ic_trigger_calculation(const char *" tax_year ",
+.BI "                               const char *" query_string ", char **" buf );
 
 .RS +4
-.BR mtd_ic_sa_trigger_calculation (3)
+.BR mtd_ic_trigger_calculation (3)
 .RE
 
-.BI "int mtd_ic_sa_get_calculation_meta(const char *" cid ", char **" buf ");"
+.BI "int mtd_ic_get_calculation(const char *" tax_year ", const char *" cid ,
+.BI "                           char **" buf );
 
 .RS +4
-.BR mtd_ic_sa_get_calculation_meta (3)
+.BR mtd_ic_get_calculation (3)
 .RE
-
-.BI "int mtd_ic_sa_get_income_tax_nics_calc(const char *" cid ", char **" buf ");
-
-.RS +4
-.BR mtd_ic_sa_get_income_tax_nics_calc (3)
 .RE
+.fi
 
-.BI "int mtd_ic_sa_get_taxable_income(const char *" cid ", char **" buf ");
+.SS Final Declaration
 
-.RS +4
-.BR mtd_ic_sa_get_taxable_income (3)
-.RE
-
-.BI "int mtd_ic_sa_get_allowances_deductions_reliefs(const char *" cid ",
-.BI "                                                char **" buf ");"
-
+.nf
+.BI "int mtd_ic_final_decl(const char *" cid ", char **" buf );
 
 .RS +4
-.BR mtd_ic_sa_get_allowances_deductions_reliefs (3)
-.RE
-
-.BI "int mtd_ic_sa_get_end_of_year_est(const char *" cid ", char **" buf ");"
-
-.RS +4
-.BR mtd_ic_sa_get_end_of_year_est (3)
-.RE
-
-.BI "int mtd_ic_sa_get_messages(const char *" cid ", char **" buf ");"
-
-.RS +4
-.BR mtd_ic_sa_get_messages (3)
+.BR mtd_ic_final_decl (3)
 .RE
 .fi
 
@@ -68,3 +51,11 @@ Individual Calculations API.
 
 .BR libmtdac (3),
 .BR libmtdac_mtd.h (3)
+
+.PP
+HMRC documentation for this API can be found at
+.PP
+
+.in +4
+.nf
+.B https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/3.0

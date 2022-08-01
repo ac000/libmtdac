@@ -1,46 +1,41 @@
-.TH MTD_IC_CR_CRYSTALLISE 3 "February 5, 2021" "" "libmtdac"
+.TH MTD_IC_FINAL_DECL 3 "July 29, 2022" "" "libmtdac"
 
 .SH NAME
 
-mtd_ic_cr_crystallise \- crystallise a tax year
+mtd_ic_final_decl \- submit a final declaration
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd-ic.h>
 .PP
 .nf
-.BI "int mtd_ic_cr_crystallise(const struct mtd_dsrc_ctx *"dsctx ",
-.BI "                          const char *"tax_year ", char **" buf );
+.BI "int mtd_ic_final_decl(const char *" tax_year ", const char *" cid ",
+.BI "                      char **" buf );
 .fi
 
 .SH DESCRIPTION
 
-This function allows developers to crystallise a tax year by agreeing to the
-HMRC's tax calculation.
+This function allows developers to submit a final declaration for a tax year
+(\fBtax_year\fP) and calulation ID (\fBcid\fP), by agreeing to the HMRC's tax
+calculation.
 
 .TP 4
-.B dsctx
-This points to either a buffer, filename, file pointer or file descriptor that
-contains the JSON payload to be sent. See
-.BR mtd_dsrc_ctx (3).
-The JSON should look like
-.PP
-.RS 8
-.EX
-{
-    "calculationId": "041f7e4d-87d9-4d4a-a296-3cfbdf92f7e2"
-}
-.EE
-.RE
-
-.TP
 .B tax_year
 This is the Tax year to operate on and is in the form
-
 .RE
 
 .RS 8
 YYYY-YY
+.RE
+
+.TP
+.B cid
+.RS 4
+This is the calculationId and is in the form
+.RE
+
+.RS 8
+^[0-9]{8}|[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
 .RE
 
 .TP
@@ -82,5 +77,5 @@ HMRC documentation for this endpoint can be found at
 
 .in +4
 .nf
-.B https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/1.0
+.B https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/3.0#Submit a Self Assessment Final Declaration
 .fi

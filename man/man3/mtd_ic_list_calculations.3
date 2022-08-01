@@ -1,19 +1,19 @@
-.TH MTD_IC_SA_LIST_CALCULATIONS 3 "June 7, 2020" "" "libmtdac"
+.TH MTD_IC_LIST_CALCULATIONS 3 "June 7, 2020" "" "libmtdac"
 
 .SH NAME
 
-mtd_ic_sa_list_calculations \- list self assessment tax calculations
+mtd_ic_list_calculations \- list self assessment tax calculations
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd-ic.h>
 .PP
-.BI "int mtd_ic_sa_list_calculations(const char *" query_string ", char **" buf );
+.BI "int mtd_ic_list_calculations(const char *" query_string ", char **" buf );
 
 .SH DESCRIPTION
 
 This functions allows the developer to list self assessment tax calculations
-for the supplied NINO and optional tax year (see \fBquery_string\fP below).
+for the current (or other tax year (see \fBquery_string\fP below).
 
 .TP 4
 .B query_string

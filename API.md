@@ -17,8 +17,8 @@
     - [Self-Assessment Accounts - Coding Out Underpayments and Debts](#self-assessment-accounts---coding-out-underpayments-and-debts)
   * [Make Tax Digital - Individuals Business End of Period Statement API functions](#make-tax-digital---individuals-business-end-of-period-statement-api-functions)
   * [Make Tax Digital - Individual Calculations API functions](#make-tax-digital---individual-calculations-api-functions)
-    - [Individual Calculations - Self-Assessment](#individual-calculations---self-assessment)
-    - [Individual Calculations - Crystallisation [test-only]](#individual-calculations---crystallisation-test-only)
+    - [Individual Calculations - TAX Calculations](#individual-calculations---tax-calculations)
+    - [Individual Calculations - Final Declaration](#individual-calculations---final-declaration)
   * [Make Tax Digital - Individual Loses API functions](#make-tax-digital---individual-loses-api-functions)
     - [Individual Loses - Brought Forward](#individual-loses---brought-forward)
     - [Individual Loses - Loss Claims](#individual-loses---loss-claims)
@@ -757,72 +757,34 @@ int mtd_saac_delete_coding_out_uda(const char *tax_year, char **buf);
 #include <libmtdac/mtd-ic.h>
 ```
 
-#### Individual Calculations - Self-Assessment
+#### Individual Calculations - TAX Calculations
 
-#### mtd\_ic\_sa\_list\_calculations
+#### mtd\_ic\_list\_calculations
 
 ```C
-int mtd_ic_sa_list_calculations(const char *query_string, char **buf);
+int mtd_ic_list_calculations(const char *query_string, char **buf);
 ```
 
-#### mtd\_ic\_sa\_trigger\_calculation
+#### mtd\_ic\_trigger\_calculation
 
 ```C
-int mtd_ic_sa_trigger_calculation(const struct mtd_dsrc_ctx *dsctx,
+int mtd_ic_trigger_calculation(const char *tax_year, const char *query_string,
                                char **buf);
 ```
 
-#### mtd\_ic\_sa\_get\_calculation\_meta
+#### mtd\_ic\_get\_calculation
 
 ```C
-int mtd_ic_sa_get_calculation_meta(const char *cid, char **buf);
-```
-
-#### mtd\_ic\_sa\_get\_income\_tax\_nics\_calc
-
-```C
-int mtd_ic_sa_get_income_tax_nics_calc(const char *cid, char **buf);
-```
-
-#### mtd\_ic\_sa\_get\_taxable\_income
-
-```C
-int mtd_ic_sa_get_taxable_income(const char *cid, char **buf);
-```
-
-#### mtd\_ic\_sa\_get\_allowances\_deductions\_reliefs
-
-```C
-int mtd_ic_sa_get_allowances_deductions_reliefs(const char *cid, char **buf);
-````
-
-#### mtd\_ic\_sa\_get\_end\_of\_year\_est
-
-```C
-int mtd_ic_sa_get_end_of_year_est(const char *cid, char **buf);
-```
-
-#### mtd\_ic\_sa\_get\_messages
-
-```C
-int mtd_ic_sa_get_messages(const char *cid, const char *query_string,
-                           char **buf);
+int mtd_ic_get_calculation(const char *tax_year, const char *cid, char **buf);
 ```
 
 
-#### Individual Calculations - Crystallisation [test-only]
+#### Individual Calculations - Final Declaration
 
-#### mtd\_ic\_cr\_intent\_to\_crystallise
-
-```C
-int mtd_ic_cr_intent_to_crystallise(const char *tax_year, char **buf);
-```
-
-#### mtd\_ic\_cr\_crystallise
+#### mtd\_ic\_final\_decl
 
 ```C
-int mtd_ic_cr_crystallise(const struct mtd_dsrc_ctx *dsctx,
-                          const char *tax_year, char **buf);
+int mtd_ic_final_decl(const char *tax_year, const char *cid, char **buf);
 ```
 
 

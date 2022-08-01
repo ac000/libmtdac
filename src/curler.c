@@ -603,7 +603,7 @@ static int do_put_post(struct curl_ctx *ctx, char **buf)
 
 	/*
 	 * Handle endpoints that are a POST/PUT request but do not
-	 * send any data such as SA_CR_INTENT_TO_CRYSTALLISE
+	 * send any data such as IC_TRIGGER_CALCULATION
 	 */
 	if (!ctx->dsctx)
 		goto out_do_curl;
