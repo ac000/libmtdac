@@ -3,8 +3,14 @@ name: "CodeQL"
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - 'include/libmtdac/**'
+      - 'src/**'
   pull_request:
     branches: [ "master" ]
+    paths:
+      - 'include/libmtdac/**'
+      - 'src/**'
   schedule:
     - cron: "11 8 * * 3"
 
@@ -31,6 +37,10 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           queries: +security-and-quality
+
+      - name: Install deps
+        run: |
+          sudo apt-get -y install libjansson-dev libcurl4-openssl-dev
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v2
