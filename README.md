@@ -1,7 +1,7 @@
 # libmtdac
 
-[![Builds](https://github.com/ac000/libmtdac/actions/workflows/build_tests.yaml/badge.svg)](https://github.com/ac000/libmtdac/actions/workflows/build_tests.yaml)
-[![FreeBSD Build Status](https://api.cirrus-ci.com/github/ac000/libmtdac.svg)](https://cirrus-ci.com/github/ac000/libmtdac)
+[![Builds](https://github.com/ac000/libmtdac/actions/workflows/build_tests.yaml/badge.svg)](https://github.com/ac000/libmtdac/actions/workflows/build_tests.yaml "GitHub workflow builds")
+[![FreeBSD Build Status](https://api.cirrus-ci.com/github/ac000/libmtdac.svg)](https://cirrus-ci.com/github/ac000/libmtdac "Cirrus FreeBSD builds")
 [![CodeQL](https://github.com/ac000/libmtdac/workflows/CodeQL/badge.svg)](https://github.com/ac000/libmtdac/actions?query=workflow:CodeQL "Code quality workflow status")
 
 1. [Overview](#overview)
