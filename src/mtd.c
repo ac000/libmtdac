@@ -272,10 +272,10 @@ static int mkdir_p(int dirfd, const char *path, mode_t mode)
 {
 	char *dir;
 	char *ptr;
-	char mdir[PATH_MAX] = "\0";
+	char mdir[PATH_MAX + 1] = "\0"; /* +1 for a trailing '/' */
 	int ret = 0;
 
-	if (strlen(path) >= sizeof(mdir)) {
+	if (strlen(path) >= PATH_MAX) {
 		errno = ENAMETOOLONG;
 		return -1;
 	}
@@ -295,7 +295,6 @@ static int mkdir_p(int dirfd, const char *path, mode_t mode)
 			break;
 
 		strcat(mdir, token);
-		strcat(mdir, "/");
 
 		err = fstatat(dirfd, mdir, &sb, 0);
 		if (!err)
@@ -306,6 +305,7 @@ static int mkdir_p(int dirfd, const char *path, mode_t mode)
 			ret = -1;
 			break;
 		}
+		strcat(mdir, "/");
 	}
 	free(ptr);
 
