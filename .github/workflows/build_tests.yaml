@@ -5,12 +5,14 @@ on:
     branches: master
     paths:
       - Makefile
+      - 'include/libmtdac/**'
       - 'src/**'
       - '.github/workflows/build_tests.yaml'
   pull_request:
     branches: master
     paths:
       - Makefile
+      - 'include/libmtdac/**'
       - 'src/**'
       - '.github/workflows/build_tests.yaml'
 
