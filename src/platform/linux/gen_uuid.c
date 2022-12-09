@@ -3,7 +3,7 @@
 /*
  * platform/linux/gen_uuid.c - generate a version 4 UUID
  *
- * Copyright (C) 2021		Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2021 - 2022	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #include <stdio.h>
@@ -22,7 +22,7 @@ char *gen_uuid(char *buf)
 	bytes_read = fscanf(fp, "%36s", buf);
 	fclose(fp);
 
-	if (bytes_read == 0)
+	if (bytes_read != 36)
 		return NULL;
 
 	return buf;
