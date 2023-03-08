@@ -3,7 +3,7 @@
 /*
  * mtd-hmrc-err.c - Make Tax Digital API Errors
  *
- * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2023	Andrew Clayton <andrew@digital-domain.net>
  */
 
 #define _GNU_SOURCE
@@ -411,8 +411,14 @@ static const struct _mtd_hmrc_err_map {
 	[MTD_HMRC_ERR_RULE_FHL_PRIVATE_USE_ADJUSTMENT] = {
 		.str = "RULE_FHL_PRIVATE_USE_ADJUSTMENT"
 	},
+	[MTD_HMRC_ERR_RULE_FINAL_DECLARATION_IN_PROGRESS] = {
+		.str = "RULE_FINAL_DECLARATION_IN_PROGRESS"
+	},
 	[MTD_HMRC_ERR_RULE_FINAL_DECLARATION_RECEIVED] = {
 		.str = "RULE_FINAL_DECLARATION_RECEIVED"
+	},
+	[MTD_HMRC_ERR_RULE_FINAL_DECLARATION_TAX_YEAR] = {
+		.str = "RULE_FINAL_DECLARATION_TAX_YEAR"
 	},
 	[MTD_HMRC_ERR_RULE_FROM_DATE_NOT_SUPPORTED] = {
 		.str = "RULE_FROM_DATE_NOT_SUPPORTED"
