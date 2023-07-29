@@ -54,7 +54,7 @@ endif
 all: $(LIBNAME)
 
 $(LIBNAME): $(objects)
-	@echo -e "  LNK\t$@"
+	@echo -e "  LNK\t$@.so"
 	$(v)$(CC) $(LDFLAGS),-soname,$(LIBNAME).so.$(SOVER) -o $(LIBNAME).so.$(VERSION) $(objects) $(LIBS)
 	$(v)ln -sf $(LIBNAME).so.$(VERSION) $(LIBNAME).so.$(SOVER)
 	$(v)ln -sf $(LIBNAME).so.$(VERSION) $(LIBNAME).so
