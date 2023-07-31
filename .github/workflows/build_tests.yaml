@@ -55,9 +55,7 @@ jobs:
           fetch-depth: "0"
 
       - name: make
-        run: |
-          git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make V=1
+        run: CFLAGS=-Werror make V=1
 
   # Debian 11 / glibc 2.31 / gcc 10.2
   debian_11:
@@ -77,9 +75,7 @@ jobs:
           fetch-depth: "0"
 
       - name: make
-        run: |
-          git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make V=1
+        run: CFLAGS=-Werror make V=1
 
   # Alpine Linux with musl libc and GCC
   alpine:
@@ -97,9 +93,7 @@ jobs:
           fetch-depth: "0"
 
       - name: make
-        run: |
-          git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make V=1
+        run: CFLAGS=-Werror make V=1
 
   # Fedora 34 / glibc 2.33 / gcc 11.2 / clang 12.0
   # Fedora 35 / glibc 2.34 / gcc 11.2 / clang 13.0
@@ -124,6 +118,4 @@ jobs:
           fetch-depth: "0"
 
       - name: make CC=${{ matrix.compiler }}
-        run: |
-          git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make CC=${{ matrix.compiler }} V=1
+        run: CFLAGS=-Werror make CC=${{ matrix.compiler }} V=1
