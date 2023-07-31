@@ -48,16 +48,14 @@ jobs:
 
     steps:
       - name: Install tools/deps
-        run: yum -y install git gcc make jansson-devel libcurl-devel
+        run: yum -y install gcc make jansson-devel libcurl-devel
 
       - uses: actions/checkout@v2
         with:
           fetch-depth: "0"
 
       - name: make
-        run: |
-          git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make V=1
+        run: CFLAGS=-Werror make GIT_VERSION=\\\"v0.0.0\\\" V=1
 
   # Debian 11 / glibc 2.31 / gcc 10.2
   debian_11:
@@ -70,16 +68,14 @@ jobs:
       - name: Install deps
         run: |
           apt-get -y update
-          apt-get -y install git gcc make libjansson-dev libcurl4-openssl-dev
+          apt-get -y install gcc make libjansson-dev libcurl4-openssl-dev
 
       - uses: actions/checkout@v2
         with:
           fetch-depth: "0"
 
       - name: make
-        run: |
-          git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make V=1
+        run: CFLAGS=-Werror make GIT_VERSION=\\\"v0.0.0\\\" V=1
 
   # Alpine Linux with musl libc and GCC
   alpine:
@@ -90,16 +86,14 @@ jobs:
 
     steps:
       - name: Install tools/deps
-        run: apk add build-base linux-headers git jansson-dev curl-dev
+        run: apk add build-base linux-headers jansson-dev curl-dev
 
       - uses: actions/checkout@v2
         with:
           fetch-depth: "0"
 
       - name: make
-        run: |
-          git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make V=1
+        run: CFLAGS=-Werror make GIT_VERSION=\\\"v0.0.0\\\" V=1
 
   # Fedora 34 / glibc 2.33 / gcc 11.2 / clang 12.0
   # Fedora 35 / glibc 2.34 / gcc 11.2 / clang 13.0
@@ -117,13 +111,11 @@ jobs:
 
     steps:
       - name: Install tools/deps
-        run: dnf -y install git ${{ matrix.compiler }} make jansson-devel libcurl-devel
+        run: dnf -y install ${{ matrix.compiler }} make jansson-devel libcurl-devel
 
       - uses: actions/checkout@v2
         with:
           fetch-depth: "0"
 
       - name: make CC=${{ matrix.compiler }}
-        run: |
-          git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make CC=${{ matrix.compiler }} V=1
+        run: CFLAGS=-Werror make CC=${{ matrix.compiler }} GIT_VERSION=\\\"v0.0.0\\\" V=1
