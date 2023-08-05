@@ -7,22 +7,22 @@ MAKE_OPTS = --no-print-directory V=$V
 
 .PHONY: libmtdac
 libmtdac:
-	@echo -e "Building: libmtdac"
+	@echo "Building: libmtdac"
 	@$(MAKE) $(MAKE_OPTS) -C src/
 
 .PHONY: man
 man:
-	@echo -e "Building: man-pages"
+	@echo "Building: man-pages"
 	@$(MAKE) $(MAKE_OPTS) -C man/man3/
 
 .PHONY: hdrchk
 hdrchk:
-	@echo -e "Checking Headers"
+	@echo "Checking Headers"
 	@$(MAKE) $(MAKE_OPTS) -C src/ hdrchk
 
 .PHONY: rpm
 rpm:
-	@echo -e "Building: rpm"
+	@echo "Building: rpm"
 ifeq ($(wildcard ~/rpmbuild/),)
 	@echo "***"
 	@echo "*** ~/rpmbuild not found, create with"
@@ -40,12 +40,12 @@ endif
 
 .PHONY: tags
 tags:
-	@echo -e "Generating tags..."
+	@echo "Generating tags..."
 	@ctags -R include/ src/
 
 .PHONY: clean
 clean:
-	@echo -e "Cleaning: libmtdac man"
+	@echo "Cleaning: libmtdac man"
 	@$(MAKE) $(MAKE_OPTS) -C src/ clean
 	@$(MAKE) $(MAKE_OPTS) -C man/man3 clean
 	@rm -f .version
