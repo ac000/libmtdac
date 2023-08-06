@@ -10,7 +10,7 @@ endif
 man: $(objects)
 
 %.3.gz: %.3
-	@echo -e "  GZ\t$@"
+	@echo "  GZ   $@"
 	$(v)gzip -c $< > $@
 
 .PHONY: clean

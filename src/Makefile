@@ -54,7 +54,7 @@ endif
 all: $(LIBNAME)
 
 $(LIBNAME): $(objects)
-	@echo -e "  LNK\t$@.so"
+	@echo "  LNK  $@.so"
 	$(v)$(CC) $(LDFLAGS),-soname,$(LIBNAME).so.$(SOVER) -o $(LIBNAME).so.$(VERSION) $(objects) $(LIBS)
 	$(v)ln -sf $(LIBNAME).so.$(VERSION) $(LIBNAME).so.$(SOVER)
 	$(v)ln -sf $(LIBNAME).so.$(VERSION) $(LIBNAME).so
@@ -64,7 +64,7 @@ vpath %.c platform/$(UNAME_S):platform/common
 
 %.o: %.c
 $(OBJ_DIR)/%.o: %.c $(DEPDIR)/%.o.d
-	@echo -e "  CC\t$< => $@"
+	@echo "  CC   $< => $@"
 	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 	$(POSTCOMPILE)
 
@@ -78,7 +78,7 @@ vpath %.h ../include/libmtdac
 hdrchk: $(hdrobjs)
 %.gch: %.h
 $(OBJ_DIR)/%.gch: %.h $(DEPDIR)/%.gch.d
-	@echo -e "  CC\t$< => $@"
+	@echo "  CC   $< => $@"
 	$(v)$(CC) $(DEPFLAGS) $(CFLAGS) -c -o $@ $<
 	$(POSTCOMPILE)
 
