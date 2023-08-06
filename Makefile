@@ -3,7 +3,7 @@ TARGETS = libmtdac hdrchk man
 .PHONY: all $(TARGETS)
 all: $(TARGETS)
 
-MAKE_OPTS = --no-print-directory V=$V
+MAKE_OPTS = --no-print-directory
 
 .PHONY: libmtdac
 libmtdac:
