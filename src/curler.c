@@ -3,7 +3,7 @@
 /*
  * curler.c
  *
- * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2025	Andrew Clayton <ac@sigsegv.uk>
  */
 
 #define _GNU_SOURCE
@@ -36,7 +36,7 @@
 #include "fph.h"
 #include "logger.h"
 
-static const struct http_status_code_entry {
+static const struct {
 	const enum mtd_http_status_code sc;
 	const char *str_enum;
 	const char *str;
@@ -68,7 +68,7 @@ static const struct http_status_code_entry {
 	{ MTD_HTTP_GATEWAY_TIMEOUT, "GATEWAY_TIMEOUT", "Gateway Timeout" },
 };
 
-static const struct http_method_str {
+static const struct {
 	const enum http_method method;
 	const char *str;
 } methods_str[] = {

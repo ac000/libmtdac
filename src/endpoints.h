@@ -3,7 +3,7 @@
 /*
  * endpoints.h - Make Tax Digital - Self Assessment API
  *
- * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2025	Andrew Clayton <ac@sigsegv.uk>
  */
 
 #ifndef _ENDPOINTS_H_
@@ -145,7 +145,7 @@ enum endpoint {
 	OA_APPLICATION_TOKEN,
 };
 
-static const struct mtd_ep_api_map {
+static const struct {
 	const char *name;
 	const char *fname;
 } ep_api_map[] = {

@@ -3,7 +3,7 @@
 /*
  * endpoints.c - Make Tax Digital - Self Assessment API
  *
- * Copyright (C) 2020 - 2022	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2025	Andrew Clayton <ac@sigsegv.uk>
  */
 
 #define _GNU_SOURCE
@@ -32,7 +32,7 @@ enum oauth_authz {
  * The order of these entries must match the order in enum endpoint
  * in endpoints.h
  */
-static const struct _endpoint {
+static const struct {
 	const char *tmpl;
 	const enum http_method method;
 	const enum content_type ctype;

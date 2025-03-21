@@ -3,7 +3,7 @@
 /*
  * mtd-hmrc-err.c - Make Tax Digital API Errors
  *
- * Copyright (C) 2020 - 2023	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2025	Andrew Clayton <ac@sigsegv.uk>
  */
 
 #define _GNU_SOURCE
@@ -14,7 +14,7 @@
 
 #include "mtd.h"
 
-static const struct _mtd_hmrc_err_map {
+static const struct {
 	const char *str;
 } mtd_hmrc_err_map[] = {
 	[MTD_HMRC_ERR_MULTIPLE] = {

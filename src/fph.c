@@ -3,7 +3,7 @@
 /*
  * fph.c - Make Tax Digital - Fraud Prevention Headers
  *
- * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2025	Andrew Clayton <ac@sigsegv.uk>
  */
 
 #define _GNU_SOURCE
@@ -108,7 +108,7 @@ enum fph_hdr {
 	FPH_V_PUBLIC_IP	   | \
 	FPH_V_FWD
 
-static const struct _fph_type_map {
+static const struct {
 	const unsigned int fph;
 	const char *str;
 } fph_type_map[] = {
@@ -147,7 +147,7 @@ static const struct _fph_type_map {
 };
 
 #define FPH_HINF(h, s)	{ .hdr = h, .str = s }
-static const struct _fph_hdr_map {
+static const struct {
 	const enum fph_hdr hdr;
 	const char *str;
 } fph_hdr_map[] = {

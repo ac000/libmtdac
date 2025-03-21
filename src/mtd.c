@@ -3,7 +3,7 @@
 /*
  * mtd.c - Make Tax Digital
  *
- * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2025	Andrew Clayton <ac@sigsegv.uk>
  */
 
 #define _GNU_SOURCE
@@ -36,7 +36,7 @@
 #define TEST_API_URL		"https://test-api.service.hmrc.gov.uk"
 #define PROD_API_URL		"https://api.service.hmrc.gov.uk"
 
-static const struct _mtd_err_map {
+static const struct {
 	const char *estr;
 	const char *str;
 } mtd_err_map[] = {
