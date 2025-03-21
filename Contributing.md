@@ -5,7 +5,7 @@ with signed-off commits. This means adding a line that says
 "Signed-off-by: Name \<Email\>" at the end of each commit. E.g
 
 ```
-Signed-off-by: Andrew Clayton <andrew@digital-domain.net>
+Signed-off-by: Andrew Clayton <ac@sigsegv.uk>
 ```
 
 This signifies that you have read/understood/and agreed to the
@@ -44,5 +44,5 @@ the longer explanation.
 Email should be sent to the project maintainer;
 
 ```
-Andrew Clayton <andrew@digital-domain.net>
+Andrew Clayton <ac@sigsegv.uk>
 ```
