@@ -31,8 +31,9 @@ endif
 UNAME_S := $(shell uname -s | tr A-Z a-z)
 ifeq ($(UNAME_S),freebsd)
         # Don't fail the build on unresolved symbols, environ is _always_
-        # undefined. In Ci we warp the build in .ci/freebsd-clang-build.sh
-        # which will decide if the build fails or not.
+        # undefined. In the CI we wrap the build in
+        # .ci/freebsd-clang-build.sh which will decide if the build fails
+        # or not.
         LDFLAGS := $(LDFLAGS),--warn-unresolved-symbols
         CFLAGS  += -I/usr/local/include
         LIBS    := -L/usr/local/lib $(LIBS) -luuid
