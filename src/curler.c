@@ -37,7 +37,7 @@
 #include "logger.h"
 
 static const struct {
-	const enum mtd_http_status_code sc;
+	enum mtd_http_status_code sc;
 	const char *str_enum;
 	const char *str;
 } http_status_code_map[] = {
@@ -69,7 +69,7 @@ static const struct {
 };
 
 static const struct {
-	const enum http_method method;
+	enum http_method method;
 	const char *str;
 } methods_str[] = {
 	{ M_OPTIONS, "OPTIONS" },

@@ -34,10 +34,10 @@ enum oauth_authz {
  */
 static const struct {
 	const char *tmpl;
-	const enum http_method method;
-	const enum content_type ctype;
-	const enum oauth_authz authz;
-	const enum mtd_ep_api api;
+	enum http_method method;
+	enum content_type ctype;
+	enum oauth_authz authz;
+	enum mtd_ep_api api;
 } endpoints[] = {
 	/* Business Details */
 	[BD_LIST] = {

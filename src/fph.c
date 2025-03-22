@@ -109,7 +109,7 @@ enum fph_hdr {
 	FPH_V_FWD
 
 static const struct {
-	const unsigned int fph;
+	unsigned int fph;
 	const char *str;
 } fph_type_map[] = {
 	[MTD_ACT_MOBILE_APP_DIRECT] = {
@@ -148,7 +148,7 @@ static const struct {
 
 #define FPH_HINF(h, s)	{ .hdr = h, .str = s }
 static const struct {
-	const enum fph_hdr hdr;
+	enum fph_hdr hdr;
 	const char *str;
 } fph_hdr_map[] = {
 	FPH_HINF(FPH_C_PUBLIC_IP, "Gov-Client-Public-IP"),
@@ -321,7 +321,7 @@ static char *get_macaddrs(void *user_data __unused)
 
 struct ip_prefix {
 	const char *ip;
-	const short prefix;
+	short prefix;
 };
 
 static const struct ip_prefix local_ip4s[] = {
