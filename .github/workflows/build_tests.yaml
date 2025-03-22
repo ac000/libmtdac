@@ -20,25 +20,6 @@ jobs:
   # GitHub Currently only supports running directly on Ubuntu,
   # for any other Linux we need to use a container.
 
-  # CentOS 7 / glibc 2.17 / gcc 4.8.5
-  centos_7:
-    runs-on: ubuntu-latest
-
-    container:
-      image: centos:7
-
-    steps:
-      - name: Install tools/deps
-        run: yum -y install gcc make jansson-devel libcurl-devel
-
-      - uses: actions/checkout@v2
-
-      - name: make
-        # Fudge the version seeing as we don't actually have a git
-        # repository here due to needing git 2.18+. The version
-        # number is not actually important to just test the build.
-        run: CFLAGS=-Werror make GIT_VERSION=\\\"v0.0.0\\\" V=1
-
   # Rocky Linux 8 (RHEL clone) / glibc 2.28 / gcc 8.5.0
   rocky-linux-8:
     runs-on: ubuntu-latest
@@ -59,8 +40,8 @@ jobs:
           git config --global --add safe.directory /__w/libmtdac/libmtdac
           CFLAGS=-Werror make V=1
 
-  # Debian 11 / glibc 2.31 / gcc 10.2
-  debian_11:
+  # Debian 11 / glibc 2.36 / gcc 12
+  debian_12:
     runs-on: ubuntu-latest
 
     container:
@@ -101,15 +82,15 @@ jobs:
           git config --global --add safe.directory /__w/libmtdac/libmtdac
           CFLAGS=-Werror make V=1
 
-  # Fedora 37 / glibc 2.36 / gcc 12.1 / clang 15
-  # Fedora 38 / glibc 2.37 / gcc 13.1 / clang 16
+  # Fedora 41 / glibc 2.39 / gcc 14 / clang 18
+  # Fedora 42 / glibc 2.40 / gcc 14 / clang 19
   fedora:
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        os: [ 'fedora:37', 'fedora:38' ]
+        os: [ 'fedora:40', 'fedora:41' ]
         compiler: [ 'gcc', 'clang' ]
 
     container:
