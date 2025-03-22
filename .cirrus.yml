@@ -1,10 +1,10 @@
 freebsd_instance:
-  image_family: freebsd-13-0
+  image_family: freebsd-14-2
   cpu: 1
   memory: 1G
 
 task:
-  name: freebsd_13 (clang)
+  name: freebsd (clang)
   skip: "!changesInclude('.cirrus.yml', 'Makefile', 'src/**')"
   install_script: pkg install -y bash gmake jansson curl e2fsprogs-libuuid
   # We don't have a full repository checkout here so fudge
