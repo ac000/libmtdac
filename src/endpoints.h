@@ -13,6 +13,9 @@
 
 #define URL_LEN			1024
 
+#define EP(ep, dsctx, ...) \
+	return do_ep(ep, API_VER, dsctx, buf, ##__VA_ARGS__, (char *)NULL);
+
 /*
  * The order of these entries must match the order in endpoints[]
  * in endpoints.c
