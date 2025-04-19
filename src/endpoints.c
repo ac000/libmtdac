@@ -637,7 +637,7 @@ int do_ep(enum endpoint ep, const char *api_ver,
 	  const struct mtd_dsrc_ctx *dsctx, char **buf, ...)
 {
 	va_list ap;
-	struct curl_ctx ctx = { 0 };
+	struct curl_ctx ctx = {};
 	const char *params[MAX_PARAMS] = { NULL };
 	int i = 0;
 
