@@ -15,7 +15,7 @@ DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$(@F).Td
 CC	= gcc
 CFLAGS += -Wall -Wextra -Wdeclaration-after-statement -Wvla \
 	  -Wmissing-prototypes -Wstrict-prototypes -Wold-style-definition \
-	  -std=gnu99 -g -O2 -Wp,-D_FORTIFY_SOURCE=2 --param=ssp-buffer-size=4 \
+	  -std=gnu11 -g -O2 -Wp,-D_FORTIFY_SOURCE=2 --param=ssp-buffer-size=4 \
 	  -fno-common -fstack-protector -fPIC -fexceptions \
 	  -fvisibility=hidden -I../include/libmtdac \
 	  -DLIBNAME=\"$(LIBNAME)\" -DGIT_VERSION=${GIT_VERSION} -pipe
