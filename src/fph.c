@@ -355,9 +355,8 @@ static bool _is_local_ip4(const struct sockaddr *sa)
 {
 	const struct in_addr *ip_addr = &((struct sockaddr_in *)sa)->sin_addr;
 	int nr = sizeof(local_ip4s) / sizeof(local_ip4s[0]);
-	int i;
 
-	for (i = 0; i < nr; i++) {
+	for (int i = 0; i < nr; i++) {
 		bool local;
 
 		local = _ipv4_isin(local_ip4s[i].ip, local_ip4s[i].prefix,
@@ -399,9 +398,8 @@ static bool _is_local_ip6(const struct sockaddr *sa)
 	const unsigned char *ip_addr =
 		(unsigned char *)&((struct sockaddr_in6 *)sa)->sin6_addr;
 	int nr = sizeof(local_ip6s) / sizeof(local_ip6s[0]);
-	int i;
 
-	for (i = 0; i < nr; i++) {
+	for (int i = 0; i < nr; i++) {
 		bool local;
 
 		local = _ipv6_isin(local_ip6s[i].ip, local_ip6s[i].prefix,

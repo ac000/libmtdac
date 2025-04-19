@@ -639,12 +639,11 @@ int do_ep(enum endpoint ep, const char *api_ver,
 	va_list ap;
 	struct curl_ctx ctx = {};
 	const char *params[MAX_PARAMS] = { NULL };
-	int i = 0;
 
 	*buf = NULL;
 
 	va_start(ap, buf);
-	for ( ; ; i++) {
+	for (int i = 0; ; i++) {
 		if (i == MAX_PARAMS) {
 			logger(MTD_LOG_ERR, "MAX_PARAMS (%d) reached\n",
 			       MAX_PARAMS);
@@ -712,7 +711,6 @@ char *ep_make_url(enum endpoint ep, const char * const params[], char *url)
 	char *string;
 	char *ptr;
 	int len;
-	int p = 0;
 
 	string = strdup(endpoints[ep].tmpl + 1); /* skip past first '/' */
 	ptr = string;
@@ -722,7 +720,7 @@ char *ep_make_url(enum endpoint ep, const char * const params[], char *url)
 	if (strstr(string, "{nino}"))
 		nino = load_token("nino", FT_NINO, MTD_EP_API_NULL);
 
-	for (;;) {
+	for (int p = 0; ;) {
 		char *token;
 
 		token = strsep(&ptr, "/");
