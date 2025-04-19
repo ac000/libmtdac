@@ -1,28 +1,39 @@
-.TH MTD_ISI_SI_O_DELETE 3 "April 19, 2025" "" "libmtdac"
+.TH MTD_ISI_SI_UA_GET_ANNUAL_SUMMARY 3 "April 19, 2025" "" "libmtdac"
 
 .SH NAME
 
-mtd_isi_si_o_delete \- delete savings income for securities and foreign interest
+mtd_isi_si_ua_get_annual_summary \- retrieve a UK savings account annual
+summary for a tax year
 
 .SH SYNOPSIS
 
 .B #include <libmtdac/mtd-isi.h>
 .PP
-.BI "int mtd_isi_si_o_delete(const char *" tax_year ", char **" buf );
+.nf
+.BI "int mtd_isi_si_ua_get_annual_summary(const char *" yax_year ",
+.BI "                                     const char *" said ",
+.BI "                                     char **" buf );
+.fi
 
 .SH DESCRIPTION
 
-This function allows developers to delete savings income for securities and
-foreign interest.
+This function allows a developer to retrieve a UK savings account annual
+summary for a tax year. (see \fBtax_year\fP & \fBsaid\fP below).
 
-.TP 4
+.TP
 .B tax_year
-.RS 4
-This is taxYear and is in the form
+This is the taxYear and is in the form
+.PP
+.RS 9
+YYYY-YY
 .RE
 
+.TP 4
+.B said
+This is the savingsAccountId and is in the form
+.PP
 .RS 8
-YYYY-YY
+^[A-Za-z0-9]{15}$
 .RE
 
 .TP

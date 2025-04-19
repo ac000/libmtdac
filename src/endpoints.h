@@ -72,6 +72,16 @@ enum endpoint {
 	IL_LC_UPDATE_LOSS_TYPE,
 	IL_LC_UPDATE_LOSS_ORDER,
 
+	/* Individuals Savings Income - UK Savings Account */
+	ISI_SI_UA_LIST,
+	ISI_SI_UA_ADD,
+	ISI_SI_UA_GET_ANNUAL_SUMMARY,
+	ISI_SI_UA_UPDATE_ANNUAL_SUMMARY,
+	/* Individuals Savings Income - Savings Income */
+	ISI_SI_O_GET,
+	ISI_SI_O_UPDATE,
+	ISI_SI_O_DELETE,
+
 	/* Obligations */
 	OB_LIST_INC_AND_EXPEND_OBLIGATIONS,
 	OB_LIST_CRYSTALLISATION_OBLIGATIONS,

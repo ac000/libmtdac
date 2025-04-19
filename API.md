@@ -24,6 +24,9 @@
     - [Individual Loses - Loss Claims](#individual-loses---loss-claims)
   * [Make Tax Digital - Individuals Disclosures API functions](#make-tax-digital---individuals-disclosures-api-functions)
     - [Individuals Disclosures - Marriage Allowance](#individuals-disclosures---marriage-allowance)
+  * [Make Tax Digital - Individuals Savings Income API functions](#make-tax-digital---individuals-savings-income-api-functions)
+    - [Individuals Savings Income - UK Savings Account](#individuals-savings-income---uk-savings-account)
+    - [Individuals Savings Income - Savings Income](#individuals-savings-income---savings-income)
   * [Make Tax Digital - Business Income Source Summary API functions](#make-tax-digital---business-income-source-summary-api-functions)
   * [Make Tax Digital - Business Source Adjustable Summary API functions](#make-tax-digital---business-source-adjustable-summary-api-functions)
     - [Business Source Adjustable Summary - Self-Employment](#business-source-adjustable-summary---self-employment)
@@ -902,6 +905,64 @@ int mtd_id_delete(const char *tax_year, char **buf);
 
 ```C
 int mtd_id_ma_create(const struct mtd_dsrc_ctx *dsctx, char **buf);
+```
+
+
+### Make Tax Digital - Individuals Savings Income API functions
+
+```c
+#include <libmtdac/mtd-isi.h>
+```
+
+#### Individuals Savings Income - UK Savings Account
+
+#### mtd\_isi\_si\_ua\_list
+
+```c
+int mtd_isi_si_ua_list(const char *query_string, char **buf);
+```
+
+#### mtd\_isi\_si\_ua\_add
+
+```c
+int mtd_isi_si_ua_add(const struct mtd_dsrc_ctx *dsctx, char **buf);
+```
+
+#### mtd\_isi\_si\_ua\_get\_annual\_summary
+
+```c
+int mtd_isi_si_ua_get_annual_summary(const char *tax_year, const char *said,
+                                     char **buf);
+```
+
+#### mtd\_isi\_si\_ua\_update\_annual\_summary
+
+```c
+int mtd_isi_si_ua_update_annual_summary(const struct mtd_dsrc_ctx *dsctx,
+                                        const char *tax_year, const char *said,
+                                        char **buf);
+```
+
+
+#### Individuals Savings Income - Savings Income
+
+#### mtd\_isi\_si\_o\_get
+
+```c
+int mtd_isi_si_o_get(const char *tax_year, char **buf);
+```
+
+#### mtd\_isi\_si\_o\_update
+
+```c
+int mtd_isi_si_o_update(const struct mtd_dsrc_ctx *dsctx, const char *tax_year,
+                        char **buf);
+```
+
+#### mtd\_isi\_si\_o\_delete
+
+```c
+int mtd_isi_si_o_delete(const char *tax_year, char **buf);
 ```
 
 

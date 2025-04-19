@@ -254,6 +254,54 @@ static const struct {
 		.api	= MTD_EP_API_ITSA
 	},
 
+	/* Individuals Savings Income - UK Savings Account */
+	[ISI_SI_UA_LIST] = {
+		.tmpl	= "/individuals/savings-income/uk-accounts/{nino}/{optional_query_params}",
+		.method	= M_GET,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+	[ISI_SI_UA_ADD] = {
+		.tmpl	= "/individuals/savings-income/uk-accounts/{nino}",
+		.method	= M_POST,
+		.ctype  = CONTENT_TYPE_JSON,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+	[ISI_SI_UA_GET_ANNUAL_SUMMARY] = {
+		.tmpl	= "/individuals/savings-income/uk-accounts/{nino}/{taxYear}/{savingsAccountId}",
+		.method	= M_GET,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+	[ISI_SI_UA_UPDATE_ANNUAL_SUMMARY] = {
+		.tmpl	= "/individuals/savings-income/uk-accounts/{nino}/{taxYear}/{savingsAccountId}",
+		.method	= M_PUT,
+		.ctype  = CONTENT_TYPE_JSON,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+	/* Individuals Savings Income - Savings Income */
+	[ISI_SI_O_GET] = {
+		.tmpl	= "/individuals/savings-income/other/{nino}/{taxYear}",
+		.method	= M_GET,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+	[ISI_SI_O_UPDATE] = {
+		.tmpl	= "/individuals/savings-income/other/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype  = CONTENT_TYPE_JSON,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+	[ISI_SI_O_DELETE] = {
+		.tmpl	= "/individuals/savings-income/other/{nino}/{taxYear}",
+		.method = M_DELETE,
+		.authz	= AUTHZ_USER,
+		.api	= MTD_EP_API_ITSA
+	},
+
 	/* Obligations */
 	[OB_LIST_INC_AND_EXPEND_OBLIGATIONS] = {
 		.tmpl	= "/obligations/details/{nino}/income-and-expenditure/{optional_query_params}",

@@ -1,0 +1,74 @@
+.TH libmtdac_mtd-isi.h 3 "April 19, 2025" "libmtdac 0.61.0" "libmtdac_mtd-isi.h"
+
+.SH NAME
+libmtdac_mtd-isi.h \- Make Tax Digital \- Individuals Savings Income API
+
+.SH SYNOPSIS
+.B #include <libmtdac/mtd-isi.h>
+
+.SH DESCRIPTION
+These functions are for working with the UK's HMRC Make Tax Digital
+Individuals Savings Income API.
+
+.SH FUNCTIONS
+
+.SS UK Savings Account
+
+.nf
+.BI "int mtd_isi_si_ua_list(const char *" query_string ", char **" buf ");
+
+.RS +4
+.BR mtd_isi_si_ua_list (3)
+.RE
+
+.BI "int mtd_isi_si_ua_add(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "                      char **" buf ");
+
+.RS +4
+.BR mtd_isi_si_ua_add (3)
+.RE
+
+.BI "int mtd_isi_si_ua_get_annual_summary(const char *" tax_year ",
+.BI "                                     const char *" said ", char **" buf ");
+
+.RS +4
+.BR mtd_isi_si_ua_get_annual_summary (3)
+.RE
+
+.BI "int mtd_isi_si_ua_update_annual_summary(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "                                        const char *" tax_year,
+.BI "                                        const char *" said ",
+.BI "                                        char **" buf ");
+
+.RS +4
+.BR mtd_isi_si_ua_update_annual_summary (3)
+.RE
+.fi
+
+.SS Savings Income
+
+.nf
+.BI "int mtd_isi_si_o_get(const char *" tax_year ", char **" buf ");
+
+.RS +4
+.BR mtd_isi_si_o_get (3)
+.RE
+
+.BI "int mtd_isi_si_o_update(const struct mtd_dsrc_ctx *" dsctx ",
+.BI "                        const char *" tax_year ", char **" buf ");
+
+.RS +4
+.BR mtd_isi_si_o_update (3)
+.RE
+
+.BI "int mtd_isi_si_o_delete(const char *" tax_year ", char **" buf ");
+
+.RS +4
+.BR mtd_isi_si_o_delete (3)
+.RE
+.fi
+
+.SH SEE ALSO
+
+.BR libmtdac (3),
+.BR libmtdac_mtd.h (3)
