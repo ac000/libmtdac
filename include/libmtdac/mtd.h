@@ -3,7 +3,7 @@
 /*
  * mtd.h - Make Tax Digital
  *
- * Copyright (C) 2020 - 2023	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2025	Andrew Clayton <ac@sigsegv.uk>
  */
 
 #ifndef _MTD_H_
@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 #define LIBMTDAC_MAJOR_VERSION		 0
-#define LIBMTDAC_MINOR_VERSION		61
+#define LIBMTDAC_MINOR_VERSION		90
 #define LIBMTDAC_MICRO_VERSION		 0
 
 /* MTD_OPT_* - option flags for mtd_init() */
@@ -71,7 +71,7 @@ enum mtd_error {
 	MTD_ERR_CONFIG_DIR_UNSPEC,
 	MTD_ERR_CONFIG_DIR_INVALID,
 	MTD_ERR_NO_CONFIG,
-	MTD_ERR_INVALID_EP_API,
+	MTD_ERR_INVALID_SCOPE,
 
 	/* keep this last */
 	MTD_ERR_INVALID_ERROR
@@ -280,62 +280,6 @@ enum mtd_hmrc_error {
 	MTD_HMRC_ERR_RULE_VOLUNTARY_CLASS2_CANNOT_BE_CHANGED,
 	MTD_HMRC_ERR_RULE_VOLUNTARY_CLASS2_VALUE_INVALID,
 
-	/*
-	 * Self-Assessment API. This API is planned to be fully
-	 * deprecated by March 2022. So group them altogether to
-	 * facilitate easy removal.
-	 */
-	MTD_HMRC_ERR_SA_AGENT_NOT_AUTHORIZED,
-	MTD_HMRC_ERR_SA_AGENT_NOT_SUBSCRIBED,
-	MTD_HMRC_ERR_SA_BOTH_EXPENSES_SUPPLIED,
-	MTD_HMRC_ERR_SA_CLIENT_NOT_SUBSCRIBED,
-	MTD_HMRC_ERR_SA_DATE_NOT_IN_THE_PAST,
-	MTD_HMRC_ERR_SA_FORMAT_ACCOUNT_NAME,
-	MTD_HMRC_ERR_SA_FORMAT_GIFT_AID_FOLLOWING_YEAR_SPECIFIED_YEAR,
-	MTD_HMRC_ERR_SA_FORMAT_GIFT_AID_NONUK_CHARITY_AMOUNT,
-	MTD_HMRC_ERR_SA_FORMAT_GIFT_AID_NONUK_NAMES,
-	MTD_HMRC_ERR_SA_FORMAT_GIFT_AID_ONE_OFF_SPECIFIED_YEAR,
-	MTD_HMRC_ERR_SA_FORMAT_GIFT_AID_SPECIFIED_YEAR,
-	MTD_HMRC_ERR_SA_FORMAT_GIFT_AID_SPECIFIED_YEAR_PREVIOUS_YEAR,
-	MTD_HMRC_ERR_SA_FORMAT_GIFTS_INVESTMENTS_AMOUNT,
-	MTD_HMRC_ERR_SA_FORMAT_GIFTS_LAND_BUILDINGS,
-	MTD_HMRC_ERR_SA_FORMAT_GIFTS_NONUK_INVESTMENTS_NAMES,
-	MTD_HMRC_ERR_SA_FORMAT_GIFTS_SHARES_SECURITIES,
-	MTD_HMRC_ERR_SA_FORMAT_OTHER_DIVIDENDS,
-	MTD_HMRC_ERR_SA_FORMAT_SAVINGS_ACCOUNT_ID,
-	MTD_HMRC_ERR_SA_FORMAT_TAXED_INTEREST,
-	MTD_HMRC_ERR_SA_FORMAT_UK_DIVIDENDS,
-	MTD_HMRC_ERR_SA_FORMAT_UNTAXED_INTEREST,
-	MTD_HMRC_ERR_SA_INVALID_ACCOUNTING_PERIOD,
-	MTD_HMRC_ERR_SA_INVALID_BOOLEAN_VALUE,
-	MTD_HMRC_ERR_SA_INVALID_DATE,
-	MTD_HMRC_ERR_SA_INVALID_FIELD_FORMAT,
-	MTD_HMRC_ERR_SA_INVALID_FIELD_LENGTH,
-	MTD_HMRC_ERR_SA_INVALID_MONETARY_AMOUNT,
-	MTD_HMRC_ERR_SA_INVALID_PERIOD,
-	MTD_HMRC_ERR_SA_INVALID_POSTCODE,
-	MTD_HMRC_ERR_SA_INVALID_VALUE,
-	MTD_HMRC_ERR_SA_MANDATORY_FIELD_MISSING,
-	MTD_HMRC_ERR_SA_MISALIGNED_PERIOD,
-	MTD_HMRC_ERR_SA_MISSING_ACCOUNT_NAME,
-	MTD_HMRC_ERR_SA_NINO_INVALID,
-	MTD_HMRC_ERR_SA_NO_INCOMES_AND_EXPENSES,
-	MTD_HMRC_ERR_SA_NOT_ALLOWED_CONSOLIDATED_EXPENSES,
-	MTD_HMRC_ERR_SA_NOT_CONTIGUOUS_PERIOD,
-	MTD_HMRC_ERR_SA_NOT_OVER_STATE_PENSION,
-	MTD_HMRC_ERR_SA_NOT_UNDER_16,
-	MTD_HMRC_ERR_SA_OVERLAPPING_PERIOD,
-	MTD_HMRC_ERR_SA_RULE_DUPLICATE_ACCOUNT_NAME,
-	MTD_HMRC_ERR_SA_RULE_EMPTY_GIFTS_OR_GIFT_AID,
-	MTD_HMRC_ERR_SA_RULE_GIFT_AID_NONUK_AMOUNT_WITHOUT_NAMES,
-	MTD_HMRC_ERR_SA_RULE_GIFT_AID_NONUK_NAMES_WITHOUT_AMOUNT,
-	MTD_HMRC_ERR_SA_RULE_GIFTS_NONUK_INVESTMENTS_AMOUNT_WITHOUT_NAMES,
-	MTD_HMRC_ERR_SA_RULE_GIFTS_NONUK_INVESTMENTS_NAMES_WITHOUT_AMOUNT,
-	MTD_HMRC_ERR_SA_RULE_MAXIMUM_SAVINGS_ACCOUNTS_LIMIT,
-	MTD_HMRC_ERR_SA_RULE_TAX_YEAR_RANGE_EXCEEDED,
-	MTD_HMRC_ERR_SA_START_DATE_INVALID,
-	MTD_HMRC_ERR_SA_TAX_YEAR_INVALID,
-
 	/* Generic top-level errors */
 	MTD_HMRC_ERR_BUSINESS_ERROR,
 	MTD_HMRC_ERR_INVALID_REQUEST,
@@ -375,9 +319,9 @@ enum mtd_scope {
 	MTD_SCOPE_WR_VAT	= 0x8,
 };
 
-enum mtd_ep_api {
-	MTD_EP_API_ITSA		= 0x0,
-	MTD_EP_API_VAT		= 0x1,
+enum mtd_api_scope {
+	MTD_API_SCOPE_ITSA		= 0x0,
+	MTD_API_SCOPE_VAT		= 0x1,
 
 	/*
 	 * Special value to tell we are adding more API
@@ -385,10 +329,143 @@ enum mtd_ep_api {
 	 *
 	 * This can be bitwise OR'd with any of the above.
 	 */
-	MTD_EP_API_ADD		= (1 << 29),
+	MTD_API_SCOPE_ADD		= (1 << 29),
 
 	/* Only used internally */
-	MTD_EP_API_NULL		= (1 << 30)
+	MTD_API_SCOPE_NULL		= (1 << 30)
+};
+
+/*
+ * The order of these entries must match the order in endpoints[]
+ * in src/api_endpoints.h
+ */
+enum mtd_api_endpoint {
+	/* Business Details */
+	MTD_API_EP_BD_LIST = 0,
+	MTD_API_EP_BD_GET,
+	MTD_API_EP_BD_AMEND_QPT,
+
+	/* Business Source Adjustable Summary */
+	MTD_API_EP_BSAS_LIST,
+	MTD_API_EP_BSAS_TRIGGER,
+
+	/* Business Source Adjustable Summary - Self-Employment */
+	MTD_API_EP_BSAS_SE_GET,
+	MTD_API_EP_BSAS_SE_SUBMIT,
+	/* UK Property */
+	MTD_API_EP_BSAS_PB_GET,
+	MTD_API_EP_BSAS_PB_SUBMIT,
+	/* Foreign Property */
+	MTD_API_EP_BSAS_FP_GET,
+	MTD_API_EP_BSAS_FP_SUBMIT,
+
+	/* Individual Calculations - Tax Calculations */
+	MTD_API_EP_ICAL_TRIGGER,
+	MTD_API_EP_ICAL_LIST_OLD,
+	MTD_API_EP_ICAL_LIST,
+	MTD_API_EP_ICAL_GET,
+	/* Final Declaration */
+	MTD_API_EP_ICAL_FINAL_DECLARATION,
+
+	/* Individual Losses - Brought Forward */
+	MTD_API_EP_ILOS_BF_CREATE,
+	MTD_API_EP_ILOS_BF_AMEND_AMNT,
+	MTD_API_EP_ILOS_BF_LIST,
+	MTD_API_EP_ILOS_BF_GET,
+	MTD_API_EP_ILOS_BF_DELETE,
+	/* Loss Claims */
+	MTD_API_EP_ILOS_LC_CREATE,
+	MTD_API_EP_ILOS_LC_LIST,
+	MTD_API_EP_ILOS_LC_GET,
+	MTD_API_EP_ILOS_LC_DELETE,
+	MTD_API_EP_ILOS_LC_AMEND_TYPE,
+	MTD_API_EP_ILOS_LC_AMEND_ORDER,
+
+	/* Individuals Savings Income - UK Savings Account */
+	MTD_API_EP_ISI_SI_UK_LIST,
+	MTD_API_EP_ISI_SI_UK_ADD,
+	MTD_API_EP_ISI_SI_UK_GET,
+	MTD_API_EP_ISI_SI_UK_UPDATE,
+	/* Savings Income */
+	MTD_API_EP_ISI_SI_O_GET,
+	MTD_API_EP_ISI_SI_O_UPDATE,
+	MTD_API_EP_ISI_SI_O_DELETE,
+
+	/* Obligations */
+	MTD_API_EP_OB_GET_IEO,
+	MTD_API_EP_OB_GET_FDO,
+	MTD_API_EP_OB_GET_EPSO,
+
+	/* Property Business - UK Property Business Annual Submission */
+	MTD_API_EP_PB_UKPBAS_GET,
+	MTD_API_EP_PB_UKPBAS_CREATE,
+	/* UK Property Income & Expenses Period Summary */
+	MTD_API_EP_PB_UKPIEPS_CREATE,
+	MTD_API_EP_PB_UKPIEPS_GET,
+	MTD_API_EP_PB_UKPIEPS_AMEND,
+	/* UK Property Cumulative Period Summary */
+	MTD_API_EP_PB_UKPCPS_GET,
+	MTD_API_EP_PB_UKPCPS_CREATE,
+	/* Historic FHL UK Property Business Annual Submission */
+	MTD_API_EP_PB_HFHL_UKPBAS_CREATE,
+	MTD_API_EP_PB_HFHL_UKPBAS_GET,
+	MTD_API_EP_PB_HFHL_UKPBAS_DELETE,
+	/* Historic non-FHL UK Property Business Annual Submission */
+	MTD_API_EP_PB_HNFHL_UKPBAS_CREATE,
+	MTD_API_EP_PB_HNFHL_UKPBAS_GET,
+	MTD_API_EP_PB_HNFHL_UKPBAS_DELETE,
+	/* Historic FHL UK Property Income & Expenses Period Summary */
+	MTD_API_EP_PB_HFHL_UKPIEPS_LIST,
+	MTD_API_EP_PB_HFHL_UKPIEPS_CREATE,
+	MTD_API_EP_PB_HFHL_UKPIEPS_AMEND,
+	MTD_API_EP_PB_HFHL_UKPIEPS_GET,
+	/* Historic non-FHL UK Property Income & Expenses Period Summary */
+	MTD_API_EP_PB_HNFHL_UKPIEPS_LIST,
+	MTD_API_EP_PB_HNFHL_UKPIEPS_CREATE,
+	MTD_API_EP_PB_HNFHL_UKPIEPS_GET,
+	MTD_API_EP_PB_HNFHL_UKPIEPS_AMEND,
+	/* Foreign Property Income & Expenses Period Summary */
+	MTD_API_EP_PB_FPIEPS_CREATE,
+	MTD_API_EP_PB_FPIEPS_GET,
+	MTD_API_EP_PB_FPIEPS_AMEND,
+	/* Foreign Property Cumulative Period Summary */
+	MTD_API_EP_PB_FPCPS_GET,
+	MTD_API_EP_PB_FPCPS_AMEND,
+	/* Foreign Property Annual Submission */
+	MTD_API_EP_PB_FPAS_GET,
+	MTD_API_EP_PB_FPAS_AMEND,
+	/* UK or Foreign Property Annual Submission Deletion */
+	MTD_API_EP_PB_AS_DELETE,
+	/* UK or Foreign Property Income and Expenses Period Summaries List */
+	MTD_API_EP_PB_PIEPS_LIST,
+
+	/* Self Employment Business - Self-Employment Annual Submission */
+	MTD_API_EP_SEB_SEAS_AMEND,
+	MTD_API_EP_SEB_SEAS_GET,
+	MTD_API_EP_SEB_SEAS_DELETE,
+	/* Self-Employment Period Summaries */
+	MTD_API_EP_SEB_SEPS_CREATE,
+	MTD_API_EP_SEB_SEPS_LIST,
+	MTD_API_EP_SEB_SEPS_AMEND,
+	MTD_API_EP_SEB_SEPS_GET,
+	/* Self-Employment Cumulative Period Summary */
+	MTD_API_EP_SEB_SECPS_AMEND,
+	MTD_API_EP_SEB_SECPS_GET,
+
+	/* Create Test User */
+	MTD_API_EP_TEST_CU_CREATE_INDIVIDUAL,
+	MTD_API_EP_TEST_CU_CREATE_ORGANISATION,
+	MTD_API_EP_TEST_CU_CREATE_AGENT,
+	MTD_API_EP_TEST_CU_LIST_SERVICES,
+
+	/* Test Fraud Prevention Headers */
+	MTD_API_EP_TEST_FPH_VALIDATE,
+	MTD_API_EP_TEST_FPH_FEEDBACK,
+
+	/* OAuth */
+	MTD_API_EP_OA_REFRESH_TOKEN,
+	MTD_API_EP_OA_EXCHANGE_AUTH_CODE,
+	MTD_API_EP_OA_APPLICATION_TOKEN,
 };
 
 enum mtd_data_src_type {
@@ -476,8 +553,8 @@ struct mtd_cfg {
 extern void mtd_global_init(void);
 extern int mtd_init(unsigned int flags, const struct mtd_cfg *cfg);
 extern void mtd_deinit(void);
-extern int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes);
-extern int mtd_init_creds(enum mtd_ep_api api);
+extern int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes);
+extern int mtd_init_creds(enum mtd_api_scope scope);
 extern int mtd_init_nino(void);
 extern char *mtd_percent_encode(const char *str, ssize_t len);
 extern const char *mtd_err2str(int err);
@@ -486,6 +563,9 @@ extern enum mtd_http_status_code mtd_http_status_code(const char *json);
 extern const char *mtd_http_status_str_u(const char *json);
 extern const char *mtd_http_status_str(const char *json);
 extern enum mtd_hmrc_error mtd_hmrc_error(const char *json);
+
+extern int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
+		  char **buf, const char * const params[]);
 
 #pragma GCC visibility pop
 

@@ -27,7 +27,7 @@
 #include "platform.h"
 #include "mtd.h"
 #include "mtd-priv.h"
-#include "endpoints.h"
+#include "endpoint.h"
 #include "auth.h"
 #include "fph.h"
 #include "curler.h"
@@ -84,9 +84,9 @@ static const struct {
 		.estr	= "MTD_ERR_NO_CONFIG",
 		.str	= "No config specified"
 	},
-	[MTD_ERR_INVALID_EP_API] = {
-		.estr	= "MTD_ERR_INVALID_EP_API",
-		.str	= "Invalid Endpoint API"
+	[MTD_ERR_INVALID_SCOPE] = {
+		.estr	= "MTD_ERR_INVALID_SCOPE",
+		.str	= "Invalid API authorisaion scope"
 	},
 
 	/* keep this last */
@@ -482,7 +482,7 @@ static const struct {
 #define WR_SCOPES	(MTD_SCOPE_WR_SA|MTD_SCOPE_WR_VAT)
 
 extern char **environ;
-int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes)
+int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 {
 	struct mtd_dsrc_ctx dsctx;
 	char *client_id = NULL;
@@ -511,16 +511,16 @@ int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes)
 		goto out_free;
 	}
 
-	reset_oauth = !(api & MTD_EP_API_ADD);
-	api &= ~MTD_EP_API_ADD;
+	reset_oauth = !(scope & MTD_API_SCOPE_ADD);
+	scope &= ~MTD_API_SCOPE_ADD;
 
-	client_id = load_token("client_id", FT_CREDS, api);
-	client_secret = load_token("client_secret", FT_CREDS, api);
+	client_id = load_token("client_id", FT_CREDS, scope);
+	client_secret = load_token("client_secret", FT_CREDS, scope);
 
 	printf("You need to authorise libmtdac to have '%s%s%s' access to "
 	       "your\n'%s' information.\n",
 	       rd_scope ? "read" : "", rd_scope && wr_scope ? "/" : "",
-	       wr_scope ? "write" : "", ep_api_map[api].fname);
+	       wr_scope ? "write" : "", api_scope_map[scope].fname);
 	printf("\n");
 	printf("The HMRC authorisation endpoint will open up in a new browser "
 	       "window/tab.\n");
@@ -574,7 +574,7 @@ int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes)
 	dsctx.data_src.buf = data;
 	dsctx.data_len = strlen(data);
 	dsctx.src_type = MTD_DATA_SRC_BUF;
-	err = do_ep(OA_EXCHANGE_AUTH_CODE, NULL, &dsctx, &buf, (char *)NULL);
+	err = mtd_ep(MTD_API_EP_OA_EXCHANGE_AUTH_CODE, &dsctx, &buf, NULL);
 	if (err)
 		goto out_free;
 
@@ -589,10 +589,11 @@ int mtd_init_auth(enum mtd_ep_api api, unsigned long scopes)
 			 mtd_ctx.config_dir);
 		froot = json_load_file(path, 0, NULL);
 		if (froot)
-			json_object_set(froot, ep_api_map[api].name, result);
+			json_object_set(froot, api_scope_map[scope].name,
+					result);
 	}
 	if (!froot)
-		froot = json_pack("{s:o}", ep_api_map[api].name, result);
+		froot = json_pack("{s:o}", api_scope_map[scope].name, result);
 
 	err = write_config(mtd_ctx.config_dir, "oauth.json", froot);
 	if (err)
@@ -645,31 +646,31 @@ int mtd_init_nino(void)
 	return MTD_ERR_NONE;
 }
 
-int mtd_init_creds(enum mtd_ep_api api)
+int mtd_init_creds(enum mtd_api_scope scope)
 {
 	char client_id[41];
 	char client_secret[41];
-	const char *api_s;
+	const char *type_s;
 	char *s;
 	json_t *froot = NULL;
 	json_t *new;
 	bool reset_creds;
 	int err;
 
-	reset_creds = !(api & MTD_EP_API_ADD);
-	api &= ~MTD_EP_API_ADD;
+	reset_creds = !(scope & MTD_API_SCOPE_ADD);
+	scope &= ~MTD_API_SCOPE_ADD;
 
-	switch (api) {
-	case MTD_EP_API_ITSA:
-		api_s = "ITSA";
+	switch (scope) {
+	case MTD_API_SCOPE_ITSA:
+		type_s = "ITSA";
 		break;
-	case MTD_EP_API_VAT:
-		api_s = "VAT";
+	case MTD_API_SCOPE_VAT:
+		type_s = "VAT";
 		break;
 	default:
-		return -MTD_ERR_INVALID_EP_API;
+		return -MTD_ERR_INVALID_SCOPE;
 	}
-	printf("\t\tEnter your credentials for the [%s] API\n\n", api_s);
+	printf("\t\tEnter your credentials for the [%s] API\n\n", type_s);
 
 	printf("Enter your 'client_id'     > ");
 	s = fgets(client_id, sizeof(client_id) - 1, stdin);
@@ -692,10 +693,11 @@ int mtd_init_creds(enum mtd_ep_api api)
 			 mtd_ctx.config_dir);
 		froot = json_load_file(path, 0, NULL);
 		if (froot)
-			json_object_set_new(froot, ep_api_map[api].name, new);
+			json_object_set_new(froot, api_scope_map[scope].name,
+					    new);
 	}
 	if (!froot)
-		froot = json_pack("{s:o}", ep_api_map[api].name, new);
+		froot = json_pack("{s:o}", api_scope_map[scope].name, new);
 
 	err = write_config(mtd_ctx.config_dir, "creds.json", froot);
 	if (err) {

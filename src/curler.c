@@ -31,7 +31,7 @@
 #include "mtd.h"
 #include "mtd-priv.h"
 #include "curler.h"
-#include "endpoints.h"
+#include "endpoint.h"
 #include "auth.h"
 #include "fph.h"
 #include "logger.h"
@@ -551,7 +551,7 @@ curl_again:
 		if (strstr(ctx->curl_buf->buf, "INVALID_CREDENTIALS")) {
 			logger(MTD_LOG_INFO, "INVALID_CREDENTIALS: "
 			       "Refreshing access_token\n");
-			ctx->oauther(ctx->api);
+			ctx->oauther(ctx->scope);
 			curl_slist_free_all(ctx->hdrs);
 			ctx->hdrs = NULL;
 			*ctx->curl_buf->buf = '\0';

@@ -17,14 +17,14 @@
 
 #include "mtd.h"
 #include "auth.h"
-#include "endpoints.h"
+#include "endpoint.h"
 #include "curler.h"
 #include "logger.h"
 #include "mtd-priv.h"
 
 extern __thread struct mtd_ctx mtd_ctx;
 
-char *load_token(const char *which, enum file_type type, enum mtd_ep_api api)
+char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 {
 	char path[PATH_MAX];
 	char *token;
@@ -33,7 +33,7 @@ char *load_token(const char *which, enum file_type type, enum mtd_ep_api api)
 	json_t *tok_obj;
 	json_error_t error;
 
-	switch (type) {
+	switch (ft) {
 	case FT_AUTH:
 		file = "oauth.json";
 		break;
@@ -51,7 +51,7 @@ char *load_token(const char *which, enum file_type type, enum mtd_ep_api api)
 	snprintf(path, sizeof(path), "%s/%s", mtd_ctx.config_dir, file);
 
 	root = json_load_file(path, 0, &error);
-	if (!root && type != FT_AUTH_APPLICATION) {
+	if (!root && ft != FT_AUTH_APPLICATION) {
 		/*
 		 * Don't bother displaying this error message for the
 		 * auth-application.json file as this can just be
@@ -64,7 +64,7 @@ char *load_token(const char *which, enum file_type type, enum mtd_ep_api api)
 		return NULL;
 	}
 	tok_obj = root;
-	if (type == FT_CREDS && api == MTD_EP_API_NULL) {
+	if (ft == FT_CREDS && scope == MTD_API_SCOPE_NULL) {
 		/*
 		 * Just take whichever is available.
 		 *
@@ -79,12 +79,12 @@ char *load_token(const char *which, enum file_type type, enum mtd_ep_api api)
 		 * APIs under both sets of credentials.
 		 */
 		tok_obj = json_object_get(root,
-					  ep_api_map[MTD_EP_API_ITSA].name);
+					  api_scope_map[MTD_API_SCOPE_ITSA].name);
 		if (!tok_obj)
 			tok_obj = json_object_get(root,
-						  ep_api_map[MTD_EP_API_VAT].name);
-	} else if (api != MTD_EP_API_NULL) {
-		tok_obj = json_object_get(root, ep_api_map[api].name);
+						  api_scope_map[MTD_API_SCOPE_VAT].name);
+	} else if (scope != MTD_API_SCOPE_NULL) {
+		tok_obj = json_object_get(root, api_scope_map[scope].name);
 	}
 	tok_obj = json_object_get(tok_obj, which);
 	if (!tok_obj)
@@ -95,15 +95,15 @@ char *load_token(const char *which, enum file_type type, enum mtd_ep_api api)
 	return token;
 }
 
-int oauther_refresh_access_token(enum mtd_ep_api api)
+int oauther_refresh_access_token(enum mtd_api_scope scope)
 {
 	struct mtd_dsrc_ctx dsctx;
 	char data[4096];
 	char path[PATH_MAX];
 	char *buf;
-	char *refresh_token = load_token("refresh_token", FT_AUTH, api);
-	char *client_id = load_token("client_id", FT_CREDS, api);
-	char *client_secret = load_token("client_secret", FT_CREDS, api);
+	char *refresh_token = load_token("refresh_token", FT_AUTH, scope);
+	char *client_id = load_token("client_id", FT_CREDS, scope);
+	char *client_secret = load_token("client_secret", FT_CREDS, scope);
 	json_t *array;
 	json_t *froot;
 	json_t *result;
@@ -116,7 +116,7 @@ int oauther_refresh_access_token(enum mtd_ep_api api)
 	dsctx.data_src.buf = data;
 	dsctx.data_len = strlen(data);
 	dsctx.src_type = MTD_DATA_SRC_BUF;
-	err = do_ep(OA_REFRESH_TOKEN, NULL, &dsctx, &buf, (char *)NULL);
+	err = mtd_ep(MTD_API_EP_OA_REFRESH_TOKEN, &dsctx, &buf, NULL);
 	if (err) {
 		logger(MTD_LOG_ERR, "%s\n", buf);
 		goto out_free;
@@ -130,9 +130,9 @@ int oauther_refresh_access_token(enum mtd_ep_api api)
 
 	froot = json_load_file(path, 0, NULL);
 	if (froot)
-		json_object_set(froot, ep_api_map[api].name, result);
+		json_object_set(froot, api_scope_map[scope].name, result);
 	else
-		froot = json_pack("{s:o}", ep_api_map[api].name, result);
+		froot = json_pack("{s:o}", api_scope_map[scope].name, result);
 
 	write_config(mtd_ctx.config_dir, "oauth.json", froot);
 	json_decref(array);
@@ -147,14 +147,14 @@ out_free:
 	return err;
 }
 
-int oauther_get_application_token(enum mtd_ep_api api __unused)
+int oauther_get_application_token(enum mtd_api_scope scope __unused)
 {
 	struct mtd_dsrc_ctx dsctx;
 	char data[4096];
 	char *buf;
-	char *client_id = load_token("client_id", FT_CREDS, MTD_EP_API_NULL);
+	char *client_id = load_token("client_id", FT_CREDS, MTD_API_SCOPE_NULL);
 	char *client_secret = load_token("client_secret", FT_CREDS,
-					 MTD_EP_API_NULL);
+					 MTD_API_SCOPE_NULL);
 	json_t *array;
 	json_t *root;
 	json_t *result;
@@ -167,7 +167,7 @@ int oauther_get_application_token(enum mtd_ep_api api __unused)
 	dsctx.data_src.buf = data;
 	dsctx.data_len = strlen(data);
 	dsctx.src_type = MTD_DATA_SRC_BUF;
-	err = do_ep(OA_APPLICATION_TOKEN, NULL, &dsctx, &buf, (char *)NULL);
+	err = mtd_ep(MTD_API_EP_OA_APPLICATION_TOKEN, &dsctx, &buf, NULL);
 	if (err) {
 		logger(MTD_LOG_ERR, "%s\n", buf);
 		goto out_free;
@@ -187,7 +187,7 @@ out_free:
 	return err;
 }
 
-int oauther_dummy(enum mtd_ep_api api __unused)
+int oauther_dummy(enum mtd_api_scope scope __unused)
 {
 	return 0;
 }

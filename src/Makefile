@@ -3,7 +3,7 @@ LIBNAME = libmtdac
 GIT_VERSION  = \"$(shell git describe --long --dirty 2> /dev/null || cat ../.version)\"
 
 SOVER	= 0
-VERSION = $(SOVER).61.0
+VERSION = $(SOVER).90.0
 
 OBJ_DIR := .objs
 $(shell mkdir -p $(OBJ_DIR) >/dev/null)

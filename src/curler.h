@@ -15,7 +15,7 @@
 #include <curl/curl.h>
 
 #include "mtd.h"
-#include "endpoints.h"
+#include "endpoint.h"
 
 enum http_method {
 	M_OPTIONS = 0,
@@ -49,14 +49,14 @@ struct curl_ctx {
 	const char *mtd_api_ver;
 
 	enum http_method http_method;
-	enum endpoint endpoint;
+	enum mtd_api_endpoint endpoint;
 
 	const char * const *params;
 	char *res_buf;
 	char *accepted_location;
 
-	enum mtd_ep_api api;
-	int (*oauther)(enum mtd_ep_api);
+	enum mtd_api_scope scope;
+	int (*oauther)(enum mtd_api_scope);
 
 	struct curl_slist *hdrs;
 
