@@ -376,8 +376,8 @@ enum mtd_scope {
 };
 
 enum mtd_ep_api {
-	MTD_EP_API_ITSA = 0,
-	MTD_EP_API_VAT = 1,
+	MTD_EP_API_ITSA		= 0x0,
+	MTD_EP_API_VAT		= 0x1,
 
 	/*
 	 * Special value to tell we are adding more API
@@ -385,10 +385,10 @@ enum mtd_ep_api {
 	 *
 	 * This can be bitwise OR'd with any of the above.
 	 */
-	MTD_EP_API_ADD = (1 << 29),
+	MTD_EP_API_ADD		= (1 << 29),
 
 	/* Only used internally */
-	MTD_EP_API_NULL = (1 << 30)
+	MTD_EP_API_NULL		= (1 << 30)
 };
 
 enum mtd_data_src_type {
