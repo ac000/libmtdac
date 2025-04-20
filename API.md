@@ -75,7 +75,7 @@ enum mtd_error {
 };
 ```
 
-Apart form *MTD_ERR_NONE* these errors are returned as **-**MTD\_ERR_...
+Apart frrm *MTD_ERR_NONE* these errors are returned as **-** MTD\_ERR\_...
 
 #### HMRC MTD endpoint errors
 
