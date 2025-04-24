@@ -40,12 +40,12 @@ jobs:
           git config --global --add safe.directory /__w/libmtdac/libmtdac
           CFLAGS=-Werror make V=1
 
-  # Debian 11 / glibc 2.36 / gcc 12
+  # Debian 12 / glibc 2.36 / gcc 12
   debian_12:
     runs-on: ubuntu-latest
 
     container:
-      image: debian:11
+      image: debian:12
 
     steps:
       - name: Install deps
@@ -82,8 +82,8 @@ jobs:
           git config --global --add safe.directory /__w/libmtdac/libmtdac
           CFLAGS=-Werror make V=1
 
-  # Fedora 41 / glibc 2.39 / gcc 14 / clang 18
-  # Fedora 42 / glibc 2.40 / gcc 14 / clang 19
+  # Fedora 41 / glibc 2.40 / gcc 14 / clang 19
+  # Fedora 42 / glibc 2.41 / gcc 15 / clang 20
   fedora:
     runs-on: ubuntu-latest
 
