@@ -48,7 +48,7 @@ int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 	len = snprintf(api_ver, sizeof(api_ver), API_VER_FMT,
 		       api_version_map[endpoints[ep].api]);
 	if (len >= sizeof(api_ver))
-	    return -MTD_ERR_REQUEST;
+	    return MTD_ERR_REQUEST;
 
 	ctx.mtd_api_ver = api_ver;
 	ctx.endpoint = ep;
@@ -68,7 +68,7 @@ int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 	case M_DELETE:
 		return do_delete(&ctx, buf);
 	default:
-		return -MTD_ERR_REQUEST;
+		return MTD_ERR_REQUEST;
 	}
 }
 

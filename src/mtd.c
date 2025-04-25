@@ -105,18 +105,18 @@ __thread struct mtd_ctx mtd_ctx;
 
 const char *mtd_err2enum_str(int err)
 {
-	if (err > MTD_ERR_NONE || err <= -MTD_ERR_INVALID_ERROR)
-		err = -MTD_ERR_INVALID_ERROR;
+	if (err < MTD_ERR_NONE || err >= MTD_ERR_INVALID_ERROR)
+		err = MTD_ERR_INVALID_ERROR;
 
-	return mtd_err_map[-err].estr;
+	return mtd_err_map[err].estr;
 }
 
 const char *mtd_err2str(int err)
 {
-	if (err > MTD_ERR_NONE || err <= -MTD_ERR_INVALID_ERROR)
-		err = -MTD_ERR_INVALID_ERROR;
+	if (err < MTD_ERR_NONE || err >= MTD_ERR_INVALID_ERROR)
+		err = MTD_ERR_INVALID_ERROR;
 
-	return mtd_err_map[-err].str;
+	return mtd_err_map[err].str;
 }
 
 enum mtd_http_status_code mtd_http_status_code(const char *json)
@@ -218,11 +218,11 @@ static int generate_device_id(void)
 	int dfd;
 	int fd;
 	int err;
-	int ret = -MTD_ERR_OS;
+	int ret = MTD_ERR_OS;
 
 	dfd = open(mtd_ctx.config_dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (dfd == -1)
-		return -MTD_ERR_CONFIG_DIR_INVALID;
+		return MTD_ERR_CONFIG_DIR_INVALID;
 
 	err = fstatat(dfd, "uuid.json", &sb, 0);
 	if (!err) {
@@ -239,14 +239,14 @@ static int generate_device_id(void)
 		       mtd_ctx.config_dir,
 		       x_strerror_r(errno, errbuf, sizeof(errbuf)));
 		close(dfd);
-		return -MTD_ERR_OS;
+		return MTD_ERR_OS;
 	}
 
 	fd = openat(dfd, "uuid.json", O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC,
 		    0600);
 	if (fd == -1) {
 		close(dfd);
-		return -MTD_ERR_OS;
+		return MTD_ERR_OS;
 	}
 
 	p = gen_uuid(uuid);
@@ -323,12 +323,12 @@ static int check_config_dir(const char *config_dir, bool is_production)
 
 	dfd = open(config_dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (dfd == -1)
-		return -MTD_ERR_CONFIG_DIR_INVALID;
+		return MTD_ERR_CONFIG_DIR_INVALID;
 
 	err = asprintf(&cfg_dir, "%s/libmtdac/%s", config_dir,
 		       is_production ? "prod-api" : "test-api");
 	if (err == -1) {
-		ret = -MTD_ERR_OS;
+		ret = MTD_ERR_OS;
 		goto out_close;
 	}
 
@@ -346,7 +346,7 @@ static int check_config_dir(const char *config_dir, bool is_production)
 	if (!err)
 		goto out_close;
 
-	ret = -MTD_ERR_OS;
+	ret = MTD_ERR_OS;
 	logger(MTD_LOG_ERR, "mkdirat %s: %s\n", cfg_dir,
 	       x_strerror_r(errno, errbuf, sizeof(errbuf)));
 
@@ -367,18 +367,18 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 	enum app_conn_type *conn_type = &mtd_ctx.app_conn_type;
 
 	if (!cfg)
-		return -MTD_ERR_NO_CONFIG;
+		return MTD_ERR_NO_CONFIG;
 
 	/* initialise struct mtd_ctx to default values */
 	memcpy(&mtd_ctx, &dfl_mtd_ctx, sizeof(struct mtd_ctx));
 
 	/* Check for unknown flags */
 	if (flags & ~(MTD_OPT_ALL))
-		return -MTD_ERR_UNKNOWN_FLAGS;
+		return MTD_ERR_UNKNOWN_FLAGS;
 	mtd_ctx.opts = flags;
 
 	if (!cfg->config_dir)
-		return -MTD_ERR_CONFIG_DIR_UNSPEC;
+		return MTD_ERR_CONFIG_DIR_UNSPEC;
 	err = check_config_dir(cfg->config_dir,
 			       flags & MTD_OPT_PRODUCTION_API);
 	if (err)
@@ -416,7 +416,7 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 
 	err = generate_device_id();
 	if (err)
-		return -MTD_ERR_OS;
+		return MTD_ERR_OS;
 
 	return MTD_ERR_NONE;
 }
@@ -437,19 +437,19 @@ int write_config(const char *dir, const char *name, const json_t *json)
 
 	dfd = open(dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (dfd == -1)
-		return -MTD_ERR_CONFIG_DIR_INVALID;
+		return MTD_ERR_CONFIG_DIR_INVALID;
 
 	fd = openat(dfd, name, O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC, 0600);
 	if (fd == -1) {
 		close(dfd);
 		logger(MTD_LOG_ERRNO, "openat");
-		return -MTD_ERR_OS;
+		return MTD_ERR_OS;
 	}
 
 	err = json_dumpfd(json, fd, JSON_INDENT(4));
 	if (err) {
 		logger(MTD_LOG_ERR, "json_dump() returned -1\n");
-		ret = -MTD_ERR_OS;
+		ret = MTD_ERR_OS;
 	}
 
 	close(fd);
@@ -507,7 +507,7 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 
 	/* Check for unknown/invalid scopes */
 	if (scopes == 0 || scopes & ~(ALL_SCOPES)) {
-		err = -MTD_ERR_UNKNOWN_SCOPES;
+		err = MTD_ERR_UNKNOWN_SCOPES;
 		goto out_free;
 	}
 
@@ -558,7 +558,7 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 	printf("\nEnter authorisation code > ");
 	s = fgets(auth_code, sizeof(auth_code) - 1, stdin);
 	if (!s) {
-		err = -MTD_ERR_OS;
+		err = MTD_ERR_OS;
 		goto out_free;
 	}
 	auth_code[strlen(auth_code) - 1] = '\0';
@@ -626,7 +626,7 @@ int mtd_init_nino(void)
 	printf("Enter your 'NINO'          > ");
 	s = fgets(nino, sizeof(nino) - 1, stdin);
 	if (!s)
-		return -MTD_ERR_OS;
+		return MTD_ERR_OS;
 	nino[strlen(nino) - 1] = '\0';
 
 	new = json_pack("{s:s}", "nino", nino);
@@ -668,20 +668,20 @@ int mtd_init_creds(enum mtd_api_scope scope)
 		type_s = "VAT";
 		break;
 	default:
-		return -MTD_ERR_INVALID_SCOPE;
+		return MTD_ERR_INVALID_SCOPE;
 	}
 	printf("\t\tEnter your credentials for the [%s] API\n\n", type_s);
 
 	printf("Enter your 'client_id'     > ");
 	s = fgets(client_id, sizeof(client_id) - 1, stdin);
 	if (!s)
-		return -MTD_ERR_OS;
+		return MTD_ERR_OS;
 	client_id[strlen(client_id) - 1] = '\0';
 
 	printf("Enter your 'client_secret' > ");
 	s = fgets(client_secret, sizeof(client_secret) - 1, stdin);
 	if (!s)
-		return -MTD_ERR_OS;
+		return MTD_ERR_OS;
 	client_secret[strlen(client_secret) - 1] = '\0';
 
 	new = json_pack("{s:s, s:s}", "client_id", client_id,
