@@ -62,39 +62,42 @@ jobs:
           git config --global --add safe.directory /__w/libmtdac/libmtdac
           CFLAGS=-Werror make V=1
 
-  # Alpine Linux with musl libc and GCC
+  # Alpine Linux with musl libc and GCC & Clang
   alpine:
     runs-on: ubuntu-latest
 
     container:
       image: alpine:edge
 
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [ 'gcc', 'clang' ]
+
     steps:
       - name: Install tools/deps
-        run: apk add build-base linux-headers git jansson-dev curl-dev
+        run: apk add build-base linux-headers ${{ matrix.compiler }} git jansson-dev curl-dev
 
       - uses: actions/checkout@v2
         with:
           fetch-depth: "0"
 
-      - name: make
+      - name: make CC=${{ matrix.compiler }}
         run: |
           git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make V=1
+          CFLAGS=-Werror make CC=${{ matrix.compiler }} V=1
 
-  # Fedora 41 / glibc 2.40 / gcc 14 / clang 19
   # Fedora 42 / glibc 2.41 / gcc 15 / clang 20
   fedora:
     runs-on: ubuntu-latest
 
+    container:
+      image: fedora:latest
+
     strategy:
       fail-fast: false
       matrix:
-        os: [ 'fedora:40', 'fedora:41' ]
         compiler: [ 'gcc', 'clang' ]
-
-    container:
-      image: ${{ matrix.os }}
 
     steps:
       - name: Install tools/deps
