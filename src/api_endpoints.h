@@ -343,7 +343,7 @@ static const struct {
 	[MTD_API_EP_PB_UKPBAS_GET] = {
 		.tmpl	= "/individuals/business/property/uk/{nino}/{businessId}/annual/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -351,7 +351,7 @@ static const struct {
 		.tmpl	= "/individuals/business/property/uk/{nino}/{businessId}/annual/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -360,14 +360,14 @@ static const struct {
 		.tmpl	= "/individuals/business/property/uk/{nino}/{businessId}/period/{taxYear}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_PB_UKPIEPS_GET] = {
 		.tmpl	= "/individuals/business/property/uk/{nino}/{businessId}/period/{taxYear}/{submissionId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -375,7 +375,7 @@ static const struct {
 		.tmpl	= "/individuals/business/property/uk/{nino}/{businessId}/period/{taxYear}/{submissionId}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -383,7 +383,7 @@ static const struct {
 	[MTD_API_EP_PB_UKPCPS_GET] = {
 		.tmpl	= "/individuals/business/property/uk/{nino}/{businessId}/cumulative/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -391,7 +391,7 @@ static const struct {
 		.tmpl	= "/individuals/business/property/uk/{nino}/{businessId}/cumulative/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -400,21 +400,21 @@ static const struct {
 		.tmpl	= "/individuals/business/property/uk/annual/furnished-holiday-lettings/{nino}/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_PB_HFHL_UKPBAS_GET] = {
 		.tmpl	= "/individuals/business/property/uk/annual/furnished-holiday-lettings/{nino}/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_PB_HFHL_UKPBAS_DELETE] = {
 		.tmpl	= "/individuals/business/property/uk/annual/furnished-holiday-lettings/{nino}/{taxYear}",
 		.method	= M_DELETE,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -423,21 +423,21 @@ static const struct {
 		.tmpl	= "/individuals/business/property/uk/annual/non-furnished-holiday-lettings/{nino}/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_PB_HNFHL_UKPBAS_GET] = {
 		.tmpl	= "/individuals/business/property/uk/annual/non-furnished-holiday-lettings/{nino}/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_PB_HNFHL_UKPBAS_DELETE] = {
 		.tmpl	= "/individuals/business/property/uk/annual/non-furnished-holiday-lettings/{nino}/{taxYear}",
 		.method	= M_DELETE,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -445,7 +445,7 @@ static const struct {
 	[MTD_API_EP_PB_HFHL_UKPIEPS_LIST] = {
 		.tmpl	= "/individuals/business/property/uk/period/furnished-holiday-lettings/{nino}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -453,7 +453,7 @@ static const struct {
 		.tmpl	= "/individuals/business/property/uk/period/furnished-holiday-lettings/{nino}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -461,14 +461,14 @@ static const struct {
 		.tmpl	= "/individuals/business/property/uk/period/furnished-holiday-lettings/{nino}/{periodId}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_PB_HFHL_UKPIEPS_GET] = {
 		.tmpl	= "/individuals/business/property/uk/period/furnished-holiday-lettings/{nino}/{periodId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -476,7 +476,7 @@ static const struct {
 	[MTD_API_EP_PB_HNFHL_UKPIEPS_LIST] = {
 		.tmpl	= "/individuals/business/property/uk/period/non-furnished-holiday-lettings/{nino}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -484,14 +484,14 @@ static const struct {
 		.tmpl	= "/individuals/business/property/uk/period/non-furnished-holiday-lettings/{nino}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_PB_HNFHL_UKPIEPS_GET] = {
 		.tmpl	= "/individuals/business/property/uk/period/non-furnished-holiday-lettings/{nino}/{periodId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -499,7 +499,7 @@ static const struct {
 		.tmpl	= "/individuals/business/property/uk/period/non-furnished-holiday-lettings/{nino}/{periodId}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -508,14 +508,14 @@ static const struct {
 		.tmpl	= "/individuals/business/property/foreign/{nino}/{businessId}/period/{taxYear}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_PB_FPIEPS_GET] = {
 		.tmpl	= "/individuals/business/property/foreign/{nino}/{businessId}/period/{taxYear}/{submissionId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -523,7 +523,7 @@ static const struct {
 		.tmpl	= "/individuals/business/property/foreign/{nino}/{businessId}/period/{taxYear}/{submissionId}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -531,7 +531,7 @@ static const struct {
 	[MTD_API_EP_PB_FPCPS_GET] = {
 		.tmpl	= "/individuals/business/property/foreign/{nino}/{businessId}/cumulative/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -539,7 +539,7 @@ static const struct {
 		.tmpl	= "/individuals/business/property/foreign/{nino}/{businessId}/cumulative/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -547,7 +547,7 @@ static const struct {
 	[MTD_API_EP_PB_FPAS_GET] = {
 		.tmpl	= "/individuals/business/property/foreign/{nino}/{businessId}/annual/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -555,7 +555,7 @@ static const struct {
 		.tmpl	= "/individuals/business/property/foreign/{nino}/{businessId}/annual/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -563,7 +563,7 @@ static const struct {
 	[MTD_API_EP_PB_AS_DELETE] = {
 		.tmpl	= "/individuals/business/property/{nino}/{businessId}/annual/{taxYear}",
 		.method	= M_DELETE,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -571,7 +571,7 @@ static const struct {
 	[MTD_API_EP_PB_PIEPS_LIST] = {
 		.tmpl	= "/individuals/business/property/{nino}/{businessId}/period/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_PB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -581,21 +581,21 @@ static const struct {
 		.tmpl	= "/individuals/business/self-employment/{nino}/{businessId}/annual/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_SEB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_SEB_SEAS_GET] = {
 		.tmpl	= "/individuals/business/self-employment/{nino}/{businessId}/annual/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_SEB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_SEB_SEAS_DELETE] = {
 		.tmpl	= "/individuals/business/self-employment/{nino}/{businessId}/annual/{taxYear}",
 		.method	= M_DELETE,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_SEB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -604,14 +604,14 @@ static const struct {
 		.tmpl	= "/individuals/business/self-employment/{nino}/{businessId}/period",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_SEB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_SEB_SEPS_LIST] = {
 		.tmpl	= "/individuals/business/self-employment/{nino}/{businessId}/period/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_SEB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -619,14 +619,14 @@ static const struct {
 		.tmpl	= "/individuals/business/self-employment/{nino}/{businessId}/period/{taxYear}/{periodId}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_SEB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_SEB_SEPS_GET] = {
 		.tmpl	= "/individuals/business/self-employment/{nino}/{businessId}/period/{taxYear}/{periodId}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_SEB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
@@ -635,14 +635,14 @@ static const struct {
 		.tmpl	= "/individuals/business/self-employment/{nino}/{businessId}/cumulative/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_SEB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
 	[MTD_API_EP_SEB_SECPS_GET] = {
 		.tmpl	= "/individuals/business/self-employment/{nino}/{businessId}/cumulative/{taxYear}",
 		.method	= M_GET,
-		.authz	= AUTHZ_APPLICATION,
+		.authz	= AUTHZ_USER,
 		.api	= EP_API_SEB,
 		.scope	= MTD_API_SCOPE_ITSA
 	},
