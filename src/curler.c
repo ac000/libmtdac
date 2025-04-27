@@ -58,6 +58,8 @@ static const struct {
 					     "Request Entity Too Large" },
 	{ MTD_HTTP_UNSUPPORTED_MEDIA_TYPE, "UNSUPPORTED_MEDIA_TYPE",
 				  "Unsupported Media Type" },
+	{ MTD_HTTP_UNPROCESSABLE_CONTENT, "UNPROCESSABLE_CONTENT",
+					  "Unprocessable Content" },
 	{ MTD_HTTP_TOO_MANY_REQUESTS, "TOO_MANY_REQUESTS",
 				      "Too Many Requests" },
 	{ MTD_HTTP_INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR",
