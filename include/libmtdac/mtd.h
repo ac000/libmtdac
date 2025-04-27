@@ -222,8 +222,10 @@ enum mtd_scope {
 };
 
 enum mtd_api_scope {
-	MTD_API_SCOPE_ITSA		= 0x0,
-	MTD_API_SCOPE_VAT		= 0x1,
+	MTD_API_SCOPE_UNSET		= 0x0,
+
+	MTD_API_SCOPE_ITSA		= 0x1,
+	MTD_API_SCOPE_VAT		= 0x2,
 
 	/*
 	 * Special value to tell we are adding more API

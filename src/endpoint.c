@@ -22,37 +22,40 @@
 
 #define API_VER_FMT         "Accept: application/vnd.hmrc.%s+json"
 
-static const char * const api_version_map[] = {
-	[EP_API_BD]		= "1.0",
-	[EP_API_BSAS]		= "6.0",
-	[EP_API_ICAL]		= "7.0",
-	[EP_API_ILOS]		= "5.0",
-	[EP_API_ISI]		= "1.0",
-	[EP_API_OB]		= "3.0",
-	[EP_API_PB]		= "5.0",
-	[EP_API_SEB]		= "4.0",
+static inline enum mtd_api_scope get_scope(enum mtd_api_endpoint ep)
+{
+	enum ep_api api = endpoints[ep].api;
 
-	[EP_API_TEST_CU]	= "1.0",
-	[EP_API_TEST_FPH]	= "1.0",
-};
+	return endpoints[ep].scope == MTD_API_SCOPE_UNSET ?
+		api_default_values[api].scope : endpoints[ep].scope;
+}
+
+static inline enum oauth_authz get_authz(enum mtd_api_endpoint ep)
+{
+	enum ep_api api = endpoints[ep].api;
+
+	return endpoints[ep].authz == AUTHZ_UNSET ?
+		api_default_values[api].authz : endpoints[ep].authz;
+}
 
 int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 	   char **buf, const char * const params[])
 {
 	size_t len;
+	enum ep_api api = endpoints[ep].api;
 	struct curl_ctx ctx = {};
 	char api_ver[128];
 
 	*buf = NULL;
 
 	len = snprintf(api_ver, sizeof(api_ver), API_VER_FMT,
-		       api_version_map[endpoints[ep].api]);
+		       api_default_values[api].api_version);
 	if (len >= sizeof(api_ver))
 	    return MTD_ERR_REQUEST;
 
 	ctx.mtd_api_ver = api_ver;
 	ctx.endpoint = ep;
-	ctx.scope = endpoints[ep].scope;
+	ctx.scope = get_scope(ep);
 	ctx.params = params;
 	ctx.content_type = endpoints[ep].ctype;
 	ctx.http_method = endpoints[ep].method;
@@ -74,7 +77,9 @@ int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 
 int (*ep_set_oauther(enum mtd_api_endpoint ep))(enum mtd_api_scope)
 {
-	switch (endpoints[ep].authz) {
+	enum oauth_authz authz = get_authz(ep);
+
+	switch (authz) {
 	case AUTHZ_USER:
 		return oauther_refresh_access_token;
 	case AUTHZ_APPLICATION:
@@ -86,9 +91,13 @@ int (*ep_set_oauther(enum mtd_api_endpoint ep))(enum mtd_api_scope)
 
 char *ep_get_token(enum mtd_api_endpoint ep)
 {
-	switch(endpoints[ep].authz) {
-	case AUTHZ_USER:
-		return load_token("access_token", FT_AUTH, endpoints[ep].scope);
+	enum oauth_authz authz = get_authz(ep);
+
+	switch(authz) {
+	case AUTHZ_USER: {
+		enum mtd_api_scope scope = get_scope(ep);
+		return load_token("access_token", FT_AUTH, scope);
+	}
 	case AUTHZ_APPLICATION:
 		return load_token("access_token", FT_AUTH_APPLICATION,
 				  MTD_API_SCOPE_NULL);

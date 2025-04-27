@@ -17,6 +17,7 @@ static const struct {
 	const char *name;
 	const char *fname;
 } api_scope_map[] = {
+	[MTD_API_SCOPE_UNSET]	= {},
 	[MTD_API_SCOPE_ITSA]	= { "itsa", "Income Tax Self-Assessment" },
 	[MTD_API_SCOPE_VAT]	= { "vat", "VAT"			 },
 };
