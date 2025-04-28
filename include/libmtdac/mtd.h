@@ -252,8 +252,7 @@ enum mtd_api_endpoint {
 	/* Business Source Adjustable Summary */
 	MTD_API_EP_BSAS_LIST,
 	MTD_API_EP_BSAS_TRIGGER,
-
-	/* Business Source Adjustable Summary - Self-Employment */
+	/* Self-Employment */
 	MTD_API_EP_BSAS_SE_GET,
 	MTD_API_EP_BSAS_SE_SUBMIT,
 	/* UK Property */

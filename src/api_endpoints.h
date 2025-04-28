@@ -137,7 +137,7 @@ static const struct {
 		.ctype	= CONTENT_TYPE_JSON,
 		.api	= EP_API_BSAS,
 	},
-	/* Business Source Adjustable Summary - Self-Employment */
+	/* Self-Employment */
 	[MTD_API_EP_BSAS_SE_GET] = {
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/self-employment/{calculationId}/{taxYear}",
 		.method	= M_GET,
