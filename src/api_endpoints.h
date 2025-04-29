@@ -186,7 +186,7 @@ static const struct {
 		.api	= EP_API_ICAL,
 	},
 	[MTD_API_EP_ICAL_LIST] = {
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{taxYear}/{optional_query_params}",
+		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{taxYear}/{query_params}",
 		.method	= M_GET,
 		.api	= EP_API_ICAL,
 	},
@@ -268,7 +268,7 @@ static const struct {
 
 	/* Individuals Savings Income - UK Savings Account */
 	[MTD_API_EP_ISI_SI_UK_LIST] = {
-		.tmpl	= "/individuals/savings-income/uk-accounts/{nino}/{optional_query_params}",
+		.tmpl	= "/individuals/savings-income/uk-accounts/{nino}/{query_params}",
 		.method	= M_GET,
 		.api	= EP_API_ISI,
 	},
