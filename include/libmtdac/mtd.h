@@ -287,8 +287,8 @@ enum mtd_api_endpoint {
 	/* Individuals Savings Income - UK Savings Account */
 	MTD_API_EP_ISI_SI_UK_LIST,
 	MTD_API_EP_ISI_SI_UK_ADD,
-	MTD_API_EP_ISI_SI_UK_GET,
-	MTD_API_EP_ISI_SI_UK_UPDATE,
+	MTD_API_EP_ISI_SI_UK_GET_AS,
+	MTD_API_EP_ISI_SI_UK_UPDATE_AS,
 	/* Savings Income */
 	MTD_API_EP_ISI_SI_O_GET,
 	MTD_API_EP_ISI_SI_O_UPDATE,

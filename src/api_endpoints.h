@@ -278,12 +278,12 @@ static const struct {
 		.ctype  = CONTENT_TYPE_JSON,
 		.api	= EP_API_ISI,
 	},
-	[MTD_API_EP_ISI_SI_UK_GET] = {
+	[MTD_API_EP_ISI_SI_UK_GET_AS] = {
 		.tmpl	= "/individuals/savings-income/uk-accounts/{nino}/{taxYear}/{savingsAccountId}",
 		.method	= M_GET,
 		.api	= EP_API_ISI,
 	},
-	[MTD_API_EP_ISI_SI_UK_UPDATE] = {
+	[MTD_API_EP_ISI_SI_UK_UPDATE_AS] = {
 		.tmpl	= "/individuals/savings-income/uk-accounts/{nino}/{taxYear}/{savingsAccountId}",
 		.method	= M_PUT,
 		.ctype  = CONTENT_TYPE_JSON,
