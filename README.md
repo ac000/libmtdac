@@ -29,6 +29,9 @@ There are man pages [here](https://github.com/ac000/libmtdac/tree/master/man/man
 libmtdac is primarily developed under Linux but it also builds and runs under
 FreeBSD.
 
+**NOTE:** This requires jansson 2.14.1 or later with DTOA support (the
+default) for the proper handling of real numbers.
+
 ### Linux
 
 libmtdac only has a couple of direct dependencies, *libcurl* & *jansson*
