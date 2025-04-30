@@ -254,13 +254,13 @@ static const struct {
 		.api	= EP_API_ILOS,
 	},
 	[MTD_API_EP_ILOS_LC_AMEND_TYPE] = {
-		.tmpl	= "https://test-api.service.hmrc.gov.uk/individuals/losses/{nino}/loss-claims/{claimId}/change-type-of-claim",
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}/change-type-of-claim",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.api	= EP_API_ILOS,
 	},
 	[MTD_API_EP_ILOS_LC_AMEND_ORDER] = {
-		.tmpl	= "https://test-api.service.hmrc.gov.uk/individuals/losses/{nino}/loss-claims/order/{taxYearClaimedFor}",
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/order/{taxYearClaimedFor}",
 		.method	= M_PUT,
 		.ctype  = CONTENT_TYPE_JSON,
 		.api	= EP_API_ILOS,
