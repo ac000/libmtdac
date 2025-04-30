@@ -55,6 +55,7 @@ int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 
 	ctx.mtd_api_ver = api_ver;
 	ctx.endpoint = ep;
+	ctx.epstr = endpoints[ep].epstr;
 	ctx.scope = get_scope(ep);
 	ctx.params = params;
 	ctx.content_type = endpoints[ep].ctype;
