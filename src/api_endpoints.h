@@ -25,6 +25,7 @@ enum ep_api {
 	EP_API_NULL = 0,
 
 	EP_API_BD,
+	EP_API_BISS,
 	EP_API_BSAS,
 	EP_API_ICAL,
 	EP_API_ILOS,
@@ -45,6 +46,11 @@ static const struct {
 } api_default_values[] = {
 	[EP_API_BD] = {
 		.api_version	= "1.0",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_ITSA,
+	},
+	[EP_API_BISS] = {
+		.api_version	= "3.0",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_ITSA,
 	},
@@ -133,6 +139,14 @@ static const struct {
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
 		.api	= EP_API_BD,
+	},
+
+	/* Business Income Source Summary */
+	[MTD_API_EP_BISS_GET] = {
+		.epstr	= "MTD_API_EP_BISS_GET",
+		.tmpl	= "/individuals/self-assessment/income-summary/{nino}/{typeOfBusiness}/{taxYear}/{businessId}",
+		.method = M_GET,
+		.api	= EP_API_BISS,
 	},
 
 	/* Business Source Adjustable Summary */

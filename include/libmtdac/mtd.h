@@ -251,6 +251,9 @@ enum mtd_api_endpoint {
 	MTD_API_EP_BD_GET,
 	MTD_API_EP_BD_AMEND_QPT,
 
+	/* Business Income Source Summary */
+	MTD_API_EP_BISS_GET,
+
 	/* Business Source Adjustable Summary */
 	MTD_API_EP_BSAS_LIST,
 	MTD_API_EP_BSAS_TRIGGER,
