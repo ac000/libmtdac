@@ -31,6 +31,7 @@ enum ep_api {
 	EP_API_ISI,
 	EP_API_OB,
 	EP_API_PB,
+	EP_API_SAID,
 	EP_API_SEB,
 
 	EP_API_TEST_CU,
@@ -74,6 +75,11 @@ static const struct {
 	},
 	[EP_API_PB] = {
 		.api_version	= "5.0",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_ITSA,
+	},
+	[EP_API_SAID] = {
+		.api_version	= "2.0",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_ITSA,
 	},
@@ -567,6 +573,14 @@ static const struct {
 		.tmpl	= "/individuals/business/property/{nino}/{businessId}/period/{taxYear}",
 		.method	= M_GET,
 		.api	= EP_API_PB,
+	},
+
+	/* Self Assessment Individual Details */
+	[MTD_API_EP_SAID_STATUS] = {
+		.epstr	= "MTD_API_EP_SAID_STATUS",
+		.tmpl	= "/individuals/person/itsa-status/{nino}/{taxYear}/{query_params}",
+		.method	= M_GET,
+		.api	= EP_API_SAID,
 	},
 
 	/* Self Employment Business - Self-Employment Annual Submission */

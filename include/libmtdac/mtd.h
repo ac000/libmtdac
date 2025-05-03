@@ -91,6 +91,8 @@ enum mtd_hmrc_error {
 	MTD_HMRC_ERR_FORMAT_END_DATE,
 	MTD_HMRC_ERR_FORMAT_FINAL_DECLARATION,
 	MTD_HMRC_ERR_FORMAT_FROM_DATE,
+	MTD_HMRC_ERR_FORMAT_FUTURE_YEARS,
+	MTD_HMRC_ERR_FORMAT_HISTORY,
 	MTD_HMRC_ERR_FORMAT_LOSS_ID,
 	MTD_HMRC_ERR_FORMAT_NINO,
 	MTD_HMRC_ERR_FORMAT_PERIOD_ID,
@@ -341,6 +343,9 @@ enum mtd_api_endpoint {
 	MTD_API_EP_PB_AS_DELETE,
 	/* UK or Foreign Property Income and Expenses Period Summaries List */
 	MTD_API_EP_PB_PIEPS_LIST,
+
+	/* Self Assessment Individual Details */
+	MTD_API_EP_SAID_STATUS,
 
 	/* Self Employment Business - Self-Employment Annual Submission */
 	MTD_API_EP_SEB_SEAS_AMEND,
