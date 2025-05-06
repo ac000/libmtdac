@@ -18,10 +18,27 @@
 
 An interface to the UK's HMRC [Make Tax Digital](https://developer.service.hmrc.gov.uk/api-documentation) API
 
+It currently supports the following MTD APIs
+
+| API                                | Version | Documentation
+|------------------------------------|---------|---------------|
+| Business Details                   | 1.0     | <https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/business-details-api/1.0/oas/page> |
+| Business Income Source Summary     | 3.0     | <https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-biss-api/3.0/oas/page> |
+| Business Source Adjustable Summary | 6.0     | <https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-bsas-api/6.0/oas/page> |
+| Individual Calculations            | 7.0     | <https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/7.0/oas/page> |
+| Individual Losses                  | 5.0     | <https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/5.0/oas/page> |
+| Obligations                        | 3.0     | <https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/obligations-api/3.0/oas/page> |
+| Property Business                  | 5.0     | <https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/property-business-api/5.0/oas/page> |
+| Self Assessment Individual Details | 2.0     | <https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-individual-details-api/2.0/oas/page> |
+| Self Employment Business           | 4.0     | <https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-employment-business-api/4.0/oas/page> |
+|                                    |         |               |
+| Create Test User                   | 1.0     | <https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/api-platform-test-user/1.0/oas/page> |
+| Test Fraud Prevention Headers      | 1.0     | <https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/txm-fph-validator-api/1.0/oas/page> |
+
 
 ## API
 
-There are man pages [here](https://github.com/ac000/libmtdac/tree/master/man/man3) and a basic overview [here](https://github.com/ac000/libmtdac/blob/master/API.md).
+There are some docs [here](https://github.com/ac000/libmtdac/tree/master/docs/) and in man page [format](https://github.com/ac000/libmtdac/tree/master/docs/man/).
 
 
 ## Build it
@@ -105,8 +122,11 @@ steps
 
 ## How to use
 
-Include the appropriate header file(s) as described above and link with
-*-lmtdac* assuming you've built and installed the RPM or similar.
+```c
+#include <libmtdac/mtd.h>
+```
+
+Link with `-lmtdac`.
 
 ### Examples
 
@@ -126,14 +146,14 @@ and a unique device id.
 Caveat Emptor.
 
 What is sent for each header can be overridden. See the
-[Fraud Prevention Headers](API.md#fraud-prevention-headers) section of
-**API.md** for more details.
+[Fraud Prevention Headers](/docs/libmtdac_mtd.h.3.rst#fraud-prevention-headers)
+section of **[libmtdac_mtd_h.3.rst](/docs/libmtdac_mtd.h.3.rst)** for more
+details.
 
 
 ## Thread safety
 
-libmtdac aims to be thread safe. I.E it should be safe to call the various
-library functions (incl mtd\_init()) from multiple threads.
+libmtdac aims to be thread safe.
 
 
 ## License
@@ -146,4 +166,6 @@ See *COPYING* in the repository root for details.
 
 ## Contributing
 
-See *CodingStyle.md* & *Contributing.md*
+See [CodingStyle.md](/CodingStyle.md) & [Contributing.md](/Contributing.md)
+
+Andrew Clayton <ac@sigsegv.uk>

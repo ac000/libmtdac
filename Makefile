@@ -13,7 +13,7 @@ libmtdac:
 .PHONY: man
 man:
 	@echo "Building: man-pages"
-	@$(MAKE) $(MAKE_OPTS) -C man/man3/
+	@$(MAKE) $(MAKE_OPTS) -C docs/
 
 .PHONY: hdrchk
 hdrchk:
@@ -47,5 +47,5 @@ tags:
 clean:
 	@echo "Cleaning: libmtdac man"
 	@$(MAKE) $(MAKE_OPTS) -C src/ clean
-	@$(MAKE) $(MAKE_OPTS) -C man/man3 clean
+	@$(MAKE) $(MAKE_OPTS) -C docs/ clean
 	@rm -f .version

@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	0.61.0
+Version:	0.90.0
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -30,7 +30,9 @@ make %{?_smp_mflags}
 rm -rf $RPM_BUILD_ROOT
 install -Dp -m0644 -t $RPM_BUILD_ROOT/%{_includedir}/libmtdac/ include/libmtdac/*.h
 install -Dp -m0755 src/libmtdac.so.%{version} $RPM_BUILD_ROOT/%{_libdir}/libmtdac.so.%{version}
-install -Dp -m0644 -t $RPM_BUILD_ROOT/%{_mandir}/man3/ man/man3/*.gz
+install -Dp -m0644 -t $RPM_BUILD_ROOT/%{_mandir}/man3/ docs/man/man3/*.3
+install -Dp -m0644 -t $RPM_BUILD_ROOT/%{_mandir}/man3type/ docs/man/man3type/*.3type
+gzip $RPM_BUILD_ROOT/%{_mandir}/man3/*.3 $RPM_BUILD_ROOT/%{_mandir}/man3type/*.3type
 cd $RPM_BUILD_ROOT/%{_libdir}
 ln -s libmtdac.so.0 libmtdac.so
 cd -
@@ -43,8 +45,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc README.md COPYING CodingStyle.md Contributing.md
+%doc README.md COPYING CodingStyle.md Contributing.md docs/*.rst
 %{_mandir}/man3/*.gz
+%{_mandir}/man3type/*.gz
 %{_libdir}/libmtdac.*
 %{_includedir}/libmtdac/*.h
 
