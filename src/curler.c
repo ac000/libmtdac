@@ -184,7 +184,6 @@ static void curl_ctx_free(const struct curl_ctx *ctx)
 	free(ctx->accepted_location);
 	free(ctx->curl_buf->buf);
 	free(ctx->curl_buf);
-	free(ctx->res_buf);
 	curl_slist_free_all(ctx->hdrs);
 
 	if (ctx->src_file && ctx->dsctx->src_type == MTD_DATA_SRC_FILE)
@@ -660,8 +659,8 @@ out_do_curl:
 	ctx->curl_buf = calloc(1, sizeof(struct curl_buf));
 
 	err = do_curl(ctx);
-	if (ctx->res_buf)
-		*buf = strdup(ctx->res_buf);
+
+	*buf = ctx->res_buf;
 
 	curl_ctx_free(ctx);
 
@@ -686,8 +685,8 @@ static int do_get_delete(struct curl_ctx *ctx, char **buf)
 	ctx->curl_buf = calloc(1, sizeof(struct curl_buf));
 
 	err = do_curl(ctx);
-	if (ctx->res_buf)
-		*buf = strdup(ctx->res_buf);
+
+	*buf = ctx->res_buf;
 
 	curl_ctx_free(ctx);
 
