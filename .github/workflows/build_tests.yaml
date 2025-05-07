@@ -38,7 +38,7 @@ jobs:
       - name: make
         run: |
           git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make V=1
+          CFLAGS=-Werror make libmtdac hdrchk V=1
 
   # Debian 12 / glibc 2.36 / gcc 12
   debian_12:
@@ -60,7 +60,7 @@ jobs:
       - name: make
         run: |
           git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make V=1
+          CFLAGS=-Werror make libmtdac hdrchk V=1
 
   # Alpine Linux with musl libc and GCC & Clang
   alpine:
@@ -85,7 +85,7 @@ jobs:
       - name: make CC=${{ matrix.compiler }}
         run: |
           git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make CC=${{ matrix.compiler }} V=1
+          CFLAGS=-Werror make libmtdac hdrchk CC=${{ matrix.compiler }} V=1
 
   # Fedora 42 / glibc 2.41 / gcc 15 / clang 20
   fedora:
@@ -110,4 +110,4 @@ jobs:
       - name: make CC=${{ matrix.compiler }}
         run: |
           git config --global --add safe.directory /__w/libmtdac/libmtdac
-          CFLAGS=-Werror make CC=${{ matrix.compiler }} V=1
+          CFLAGS=-Werror make libmtdac hdrchk CC=${{ matrix.compiler }} V=1
