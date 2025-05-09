@@ -35,6 +35,8 @@ enum ep_api {
 	EP_API_SAID,
 	EP_API_SEB,
 
+	EP_API_VAT,
+
 	EP_API_TEST_CU,
 	EP_API_TEST_FPH,
 };
@@ -93,6 +95,12 @@ static const struct {
 		.api_version	= "4.0",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_ITSA,
+	},
+
+	[EP_API_VAT] = {
+		.api_version	= "1.0",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_VAT,
 	},
 
 	[EP_API_TEST_CU] = {
@@ -659,6 +667,49 @@ static const struct {
 		.api	= EP_API_SEB,
 	},
 
+	/* VAT */
+	[MTD_API_EP_VAT_LIST_OBLIGATIONS] = {
+		.epstr	= "MTD_API_EP_VAT_LIST_OBLIGATIONS",
+		.tmpl	= "/organisations/vat/{vrn}/obligations/{query_params}",
+		.method	= M_GET,
+		.api	= EP_API_VAT,
+	},
+	[MTD_API_EP_VAT_SUBMIT] = {
+		.epstr	= "MTD_API_EP_VAT_SUBMIT",
+		.tmpl	= "/organisations/vat/{vrn}/returns",
+		.method	= M_POST,
+		.api	= EP_API_VAT,
+	},
+	[MTD_API_EP_VAT_VIEW_RETURN] = {
+		.epstr	= "MTD_API_EP_VAT_VIEW_RETURN",
+		.tmpl	= "/organisations/vat/{vrn}/returns/{periodKey}",
+		.method	= M_GET,
+		.api	= EP_API_VAT,
+	},
+	[MTD_API_EP_VAT_GET_LIABILITIES] = {
+		.epstr	= "MTD_API_EP_VAT_GET_LIABILITIES",
+		.tmpl	= "/organisations/vat/{vrn}/liabilities/{query_params}",
+		.method	= M_GET,
+		.api	= EP_API_VAT,
+	},
+	[MTD_API_EP_VAT_GET_PAYMENTS] = {
+		.epstr	= "MTD_API_EP_VAT_GET_PAYMENTS",
+		.tmpl	= "/organisations/vat/{vrn}/payments/{query_params}",
+		.method	= M_GET,
+		.api	= EP_API_VAT,
+	},
+	[MTD_API_EP_VAT_GET_PENALTIES] = {
+		.epstr	= "MTD_API_EP_VAT_GET_PENALTIES",
+		.tmpl	= "/organisations/vat/{vrn}/penalties",
+		.method	= M_GET,
+		.api	= EP_API_VAT,
+	},
+	[MTD_API_EP_VAT_GET_FINANCIAL_DETAILS] = {
+		.epstr	= "MTD_API_EP_VAT_GET_FINANCIAL_DETAILS",
+		.tmpl	= "/organisations/vat/{vrn}/financial-details/{penaltyChargeReference}",
+		.method	= M_GET,
+		.api	= EP_API_VAT,
+	},
 
 	/* Create Test User */
 	[MTD_API_EP_TEST_CU_CREATE_INDIVIDUAL] = {

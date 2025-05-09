@@ -58,6 +58,10 @@ Self-Employment Business 4.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-employment-business-api/4.0/oas/page
 
+VAT 1.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/vat-api/1.0/oas/page
+
 Create Test User 1.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/api-platform-test-user/1.0/oas/page
