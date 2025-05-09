@@ -21,22 +21,22 @@ Digital <https://developer.service.hmrc.gov.uk/api-documentation>`__ API
 
 It currently supports the following MTD APIs
 
-=====================================    =======
-API                                      Version
-=====================================    =======
-`Business Details`_                      1.0
-`Business Income Source Summary`_        3.0
-`Business Source Adjustable Summary`_    6.0
-`Individual Calculations`_               7.0
-`Individual Losses`_                     5.0
-`Obligations`_                           3.0
-`Property Business`_                     5.0
-`Self Assessment Individual Details`_    2.0
-`Self Employment Business`_              4.0
+=====================================	 =======
+API					 Version
+=====================================	 =======
+`Business Details`_			 1.0
+`Business Income Source Summary`_	 3.0
+`Business Source Adjustable Summary`_	 6.0
+`Individual Calculations`_		 7.0
+`Individual Losses`_			 5.0
+`Obligations`_				 3.0
+`Property Business`_			 5.0
+`Self Assessment Individual Details`_	 2.0
+`Self Employment Business`_		 4.0
 \
-`Create Test User`_                      1.0
-`Test Fraud Prevention Headers`_         1.0
-=====================================    =======
+`Create Test User`_			 1.0
+`Test Fraud Prevention Headers`_	 1.0
+=====================================	 =======
 
 .. _Business Details: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/business-details-api/1.0/oas/page
 .. _Business Income Source Summary: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-biss-api/3.0/oas/page
