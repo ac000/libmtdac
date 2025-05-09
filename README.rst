@@ -29,6 +29,7 @@ API					 Version
 `Business Source Adjustable Summary`_	 6.0
 `Individual Calculations`_		 7.0
 `Individual Losses`_			 5.0
+`Individuals Savings Income`_		 1.0
 `Obligations`_				 3.0
 `Property Business`_			 5.0
 `Self Assessment Individual Details`_	 2.0
@@ -43,6 +44,7 @@ API					 Version
 .. _Business Source Adjustable Summary: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-bsas-api/6.0/oas/page
 .. _Individual Calculations: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/7.0/oas/page
 .. _Individual Losses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/5.0/oas/page
+.. _Individuals Savings Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-savings-income-api/1.0/oas/page
 .. _Obligations: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/obligations-api/3.0/oas/page
 .. _Property Business: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/property-business-api/5.0/oas/page
 .. _Self Assessment Individual Details: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-individual-details-api/2.0/oas/page

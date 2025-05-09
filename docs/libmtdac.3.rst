@@ -22,6 +22,10 @@ Business Details 1.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/business-details-api/1.0/oas/page
 
+Business Income Source Summary 3.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-biss-api/3.0/oas/page
+
 Business Source Adjustable Summary 6.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-bsas-api/6.0/oas/page
@@ -34,6 +38,10 @@ Individual Losses 5.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/5.0/oas/page
 
+Individuals Savings Income 1.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-savings-income-api/1.0/oas/page
+
 Obligations 3.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/obligations-api/3.0/oas/page
@@ -41,6 +49,10 @@ https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/obligat
 Property Business 5.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/property-business-api/5.0/oas/page
+
+Self Assessment Individual Details 2.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-individual-details-api/2.0/oas/page
 
 Self-Employment Business 4.0
 
