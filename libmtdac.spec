@@ -15,7 +15,7 @@ Requires:	libcurl jansson
 %description
 libmtdac is a library for interfacing with the UK's HMRC Make Tax Digital API.
 
-Currently just supports the Self-Assessment APIs
+Currently supports the Income Tax Self Assessment (ITSA) & VAT APIs
 
 
 %prep
