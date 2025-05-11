@@ -45,7 +45,6 @@ tags:
 
 .PHONY: clean
 clean:
-	@echo "Cleaning: libmtdac man"
+	@echo "Cleaning: libmtdac"
 	@$(MAKE) $(MAKE_OPTS) -C src/ clean
-	@$(MAKE) $(MAKE_OPTS) -C docs/ clean
 	@rm -f .version
