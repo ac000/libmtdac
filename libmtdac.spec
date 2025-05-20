@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	0.90.0
+Version:	1.0.0
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -34,7 +34,7 @@ install -Dp -m0644 -t $RPM_BUILD_ROOT/%{_mandir}/man3/ docs/man/man3/*.3
 install -Dp -m0644 -t $RPM_BUILD_ROOT/%{_mandir}/man3type/ docs/man/man3type/*.3type
 gzip $RPM_BUILD_ROOT/%{_mandir}/man3/*.3 $RPM_BUILD_ROOT/%{_mandir}/man3type/*.3type
 cd $RPM_BUILD_ROOT/%{_libdir}
-ln -s libmtdac.so.0 libmtdac.so
+ln -s libmtdac.so.1 libmtdac.so
 cd -
 
 %post -p /sbin/ldconfig
@@ -53,6 +53,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Tue May 20 2025 Andrew Clayton <ac@sigsegv.uk> - 1.0.0-1
+- Re-add VAT support
+- Convert markdown docs to reStructuredText
 
 * Wed May 07 2025 Andrew Clayton <ac@sigsegv.uk> - 0.90.0-1
 - Big API update, both in terms MTD APIs and libmtdac API
