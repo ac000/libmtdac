@@ -45,7 +45,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc README.md COPYING CodingStyle.md Contributing.md docs/*.rst
+%doc README.rst COPYING CodingStyle.rst Contributing.rst docs/*.rst
 %{_mandir}/man3/*.gz
 %{_mandir}/man3type/*.gz
 %{_libdir}/libmtdac.*
