@@ -1,9 +1,11 @@
+include ../version.mk
+
 LIBNAME = libmtdac
 
 GIT_VERSION  = \"$(shell git describe --long --dirty 2> /dev/null || cat ../.version)\"
 
-SOVER	= 1
-VERSION = $(SOVER).0.0
+SOVER	= $(MAJOR)
+VERSION = $(MAJOR).$(MINOR).$(PATCH)
 
 OBJ_DIR := .objs
 $(shell mkdir -p $(OBJ_DIR) >/dev/null)

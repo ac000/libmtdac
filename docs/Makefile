@@ -1,4 +1,6 @@
-VERSION	    = 1.0.0
+include ../version.mk
+
+VERSION	    = $(MAJOR).$(MINOR).$(PATCH)
 DATE	    = $(shell date +"%b %e, %Y")
 
 MANS3	    = man/man3
