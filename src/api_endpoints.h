@@ -33,6 +33,7 @@ enum ep_api {
 	EP_API_ISI,
 	EP_API_OB,
 	EP_API_PB,
+	EP_API_SAASS,
 	EP_API_SAID,
 	EP_API_SEB,
 
@@ -91,6 +92,11 @@ static const struct {
 		.api_version	= "5.0",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
+	},
+	[EP_API_SAASS] = {
+		.api_version	= "1.0",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SAASS,
 	},
 	[EP_API_SAID] = {
 		.api_version	= "2.0",
@@ -622,6 +628,22 @@ static const struct {
 		.tmpl	= "/individuals/business/property/{nino}/{businessId}/period/{taxYear}",
 		.method	= M_GET,
 		.api	= EP_API_PB,
+	},
+
+	/* Self Assessment Assist */
+	[MTD_API_EP_SAASS_REPORT_GEN] = {
+		.epstr	= "MTD_API_EP_SAASS_REPORT_GEN",
+		.tmpl	= "/individuals/self-assessment/assist/reports/{nino}/{taxYear}/{calculationId}",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
+		.api	= EP_API_SAASS,
+	},
+	[MTD_API_EP_SAASS_REPORT_ACK] = {
+		.epstr	= "MTD_API_EP_SAASS_REPORT_ACK",
+		.tmpl	= "/individuals/self-assessment/assist/reports/acknowledge/{nino}/{reportId}/{correlationId}",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
+		.api	= EP_API_SAASS,
 	},
 
 	/* Self Assessment Individual Details */
