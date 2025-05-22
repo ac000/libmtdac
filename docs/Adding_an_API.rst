@@ -1,9 +1,9 @@
 Adding a new API
 ================
 
-- Add entry to the ``ep_api`` enum in ``src/api_endpoints.h``
 - Add entries to the ``mtd_api_endpoint`` enum in ``include/libmtdac/mtd.h``
-- Add entry to ``api_default_values[]`` in ``src/api_endpoint.c``
+- Add entry to the ``ep_api`` enum in ``src/api_endpoints.h``
+- Add entry to ``api_default_values[]`` in ``src/api_endpoints.h``
 - Add entries to ``endpoints[]`` in ``src/api_endpoints.h`` (order should match
   above)
 - Add any new error codes to the ``mtd_hmrc_error`` enum in
