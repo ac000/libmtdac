@@ -11,7 +11,7 @@ with signed-off commits. This means adding a line that says
  Signed-off-by: Andrew Clayton <ac@sigsegv.uk>
 
 This signifies that you have read/understood/and agreed to the
-[Developer's Certificate of Origin](DCO). Essentially indicating that you
+`Developer’s Certificate of Origin <DCO>`__. Essentially indicating that you
 wrote the code and/or have the right to contribute it to this project.
 
 This is **not** a CLA.
