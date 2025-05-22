@@ -17,9 +17,20 @@ static const struct {
 	const char *name;
 	const char *fname;
 } api_scope_map[] = {
-	[MTD_API_SCOPE_UNSET]	= {},
-	[MTD_API_SCOPE_SA]	= { "itsa", "Income Tax Self-Assessment" },
-	[MTD_API_SCOPE_VAT]	= { "vat", "VAT"			 },
+	[MTD_API_SCOPE_UNSET] = {
+	},
+	[MTD_API_SCOPE_SA] = {
+		.name	= "itsa",
+		.fname	= "Income Tax Self-Assessment"
+	},
+	[MTD_API_SCOPE_SAASS] = {
+		.name	= "itsa-assist",
+		.fname	= "Income Tax Self-Assessment Assist"
+	},
+	[MTD_API_SCOPE_VAT] = {
+		.name	= "vat",
+		.fname	= "VAT"
+	},
 };
 
 extern int (*ep_set_oauther(enum mtd_api_endpoint ep))(enum mtd_api_scope);

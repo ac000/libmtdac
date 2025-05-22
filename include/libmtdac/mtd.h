@@ -252,15 +252,18 @@ enum mtd_http_status_code {
 enum mtd_scope {
 	MTD_SCOPE_RD_SA		= 0x1,
 	MTD_SCOPE_WR_SA		= 0x2,
-	MTD_SCOPE_RD_VAT	= 0x4,
-	MTD_SCOPE_WR_VAT	= 0x8,
+	MTD_SCOPE_RD_SAASS	= 0x4,
+	MTD_SCOPE_WR_SAASS	= 0x8,
+	MTD_SCOPE_RD_VAT	= 0x10,
+	MTD_SCOPE_WR_VAT	= 0x20,
 };
 
 enum mtd_api_scope {
 	MTD_API_SCOPE_UNSET		= 0x0,
 
 	MTD_API_SCOPE_SA		= 0x1,
-	MTD_API_SCOPE_VAT		= 0x2,
+	MTD_API_SCOPE_SAASS		= 0x2,
+	MTD_API_SCOPE_VAT		= 0x4,
 
 	/*
 	 * Special value to tell we are adding more API

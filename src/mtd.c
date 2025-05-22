@@ -469,6 +469,12 @@ static const struct {
 		.scope	= MTD_SCOPE_WR_SA,
 		.str	= "write:self-assessment"
 	}, {
+		.scope	= MTD_SCOPE_RD_SAASS,
+		.str	= "read:self-assessment-assist"
+	}, {
+		.scope	= MTD_SCOPE_WR_SAASS,
+		.str	= "write:self-assessment-assist",
+	}, {
 		.scope	= MTD_SCOPE_RD_VAT,
 		.str	= "read:vat"
 	}, {
@@ -476,10 +482,10 @@ static const struct {
 		.str	= "write:vat"
 	},
 };
-#define ALL_SCOPES	(MTD_SCOPE_RD_SA|MTD_SCOPE_WR_SA|MTD_SCOPE_RD_VAT| \
-			 MTD_SCOPE_WR_VAT)
-#define RD_SCOPES	(MTD_SCOPE_RD_SA|MTD_SCOPE_RD_VAT)
-#define WR_SCOPES	(MTD_SCOPE_WR_SA|MTD_SCOPE_WR_VAT)
+#define ALL_SCOPES	(MTD_SCOPE_RD_SA|MTD_SCOPE_WR_SA|MTD_SCOPE_RD_SAASS| \
+			 MTD_SCOPE_WR_SAASS|MTD_SCOPE_RD_VAT|MTD_SCOPE_WR_VAT)
+#define RD_SCOPES	(MTD_SCOPE_RD_SA|MTD_SCOPE_RD_SAASS|MTD_SCOPE_RD_VAT)
+#define WR_SCOPES	(MTD_SCOPE_WR_SA|MTD_SCOPE_WR_SAASS|MTD_SCOPE_WR_VAT)
 
 extern char **environ;
 int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
@@ -663,6 +669,9 @@ int mtd_init_creds(enum mtd_api_scope scope)
 	switch (scope) {
 	case MTD_API_SCOPE_SA:
 		type_s = "ITSA";
+		break;
+	case MTD_API_SCOPE_SAASS:
+		type_s = "ITSA Assist";
 		break;
 	case MTD_API_SCOPE_VAT:
 		type_s = "VAT";
