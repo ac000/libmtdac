@@ -29,6 +29,7 @@ enum ep_api {
 	EP_API_BSAS,
 	EP_API_ICAL,
 	EP_API_ILOS,
+	EP_API_IPI,
 	EP_API_ISI,
 	EP_API_OB,
 	EP_API_PB,
@@ -68,6 +69,11 @@ static const struct {
 	},
 	[EP_API_ILOS] = {
 		.api_version	= "5.0",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_ITSA,
+	},
+	[EP_API_IPI] = {
+		.api_version	= "1.0",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_ITSA,
 	},
@@ -320,6 +326,27 @@ static const struct {
 		.method	= M_PUT,
 		.ctype  = CONTENT_TYPE_JSON,
 		.api	= EP_API_ILOS,
+	},
+
+	/* Individuals Pensions Income */
+	[MTD_API_EP_IPI_GET] = {
+		.epstr	= "MTD_API_EP_IPI_GET",
+		.tmpl	= "/individuals/pensions-income/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= EP_API_IPI,
+	},
+	[MTD_API_EP_IPI_AMEND] = {
+		.epstr	= "MTD_API_EP_IPI_AMEND",
+		.tmpl	= "/individuals/pensions-income/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_IPI,
+	},
+	[MTD_API_EP_IPI_DELETE] = {
+		.epstr	= "MTD_API_EP_IPI_DELETE",
+		.tmpl	= "/individuals/pensions-income/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= EP_API_IPI,
 	},
 
 	/* Individuals Savings Income - UK Savings Account */
