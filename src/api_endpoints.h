@@ -50,57 +50,57 @@ static const struct {
 	[EP_API_BD] = {
 		.api_version	= "1.0",
 		.authz		= AUTHZ_USER,
-		.scope		= MTD_API_SCOPE_ITSA,
+		.scope		= MTD_API_SCOPE_SA,
 	},
 	[EP_API_BISS] = {
 		.api_version	= "3.0",
 		.authz		= AUTHZ_USER,
-		.scope		= MTD_API_SCOPE_ITSA,
+		.scope		= MTD_API_SCOPE_SA,
 	},
 	[EP_API_BSAS] = {
 		.api_version	= "6.0",
 		.authz		= AUTHZ_USER,
-		.scope		= MTD_API_SCOPE_ITSA,
+		.scope		= MTD_API_SCOPE_SA,
 	},
 	[EP_API_ICAL] = {
 		.api_version	= "7.0",
 		.authz		= AUTHZ_USER,
-		.scope		= MTD_API_SCOPE_ITSA,
+		.scope		= MTD_API_SCOPE_SA,
 	},
 	[EP_API_ILOS] = {
 		.api_version	= "5.0",
 		.authz		= AUTHZ_USER,
-		.scope		= MTD_API_SCOPE_ITSA,
+		.scope		= MTD_API_SCOPE_SA,
 	},
 	[EP_API_IPI] = {
 		.api_version	= "1.0",
 		.authz		= AUTHZ_USER,
-		.scope		= MTD_API_SCOPE_ITSA,
+		.scope		= MTD_API_SCOPE_SA,
 	},
 	[EP_API_ISI] = {
 		.api_version	= "1.0",
 		.authz		= AUTHZ_USER,
-		.scope		= MTD_API_SCOPE_ITSA,
+		.scope		= MTD_API_SCOPE_SA,
 	},
 	[EP_API_OB] = {
 		.api_version	= "3.0",
 		.authz		= AUTHZ_USER,
-		.scope		= MTD_API_SCOPE_ITSA,
+		.scope		= MTD_API_SCOPE_SA,
 	},
 	[EP_API_PB] = {
 		.api_version	= "5.0",
 		.authz		= AUTHZ_USER,
-		.scope		= MTD_API_SCOPE_ITSA,
+		.scope		= MTD_API_SCOPE_SA,
 	},
 	[EP_API_SAID] = {
 		.api_version	= "2.0",
 		.authz		= AUTHZ_USER,
-		.scope		= MTD_API_SCOPE_ITSA,
+		.scope		= MTD_API_SCOPE_SA,
 	},
 	[EP_API_SEB] = {
 		.api_version	= "4.0",
 		.authz		= AUTHZ_USER,
-		.scope		= MTD_API_SCOPE_ITSA,
+		.scope		= MTD_API_SCOPE_SA,
 	},
 
 	[EP_API_VAT] = {

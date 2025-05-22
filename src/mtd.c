@@ -661,7 +661,7 @@ int mtd_init_creds(enum mtd_api_scope scope)
 	scope &= ~MTD_API_SCOPE_ADD;
 
 	switch (scope) {
-	case MTD_API_SCOPE_ITSA:
+	case MTD_API_SCOPE_SA:
 		type_s = "ITSA";
 		break;
 	case MTD_API_SCOPE_VAT:

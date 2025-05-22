@@ -259,7 +259,7 @@ enum mtd_scope {
 enum mtd_api_scope {
 	MTD_API_SCOPE_UNSET		= 0x0,
 
-	MTD_API_SCOPE_ITSA		= 0x1,
+	MTD_API_SCOPE_SA		= 0x1,
 	MTD_API_SCOPE_VAT		= 0x2,
 
 	/*
@@ -273,6 +273,8 @@ enum mtd_api_scope {
 	/* Only used internally */
 	MTD_API_SCOPE_NULL		= (1 << 30)
 };
+/* Compat */
+#define MTD_API_SCOPE_ITSA MTD_API_SCOPE_SA
 
 /*
  * The order of these entries must match the order in endpoints[]

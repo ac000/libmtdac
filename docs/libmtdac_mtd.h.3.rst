@@ -306,7 +306,7 @@ authorised for.
   enum mtd_api_scope {
           MTD_API_SCOPE_UNSET             = 0x0,
 
-          MTD_API_SCOPE_ITSA              = 0x1,
+          MTD_API_SCOPE_SA                = 0x1,
           MTD_API_SCOPE_VAT               = 0x2,
 
           /*
@@ -317,6 +317,7 @@ authorised for.
            */
           MTD_API_SCOPE_ADD               = (1 << 29),
   };
+  #define MTD_API_SCOPE_ITSA MTD_API_SCOPE_SA
 
 What API the above scopes belong to. They can be OR'd together.
 *MTD_API_SCOPE_ADD* can be used to avoid resetting the oauth.json file

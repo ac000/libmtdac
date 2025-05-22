@@ -79,7 +79,7 @@ char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 		 * APIs under both sets of credentials.
 		 */
 		tok_obj = json_object_get(root,
-					  api_scope_map[MTD_API_SCOPE_ITSA].name);
+					  api_scope_map[MTD_API_SCOPE_SA].name);
 		if (!tok_obj)
 			tok_obj = json_object_get(root,
 						  api_scope_map[MTD_API_SCOPE_VAT].name);
