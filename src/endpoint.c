@@ -93,15 +93,14 @@ int (*ep_set_oauther(enum mtd_api_endpoint ep))(enum mtd_api_scope)
 char *ep_get_token(enum mtd_api_endpoint ep)
 {
 	enum oauth_authz authz = get_authz(ep);
+	enum mtd_api_scope scope = get_scope(ep);
 
 	switch(authz) {
 	case AUTHZ_USER: {
-		enum mtd_api_scope scope = get_scope(ep);
 		return load_token("access_token", FT_AUTH, scope);
 	}
 	case AUTHZ_APPLICATION:
-		return load_token("access_token", FT_AUTH_APPLICATION,
-				  MTD_API_SCOPE_NULL);
+		return load_token("access_token", FT_AUTH_APPLICATION, scope);
 	default:
 		return NULL;
 	}

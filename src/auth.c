@@ -38,7 +38,13 @@ char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 		file = "oauth.json";
 		break;
 	case FT_AUTH_APPLICATION:
-		file = "oauth-application.json";
+		switch (scope) {
+		case MTD_API_SCOPE_SA:
+			file = "oauth-application-sa.json";
+			break;
+		default:
+			file = "oauth-application.json";
+		}
 		break;
 	case FT_CREDS:
 		file = "creds.json";
@@ -83,7 +89,7 @@ char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 		if (!tok_obj)
 			tok_obj = json_object_get(root,
 						  api_scope_map[MTD_API_SCOPE_VAT].name);
-	} else if (scope != MTD_API_SCOPE_NULL) {
+	} else if (scope != MTD_API_SCOPE_NULL && ft != FT_AUTH_APPLICATION) {
 		tok_obj = json_object_get(root, api_scope_map[scope].name);
 	}
 	tok_obj = json_object_get(tok_obj, which);
@@ -147,10 +153,12 @@ out_free:
 	return err;
 }
 
-int oauther_get_application_token(enum mtd_api_scope scope __unused)
+int oauther_get_application_token(enum mtd_api_scope scope)
 {
 	struct mtd_dsrc_ctx dsctx;
 	char data[4096];
+	const char *scopes;
+	const char *file;
 	char *buf;
 	char *client_id = load_token("client_id", FT_CREDS, MTD_API_SCOPE_NULL);
 	char *client_secret = load_token("client_secret", FT_CREDS,
@@ -160,9 +168,19 @@ int oauther_get_application_token(enum mtd_api_scope scope __unused)
 	json_t *result;
 	int err;
 
+	switch (scope) {
+	case MTD_API_SCOPE_SA:
+		scopes = "&scope=read:self-assessment+write:self-assessment";
+		file = "oauth-application-sa.json";
+		break;
+	default:
+		scopes = "";
+		file = "oauth-application.json";
+	};
+
 	snprintf(data, sizeof(data),
-		 "client_secret=%s&client_id=%s&grant_type=client_credentials",
-		 client_secret, client_id);
+		 "client_secret=%s&client_id=%s&grant_type=client_credentials%s",
+		 client_secret, client_id, scopes);
 
 	dsctx.data_src.buf = data;
 	dsctx.data_len = strlen(data);
@@ -176,7 +194,7 @@ int oauther_get_application_token(enum mtd_api_scope scope __unused)
 	array = json_loads(buf, 0, NULL);
 	root = json_array_get(array, 0);
 	result = json_object_get(root, "result");
-	write_config(mtd_ctx.config_dir, "oauth-application.json", result);
+	write_config(mtd_ctx.config_dir, file, result);
 	json_decref(array);
 
 out_free:
