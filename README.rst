@@ -40,6 +40,7 @@ API					 Version
 `VAT`_					 1.0
 \
 `Create Test User`_			 1.0
+`Self Assessment Test Support`_		 1.0
 `Test Fraud Prevention Headers`_	 1.0
 =====================================	 =======
 
@@ -57,6 +58,7 @@ API					 Version
 .. _Self Employment Business: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-employment-business-api/4.0/oas/page
 .. _VAT: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/vat-api/1.0/oas/page
 .. _Create Test User: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/api-platform-test-user/1.0/oas/page
+.. _Self Assessment Test Support: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/mtd-sa-test-support-api/1.0/oas/page
 .. _Test Fraud Prevention Headers: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/txm-fph-validator-api/1.0/oas/page
 
 API

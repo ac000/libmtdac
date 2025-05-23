@@ -74,6 +74,10 @@ Create Test User 1.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/api-platform-test-user/1.0/oas/page
 
+Self Assessment Test Support 1.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/mtd-sa-test-support-api/1.0/oas/page
+
 Test Fraud Prevention Headers 1.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/txm-fph-validator-api/1.0/oas/page

@@ -41,6 +41,7 @@ enum ep_api {
 
 	EP_API_TEST_CU,
 	EP_API_TEST_FPH,
+	EP_API_TEST_SATS,
 };
 
 static const struct {
@@ -124,7 +125,12 @@ static const struct {
 		.api_version	= "1.0",
 		.authz		= AUTHZ_APPLICATION,
 		.scope		= MTD_API_SCOPE_NULL,
-	}
+	},
+	[EP_API_TEST_SATS] = {
+		.api_version	= "1.0",
+		.authz		= AUTHZ_APPLICATION,
+		.scope		= MTD_API_SCOPE_SA,
+	},
 };
 
 /*
@@ -801,6 +807,63 @@ static const struct {
 		.tmpl	= "/test/fraud-prevention-headers/{api}/validation-feedback/{query_params}",
 		.method	= M_GET,
 		.api	= EP_API_TEST_FPH,
+	},
+
+	/* Self Assessment Test Support */
+	[MTD_API_EP_TEST_SATS_DELETE] = {
+		.epstr	= "MTD_API_EP_TEST_SATS_DELETE",
+		.tmpl	= "/individuals/self-assessment-test-support/vendor-state/{query_params}",
+		.method = M_DELETE,
+		.api	= EP_API_TEST_SATS,
+	},
+	/* Self Assessment Test Support Checkpoint for Vendor Data */
+	[MTD_API_EP_TEST_SATS_CHKPT_LIST] = {
+		.epstr	= "MTD_API_EP_TEST_SATS_CHKPT_LIST",
+		.tmpl	= "/individuals/self-assessment-test-support/vendor-state/checkpoints/{query_params}",
+		.method = M_GET,
+		.api	= EP_API_TEST_SATS,
+	},
+	[MTD_API_EP_TEST_SATS_CHKPT_CREATE] = {
+		.epstr	= "MTD_API_EP_TEST_SATS_CHKPT_CREATE",
+		.tmpl	= "/individuals/self-assessment-test-support/vendor-state/checkpoints/{query_params}",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
+		.api	= EP_API_TEST_SATS,
+	},
+	[MTD_API_EP_TEST_SATS_CHKPT_DELETE] = {
+		.epstr	= "MTD_API_EP_TEST_SATS_CHKPT_DELETE",
+		.tmpl	= "/individuals/self-assessment-test-support/vendor-state/checkpoints/{checkpointId}",
+		.method = M_DELETE,
+		.api	= EP_API_TEST_SATS,
+	},
+	[MTD_API_EP_TEST_SATS_CHKPT_RESTORE] = {
+		.epstr	= "MTD_API_EP_TEST_SATS_CHKPT_RESTORE",
+		.tmpl	= "/individuals/self-assessment-test-support/vendor-state/checkpoints/{checkpointId}/restore",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
+		.api	= EP_API_TEST_SATS,
+	},
+	/* Self Assessment Test Support Business Income Source */
+	[MTD_API_EP_TEST_SATS_BIS_CREATE] = {
+		.epstr	= "MTD_API_EP_TEST_SATS_BIS_CREATE",
+		.tmpl	= "https://test-api.service.hmrc.gov.uk/individuals/self-assessment-test-support/business/{nino}",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_TEST_SATS,
+	},
+	[MTD_API_EP_TEST_SATS_BIS_DELETE] = {
+		.epstr	= "MTD_API_EP_TEST_SATS_BIS_DELETE",
+		.tmpl	= "/individuals/self-assessment-test-support/business/{nino}/{businessId}",
+		.method	= M_DELETE,
+		.api	= EP_API_TEST_SATS,
+	},
+	/* Self Assessment Test Support ITSA Status */
+	[MTD_API_EP_TEST_SATS_IS_AMEND] = {
+		.epstr	= "MTD_API_EP_TEST_SATS_IS_AMEND",
+		.tmpl	= "/individuals/self-assessment-test-support/itsa-status/{nino}/{taxYear}",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_TEST_SATS,
 	},
 
 	/* OAuth */
