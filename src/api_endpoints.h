@@ -28,6 +28,7 @@ enum ep_api {
 	EP_API_BISS,
 	EP_API_BSAS,
 	EP_API_ICAL,
+	EP_API_IEI,
 	EP_API_ILOS,
 	EP_API_IPI,
 	EP_API_ISI,
@@ -66,6 +67,11 @@ static const struct {
 	},
 	[EP_API_ICAL] = {
 		.api_version	= "7.0",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
+	[EP_API_IEI] = {
+		.api_version	= "1.0",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
@@ -264,6 +270,113 @@ static const struct {
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_NONE,
 		.api	= EP_API_ICAL,
+	},
+
+	/* Individuals Employments Income - Employments */
+	[MTD_API_EP_IEI_E_LIST] = {
+		.epstr	= "MTD_API_EP_IEI_E_LIST",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_E_ADD] = {
+		.epstr	= "MTD_API_EP_IEI_E_ADD",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_E_GET] = {
+		.epstr	= "MTD_API_EP_IEI_E_GET",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}/{employmentId}",
+		.method	= M_GET,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_E_AMEND] = {
+		.epstr	= "MTD_API_EP_IEI_E_AMEND",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}/{employmentId}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_E_DELETE] = {
+	       .epstr	= "MTD_API_EP_IEI_E_DELETE",
+	       .tmpl	= "/individuals/employments-income/{nino}/{taxYear}/{employmentId}",
+	       .method	= M_DELETE,
+	       .api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_E_IGNORE] = {
+		.epstr	= "MTD_API_EP_IEI_E_IGNORE",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}/{employmentId}/ignore",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_E_UNIGNORE] = {
+		.epstr	= "MTD_API_EP_IEI_E_UNIGNORE",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}/{employmentId}/unignore",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_E_EFD_GET] = {
+		.epstr	= "MTD_API_EP_IEI_E_EFD_GET",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}/{employmentId}/financial-details/{query_params}",
+		.method	= M_GET,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_E_EFD_AMEND] = {
+		.epstr	= "MTD_API_EP_IEI_E_EFD_AMEND",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}/{employmentId}/financial-details",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_E_EFD_DELETE] = {
+		.epstr	= "MTD_API_EP_IEI_E_EFD_DELETE",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}/{employmentId}/financial-details",
+		.method	= M_DELETE,
+		.api	= EP_API_IEI,
+	},
+	/* Non-PAYE Employment Income */
+	[MTD_API_EP_IEI_NPE_GET] = {
+		.epstr	= "MTD_API_EP_IEI_NPE_GET",
+		.tmpl	= "/individuals/employments-income/non-paye/{nino}/{taxYear}/{query_params}",
+		.method	= M_GET,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_NPE_AMEND] = {
+		.epstr	= "MTD_API_EP_IEI_NPE_AMEND",
+		.tmpl	= "/individuals/employments-income/non-paye/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_NPE_DELETE] = {
+		.epstr	= "MTD_API_EP_IEI_NPE_DELETE",
+		.tmpl	= "/individuals/employments-income/non-paye/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= EP_API_IEI,
+	},
+	/* Other Employment Income */
+	[MTD_API_EP_IEI_OE_GET] = {
+		.epstr	= "MTD_API_EP_IEI_OE_GET",
+		.tmpl	= "/individuals/employments-income/other/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_OE_AMEND] = {
+		.epstr	= "MTD_API_EP_IEI_OE_AMEND",
+		.tmpl	= "/individuals/employments-income/other/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_OE_DELETE] = {
+		.epstr	= "MTD_API_EP_IEI_OE_DELETE",
+		.tmpl	= "/individuals/employments-income/other/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= EP_API_IEI,
 	},
 
 	/* Individual Losses - Brought Forward */

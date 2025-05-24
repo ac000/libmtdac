@@ -28,6 +28,7 @@ API					 Version
 `Business Income Source Summary`_	 3.0
 `Business Source Adjustable Summary`_	 6.0
 `Individual Calculations`_		 7.0
+`Individuals Employments Income`_	 1.0
 `Individual Losses`_			 5.0
 `Individuals Pensions Income`_		 1.0
 `Individuals Savings Income`_		 1.0
@@ -48,6 +49,7 @@ API					 Version
 .. _Business Income Source Summary: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-biss-api/3.0/oas/page
 .. _Business Source Adjustable Summary: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-bsas-api/6.0/oas/page
 .. _Individual Calculations: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/7.0/oas/page
+.. _Individuals Employments Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-income-api/1.0/oas/page
 .. _Individual Losses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/5.0/oas/page
 .. _Individuals Pensions Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-pensions-income-api/1.0/oas/page
 .. _Individuals Savings Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-savings-income-api/1.0/oas/page
