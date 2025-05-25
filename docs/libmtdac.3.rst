@@ -58,6 +58,10 @@ Property Business 5.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/property-business-api/5.0/oas/page
 
+Self Assessment Accounts 3.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-accounts-api/3.0/oas/page
+
 Self Assessment Assist 1.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-assist/1.0/oas/page

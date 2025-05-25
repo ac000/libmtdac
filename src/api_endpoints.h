@@ -34,6 +34,7 @@ enum ep_api {
 	EP_API_ISI,
 	EP_API_OB,
 	EP_API_PB,
+	EP_API_SAA,
 	EP_API_SAASS,
 	EP_API_SAID,
 	EP_API_SEB,
@@ -97,6 +98,11 @@ static const struct {
 	},
 	[EP_API_PB] = {
 		.api_version	= "5.0",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
+	[EP_API_SAA] = {
+		.api_version	= "3.0",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
@@ -747,6 +753,79 @@ static const struct {
 		.tmpl	= "/individuals/business/property/{nino}/{businessId}/period/{taxYear}",
 		.method	= M_GET,
 		.api	= EP_API_PB,
+	},
+
+	/* Self Assessment Accounts - Payments and Liabilities */
+	[MTD_API_EP_SAA_PL_HIST] = {
+		.epstr	= "MTD_API_EP_SAA_PL_HIST",
+		.tmpl	= "/accounts/self-assessment/{nino}/charges/{transactionId}",
+		.method	= M_GET,
+		.api	= EP_API_SAA,
+	},
+	[MTD_API_EP_SAA_PL_GET_BY_TID] = {
+		.epstr	= "MTD_API_EP_SAA_PL_GET_BY_TID",
+		.tmpl	= "/accounts/self-assessment/{nino}/charges/transactionId/{transactionId}",
+		.method	= M_GET,
+		.api	= EP_API_SAA,
+	},
+	[MTD_API_EP_SAA_PL_GET_BY_CR] = {
+		.epstr	= "MTD_API_EP_SAA_PL_GET_BY_CR",
+		.tmpl	= "/accounts/self-assessment/{nino}/charges/chargeReference/{chargeReference}",
+		.method	= M_GET,
+		.api	= EP_API_SAA,
+	},
+	[MTD_API_EP_SAA_PL_GET_BAL_TRANS] = {
+		.epstr	= "MTD_API_EP_SAA_PL_GET_BAL_TRANS",
+		.tmpl	= "/accounts/self-assessment/{nino}/balance-and-transactions/{query_params}",
+		.method	= M_GET,
+		.api	= EP_API_SAA,
+	},
+	[MTD_API_EP_SAA_PL_PA_LIST] = {
+		.epstr	= "MTD_API_EP_SAA_PL_PA_LIST",
+		.tmpl	= "/accounts/self-assessment/{nino}/payments-and-allocations/{query_params}",
+		.method	= M_GET,
+		.api	= EP_API_SAA,
+	},
+	/* Coding Out Underpayments and Debts */
+	[MTD_API_EP_SAA_COUD_GET] = {
+		.epstr	= "MTD_API_EP_SAA_COUD_GET",
+		.tmpl	= "/accounts/self-assessment/{nino}/{taxYear}/collection/tax-code/{query_params}",
+		.method	= M_GET,
+		.api	= EP_API_SAA,
+	},
+	[MTD_API_EP_SAA_COUD_AMEND] = {
+		.epstr	= "MTD_API_EP_SAA_COUD_AMEND",
+		.tmpl	= "/accounts/self-assessment/{nino}/{taxYear}/collection/tax-code",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_SAA,
+	},
+	[MTD_API_EP_SAA_COUD_DELETE] = {
+		.epstr	= "MTD_API_EP_SAA_COUD_DELETE",
+		.tmpl	= "/accounts/self-assessment/{nino}/{taxYear}/collection/tax-code",
+		.method	= M_DELETE,
+		.api	= EP_API_SAA,
+	},
+	/* Coding Out Status */
+	[MTD_API_EP_SAA_COS_OPT_OUT] = {
+		.epstr	= "MTD_API_EP_SAA_COS_OPT_OUT",
+		.tmpl	= "/accounts/self-assessment/{nino}/{taxYear}/collection/tax-code/coding-out/opt-out",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
+		.api	= EP_API_SAA,
+	},
+	[MTD_API_EP_SAA_COS_OPT_STATUS] = {
+		.epstr	= "MTD_API_EP_SAA_COS_OPT_STATUS",
+		.tmpl	= "/accounts/self-assessment/{nino}/{taxYear}/collection/tax-code/coding-out/status",
+		.method = M_GET,
+		.api	= EP_API_SAA,
+	},
+	[MTD_API_EP_SAA_COS_OPT_IN] = {
+		.epstr	= "MTD_API_EP_SAA_COS_OPT_IN",
+		.tmpl	= "/accounts/self-assessment/{nino}/{taxYear}/collection/tax-code/coding-out/opt-in",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
+		.api	= EP_API_SAA,
 	},
 
 	/* Self Assessment Assist */
