@@ -138,6 +138,7 @@ Errors (HMRC)
           MTD_HMRC_ERR_FORMAT_COUNTRY_CODE,
           MTD_HMRC_ERR_FORMAT_CUSTOMER_PAYMENT_INFORMATION,
           MTD_HMRC_ERR_FORMAT_CUSTOMER_REF,
+          MTD_HMRC_ERR_FORMAT_CUSTOMER_REFERENCE,
           MTD_HMRC_ERR_FORMAT_DATE,
           MTD_HMRC_ERR_FORMAT_DOC_NUMBER,
           MTD_HMRC_ERR_FORMAT_DOUBLE_TAXATION_ARTICLE,
@@ -170,6 +171,7 @@ Errors (HMRC)
           MTD_HMRC_ERR_FORMAT_STRING,
           MTD_HMRC_ERR_FORMAT_SUBMISSION_ID,
           MTD_HMRC_ERR_FORMAT_SUBMITTED_ON,
+          MTD_HMRC_ERR_FORMAT_TAX_SOURCE,
           MTD_HMRC_ERR_FORMAT_TAX_YEAR,
           MTD_HMRC_ERR_FORMAT_TO_DATE,
           MTD_HMRC_ERR_FORMAT_TRANSACTION_ID,
@@ -427,6 +429,16 @@ MTD API Endpoints
           MTD_API_EP_IEI_OE_GET,
           MTD_API_EP_IEI_OE_AMEND,
           MTD_API_EP_IEI_OE_DELETE,
+
+          /* Individuals Expenses - Employment Expenses */
+          MTD_API_EP_IE_EE_AMEND,
+          MTD_API_EP_IE_EE_GET,
+          MTD_API_EP_IE_EE_DELETE,
+          MTD_API_EP_IE_EE_IGNORE,
+          /* Other Expenses */
+          MTD_API_EP_IE_OE_AMEND,
+          MTD_API_EP_IE_OE_GET,
+          MTD_API_EP_IE_OE_DELETE,
 
           /* Individual Losses - Brought Forward */
           MTD_API_EP_ILOS_BF_CREATE,

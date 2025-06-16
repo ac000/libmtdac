@@ -38,6 +38,10 @@ Individuals Employments Income 1.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-income-api/1.0/oas/page
 
+Individuals Expenses 3.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-expenses-api/3.0/oas/page
+
 Individual Losses 5.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/5.0/oas/page

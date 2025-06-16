@@ -28,6 +28,7 @@ enum ep_api {
 	EP_API_BISS,
 	EP_API_BSAS,
 	EP_API_ICAL,
+	EP_API_IE,
 	EP_API_IEI,
 	EP_API_ILOS,
 	EP_API_IPI,
@@ -68,6 +69,11 @@ static const struct {
 	},
 	[EP_API_ICAL] = {
 		.api_version	= "7.0",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
+	[EP_API_IE] = {
+		.api_version	= "3.0",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
@@ -383,6 +389,51 @@ static const struct {
 		.tmpl	= "/individuals/employments-income/other/{nino}/{taxYear}",
 		.method	= M_DELETE,
 		.api	= EP_API_IEI,
+	},
+
+	/* Individuals Expenses - Employment Expenses */
+	[MTD_API_EP_IE_EE_AMEND] = {
+		.epstr	= "MTD_API_EP_IE_EE_AMEND",
+		.tmpl	= "/individuals/expenses/employments/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.api	= EP_API_IE,
+	},
+	[MTD_API_EP_IE_EE_GET] = {
+		.epstr	= "MTD_API_EP_IE_EE_GET",
+		.tmpl	= "/individuals/expenses/employments/{nino}/{taxYear}/{query_params}",
+		.method	= M_GET,
+		.api	= EP_API_IE,
+	},
+	[MTD_API_EP_IE_EE_DELETE] = {
+		.epstr	= "MTD_API_EP_IE_EE_DELETE",
+		.tmpl	= "/individuals/expenses/employments/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= EP_API_IE,
+	},
+	[MTD_API_EP_IE_EE_IGNORE] = {
+		.epstr	= "MTD_API_EP_IE_EE_IGNORE",
+		.tmpl	= "/individuals/expenses/employments/{nino}/{taxYear}",
+		.method	= M_POST,
+		.api	= EP_API_IE,
+	},
+	/* Other Expenses */
+	[MTD_API_EP_IE_OE_AMEND] = {
+		.epstr	= "MTD_API_EP_IE_OE_AMEND",
+		.tmpl	= "/individuals/expenses/other/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.api	= EP_API_IE,
+	},
+	[MTD_API_EP_IE_OE_GET] = {
+		.epstr	= "MTD_API_EP_IE_OE_GET",
+		.tmpl	= "/individuals/expenses/other/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= EP_API_IE,
+	},
+	[MTD_API_EP_IE_OE_DELETE] = {
+		.epstr	= "MTD_API_EP_IE_OE_DELETE",
+		.tmpl	= "/individuals/expenses/other/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= EP_API_IE,
 	},
 
 	/* Individual Losses - Brought Forward */
