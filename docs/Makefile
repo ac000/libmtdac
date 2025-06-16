@@ -30,3 +30,7 @@ $(MANS3)/%.3: %.3.rst
 $(MANS3type)/%.3type: %.3type.rst
 	@echo "  MAN   $@"
 	$(v)$(PANDOC3type) --metadata date="$(DATE)" -o $@
+
+.PHONY: clean
+clean:
+	@rm -f man/man3/*.3 man/man3type/*.3type
