@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	1.0.0
+Version:	1.1.0
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -53,6 +53,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Mon Jun 16 2025 Andrew Clayton <ac@sigsegv.uk> - 1.1.0-1
+- Add support for more endpoints; Individuals Pensions Income,
+  Self Assessment Assist, Self Assessment Test Support,
+  Individuals Employments Income, Self Assessment Accounts API &
+  Individuals Expenses
+- Support application-restricted endpoints that require a scope
 
 * Tue May 20 2025 Andrew Clayton <ac@sigsegv.uk> - 1.0.0-1
 - Re-add VAT support
