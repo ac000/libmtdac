@@ -155,19 +155,21 @@ static size_t header_cb(char *buffer, size_t size, size_t nitems,
 			void *userdata)
 {
 	struct curl_ctx *ctx = userdata;
-	bool found_hdr = true;
 	char *hdr_val;
 	char **ptr;
 	size_t ret = nitems * size;
 
 	if (strcasestr(buffer, "Location:"))
 		ptr = &ctx->accepted_location;
-	else if (strcasestr(buffer, "X-Correlationid"))
+	else if (strcasestr(buffer, "X-Correlationid:"))
 		ptr = &ctx->x_corr_id;
+	else if (strcasestr(buffer, "Deprecation:"))
+		ptr = &ctx->deprecation_hdr;
+	else if (strcasestr(buffer, "Sunset:"))
+		ptr = &ctx->sunset_hdr;
+	else if (strcasestr(buffer, "Link:"))
+		ptr = &ctx->link_hdr;
 	else
-		found_hdr = false;
-
-	if (!found_hdr)
 		return ret;
 
 	hdr_val = strchr(buffer, ' ');
@@ -261,13 +263,16 @@ static void set_response(struct curl_ctx *ctx)
 		json_decref(loc);
 	}
 
-	new = json_pack("{s:i, s:s, s:s, s:s, s:s, s:s?, s:s, s:o?}",
+	new = json_pack("{s:i, s:s, s:s, s:s, s:s, s:s?, s:s?, s:s?, s:s?, s:s, s:o?}",
 			"status_code", ctx->status_code,
 			"status_str", http_status_code2str(ctx->status_code),
 			"libmtdac_endpoint", ctx->epstr,
 			"url", ctx->url,
 			"method", methods_str[ctx->http_method].str,
 			"xid", ctx->x_corr_id,
+			"deprecation", ctx->deprecation_hdr,
+			"sunset", ctx->sunset_hdr,
+			"link", ctx->link_hdr,
 			"date", gen_datestamp(date, sizeof(date)),
 			"result", rootbuf);
 

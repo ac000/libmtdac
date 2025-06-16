@@ -45,6 +45,9 @@ struct curl_ctx {
 	const char *url;
 	char *location;
 	char *x_corr_id;
+	char *deprecation_hdr;
+	char *sunset_hdr;
+	char *link_hdr;
 
 	const char *mtd_api_ver;
 
