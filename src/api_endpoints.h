@@ -396,6 +396,7 @@ static const struct {
 		.epstr	= "MTD_API_EP_IE_EE_AMEND",
 		.tmpl	= "/individuals/expenses/employments/{nino}/{taxYear}",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.api	= EP_API_IE,
 	},
 	[MTD_API_EP_IE_EE_GET] = {
@@ -412,8 +413,9 @@ static const struct {
 	},
 	[MTD_API_EP_IE_EE_IGNORE] = {
 		.epstr	= "MTD_API_EP_IE_EE_IGNORE",
-		.tmpl	= "/individuals/expenses/employments/{nino}/{taxYear}",
+		.tmpl	= "/individuals/expenses/employments/{nino}/{taxYear}/ignore",
 		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
 		.api	= EP_API_IE,
 	},
 	/* Other Expenses */
@@ -421,6 +423,7 @@ static const struct {
 		.epstr	= "MTD_API_EP_IE_OE_AMEND",
 		.tmpl	= "/individuals/expenses/other/{nino}/{taxYear}",
 		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
 		.api	= EP_API_IE,
 	},
 	[MTD_API_EP_IE_OE_GET] = {
