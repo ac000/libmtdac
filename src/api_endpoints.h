@@ -28,6 +28,7 @@ enum ep_api {
 	EP_API_BISS,
 	EP_API_BSAS,
 	EP_API_ICAL,
+	EP_API_ID,
 	EP_API_IE,
 	EP_API_IEI,
 	EP_API_ILOS,
@@ -69,6 +70,11 @@ static const struct {
 	},
 	[EP_API_ICAL] = {
 		.api_version	= "7.0",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
+	[EP_API_ID] = {
+		.api_version	= "2.0",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
@@ -282,6 +288,35 @@ static const struct {
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_NONE,
 		.api	= EP_API_ICAL,
+	},
+
+	/* Individuals Disclosures - Marriage Allowance */
+	[MTD_API_EP_ID_MA_CREATE] = {
+		.epstr	= "MTD_API_EP_ID_MA_CREATE",
+		.tmpl	= "/individuals/disclosures/marriage-allowance/{nino}",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_ID,
+	},
+	/* Disclosures */
+	[MTD_API_EP_ID_D_GET] = {
+		.epstr	= "MTD_API_EP_ID_D_GET",
+		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= EP_API_ID,
+	},
+	[MTD_API_EP_ID_D_AMEND] = {
+		.epstr	= "MTD_API_EP_ID_D_AMEND",
+		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_ID,
+	},
+	[MTD_API_EP_ID_D_DELETE] = {
+		.epstr	= "MTD_API_EP_ID_D_DELETE",
+		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= EP_API_ID,
 	},
 
 	/* Individuals Employments Income - Employments */

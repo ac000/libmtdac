@@ -34,6 +34,10 @@ Individual Calculations 7.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/7.0/oas/page
 
+Individuals Disclosures 2.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-disclosures-api/2.0/oas/page
+
 Individuals Employments Income 1.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-income-api/1.0/oas/page
