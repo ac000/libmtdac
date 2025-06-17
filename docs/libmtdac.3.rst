@@ -58,6 +58,10 @@ Individuals Savings Income 1.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-savings-income-api/1.0/oas/page
 
+Individuals State Benefits 2.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-state-benefits-api/2.0/oas/page
+
 Obligations 3.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/obligations-api/3.0/oas/page

@@ -33,6 +33,7 @@ enum ep_api {
 	EP_API_IEI,
 	EP_API_ILOS,
 	EP_API_IPI,
+	EP_API_ISB,
 	EP_API_ISI,
 	EP_API_OB,
 	EP_API_PB,
@@ -95,6 +96,11 @@ static const struct {
 	},
 	[EP_API_IPI] = {
 		.api_version	= "1.0",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
+	[EP_API_ISB] = {
+		.api_version	= "2.0",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
@@ -317,6 +323,61 @@ static const struct {
 		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
 		.method	= M_DELETE,
 		.api	= EP_API_ID,
+	},
+
+	/* Individuals State Benefits */
+	[MTD_API_EP_ISB_CREATE] = {
+		.epstr	= "MTD_API_EP_ISB_CREATE",
+		.tmpl	= "/individuals/state-benefits/{nino}/{taxYear}",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_ISB,
+	},
+	[MTD_API_EP_ISB_LIST] = {
+		.epstr	= "MTD_API_EP_ISB_LIST",
+		.tmpl	= "/individuals/state-benefits/{nino}/{taxYear}/{query_params}",
+		.method	= M_GET,
+		.api	= EP_API_ISB,
+	},
+	[MTD_API_EP_ISB_AMEND] = {
+		.epstr	= "MTD_API_EP_ISB_AMEND",
+		.tmpl	= "/individuals/state-benefits/{nino}/{taxYear}/{benefitId}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_ISB,
+	},
+	[MTD_API_EP_ISB_DELETE] = {
+		.epstr	= "MTD_API_EP_ISB_DELETE",
+		.tmpl	= "/individuals/state-benefits/{nino}/{taxYear}/{benefitId}",
+		.method	= M_DELETE,
+		.api	= EP_API_ISB,
+	},
+	[MTD_API_EP_ISB_AMEND_AMNTS] = {
+		.epstr	= "MTD_API_EP_ISB_AMEND_AMNTS",
+		.tmpl	= "/individuals/state-benefits/{nino}/{taxYear}/{benefitId}/amounts",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= EP_API_ISB,
+	},
+	[MTD_API_EP_ISB_DELETE_AMNTS] = {
+		.epstr	= "MTD_API_EP_ISB_DELETE_AMNTS",
+		.tmpl	= "/individuals/state-benefits/{nino}/{taxYear}/{benefitId}/amounts",
+		.method	= M_DELETE,
+		.api	= EP_API_ISB,
+	},
+	[MTD_API_EP_ISB_IGNORE] = {
+		.epstr	= "MTD_API_EP_ISB_IGNORE",
+		.tmpl	= "/individuals/state-benefits/{nino}/{taxYear}/{benefitId}/ignore",
+		.method = M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
+		.api	= EP_API_ISB,
+	},
+	[MTD_API_EP_ISB_UNIGNORE] = {
+		.epstr	= "MTD_API_EP_ISB_UNIGNORE",
+		.tmpl	= "/individuals/state-benefits/{nino}/{taxYear}/{benefitId}/unignore",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
+		.api	= EP_API_ISB,
 	},
 
 	/* Individuals Employments Income - Employments */
