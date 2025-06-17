@@ -650,7 +650,8 @@ static int do_put_post(struct curl_ctx *ctx, char **buf)
 		err = fstat(fileno(ctx->src_file), &sb);
 		if (err) {
 			logger(MTD_LOG_ERR, "couldn't stat() file\n");
-			return MTD_ERR_OS;
+			err = MTD_ERR_OS;
+			goto out_cleanup;
 		}
 		ctx->src_size = sb.st_size;
 		ctx->read_cb = curl_readfp_cb;
@@ -667,6 +668,7 @@ out_do_curl:
 
 	*buf = ctx->res_buf;
 
+out_cleanup:
 	curl_ctx_free(ctx);
 
 	return err;
