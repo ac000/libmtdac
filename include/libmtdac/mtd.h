@@ -23,7 +23,10 @@ extern "C" {
 /* MTD_OPT_* - option flags for mtd_init() */
 #define MTD_OPT_LOG_ERR				0x00000001
 #define MTD_OPT_LOG_INFO			0x00000002
-#define MTD_OPT_LOG_DEBUG			0x00000004
+#define MTD_OPT_LOG_DEBUG_DATA			0x00000004
+#define MTD_OPT_LOG_DEBUG_ALL			0x00000008
+
+#define MTD_OPT_LOG_DEBUG MTD_OPT_LOG_DEBUG_ALL
 
 /* also update enum app_conn_type in mtd.c */
 #define MTD_OPT_ACT_MOBILE_APP_DIRECT		0x00000100
@@ -45,7 +48,8 @@ extern "C" {
 #define MTD_OPT_ALL \
 	MTD_OPT_LOG_ERR | \
 	MTD_OPT_LOG_INFO | \
-	MTD_OPT_LOG_DEBUG | \
+	MTD_OPT_LOG_DEBUG_DATA | \
+	MTD_OPT_LOG_DEBUG_ALL | \
 	MTD_OPT_ACT_MOBILE_APP_DIRECT | \
 	MTD_OPT_ACT_DESKTOP_APP_DIRECT | \
 	MTD_OPT_ACT_MOBILE_APP_VIA_SERVER | \

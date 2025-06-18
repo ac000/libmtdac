@@ -33,9 +33,13 @@ Log level
 
   #define MTD_OPT_LOG_ERR
   #define MTD_OPT_LOG_INFO
-  #define MTD_OPT_LOG_DEBUG
+  #define MTD_OPT_LOG_DEBUG_DATA
+  #define MTD_OPT_LOG_DEBUG_ALL
 
 These set the desired log level. Defaults to **MTD_OPT_LOG_ERR**
+
+There is a **MTD_OPT_LOG_DEBUG** compatibility macro that is an alias for
+**MTD_OPT_LOG_DEBUG_ALL**
 
 Connection type options
 -----------------------

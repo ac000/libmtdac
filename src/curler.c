@@ -358,7 +358,7 @@ static int curl_perform(struct curl_ctx *ctx)
 
 	curl_easy_setopt(curl, CURLOPT_USERAGENT, get_user_agent(ua));
 
-	if (mtd_ctx.log_level == MTD_LOG_DEBUG)
+	if (mtd_ctx.log_level == MTD_LOG_DEBUG_ALL)
 		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
 	res = curl_easy_perform(curl);
@@ -376,7 +376,7 @@ static int curl_perform(struct curl_ctx *ctx)
 	}
 	curl_easy_cleanup(curl);
 
-	logger(MTD_LOG_DEBUG, "[%ld] (%s)\n", ctx->status_code, ctx->url);
+	logger(MTD_LOG_DEBUG_ALL, "[%ld] (%s)\n", ctx->status_code, ctx->url);
 
 	set_response(ctx);
 

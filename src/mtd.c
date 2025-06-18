@@ -389,8 +389,10 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 
 	if (flags & MTD_OPT_LOG_INFO)
 		mtd_ctx.log_level = MTD_LOG_INFO;
-	else if (flags & MTD_OPT_LOG_DEBUG)
-		mtd_ctx.log_level = MTD_LOG_DEBUG;
+	else if (flags & MTD_OPT_LOG_DEBUG_DATA)
+		mtd_ctx.log_level = MTD_LOG_DEBUG_DATA;
+	else if (flags & MTD_OPT_LOG_DEBUG_ALL || flags & MTD_OPT_LOG_DEBUG)
+		mtd_ctx.log_level = MTD_LOG_DEBUG_ALL;
 
 	if (flags & MTD_OPT_GLOBAL_INIT)
 		curl_global_init(CURL_GLOBAL_ALL);

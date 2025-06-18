@@ -32,8 +32,16 @@ libmtdac is to be used.
 **MTD_OPT_LOG_INFO**
     This sets the log level to INFO
 
+**MTD_OPT_LOG_DEBUG_DATA**
+    This sets the log level to DEBUG_DATA and will cause JSON payloads to
+    be logged. Both those sent and received.
+
+**MTD_OPT_LOG_DEBUG_ALL**
+    This sets the log level to DEBUG_ALL and as well as the above also
+    includes curls debug logging.
+
 **MTD_OPT_LOG_DEBUG**
-    This sets the log level to DEBUG
+    This is an alias for **MTD_OPT_LOG_DEBUG_ALL**
 
 **At most, only one of the above should be set**
 

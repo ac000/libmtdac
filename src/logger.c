@@ -21,10 +21,11 @@
 #define OPT_NL	OPT_SP
 
 static const char *logger_err_levels[] = {
-	[MTD_LOG_ERRNO] = LIBNAME " ERROR",
-	[MTD_LOG_ERR]	= LIBNAME " ERROR",
-	[MTD_LOG_INFO]	= LIBNAME " INFO",
-	[MTD_LOG_DEBUG]	= LIBNAME " DEBUG",
+	[MTD_LOG_ERRNO]		= LIBNAME " ERROR",
+	[MTD_LOG_ERR]		= LIBNAME " ERROR",
+	[MTD_LOG_INFO]		= LIBNAME " INFO",
+	[MTD_LOG_DEBUG_DATA]	= LIBNAME " DEBUG_DATA",
+	[MTD_LOG_DEBUG_ALL]	= LIBNAME " DEBUG_ALL",
 };
 
 extern __thread struct mtd_ctx mtd_ctx;

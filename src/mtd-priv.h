@@ -32,7 +32,8 @@ enum log_level {
 	MTD_LOG_ERRNO = 0,
 	MTD_LOG_ERR,
 	MTD_LOG_INFO,
-	MTD_LOG_DEBUG,
+	MTD_LOG_DEBUG_DATA,
+	MTD_LOG_DEBUG_ALL,
 };
 
 struct mtd_ctx {
