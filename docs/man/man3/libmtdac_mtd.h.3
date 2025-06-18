@@ -722,6 +722,8 @@ struct mtd_cfg {
         const char * const *extra_hdrs;
 
         const char *config_dir;
+
+        const FILE *log_fp;
 };
 .EE
 .PP
@@ -740,8 +742,8 @@ const struct mtd_fph_ops fph_ops = {
 };
 .EE
 .PP
-Finally you \f[B]need\f[R] to specify the directory that libmtdac will
-use for its config data.
+You also \f[B]need\f[R] to specify the directory that libmtdac will use
+for its config data.
 .IP
 .EX
 const struct mtd_cfg cfg = {
@@ -764,3 +766,9 @@ const struct mtd_cfg cfg = {
 MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_CLI_USER_ID, my_user);
 MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_VEN_VERSION, my_ver);
 .EE
+.PP
+Finally you can optionally specify an open file\-pointer
+(\f[CR]FILE *\f[R]) to have logs sent to rather than
+\f[I]stderr\f[R]/\f[I]stdout\f[R].
+\f[CR]MTD_LOG_ERROR\f[R] logs are not affected by this and still go to
+\f[I]stderr\f[R].

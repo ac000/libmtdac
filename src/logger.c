@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <time.h>
 #include <errno.h>
 
 #include "mtd-priv.h"
@@ -35,7 +36,23 @@ void _logger(const char *func, enum log_level log_level, const char *fmt, ...)
 	int e = errno;
 	char *logbuf = NULL;
 	char *errp = NULL;
-	FILE *out = log_level <= MTD_LOG_ERR ? stderr : stdout;
+	char datetime[32] = {};
+	FILE *out;
+
+	if (log_level <= MTD_LOG_ERR) {
+		out = stderr;
+	} else if (mtd_ctx.cfg->log_fp) {
+		time_t t;
+		struct tm tm = {};
+
+		t = time(NULL);
+		localtime_r(&t, &tm);
+		strftime(datetime, sizeof(datetime), "-- [%F %T]\n", &tm);
+
+		out = (FILE *)mtd_ctx.cfg->log_fp;
+	} else {
+		out = stdout;
+	}
 
 	if (log_level > mtd_ctx.log_level)
 		return;
@@ -60,8 +77,8 @@ void _logger(const char *func, enum log_level log_level, const char *fmt, ...)
 	if (logbuf && *logbuf == ' ') /* continuation line */
 		fprintf(out, "%s", logbuf);
 	else
-		fprintf(out, "[%s] %s:" OPT_SP "%s" OPT_SP "%s" OPT_NL,
-			logger_err_levels[log_level], func,
+		fprintf(out, "%s[%s] %s:" OPT_SP "%s" OPT_SP "%s" OPT_NL,
+			datetime, logger_err_levels[log_level], func,
 			logbuf ? " " : "", logbuf ? logbuf : "",
 			errp ? " " : "", errp ? errp : "", errp ? "\n" : "");
 

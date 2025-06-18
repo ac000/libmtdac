@@ -99,6 +99,8 @@ libmtdac is to be used.
           const char * const *extra_hdrs;
 
           const char *config_dir;
+
+          const FILE *log_fp;
   };
 
 
@@ -145,6 +147,10 @@ NULL terminated array of character pointers.
 
 *config_dir* should point to a string containing the path to the
 configuration directory for this application. E.g. "/home/foo/.config/my-app"
+
+*log_fp* can *optionally* point to a valid file-pointer of an already opened
+file for writing to have logs sent to. This doesn't affect *MTD_LOG_ERROR*
+logs which are still sent to *stderr*.
 
 RETURN VALUE
 ============

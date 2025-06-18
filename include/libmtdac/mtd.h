@@ -659,6 +659,8 @@ struct mtd_cfg {
 	const char * const *extra_hdrs;
 
 	const char *config_dir;
+
+	const FILE *log_fp;
 };
 
 #pragma GCC visibility push(default)

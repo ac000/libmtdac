@@ -93,6 +93,8 @@ struct mtd_cfg {
         const char * const *extra_hdrs;
 
         const char *config_dir;
+
+        const FILE *log_fp;
 };
 .EE
 .PP
@@ -141,6 +143,11 @@ point to a NULL terminated array of character pointers.
 configuration directory for this application.
 E.g.
 \[dq]/home/foo/.config/my\-app\[dq]
+.PP
+\f[I]log_fp\f[R] can \f[I]optionally\f[R] point to a valid file\-pointer
+of an already opened file for writing to have logs sent to.
+This doesn\[aq]t affect \f[I]MTD_LOG_ERROR\f[R] logs which are still
+sent to \f[I]stderr\f[R].
 .SH RETURN VALUE
 On success, zero (\f[B]MTD_ERR_NONE\f[R]) is returned.
 On error, one of the below errors is returned.

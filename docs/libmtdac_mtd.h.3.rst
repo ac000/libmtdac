@@ -750,6 +750,8 @@ Config
           const char * const *extra_hdrs;
 
           const char *config_dir;
+
+          const FILE *log_fp;
   };
 
 This is a structure that can be passed into **mtd_init(3)** to
@@ -767,7 +769,7 @@ functions then set mtd_cfg.fph_ops to this structure and pass it into
           .fph_version = my_ver
   };
 
-Finally you **need** to specify the directory that libmtdac will use for
+You also **need** to specify the directory that libmtdac will use for
 its config data.
 
 .. code-block::
@@ -791,3 +793,7 @@ You can also use the MTD_FPH_SET_FUNC() macro, e.g.
 
   MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_CLI_USER_ID, my_user);
   MTD_FPH_SET_FUNC(fph_ops, MTD_FPH_VEN_VERSION, my_ver);
+
+Finally you can optionally specify an open file-pointer (``FILE *``) to have
+logs sent to rather than *stderr*/*stdout*. ``MTD_LOG_ERROR`` logs are not
+affected by this and still go to *stderr*.
