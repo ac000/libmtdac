@@ -665,7 +665,8 @@ containing the data to send.
 You then set *src_type* to the appropriate *enum mtd_data_src_type* value.
 
 In the case of using a *buffer* you also need to set the length in bytes
-of the data in the buffer via *data_len*.
+of the data in the buffer via *data_len*. The length should *not* include
+any terminating nul byte.
 
 Fraud Prevention Headers
 ------------------------
