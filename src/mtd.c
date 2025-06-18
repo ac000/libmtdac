@@ -370,7 +370,7 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 		return MTD_ERR_NO_CONFIG;
 
 	/* initialise struct mtd_ctx to default values */
-	memcpy(&mtd_ctx, &dfl_mtd_ctx, sizeof(struct mtd_ctx));
+	mtd_ctx = dfl_mtd_ctx;
 
 	/* Check for unknown flags */
 	if (flags & ~(MTD_OPT_ALL))
