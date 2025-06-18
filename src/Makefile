@@ -30,6 +30,8 @@ ifeq ($(CC),clang)
         CFLAGS += -Wno-string-plus-int
 endif
 
+CFLAGS += $(EXTRA_CFLAGS)
+
 UNAME_S := $(shell uname -s | tr A-Z a-z)
 ifeq ($(UNAME_S),freebsd)
         # Don't fail the build on unresolved symbols, environ is _always_
