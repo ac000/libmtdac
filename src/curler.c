@@ -288,6 +288,8 @@ static void set_response(struct curl_ctx *ctx)
 	ctx->x_corr_id = NULL;
 	ctx->res_buf = json_dumps(resbuf, JSON_INDENT(4));
 
+	logger(MTD_LOG_DEBUG_DATA, "[%s]\n", ctx->res_buf);
+
 	json_decref(resbuf);
 }
 
@@ -632,6 +634,7 @@ static int do_put_post(struct curl_ctx *ctx, char **buf)
 	case MTD_DATA_SRC_BUF:
 		ctx->post_data = ctx->dsctx->data_src.buf;
 		ctx->post_size = ctx->dsctx->data_len;
+		logger(MTD_LOG_DEBUG_DATA, "[%s]\n", ctx->post_data);
 		break;
 	}
 
@@ -640,6 +643,8 @@ static int do_put_post(struct curl_ctx *ctx, char **buf)
 	case MTD_DATA_SRC_FD:
 	case MTD_DATA_SRC_FP: {
 		struct stat sb;
+		char *log_buf;
+		size_t r;
 
 		if (!ctx->src_file &&
 		    ctx->dsctx->src_type != MTD_DATA_SRC_FILE) {
@@ -655,6 +660,29 @@ static int do_put_post(struct curl_ctx *ctx, char **buf)
 		}
 		ctx->src_size = sb.st_size;
 		ctx->read_cb = curl_readfp_cb;
+
+		if (mtd_ctx.log_level < MTD_LOG_DEBUG_DATA)
+			break;
+
+		log_buf = malloc(sb.st_size + 1);
+		if (!log_buf) {
+			logger(MTD_LOG_ERRNO, "malloc:");
+			err = MTD_ERR_OS;
+			goto out_cleanup;
+		}
+
+		r = fread(log_buf, 1, sb.st_size, ctx->src_file);
+		if (r < (size_t)sb.st_size) {
+			logger(MTD_LOG_ERR, "fread() failed\n");
+			err = MTD_ERR_OS;
+			free(log_buf);
+			goto out_cleanup;
+		}
+		log_buf[sb.st_size] = '\0';
+
+		logger(MTD_LOG_DEBUG_DATA, "[%s]\n", log_buf);
+
+		free(log_buf);
 	}
 	default:
 		break;
