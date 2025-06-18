@@ -30,6 +30,10 @@ ifeq ($(CC),clang)
         CFLAGS += -Wno-string-plus-int
 endif
 
+ifeq ($(CC),gcc)
+        CFLAGS += -Wshadow=local
+endif
+
 CFLAGS += $(EXTRA_CFLAGS)
 
 UNAME_S := $(shell uname -s | tr A-Z a-z)
