@@ -24,7 +24,7 @@
 
 static inline enum mtd_api_scope get_scope(enum mtd_api_endpoint ep)
 {
-	enum ep_api api = endpoints[ep].api;
+	enum mtd_ep_api api = endpoints[ep].api;
 
 	return endpoints[ep].scope == MTD_API_SCOPE_UNSET ?
 		api_default_values[api].scope : endpoints[ep].scope;
@@ -32,7 +32,7 @@ static inline enum mtd_api_scope get_scope(enum mtd_api_endpoint ep)
 
 static inline enum oauth_authz get_authz(enum mtd_api_endpoint ep)
 {
-	enum ep_api api = endpoints[ep].api;
+	enum mtd_ep_api api = endpoints[ep].api;
 
 	return endpoints[ep].authz == AUTHZ_UNSET ?
 		api_default_values[api].authz : endpoints[ep].authz;
@@ -42,7 +42,7 @@ int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 	   char **buf, const char * const params[])
 {
 	size_t len;
-	enum ep_api api = endpoints[ep].api;
+	enum mtd_ep_api api = endpoints[ep].api;
 	struct curl_ctx ctx = {};
 	char api_ver[128];
 

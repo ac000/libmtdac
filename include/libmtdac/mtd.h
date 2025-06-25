@@ -350,6 +350,34 @@ enum mtd_api_scope {
 /* Compat */
 #define MTD_API_SCOPE_ITSA MTD_API_SCOPE_SA
 
+enum mtd_ep_api {
+	MTD_EP_API_NULL = 0,
+
+	MTD_EP_API_BD,		/* Business Details */
+	MTD_EP_API_BISS,	/* Business Income Source Summary */
+	MTD_EP_API_BSAS,	/* Business Source Adjustable Summary */
+	MTD_EP_API_ICAL,	/* Individual Calculations */
+	MTD_EP_API_ID,		/* Individuals Disclosures */
+	MTD_EP_API_IE,		/* Individuals Expenses */
+	MTD_EP_API_IEI,		/* Individuals Employments Income */
+	MTD_EP_API_ILOS,	/* Individual Losses */
+	MTD_EP_API_IPI,		/* Individuals Pensions Income */
+	MTD_EP_API_ISB,		/* Individuals Savings Income */
+	MTD_EP_API_ISI,		/* Individuals State Benefits */
+	MTD_EP_API_OB,		/* Obligations */
+	MTD_EP_API_PB,		/* Property Business */
+	MTD_EP_API_SAA,		/* Self Assessment Accounts */
+	MTD_EP_API_SAASS,	/* Self Assessment Assist */
+	MTD_EP_API_SAID,	/* Self Assessment Individual Details */
+	MTD_EP_API_SEB,		/* Self Employment Business */
+
+	MTD_EP_API_VAT,		/* VAT */
+
+	MTD_EP_API_TEST_CU,	/* Create Test User */
+	MTD_EP_API_TEST_FPH,	/* Test Fraud Prevention Headers */
+	MTD_EP_API_TEST_SATS,	/* Self Assessment Test Support */
+};
+
 /*
  * The order of these entries must match the order in endpoints[]
  * in src/api_endpoints.h
