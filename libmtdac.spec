@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	1.1.1
+Version:	1.2.0
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -53,6 +53,16 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Thu Jun 26 2025 Andrew Clayton <ac@sigsegv.uk> - 1.2.0-1
+- Flow through API deprecation headers from HMRC
+- Add support for more endpoints; Individuals Disclosures &
+  Individuals State Benefits
+- Allow to log data sent/received to/from HMRC
+- Allow to log to a file
+- Add a new mtd_ep_api_get_info() function
+- Fix's the MTD_API_EP_BSAS_PB_SUBMIT endpoint
+- Update numerous APIs to their current production version
 
 * Mon Jun 16 2025 Andrew Clayton <ac@sigsegv.uk> - 1.1.1-1
 - Fix some of the Individuals Expenses API endpoints
