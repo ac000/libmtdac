@@ -100,7 +100,7 @@ static const struct {
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_PB] = {
-		.api_version	= "5.0",
+		.api_version	= "6.0",
 		.name		= "Property Business",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,

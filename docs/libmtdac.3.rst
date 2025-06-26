@@ -66,9 +66,9 @@ Obligations 3.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/obligations-api/3.0/oas/page
 
-Property Business 5.0
+Property Business 6.0
 
-https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/property-business-api/5.0/oas/page
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/property-business-api/6.0/oas/page
 
 Self Assessment Accounts 4.0
 

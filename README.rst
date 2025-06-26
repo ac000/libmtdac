@@ -36,7 +36,7 @@ API					 Version
 `Individuals Savings Income`_		 2.0
 `Individuals State Benefits`_		 2.0
 `Obligations`_				 3.0
-`Property Business`_			 5.0
+`Property Business`_			 6.0
 `Self Assessment Accounts`_		 4.0
 `Self Assessment Assist`_		 1.0
 `Self Assessment Individual Details`_	 2.0
@@ -61,7 +61,7 @@ API					 Version
 .. _Individuals Savings Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-savings-income-api/2.0/oas/page
 .. _Individuals State Benefits: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-state-benefits-api/2.0/oas/page
 .. _Obligations: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/obligations-api/3.0/oas/page
-.. _Property Business: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/property-business-api/5.0/oas/page
+.. _Property Business: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/property-business-api/6.0/oas/page
 .. _Self Assessment Accounts: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-accounts-api/4.0/oas/page
 .. _Self Assessment Assist: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-assist/1.0/oas/page
 .. _Self Assessment Individual Details: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-individual-details-api/2.0/oas/page
