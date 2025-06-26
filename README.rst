@@ -33,7 +33,7 @@ API					 Version
 `Individuals Expenses`_			 3.0
 `Individual Losses`_			 5.0
 `Individuals Pensions Income`_		 1.0
-`Individuals Savings Income`_		 1.0
+`Individuals Savings Income`_		 2.0
 `Individuals State Benefits`_		 2.0
 `Obligations`_				 3.0
 `Property Business`_			 5.0
@@ -58,7 +58,7 @@ API					 Version
 .. _Individuals Expenses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-expenses-api/3.0/oas/page
 .. _Individual Losses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/5.0/oas/page
 .. _Individuals Pensions Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-pensions-income-api/1.0/oas/page
-.. _Individuals Savings Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-savings-income-api/1.0/oas/page
+.. _Individuals Savings Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-savings-income-api/2.0/oas/page
 .. _Individuals State Benefits: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-state-benefits-api/2.0/oas/page
 .. _Obligations: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/obligations-api/3.0/oas/page
 .. _Property Business: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/property-business-api/5.0/oas/page

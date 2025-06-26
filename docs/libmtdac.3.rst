@@ -54,9 +54,9 @@ Individuals Pensions Income 1.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-pensions-income-api/1.0/oas/page
 
-Individuals Savings Income 1.0
+Individuals Savings Income 2.0
 
-https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-savings-income-api/1.0/oas/page
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-savings-income-api/2.0/oas/page
 
 Individuals State Benefits 2.0
 
