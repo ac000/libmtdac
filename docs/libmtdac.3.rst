@@ -50,9 +50,9 @@ Individual Losses 5.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/5.0/oas/page
 
-Individuals Pensions Income 1.0
+Individuals Pensions Income 2.0
 
-https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-pensions-income-api/1.0/oas/page
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-pensions-income-api/2.0/oas/page
 
 Individuals Savings Income 2.0
 
