@@ -237,7 +237,8 @@ static const struct {
 	[MTD_API_EP_BSAS_PB_SUBMIT] = {
 		.epstr	= "MTD_API_EP_BSAS_PB_SUBMIT",
 		.tmpl	= "/individuals/self-assessment/adjustable-summary/{nino}/uk-property/{calculationId}/{taxYear}",
-		.method	= M_GET,
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
 		.api	= MTD_EP_API_BSAS,
 	},
 	/* Foreign Property */
