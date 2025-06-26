@@ -106,7 +106,7 @@ static const struct {
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_SAA] = {
-		.api_version	= "3.0",
+		.api_version	= "4.0",
 		.name		= "Self Assessment Accounts",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
