@@ -70,7 +70,7 @@ static const struct {
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_ILOS] = {
-		.api_version	= "5.0",
+		.api_version	= "6.0",
 		.name		= "Individual Losses",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
@@ -533,14 +533,14 @@ static const struct {
 	/* Individual Losses - Brought Forward */
 	[MTD_API_EP_ILOS_BF_CREATE] = {
 		.epstr	= "MTD_API_EP_ILOS_BF_CREATE",
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses",
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/tax-year/brought-forward-from/{taxYear}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.api	= MTD_EP_API_ILOS,
 	},
 	[MTD_API_EP_ILOS_BF_AMEND_AMNT] = {
 		.epstr	= "MTD_API_EP_ILOS_BF_AMEND_AMNT",
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}/change-loss-amount",
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}/tax-year/{taxYear}/change-loss-amount",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.api	= MTD_EP_API_ILOS,
@@ -559,7 +559,7 @@ static const struct {
 	},
 	[MTD_API_EP_ILOS_BF_DELETE] = {
 		.epstr	= "MTD_API_EP_ILOS_BF_DELETE",
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}",
+		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}/tax-year/{taxYear}",
 		.method	= M_DELETE,
 		.api	= MTD_EP_API_ILOS,
 	},
@@ -585,13 +585,13 @@ static const struct {
 	},
 	[MTD_API_EP_ILOS_LC_DELETE] = {
 		.epstr	= "MTD_API_EP_ILOS_LC_DELETE",
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}",
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}/tax-year/{taxYearClaimedFor}",
 		.method	= M_DELETE,
 		.api	= MTD_EP_API_ILOS,
 	},
 	[MTD_API_EP_ILOS_LC_AMEND_TYPE] = {
 		.epstr	= "MTD_API_EP_ILOS_LC_AMEND_TYPE",
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}/change-type-of-claim",
+		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}/tax-year/{taxYearClaimedFor}/change-type-of-claim",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.api	= MTD_EP_API_ILOS,
