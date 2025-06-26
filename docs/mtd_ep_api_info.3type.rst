@@ -20,6 +20,7 @@ SYNOPSIS
   struct mtd_ep_api_info {
           enum mtd_ep_api api;
           const char *version;
+          const char *name;
   };
 
 DESCRIPTION
@@ -41,7 +42,7 @@ EXAMPLE
 
   eai = mtd_ep_api_get_info(MTD_EP_API_BD);
   if (eai.api != MTD_EP_API_NULL)
-          printf("MTD_EP_API_BD [%s]\n", eai.version);
+          printf("%s [%s]\n", eai.name, eai.version);
 
 SEE ALSO
 ========

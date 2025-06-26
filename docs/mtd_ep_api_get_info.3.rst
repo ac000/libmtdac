@@ -31,8 +31,8 @@ A *struct mtd_ep_api_info* is returned.
 
 On success, the *api* member will be set to the value of *api* as passed in.
 
-Currently one other member is set, *version* which is the version number of
-the specified API as a string.
+Currently two other members are set, *version* which is the version number of
+the specified API as a string and *name* which is the full name of the API.
 
 On failure, the *api* member will be set to *MTD_EP_API_NULL*.
 

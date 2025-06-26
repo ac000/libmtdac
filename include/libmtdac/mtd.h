@@ -614,6 +614,7 @@ enum mtd_api_endpoint {
 struct mtd_ep_api_info {
 	enum mtd_ep_api api;
 	const char *version;
+	const char *name;
 };
 
 enum mtd_data_src_type {

@@ -47,6 +47,7 @@ struct mtd_ep_api_info mtd_ep_api_get_info(enum mtd_ep_api api)
 
 	eai.api = api;
 	eai.version = api_default_values[api].api_version;
+	eai.name = api_default_values[api].name;
 
 	return eai;
 }

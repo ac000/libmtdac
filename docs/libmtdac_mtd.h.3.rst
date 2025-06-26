@@ -664,6 +664,7 @@ Used to tell **mtd_ep(3)** which API endpoint to query.
   struct mtd_ep_api_info {
           enum mtd_ep_api api;
           const char *version;
+          const char *name;
   };
 
 Structure as returned by **mtd_ep_api_get_info(3)** containing information

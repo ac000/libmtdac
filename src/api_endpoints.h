@@ -23,113 +23,135 @@ enum oauth_authz {
 
 static const struct {
 	const char *api_version;
+	const char *name;
 	enum oauth_authz authz;
 	enum mtd_api_scope scope;
 } api_default_values[] = {
 	[MTD_EP_API_BD] = {
 		.api_version	= "1.0",
+		.name		= "Business Details",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_BISS] = {
 		.api_version	= "3.0",
+		.name		= "Business Income Source Summary",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_BSAS] = {
 		.api_version	= "6.0",
+		.name		= "Business Source Adjustable Summary",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_ICAL] = {
 		.api_version	= "7.0",
+		.name		= "Individual Calculations",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_ID] = {
 		.api_version	= "2.0",
+		.name		= "Individuals Disclosures",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_IE] = {
 		.api_version	= "3.0",
+		.name		= "Individuals Expenses",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_IEI] = {
 		.api_version	= "1.0",
+		.name		= "Individuals Employments Income",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_ILOS] = {
 		.api_version	= "5.0",
+		.name		= "Individual Losses",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_IPI] = {
 		.api_version	= "1.0",
+		.name		= "Individuals Pensions Income",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_ISB] = {
 		.api_version	= "2.0",
+		.name		= "Individuals State Benefits",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_ISI] = {
 		.api_version	= "1.0",
+		.name		= "Individuals Savings Income",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_OB] = {
 		.api_version	= "3.0",
+		.name		= "Obligations",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_PB] = {
 		.api_version	= "5.0",
+		.name		= "Property Business",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_SAA] = {
 		.api_version	= "3.0",
+		.name		= "Self Assessment Accounts",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_SAASS] = {
 		.api_version	= "1.0",
+		.name		= "Self Assessment Assist",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SAASS,
 	},
 	[MTD_EP_API_SAID] = {
 		.api_version	= "2.0",
+		.name		= "Self Assessment Individual Details",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_SEB] = {
 		.api_version	= "4.0",
+		.name		= "Self Employment Business",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
 
 	[MTD_EP_API_VAT] = {
 		.api_version	= "1.0",
+		.name		= "VAT",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_VAT,
 	},
 
 	[MTD_EP_API_TEST_CU] = {
 		.api_version	= "1.0",
+		.name		= "Create Test User",
 		.authz		= AUTHZ_APPLICATION,
 		.scope		= MTD_API_SCOPE_NULL,
 	},
 	[MTD_EP_API_TEST_FPH] = {
 		.api_version	= "1.0",
+		.name		= "Test Fraud Prevention Headers",
 		.authz		= AUTHZ_APPLICATION,
 		.scope		= MTD_API_SCOPE_NULL,
 	},
 	[MTD_EP_API_TEST_SATS] = {
 		.api_version	= "1.0",
+		.name		= "Self Assessment Test Support",
 		.authz		= AUTHZ_APPLICATION,
 		.scope		= MTD_API_SCOPE_SA,
 	},
