@@ -82,9 +82,9 @@ Self Assessment Individual Details 2.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-individual-details-api/2.0/oas/page
 
-Self-Employment Business 4.0
+Self-Employment Business 5.0
 
-https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-employment-business-api/4.0/oas/page
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-employment-business-api/5.0/oas/page
 
 VAT 1.0
 
