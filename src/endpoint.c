@@ -38,6 +38,19 @@ static inline enum oauth_authz get_authz(enum mtd_api_endpoint ep)
 		api_default_values[api].authz : endpoints[ep].authz;
 }
 
+struct mtd_ep_api_info mtd_ep_api_get_info(enum mtd_ep_api api)
+{
+	struct mtd_ep_api_info eai = { .api = MTD_EP_API_NULL };
+
+	if (api >= MTD_EP_API_SENTINAL)
+		return eai;
+
+	eai.api = api;
+	eai.version = api_default_values[api].api_version;
+
+	return eai;
+}
+
 int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 	   char **buf, const char * const params[])
 {

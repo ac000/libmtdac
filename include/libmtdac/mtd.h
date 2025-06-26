@@ -376,6 +376,8 @@ enum mtd_ep_api {
 	MTD_EP_API_TEST_CU,	/* Create Test User */
 	MTD_EP_API_TEST_FPH,	/* Test Fraud Prevention Headers */
 	MTD_EP_API_TEST_SATS,	/* Self Assessment Test Support */
+
+	MTD_EP_API_SENTINAL	/* keep last */
 };
 
 /*
@@ -609,6 +611,11 @@ enum mtd_api_endpoint {
 	MTD_API_EP_OA_APPLICATION_TOKEN,
 };
 
+struct mtd_ep_api_info {
+	enum mtd_ep_api api;
+	const char *version;
+};
+
 enum mtd_data_src_type {
 	MTD_DATA_SRC_FILE = 0,
 	MTD_DATA_SRC_BUF,
@@ -707,6 +714,7 @@ extern const char *mtd_http_status_str_u(const char *json);
 extern const char *mtd_http_status_str(const char *json);
 extern enum mtd_hmrc_error mtd_hmrc_error(const char *json);
 
+extern struct mtd_ep_api_info mtd_ep_api_get_info(enum mtd_ep_api api);
 extern int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 		  char **buf, const char * const params[]);
 
