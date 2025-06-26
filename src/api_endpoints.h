@@ -40,7 +40,7 @@ static const struct {
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_BSAS] = {
-		.api_version	= "6.0",
+		.api_version	= "7.0",
 		.name		= "Business Source Adjustable Summary",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,

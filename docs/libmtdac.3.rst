@@ -26,9 +26,9 @@ Business Income Source Summary 3.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-biss-api/3.0/oas/page
 
-Business Source Adjustable Summary 6.0
+Business Source Adjustable Summary 7.0
 
-https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-bsas-api/6.0/oas/page
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-bsas-api/7.0/oas/page
 
 Individual Calculations 7.0
 
