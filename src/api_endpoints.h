@@ -64,7 +64,7 @@ static const struct {
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_IEI] = {
-		.api_version	= "1.0",
+		.api_version	= "2.0",
 		.name		= "Individuals Employments Income",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,

@@ -38,9 +38,9 @@ Individuals Disclosures 2.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-disclosures-api/2.0/oas/page
 
-Individuals Employments Income 1.0
+Individuals Employments Income 2.0
 
-https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-income-api/1.0/oas/page
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-income-api/2.0/oas/page
 
 Individuals Expenses 3.0
 
