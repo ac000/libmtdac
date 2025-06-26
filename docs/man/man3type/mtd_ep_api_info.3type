@@ -12,6 +12,7 @@ libmtdac, \f[I]\-lmtdac\f[R]
 struct mtd_ep_api_info {
         enum mtd_ep_api api;
         const char *version;
+        const char *name;
 };
 .EE
 .SH DESCRIPTION
@@ -28,7 +29,7 @@ struct mtd_ep_api_info eai;
 
 eai = mtd_ep_api_get_info(MTD_EP_API_BD);
 if (eai.api != MTD_EP_API_NULL)
-        printf(\[dq]MTD_EP_API_BD [%s]\[rs]n\[dq], eai.version);
+        printf(\[dq]%s [%s]\[rs]n\[dq], eai.name, eai.version);
 .EE
 .SH SEE ALSO
 \f[B]libmtdac(3)\f[R], \f[B]libmtdac_mtd.h(3)\f[R],

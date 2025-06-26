@@ -22,8 +22,9 @@ A \f[I]struct mtd_ep_api_info\f[R] is returned.
 On success, the \f[I]api\f[R] member will be set to the value of
 \f[I]api\f[R] as passed in.
 .PP
-Currently one other member is set, \f[I]version\f[R] which is the
-version number of the specified API as a string.
+Currently two other members are set, \f[I]version\f[R] which is the
+version number of the specified API as a string and \f[I]name\f[R] which
+is the full name of the API.
 .PP
 On failure, the \f[I]api\f[R] member will be set to
 \f[I]MTD_EP_API_NULL\f[R].
