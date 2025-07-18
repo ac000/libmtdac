@@ -31,6 +31,7 @@ API					 Version
 `Individuals Disclosures`_		 2.0
 `Individuals Employments Income`_	 2.0
 `Individuals Expenses`_			 3.0
+`Individuals Foreign Income`_		 2.0
 `Individual Losses`_			 6.0
 `Individuals Other Income`_		 2.0
 `Individuals Pensions Income`_		 2.0
@@ -57,6 +58,7 @@ API					 Version
 .. _Individuals Disclosures: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-disclosures-api/2.0/oas/page
 .. _Individuals Employments Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-income-api/2.0/oas/page
 .. _Individuals Expenses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-expenses-api/3.0/oas/page
+.. _Individuals Foreign Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-foreign-income-api/2.0/oas/page
 .. _Individual Losses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/6.0/oas/page
 .. _Individuals Other Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-other-income-api/2.0/oas/page
 .. _Individuals Pensions Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-pensions-income-api/2.0/oas/page

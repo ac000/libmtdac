@@ -46,6 +46,10 @@ Individuals Expenses 3.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-expenses-api/3.0/oas/page
 
+Individuals Foreign Income 2.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-foreign-income-api/2.0/oas/page
+
 Individual Losses 6.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/6.0/oas/page

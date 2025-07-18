@@ -411,6 +411,7 @@ MTD API Endpoints
           MTD_EP_API_ID,          /* Individuals Disclosures */
           MTD_EP_API_IE,          /* Individuals Expenses */
           MTD_EP_API_IEI,         /* Individuals Employments Income */
+          MTD_EP_API_IFI,         /* Individuals Foreign Income */
           MTD_EP_API_ILOS,        /* Individual Losses */
           MTD_EP_API_IOI,         /* Individuals Other Income */
           MTD_EP_API_IPI,         /* Individuals Pensions Income */
@@ -498,6 +499,11 @@ MTD API Endpoints
           MTD_API_EP_IE_OE_AMEND,
           MTD_API_EP_IE_OE_GET,
           MTD_API_EP_IE_OE_DELETE,
+
+          /* Individuals Foreign Income */
+          MTD_API_EP_IFI_AMEND,
+          MTD_API_EP_IFI_GET,
+          MTD_API_EP_IFI_DELETE,
 
           /* Individual Losses - Brought Forward */
           MTD_API_EP_ILOS_BF_CREATE,
