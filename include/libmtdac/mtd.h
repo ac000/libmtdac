@@ -275,6 +275,7 @@ enum mtd_hmrc_error {
 	MTD_HMRC_ERR_RULE_TO_DATE_BEFORE_FROM_DATE,
 	MTD_HMRC_ERR_RULE_TRADING_INCOME_ALLOWANCE_CLAIMED,
 	MTD_HMRC_ERR_RULE_TYPE_OF_BUSINESS_INCORRECT,
+	MTD_HMRC_ERR_RULE_UNALIGNED_CESSATION_TAX_YEAR,
 	MTD_HMRC_ERR_RULE_UNIGNORE_FORBIDDEN,
 	MTD_HMRC_ERR_RULE_UPDATE_FORBIDDEN,
 	MTD_HMRC_ERR_RULE_VOLUNTARY_CLASS2_CANNOT_BE_CHANGED,
@@ -362,6 +363,7 @@ enum mtd_ep_api {
 	MTD_EP_API_IE,		/* Individuals Expenses */
 	MTD_EP_API_IEI,		/* Individuals Employments Income */
 	MTD_EP_API_ILOS,	/* Individual Losses */
+	MTD_EP_API_IOI,		/* Individuals Other Income */
 	MTD_EP_API_IPI,		/* Individuals Pensions Income */
 	MTD_EP_API_ISB,		/* Individuals Savings Income */
 	MTD_EP_API_ISI,		/* Individuals State Benefits */
@@ -465,6 +467,11 @@ enum mtd_api_endpoint {
 	MTD_API_EP_ILOS_LC_DELETE,
 	MTD_API_EP_ILOS_LC_AMEND_TYPE,
 	MTD_API_EP_ILOS_LC_AMEND_ORDER,
+
+	/* Individuals Other Income */
+	MTD_API_EP_IOI_GET,
+	MTD_API_EP_IOI_AMEND,
+	MTD_API_EP_IOI_DELETE,
 
 	/* Individuals Pensions Income */
 	MTD_API_EP_IPI_GET,

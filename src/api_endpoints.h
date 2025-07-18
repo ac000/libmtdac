@@ -75,6 +75,12 @@ static const struct {
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
+	[MTD_EP_API_IOI] = {
+		.api_version	= "2.0",
+		.name		= "Individuals Other Income",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
 	[MTD_EP_API_IPI] = {
 		.api_version	= "2.0",
 		.name		= "Individuals Pensions Income",
@@ -602,6 +608,27 @@ static const struct {
 		.method	= M_PUT,
 		.ctype  = CONTENT_TYPE_JSON,
 		.api	= MTD_EP_API_ILOS,
+	},
+
+	/* Individuals Other Income */
+	[MTD_API_EP_IOI_GET] = {
+		.epstr	= "MTD_API_EP_IOI_GET",
+		.tmpl	= "/individuals/other-income/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IOI,
+	},
+	[MTD_API_EP_IOI_AMEND] = {
+		.epstr	= "MTD_API_EP_IOI_AMEND",
+		.tmpl	= "/individuals/other-income/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IOI,
+	},
+	[MTD_API_EP_IOI_DELETE] = {
+		.epstr	= "MTD_API_EP_IOI_DELETE",
+		.tmpl	= "/individuals/other-income/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IOI,
 	},
 
 	/* Individuals Pensions Income */
