@@ -45,6 +45,12 @@ static const struct {
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
+	[MTD_EP_API_CISD] = {
+		.api_version	= "3.0",
+		.name		= "CIS Deductions",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
 	[MTD_EP_API_ICAL] = {
 		.api_version	= "7.0",
 		.name		= "Individual Calculations",
@@ -266,6 +272,34 @@ static const struct {
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.api	= MTD_EP_API_BSAS,
+	},
+
+	/* CIS Deductions */
+	[MTD_API_EP_CISD_GET] = {
+		.epstr	= "MTD_API_EP_CISD_GET",
+		.tmpl	= "/individuals/deductions/cis/{nino}/current-position/{taxYear}/{source}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_CISD,
+	},
+	[MTD_API_EP_CISD_CREATE] = {
+		.epstr	= "MTD_API_EP_CISD_CREATE",
+		.tmpl	= "/individuals/deductions/cis/{nino}/amendments",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_CISD,
+	},
+	[MTD_API_EP_CISD_AMEND] = {
+		.epstr	= "MTD_API_EP_CISD_AMEND",
+		.tmpl	= "/individuals/deductions/cis/{nino}/amendments/{submissionId}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_CISD,
+	},
+	[MTD_API_EP_CISD_DELETE] = {
+		.epstr	= "MTD_API_EP_CISD_DELETE",
+		.tmpl	= "/individuals/deductions/cis/{nino}/amendments/{submissionId}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_CISD,
 	},
 
 	/* Individual Calculations - Tax Calculations */

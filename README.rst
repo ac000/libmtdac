@@ -27,6 +27,7 @@ API					 Version
 `Business Details`_			 1.0
 `Business Income Source Summary`_	 3.0
 `Business Source Adjustable Summary`_	 7.0
+`CIS Deductions`_			 3.0
 `Individual Calculations`_		 7.0
 `Individuals Disclosures`_		 2.0
 `Individuals Employments Income`_	 2.0
@@ -54,6 +55,7 @@ API					 Version
 .. _Business Details: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/business-details-api/1.0/oas/page
 .. _Business Income Source Summary: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-biss-api/3.0/oas/page
 .. _Business Source Adjustable Summary: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-bsas-api/7.0/oas/page
+.. _CIS Deductions: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/cis-deductions-api/3.0/oas/page
 .. _Individual Calculations: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/7.0/oas/page
 .. _Individuals Disclosures: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-disclosures-api/2.0/oas/page
 .. _Individuals Employments Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-income-api/2.0/oas/page

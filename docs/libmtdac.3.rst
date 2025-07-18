@@ -30,6 +30,10 @@ Business Source Adjustable Summary 7.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-bsas-api/7.0/oas/page
 
+CIS Deductions 3.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/cis-deductions-api/3.0/oas/page
+
 Individual Calculations 7.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/7.0/oas/page
