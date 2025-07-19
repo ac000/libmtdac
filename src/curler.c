@@ -343,6 +343,8 @@ static int curl_perform(struct curl_ctx *ctx)
 
 	if (ctx->http_method == M_PUT)
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
+	else if (ctx->http_method == M_DELETE)
+		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
 
 	if (ctx->post_data) {
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, ctx->post_data);
