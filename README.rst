@@ -30,6 +30,7 @@ API							Version
 `CIS Deductions`_					3.0
 `Individual Calculations`_				7.0
 `Individuals Disclosures`_				2.0
+`Individuals Dividends Income`_				2.0
 `Individuals Employments Income`_			2.0
 `Individuals Expenses`_					3.0
 `Individuals Foreign Income`_				2.0
@@ -59,6 +60,7 @@ API							Version
 .. _CIS Deductions: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/cis-deductions-api/3.0/oas/page
 .. _Individual Calculations: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/7.0/oas/page
 .. _Individuals Disclosures: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-disclosures-api/2.0/oas/page
+.. _Individuals Dividends Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-dividends-income-api/2.0/oas/page
 .. _Individuals Employments Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-income-api/2.0/oas/page
 .. _Individuals Expenses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-expenses-api/3.0/oas/page
 .. _Individuals Foreign Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-foreign-income-api/2.0/oas/page

@@ -120,6 +120,8 @@ enum mtd_hmrc_error {
         MTD_HMRC_ERR_FORMAT_CLASS_4_EXEMPTION_REASON,
         MTD_HMRC_ERR_FORMAT_CLASS_OF_SHARES_ACQUIRED,
         MTD_HMRC_ERR_FORMAT_CLASS_OF_SHARES_AWARDED,
+        MTD_HMRC_ERR_FORMAT_COMPANY_NAME,
+        MTD_HMRC_ERR_FORMAT_COMPANY_NUMBER,
         MTD_HMRC_ERR_FORMAT_COUNTRY_CODE,
         MTD_HMRC_ERR_FORMAT_CUSTOMER_PAYMENT_INFORMATION,
         MTD_HMRC_ERR_FORMAT_CUSTOMER_REF,
@@ -127,6 +129,7 @@ enum mtd_hmrc_error {
         MTD_HMRC_ERR_FORMAT_DATE,
         MTD_HMRC_ERR_FORMAT_DEDUCTIONS_FROM_DATE,
         MTD_HMRC_ERR_FORMAT_DEDUCTIONS_TO_DATE,
+        MTD_HMRC_ERR_FORMAT_DIRECTORSHIP_CEASED_DATE,
         MTD_HMRC_ERR_FORMAT_DOC_NUMBER,
         MTD_HMRC_ERR_FORMAT_DOUBLE_TAXATION_ARTICLE,
         MTD_HMRC_ERR_FORMAT_DOUBLE_TAXATION_TREATY,
@@ -233,6 +236,7 @@ enum mtd_hmrc_error {
         MTD_HMRC_ERR_RULE_DEDUCTIONS_DATE_RANGE_INVALID,
         MTD_HMRC_ERR_RULE_DELETE_AFTER_FINAL_DECLARATION,
         MTD_HMRC_ERR_RULE_DELETE_FORBIDDEN,
+        MTD_HMRC_ERR_RULE_DIRECTORSHIP_CEASED_DATE,
         MTD_HMRC_ERR_RULE_DUPLICATE_COUNTRY_CODE,
         MTD_HMRC_ERR_RULE_DUPLICATE_ID_NOT_ALLOWED,
         MTD_HMRC_ERR_RULE_DUPLICATE_PERIOD,
@@ -259,6 +263,8 @@ enum mtd_hmrc_error {
         MTD_HMRC_ERR_RULE_ITSA_CONTRACT_OBJECT_NOT_EXIST,
         MTD_HMRC_ERR_RULE_LUMP_SUMS,
         MTD_HMRC_ERR_RULE_MISALIGNED_PERIOD,
+        MTD_HMRC_ERR_RULE_MISSING_CLOSE_COMPANY,
+        MTD_HMRC_ERR_RULE_MISSING_CLOSE_COMPANY_DETAILS,
         MTD_HMRC_ERR_RULE_MISSING_SUBMISSION_DATES,
         MTD_HMRC_ERR_RULE_NO_ACCOUNTING_PERIOD,
         MTD_HMRC_ERR_RULE_NO_CHANGE,
@@ -397,6 +403,7 @@ enum mtd_ep_api {
         MTD_EP_API_CISD,        /* CIS Deductions */
         MTD_EP_API_ICAL,        /* Individual Calculations */
         MTD_EP_API_ID,          /* Individuals Disclosures */
+        MTD_EP_API_IDI,         /* Individuals Dividends Income */
         MTD_EP_API_IE,          /* Individuals Expenses */
         MTD_EP_API_IEI,         /* Individuals Employments Income */
         MTD_EP_API_IFI,         /* Individuals Foreign Income */
@@ -464,6 +471,19 @@ enum mtd_api_endpoint {
         MTD_API_EP_ID_D_GET,
         MTD_API_EP_ID_D_AMEND,
         MTD_API_EP_ID_D_DELETE,
+
+        /* Individuals Dividends Income \- Dividends Income */
+        MTD_API_EP_IDI_DI_GET,
+        MTD_API_EP_IDI_DI_AMEND,
+        MTD_API_EP_IDI_DI_DELETE,
+        /* UK Dividends Income */
+        MTD_API_EP_IDI_UKDI_GET,
+        MTD_API_EP_IDI_UKDI_AMEND,
+        MTD_API_EP_IDI_UKDI_DELETE,
+        /* Additional Directorship and Dividend Information */
+        MTD_API_EP_IDI_ADDI_GET,
+        MTD_API_EP_IDI_ADDI_AMEND,
+        MTD_API_EP_IDI_ADDI_DELETE,
 
         /* Individuals Employments Income \- Employments */
         MTD_API_EP_IEI_E_LIST,

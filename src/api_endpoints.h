@@ -63,6 +63,12 @@ static const struct {
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
+	[MTD_EP_API_IDI] = {
+		.api_version	= "2.0",
+		.name		= "Individuals Dividends Income",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
 	[MTD_EP_API_IE] = {
 		.api_version	= "3.0",
 		.name		= "Individuals Expenses",
@@ -370,6 +376,67 @@ static const struct {
 		.tmpl	= "/individuals/disclosures/{nino}/{taxYear}",
 		.method	= M_DELETE,
 		.api	= MTD_EP_API_ID,
+	},
+
+	/* Individuals Dividends Income - Dividends Income */
+	[MTD_API_EP_IDI_DI_GET] = {
+		.epstr	= "MTD_API_EP_IDI_DI_GET",
+		.tmpl	= "/individuals/dividends-income/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IDI,
+	},
+	[MTD_API_EP_IDI_DI_AMEND] = {
+		.epstr	= "MTD_API_EP_IDI_DI_AMEND",
+		.tmpl	= "/individuals/dividends-income/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IDI,
+	},
+	[MTD_API_EP_IDI_DI_DELETE] = {
+		.epstr	= "MTD_API_EP_IDI_DI_DELETE",
+		.tmpl	= "/individuals/dividends-income/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IDI,
+	},
+	/* UK Dividends Income */
+	[MTD_API_EP_IDI_UKDI_GET] = {
+		.epstr	= "MTD_API_EP_IDI_UKDI_GET",
+		.tmpl	= "/individuals/dividends-income/uk/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IDI,
+	},
+	[MTD_API_EP_IDI_UKDI_AMEND] = {
+		.epstr	= "MTD_API_EP_IDI_UKDI_AMEND",
+		.tmpl	= "/individuals/dividends-income/uk/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IDI,
+	},
+	[MTD_API_EP_IDI_UKDI_DELETE] = {
+		.epstr	= "MTD_API_EP_IDI_UKDI_DELETE",
+		.tmpl	= "/individuals/dividends-income/uk/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IDI,
+	},
+	/* Additional Directorship and Dividend Information */
+	[MTD_API_EP_IDI_ADDI_GET] = {
+		.epstr	= "MTD_API_EP_IDI_ADDI_GET",
+		.tmpl	= "/individuals/dividends-income/directorship/{nino}/{taxYear}/{employmentId}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IDI,
+	},
+	[MTD_API_EP_IDI_ADDI_AMEND] = {
+		.epstr	= "MTD_API_EP_IDI_ADDI_AMEND",
+		.tmpl	= "/individuals/dividends-income/directorship/{nino}/{taxYear}/{employmentId}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IDI,
+	},
+	[MTD_API_EP_IDI_ADDI_DELETE] = {
+		.epstr	= "MTD_API_EP_IDI_ADDI_DELETE",
+		.tmpl	= "/individuals/dividends-income/directorship/{nino}/{taxYear}/{employmentId}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IDI,
 	},
 
 	/* Individuals State Benefits */
