@@ -68,6 +68,8 @@ int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 	    return MTD_ERR_REQUEST;
 
 	ctx.mtd_api_ver_hdr = api_ver_hdr;
+	ctx.mtd_api_name = api_default_values[api].name;
+	ctx.mtd_api_ver = api_default_values[api].api_version;
 	ctx.endpoint = ep;
 	ctx.epstr = endpoints[ep].epstr;
 	ctx.scope = get_scope(ep);

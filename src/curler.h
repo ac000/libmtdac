@@ -50,6 +50,8 @@ struct curl_ctx {
 	char *link_hdr;
 
 	const char *mtd_api_ver_hdr;
+	const char *mtd_api_name;
+	const char *mtd_api_ver;
 
 	enum http_method http_method;
 	enum mtd_api_endpoint endpoint;

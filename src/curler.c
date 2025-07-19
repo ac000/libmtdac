@@ -263,10 +263,12 @@ static void set_response(struct curl_ctx *ctx)
 		json_decref(loc);
 	}
 
-	new = json_pack("{s:i, s:s, s:s, s:s, s:s, s:s?, s:s?, s:s?, s:s?, s:s, s:o?}",
+	new = json_pack("{s:i, s:s, s:s, s:s?, s:s?, s:s, s:s, s:s?, s:s?, s:s?, s:s?, s:s, s:o?}",
 			"status_code", ctx->status_code,
 			"status_str", http_status_code2str(ctx->status_code),
 			"libmtdac_endpoint", ctx->epstr,
+			"api_name", ctx->mtd_api_name,
+			"api_ver", ctx->mtd_api_ver,
 			"url", ctx->url,
 			"method", methods_str[ctx->http_method].str,
 			"xid", ctx->x_corr_id,
