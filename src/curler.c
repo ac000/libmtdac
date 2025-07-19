@@ -398,7 +398,7 @@ static int set_headers(struct curl_ctx *ctx)
 	const char * const *hdrs;
 
 	if (!strstr(ctx->url, "/oauth/token")) {
-		err = curl_add_hdr(ctx, ctx->mtd_api_ver);
+		err = curl_add_hdr(ctx, ctx->mtd_api_ver_hdr);
 		if (err)
 			return MTD_ERR_OS;
 	}
