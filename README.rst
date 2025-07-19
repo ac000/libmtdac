@@ -21,36 +21,37 @@ Digital <https://developer.service.hmrc.gov.uk/api-documentation>`__ API
 
 It currently supports the following MTD APIs
 
-=====================================	 =======
-API					 Version
-=====================================	 =======
-`Business Details`_			 1.0
-`Business Income Source Summary`_	 3.0
-`Business Source Adjustable Summary`_	 7.0
-`CIS Deductions`_			 3.0
-`Individual Calculations`_		 7.0
-`Individuals Disclosures`_		 2.0
-`Individuals Employments Income`_	 2.0
-`Individuals Expenses`_			 3.0
-`Individuals Foreign Income`_		 2.0
-`Individual Losses`_			 6.0
-`Individuals Other Income`_		 2.0
-`Individuals Pensions Income`_		 2.0
-`Individuals Savings Income`_		 2.0
-`Individuals State Benefits`_		 2.0
-`Obligations`_				 3.0
-`Property Business`_			 6.0
-`Self Assessment Accounts`_		 4.0
-`Self Assessment Assist`_		 1.0
-`Self Assessment Individual Details`_	 2.0
-`Self Employment Business`_		 5.0
+==================================================	=======
+API							Version
+==================================================	=======
+`Business Details`_					1.0
+`Business Income Source Summary`_			3.0
+`Business Source Adjustable Summary`_			7.0
+`CIS Deductions`_					3.0
+`Individual Calculations`_				7.0
+`Individuals Disclosures`_				2.0
+`Individuals Employments Income`_			2.0
+`Individuals Expenses`_					3.0
+`Individuals Foreign Income`_				2.0
+`Individuals Insurance Policies Income`_		2.0
+`Individual Losses`_					6.0
+`Individuals Other Income`_				2.0
+`Individuals Pensions Income`_				2.0
+`Individuals Savings Income`_				2.0
+`Individuals State Benefits`_				2.0
+`Obligations`_						3.0
+`Property Business`_					6.0
+`Self Assessment Accounts`_				4.0
+`Self Assessment Assist`_				1.0
+`Self Assessment Individual Details`_			2.0
+`Self Employment Business`_				5.0
 \
-`VAT`_					 1.0
+`VAT`_							1.0
 \
-`Create Test User`_			 1.0
-`Self Assessment Test Support`_		 1.0
-`Test Fraud Prevention Headers`_	 1.0
-=====================================	 =======
+`Create Test User`_					1.0
+`Self Assessment Test Support`_				1.0
+`Test Fraud Prevention Headers`_			1.0
+==================================================	=======
 
 .. _Business Details: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/business-details-api/1.0/oas/page
 .. _Business Income Source Summary: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-biss-api/3.0/oas/page
@@ -61,6 +62,7 @@ API					 Version
 .. _Individuals Employments Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-employments-income-api/2.0/oas/page
 .. _Individuals Expenses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-expenses-api/3.0/oas/page
 .. _Individuals Foreign Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-foreign-income-api/2.0/oas/page
+.. _Individuals Insurance Policies Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-insurance-policies-income-api/2.0/oas/page
 .. _Individual Losses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/6.0/oas/page
 .. _Individuals Other Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-other-income-api/2.0/oas/page
 .. _Individuals Pensions Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-pensions-income-api/2.0/oas/page

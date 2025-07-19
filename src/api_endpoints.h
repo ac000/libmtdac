@@ -81,6 +81,12 @@ static const struct {
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
+	[MTD_EP_API_IIPI] = {
+		.api_version	= "2.0",
+		.name		= "Individuals Insurance Policies Income",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
 	[MTD_EP_API_ILOS] = {
 		.api_version	= "6.0",
 		.name		= "Individual Losses",
@@ -595,6 +601,27 @@ static const struct {
 		.tmpl	= "/individuals/foreign-income/{nino}/{taxYear}",
 		.method	= M_DELETE,
 		.api	= MTD_EP_API_IFI,
+	},
+
+	/* Individuals Insurance Policies Income */
+	[MTD_API_EP_IIPI_GET] = {
+		.epstr	= "MTD_API_EP_IIPI_GET",
+		.tmpl	= "/individuals/insurance-policies-income/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IIPI,
+	},
+	[MTD_API_EP_IIPI_AMEND] = {
+		.epstr	= "MTD_API_EP_IIPI_AMEND",
+		.tmpl	= "/individuals/insurance-policies-income/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IIPI,
+	},
+	[MTD_API_EP_IIPI_DELETE] = {
+		.epstr	= "MTD_API_EP_IIPI_DELETE",
+		.tmpl	= "/individuals/insurance-policies-income/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IIPI,
 	},
 
 	/* Individual Losses - Brought Forward */

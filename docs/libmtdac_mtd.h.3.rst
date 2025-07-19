@@ -156,6 +156,7 @@ Errors (HMRC)
           MTD_HMRC_ERR_FORMAT_EMPLOYER_REFERENCE,
           MTD_HMRC_ERR_FORMAT_EMPLOYMENT_ID,
           MTD_HMRC_ERR_FORMAT_END_DATE,
+          MTD_HMRC_ERR_FORMAT_EVENT,
           MTD_HMRC_ERR_FORMAT_FINAL_DECLARATION,
           MTD_HMRC_ERR_FORMAT_FROM_DATE,
           MTD_HMRC_ERR_FORMAT_FUTURE_YEARS,
@@ -424,6 +425,7 @@ MTD API Endpoints
           MTD_EP_API_IE,          /* Individuals Expenses */
           MTD_EP_API_IEI,         /* Individuals Employments Income */
           MTD_EP_API_IFI,         /* Individuals Foreign Income */
+          MTD_EP_API_IIPI,        /* Individuals Insurance Policies Income */
           MTD_EP_API_ILOS,        /* Individual Losses */
           MTD_EP_API_IOI,         /* Individuals Other Income */
           MTD_EP_API_IPI,         /* Individuals Pensions Income */
@@ -522,6 +524,11 @@ MTD API Endpoints
           MTD_API_EP_IFI_AMEND,
           MTD_API_EP_IFI_GET,
           MTD_API_EP_IFI_DELETE,
+
+          /* Individuals Insurance Policies Income */
+          MTD_API_EP_IIPI_GET,
+          MTD_API_EP_IIPI_AMEND,
+          MTD_API_EP_IIPI_DELETE,
 
           /* Individual Losses - Brought Forward */
           MTD_API_EP_ILOS_BF_CREATE,
