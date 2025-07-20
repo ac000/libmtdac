@@ -286,8 +286,16 @@ static void set_response(struct curl_ctx *ctx)
 	json_array_append_new(resbuf, new);
 
 	free(ctx->res_buf);
+
 	free(ctx->x_corr_id);
+	free(ctx->deprecation_hdr);
+	free(ctx->sunset_hdr);
+	free(ctx->link_hdr);
 	ctx->x_corr_id = NULL;
+	ctx->deprecation_hdr = NULL;
+	ctx->sunset_hdr = NULL;
+	ctx->link_hdr = NULL;
+
 	ctx->res_buf = json_dumps(resbuf, JSON_INDENT(4));
 
 	logger(MTD_LOG_DEBUG_DATA, "[%s]\n", ctx->res_buf);
