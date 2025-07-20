@@ -457,7 +457,7 @@ int write_config(const char *dir, const char *name, const json_t *json)
 	close(fd);
 	close(dfd);
 
-	return ret;;
+	return ret;
 }
 
 static const struct {
