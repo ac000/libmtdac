@@ -256,7 +256,7 @@ static const struct {
 	}
 };
 
-enum mtd_hmrc_error mtd_hmrc_error(const char *json)
+enum mtd_hmrc_error mtd_hmrc_get_error(const char *json)
 {
 	json_t *jarray;
 	json_t *root;

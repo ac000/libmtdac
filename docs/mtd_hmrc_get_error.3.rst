@@ -1,7 +1,7 @@
 NAME
 ====
 
-**mtd_hmrc_error** - get HMRC endpoint error code
+**mtd_hmrc_get_error** - get HMRC endpoint error code
 
 LIBRARY
 =======
@@ -13,7 +13,7 @@ SYNOPSIS
 
 **#include <libmtdac/mtd.h>**
 
-enum mtd_hmrc_error mtd_hmrc_error(const char \*json);
+enum mtd_hmrc_error mtd_hmrc_get_error(const char \*json);
 
 DESCRIPTION
 ===========

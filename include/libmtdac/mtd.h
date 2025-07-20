@@ -772,7 +772,7 @@ extern const char *mtd_err2enum_str(int err);
 extern enum mtd_http_status_code mtd_http_status_code(const char *json);
 extern const char *mtd_http_status_str_u(const char *json);
 extern const char *mtd_http_status_str(const char *json);
-extern enum mtd_hmrc_error mtd_hmrc_error(const char *json);
+extern enum mtd_hmrc_error mtd_hmrc_get_error(const char *json);
 
 extern struct mtd_ep_api_info mtd_ep_api_get_info(enum mtd_ep_api api);
 extern int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
