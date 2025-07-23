@@ -72,7 +72,7 @@ Specifying a filename
 
   int main(int argc, char *argv[])
   {
-          const struct mtd_cfg cfg = {
+          static const struct mtd_cfg cfg = {
                   .config_dir = "/home/foo/.config/my-app",
           };
           struct mtd_dsrc_ctx dsctx;
@@ -105,7 +105,7 @@ Using a buffer
 
   int main(void)
   {
-          const struct mtd_cfg cfg = {
+          static const struct mtd_cfg cfg = {
                   .config_dir = "/home/foo/.config/my-app",
           };
           struct mtd_dsrc_ctx dsctx;
@@ -147,7 +147,7 @@ Using a FILE *
 
   int main(int argc, char *argv[])
   {
-          const struct mtd_cfg cfg = {
+          static const struct mtd_cfg cfg = {
                   .config_dir = "/home/foo/.config/my-app",
           };
           struct mtd_dsrc_ctx dsctx;
@@ -184,7 +184,7 @@ Using a file descriptor
 
   int main(int argc, char *argv[])
   {
-          const struct mtd_cfg cfg = {
+          static const struct mtd_cfg cfg = {
                   .config_dir = "/home/foo/.config/my-app",
           };
           struct mtd_dsrc_ctx dsctx;
