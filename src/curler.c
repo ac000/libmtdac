@@ -597,6 +597,7 @@ curl_again:
 		   refreshed_token) {
 		if (strstr(ctx->curl_buf->buf, "invalid_request"))
 			return MTD_ERR_NEEDS_AUTHORISATION;
+		return MTD_ERR_REQUEST;
 	} else if (ctx->status_code == MTD_HTTP_SEE_OTHER) {
 		logger(MTD_LOG_INFO, "Performing re-direct: GET %s\n",
 		       ctx->location);
