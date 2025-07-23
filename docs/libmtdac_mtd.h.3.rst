@@ -342,6 +342,19 @@ Errors (HMRC)
           MTD_HMRC_ERR_UNKNOWN
   };
 
+  struct mtd_hmrc_err {
+          enum mtd_hmrc_error error;
+          const char *code;
+          const char *msg;
+          struct mtd_hmrc_err *next;
+  };
+
+Structure as returned by **mtd_hmrc_get_error(3)**. Actually it's a linked
+list of structures with the *next* member pointing to the next structure
+or *NULL*. See **mtd_hmrc_err(3type)**.
+
+Should be freed with **mtd_hmrc_free_error(3)**.
+
 HTTP status codes (relevant to the MTD API)
 -------------------------------------------
 

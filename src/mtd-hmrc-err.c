@@ -8,6 +8,7 @@
 
 #define _GNU_SOURCE
 
+#include <stdlib.h>
 #include <string.h>
 
 #include <jansson.h>
@@ -256,79 +257,106 @@ static const struct {
 	}
 };
 
-enum mtd_hmrc_error mtd_hmrc_get_error(const char *json)
+void mtd_hmrc_free_error(struct mtd_hmrc_err *mhe)
+{
+	while (mhe) {
+		struct mtd_hmrc_err *p;
+
+		p = mhe;
+		mhe = mhe->next;
+
+		free((char *)p->code);
+		free((char *)p->msg);
+		free(p);
+	}
+}
+
+static enum mtd_hmrc_error lookup_hmrc_error(const char *code)
+{
+	for (int i = 0; i < MTD_HMRC_ERR_UNKNOWN; i++) {
+		if (strcmp(mtd_hmrc_err_map[i].str, code) == 0)
+			return i;
+	}
+
+	return MTD_HMRC_ERR_UNKNOWN;
+}
+
+
+int mtd_hmrc_get_error(const char *json, struct mtd_hmrc_err **mhe)
 {
 	json_t *jarray;
 	json_t *root;
 	json_t *result;
 	json_t *code_obj;
-	json_t *ecode_obj = NULL;
+	json_t *msg_obj;
 	json_t *errors;
+	json_t *error;
+	size_t index;
 	const char *code;
-	int i;
-	enum mtd_hmrc_error err = MTD_HMRC_ERR_UNKNOWN;
+	struct mtd_hmrc_err *mhep;
 
 	jarray = json_loads(json, 0, NULL);
 	root = json_array_get(jarray, json_array_size(jarray) - 1);
 	result = json_object_get(root, "result");
-	errors = json_object_get(root, "errors");
-	if (errors && json_array_size(errors) > 1) {
-		err = MTD_HMRC_ERR_MULTIPLE;
-		goto out_free;
-	} else if (errors) {
-		ecode_obj = json_object_get(errors, "code");
-		code_obj = ecode_obj;
-	}
+	errors = json_object_get(result, "errors");
 
-	/*
-	 * You can get 1 or more HMRC errors returned from endpoints.
-	 *
-	 * Normally a single error would just be in the top level
-	 * 'result' and multiple errors would be contained in an
-	 * 'errors' array.
-	 *
-	 * However you can also get an errors array that only contains
-	 * a single error and still have a top level error.
-	 *
-	 * Whether there's just a single error or multiple errors in
-	 * the errors array, that will be the more specific error. So
-	 * we want to check for that error first then fallback to the
-	 * top level error.
-	 *
-	 * The reason for two separate loops for the two codes is so
-	 * that we can put in generic codes like 'INVALID_REQUEST' &
-	 * 'BUSINESS_ERROR' and we will only use them if we didn't
-	 * find a more specific error code first.
-	 */
-	if (!ecode_obj)
+	*mhe = calloc(1, sizeof(struct mtd_hmrc_err));
+	if (!*mhe)
+		return MTD_ERR_OS;
+
+	if (!errors) {
 		code_obj = json_object_get(result, "code");
-	if (!code_obj)
-		goto out_free;
+		if (!code_obj)
+			goto out_err_free;
 
-	code = json_string_value(code_obj);
-	for (i = 0; i < MTD_HMRC_ERR_UNKNOWN; i++) {
-		if (strcmp(mtd_hmrc_err_map[i].str, code) != 0)
-			continue;
+		code = json_string_value(code_obj);
 
-		err = i;
-		goto out_free;
+		(*mhe)->error = lookup_hmrc_error(code);
+		(*mhe)->code = strdup(code);
+
+		msg_obj = json_object_get(result, "message");
+		if (msg_obj)
+			(*mhe)->msg = strdup(json_string_value(msg_obj));
+		else
+			(*mhe)->msg = strdup("");
+
+		return MTD_ERR_NONE;
 	}
 
-	if (!ecode_obj)
-		goto out_free;
+	mhep = *mhe;
 
-	code_obj = json_object_get(result, "code");
-	code = json_string_value(code_obj);
-	for (i = 0; i < MTD_HMRC_ERR_UNKNOWN; i++) {
-		if (strcmp(mtd_hmrc_err_map[i].str, code) != 0)
+	json_array_foreach(errors, index, error) {
+		code_obj = json_object_get(error, "code");
+		if (!code_obj)
 			continue;
 
-		err = i;
-		break;
+		if (index > 0) {
+			(*mhe)->next = calloc(1, sizeof(struct mtd_hmrc_err));
+			if (!(*mhe)->next)
+				goto out_err_free;
+
+			*mhe = (*mhe)->next;
+		}
+
+		code = json_string_value(code_obj);
+
+		(*mhe)->error = lookup_hmrc_error(code);
+		(*mhe)->code = strdup(code);
+
+		msg_obj = json_object_get(error, "message");
+		if (msg_obj)
+			(*mhe)->msg = strdup(json_string_value(msg_obj));
+		else
+			(*mhe)->msg = strdup("");
 	}
 
-out_free:
-	json_decref(jarray);
+	*mhe = mhep;
 
-	return err;
+	return MTD_ERR_NONE;
+
+out_err_free:
+	mtd_hmrc_free_error(*mhe);
+	*mhe = NULL;
+
+	return MTD_ERR_OS;
 }
