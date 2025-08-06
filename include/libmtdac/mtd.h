@@ -10,6 +10,7 @@
 #define _MTD_H_
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <sys/types.h>
 
 #ifdef __cplusplus
@@ -62,6 +63,51 @@ extern "C" {
 	MTD_OPT_SND_EMPTY_HDRS | \
 	MTD_OPT_GLOBAL_INIT | \
 	MTD_OPT_PRODUCTION_API
+
+enum mtd_vldt_fmt {
+	MTD_VLDT_FMT_ACCOUNT_NAME,
+	MTD_VLDT_FMT_BUSINESS_ID,
+	MTD_VLDT_FMT_CALCULATION_ID,
+	MTD_VLDT_FMT_CHARITY_NAME,
+	MTD_VLDT_FMT_COMPANY_NAME,
+	MTD_VLDT_FMT_COMPANY_NUMBER,
+	MTD_VLDT_FMT_EMPLOYER_NAME,
+	MTD_VLDT_FMT_EMPLOYER_REF,
+	MTD_VLDT_FMT_EMPLOYMENT_ID,
+	MTD_VLDT_FMT_ID_15,
+	MTD_VLDT_FMT_I_F_NAME,
+	MTD_VLDT_FMT_ISO_8601_DATE,
+	MTD_VLDT_FMT_LOSS_ID,
+	MTD_VLDT_FMT_NINO,
+	MTD_VLDT_FMT_PAYROLL_ID,
+	MTD_VLDT_FMT_PERIOD_ID,
+	MTD_VLDT_FMT_REF,
+	MTD_VLDT_FMT_SCHEME_REF,
+	MTD_VLDT_FMT_SCHEME_REF_TAS,
+	MTD_VLDT_FMT_TAX_YEAR,
+	MTD_VLDT_FMT_UUID,
+	MTD_VLDT_FMT_UUID_89AB,
+};
+
+#define MTD_VLDT_FMT_ASSET_DESC			MTD_VLDT_FMT_REF
+#define MTD_VLDT_FMT_BENEFIT_ID			MTD_VLDT_FMT_UUID_89AB
+#define MTD_VLDT_FMT_BUILDING_NAME		MTD_VLDT_FMT_REF
+#define MTD_VLDT_FMT_BUILDING_NUMBER		MTD_VLDT_FMT_REF
+#define MTD_VLDT_FMT_CORRELATION_ID		MTD_VLDT_FMT_UUID
+#define MTD_VLDT_FMT_CUSTOMER_REF		MTD_VLDT_FMT_REF
+#define MTD_VLDT_FMT_EMPLOYMENT_ID		MTD_VLDT_FMT_UUID_89AB
+#define MTD_VLDT_FMT_EVENT			MTD_VLDT_FMT_REF
+#define MTD_VLDT_FMT_HOLDING_COMPANY_NAME	MTD_VLDT_FMT_I_F_NAME
+#define MTD_VLDT_FMT_POSTCODE			MTD_VLDT_FMT_REF
+#define MTD_VLDT_FMT_QOPS_REF			MTD_VLDT_FMT_REF
+#define MTD_VLDT_FMT_REPORT_ID			MTD_VLDT_FMT_UUID
+#define MTD_VLDT_FMT_SAVINGS_ACCOUNT_NAME	MTD_VLDT_FMT_ACCOUNT_NAME
+#define MTD_VLDT_FMT_SAVINGS_ACCOUNT_ID		MTD_VLDT_FMT_ID_15
+#define MTD_VLDT_FMT_SF74_REF			MTD_VLDT_FMT_REF
+#define MTD_VLDT_FMT_SUBMISSION_ID		MTD_VLDT_FMT_UUID_89AB
+#define MTD_VLDT_FMT_TAXATION_REF		MTD_VLDT_FMT_REF
+#define MTD_VLDT_FMT_TAXATION_TREATY		MTD_VLDT_FMT_REF
+#define MTD_VLDT_FMT_UNIQUE_INVESTMENT_REF	MTD_VLDT_FMT_REF
 
 enum mtd_error {
 	MTD_ERR_NONE = 0,
@@ -781,7 +827,7 @@ extern const char *mtd_http_status_str_u(const char *json);
 extern const char *mtd_http_status_str(const char *json);
 extern int mtd_hmrc_get_error(const char *json, struct mtd_hmrc_err **mhe);
 extern void mtd_hmrc_free_error(struct mtd_hmrc_err *mhe);
-
+extern bool mtd_is_valid_fmt(enum mtd_vldt_fmt what, const char *str);
 extern struct mtd_ep_api_info mtd_ep_api_get_info(enum mtd_ep_api api);
 extern int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 		  char **buf, const char * const params[]);

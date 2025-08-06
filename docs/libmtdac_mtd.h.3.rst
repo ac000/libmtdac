@@ -85,6 +85,60 @@ of calling **mtd_global_init(3)**.
 
 Use the production rather than sandbox API.
 
+Format validation
+-----------------
+
+.. code-block::
+
+    enum mtd_vldt_fmt {
+            MTD_VLDT_FMT_ACCOUNT_NAME,
+            MTD_VLDT_FMT_BUSINESS_ID,
+            MTD_VLDT_FMT_CALCULATION_ID,
+            MTD_VLDT_FMT_CHARITY_NAME,
+            MTD_VLDT_FMT_COMPANY_NAME,
+            MTD_VLDT_FMT_COMPANY_NUMBER,
+            MTD_VLDT_FMT_EMPLOYER_NAME,
+            MTD_VLDT_FMT_EMPLOYER_REF,
+            MTD_VLDT_FMT_EMPLOYMENT_ID,
+            MTD_VLDT_FMT_ID_15,
+            MTD_VLDT_FMT_I_F_NAME,
+            MTD_VLDT_FMT_ISO_8601_DATE,
+            MTD_VLDT_FMT_LOSS_ID,
+            MTD_VLDT_FMT_NINO,
+            MTD_VLDT_FMT_PAYROLL_ID,
+            MTD_VLDT_FMT_PERIOD_ID,
+            MTD_VLDT_FMT_REF,
+            MTD_VLDT_FMT_SCHEME_REF,
+            MTD_VLDT_FMT_SCHEME_REF_TAS,
+            MTD_VLDT_FMT_TAX_YEAR,
+            MTD_VLDT_FMT_UUID,
+            MTD_VLDT_FMT_UUID_89AB,
+    };
+
+Aliases for some of the above
+
+.. code-block::
+
+    #define MTD_VLDT_FMT_ASSET_DESC                MTD_VLDT_FMT_REF
+    #define MTD_VLDT_FMT_BENEFIT_ID                MTD_VLDT_FMT_UUID_89AB
+    #define MTD_VLDT_FMT_BUILDING_NAME             MTD_VLDT_FMT_REF
+    #define MTD_VLDT_FMT_BUILDING_NUMBER           MTD_VLDT_FMT_REF
+    #define MTD_VLDT_FMT_CORRELATION_ID            MTD_VLDT_FMT_UUID
+    #define MTD_VLDT_FMT_CUSTOMER_REF              MTD_VLDT_FMT_REF
+    #define MTD_VLDT_FMT_EMPLOYMENT_ID             MTD_VLDT_FMT_UUID_89AB
+    #define MTD_VLDT_FMT_EVENT                     MTD_VLDT_FMT_REF
+    #define MTD_VLDT_FMT_HOLDING_COMPANY_NAME      MTD_VLDT_FMT_I_F_NAME
+    #define MTD_VLDT_FMT_POSTCODE                  MTD_VLDT_FMT_REF
+    #define MTD_VLDT_FMT_QOPS_REF                  MTD_VLDT_FMT_REF
+    #define MTD_VLDT_FMT_REPORT_ID                 MTD_VLDT_FMT_UUID
+    #define MTD_VLDT_FMT_SAVINGS_ACCOUNT_NAME      MTD_VLDT_FMT_ACCOUNT_NAME
+    #define MTD_VLDT_FMT_SAVINGS_ACCOUNT_ID        MTD_VLDT_FMT_ID_15
+    #define MTD_VLDT_FMT_SF74_REF                  MTD_VLDT_FMT_REF
+    #define MTD_VLDT_FMT_SUBMISSION_ID             MTD_VLDT_FMT_UUID_89AB
+    #define MTD_VLDT_FMT_TAXATION_REF              MTD_VLDT_FMT_REF
+    #define MTD_VLDT_FMT_TAXATION_TREATY           MTD_VLDT_FMT_REF
+    #define MTD_VLDT_FMT_UNIQUE_INVESTMENT_REF     MTD_VLDT_FMT_REF
+
 Errors (libmtdac)
 -----------------
 
