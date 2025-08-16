@@ -129,6 +129,12 @@ static const struct {
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
+	[MTD_EP_API_OD] = {
+		.api_version	= "2.0",
+		.name		= "Other Deductions",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
 	[MTD_EP_API_PB] = {
 		.api_version	= "6.0",
 		.name		= "Property Business",
@@ -873,6 +879,27 @@ static const struct {
 		.tmpl	= "/obligations/details/{nino}/end-of-period-statement/{query_params}",
 		.method	= M_GET,
 		.api	= MTD_EP_API_OB,
+	},
+
+	/* Other Deductions */
+	[MTD_API_EP_OD_AMEND] = {
+		.epstr	= "MTD_API_EP_OD_AMEND",
+		.tmpl	= "/individuals/deductions/other/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_OD,
+	},
+	[MTD_API_EP_OD_GET] = {
+		.epstr	= "MTD_API_EP_OD_GET",
+		.tmpl	= "/individuals/deductions/other/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_OD,
+	},
+	[MTD_API_EP_OD_DELETE] = {
+		.epstr	= "MTD_API_EP_OD_DELETE",
+		.tmpl	= "/individuals/deductions/other/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_OD,
 	},
 
 	/* Property Business - UK Property Business Annual Submission */

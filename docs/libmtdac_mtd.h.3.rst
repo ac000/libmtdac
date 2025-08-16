@@ -222,6 +222,7 @@ Errors (HMRC)
           MTD_HMRC_ERR_FORMAT_INCLUDE_ESTIMATED_CHARGES,
           MTD_HMRC_ERR_FORMAT_INCLUDE_LOCKS,
           MTD_HMRC_ERR_FORMAT_LOSS_ID,
+          MTD_HMRC_ERR_FORMAT_NAME_OF_SHIP,
           MTD_HMRC_ERR_FORMAT_NINO,
           MTD_HMRC_ERR_FORMAT_PAYROLL_ID,
           MTD_HMRC_ERR_FORMAT_PERIOD_ID,
@@ -506,6 +507,7 @@ MTD API Endpoints
           MTD_EP_API_ISB,         /* Individuals Savings Income */
           MTD_EP_API_ISI,         /* Individuals State Benefits */
           MTD_EP_API_OB,          /* Obligations */
+          MTD_EP_API_OD,          /* Other Deductions */
           MTD_EP_API_PB,          /* Property Business */
           MTD_EP_API_SAA,         /* Self Assessment Accounts */
           MTD_EP_API_SAASS,       /* Self Assessment Assist */
@@ -665,6 +667,11 @@ MTD API Endpoints
           MTD_API_EP_OB_GET_IEO,
           MTD_API_EP_OB_GET_FDO,
           MTD_API_EP_OB_GET_EPSO,
+
+          /* Other Deductions */
+          MTD_API_EP_OD_AMEND,
+          MTD_API_EP_OD_GET,
+          MTD_API_EP_OD_DELETE,
 
           /* Property Business - UK Property Business Annual Submission */
           MTD_API_EP_PB_UKPBAS_GET,

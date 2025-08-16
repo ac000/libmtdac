@@ -86,6 +86,10 @@ Obligations 3.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/obligations-api/3.0/oas/page
 
+Other Deductions 2.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/other-deductions-api/2.0/oas/page
+
 Property Business 6.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/property-business-api/6.0/oas/page
