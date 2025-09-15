@@ -10,6 +10,8 @@
 
 #include "../../platform.h"
 
+#define UUID_LEN	36
+
 char *gen_uuid(char *buf)
 {
 	FILE *fp;
@@ -19,11 +21,13 @@ char *gen_uuid(char *buf)
 	if (!fp)
 		return NULL;
 
-	bytes_read = fscanf(fp, "%36s", buf);
+	bytes_read = fread(buf, 1, UUID_LEN, fp);
 	fclose(fp);
 
-	if (bytes_read != 36)
+	if (bytes_read != UUID_LEN)
 		return NULL;
+
+	buf[UUID_LEN] = '\0';
 
 	return buf;
 }
