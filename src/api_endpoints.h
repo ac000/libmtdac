@@ -51,6 +51,12 @@ static const struct {
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
+	[MTD_EP_API_IC] = {
+		.api_version	= "3.0",
+		.name		= "Individuals Charges",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
 	[MTD_EP_API_ICAL] = {
 		.api_version	= "7.0",
 		.name		= "Individual Calculations",
@@ -318,6 +324,47 @@ static const struct {
 		.tmpl	= "/individuals/deductions/cis/{nino}/amendments/{submissionId}/{taxYear}",
 		.method	= M_DELETE,
 		.api	= MTD_EP_API_CISD,
+	},
+
+	/* Individuals Charges - Pension Charges */
+	[MTD_API_EP_IC_PC_GET] = {
+		.epstr	= "MTD_API_EP_IC_PC_GET",
+		.tmpl	= "/individuals/charges/pensions/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IC,
+	},
+	[MTD_API_EP_IC_PC_AMEND] = {
+		.epstr	= "MTD_API_EP_IC_PC_AMEND",
+		.tmpl	= "/individuals/charges/pensions/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IC,
+	},
+	[MTD_API_EP_IC_PC_DELETE] = {
+		.epstr	= "MTD_API_EP_IC_PC_DELETE",
+		.tmpl	= "/individuals/charges/pensions/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IC,
+	},
+	/* High Income Child Benefit Charge Submission */
+	[MTD_API_EP_IC_HICBCS_GET] = {
+		.epstr	= "MTD_API_EP_IC_HICBCS_GET",
+		.tmpl	= "/individuals/charges/high-income-child-benefit/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IC,
+	},
+	[MTD_API_EP_IC_HICBCS_AMEND] = {
+		.epstr	= "MTD_API_EP_IC_HICBCS_AMEND",
+		.tmpl	= "/individuals/charges/high-income-child-benefit/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IC,
+	},
+	[MTD_API_EP_IC_HICBCS_DELETE] = {
+		.epstr	= "MTD_API_EP_IC_HICBCS_DELETE",
+		.tmpl	= "/individuals/charges/high-income-child-benefit/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IC,
 	},
 
 	/* Individual Calculations - Tax Calculations */

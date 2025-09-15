@@ -225,7 +225,10 @@ Errors (HMRC)
           MTD_HMRC_ERR_FORMAT_NAME_OF_SHIP,
           MTD_HMRC_ERR_FORMAT_NINO,
           MTD_HMRC_ERR_FORMAT_PAYROLL_ID,
+          MTD_HMRC_ERR_FORMAT_PENSION_SCHEME_TAX_REFERENCE,
           MTD_HMRC_ERR_FORMAT_PERIOD_ID,
+          MTD_HMRC_ERR_FORMAT_PROVIDER_NAME,
+          MTD_HMRC_ERR_FORMAT_PROVIDERS_ADDRESS,
           MTD_HMRC_ERR_FORMAT_QOPS_REF,
           MTD_HMRC_ERR_FORMAT_REMOVE_PAYMENT_ON_ACCOUNT,
           MTD_HMRC_ERR_FORMAT_REPORT_ID,
@@ -305,6 +308,7 @@ Errors (HMRC)
           MTD_HMRC_ERR_RULE_COST_OF_MATERIALS,
           MTD_HMRC_ERR_RULE_COUNTRY_CODE,
           MTD_HMRC_ERR_RULE_CUSTOM_EMPLOYMENT,
+          MTD_HMRC_ERR_RULE_DATE_CEASED,
           MTD_HMRC_ERR_RULE_DATE_RANGE_INVALID,
           MTD_HMRC_ERR_RULE_DECEASED_RECIPIENT,
           MTD_HMRC_ERR_RULE_DECLARATION_NOT_RECEIVED,
@@ -336,6 +340,7 @@ Errors (HMRC)
           MTD_HMRC_ERR_RULE_INVALID_DATE_RANGE,
           MTD_HMRC_ERR_RULE_INVALID_REQUEST,
           MTD_HMRC_ERR_RULE_INVALID_SUBMISSION_PENSION_SCHEME,
+          MTD_HMRC_ERR_RULE_IS_ANNUAL_ALLOWANCE_REDUCED,
           MTD_HMRC_ERR_RULE_ITSA_CONTRACT_OBJECT_NOT_EXIST,
           MTD_HMRC_ERR_RULE_LUMP_SUMS,
           MTD_HMRC_ERR_RULE_MISALIGNED_PERIOD,
@@ -494,6 +499,7 @@ MTD API Endpoints
           MTD_EP_API_BISS,        /* Business Income Source Summary */
           MTD_EP_API_BSAS,        /* Business Source Adjustable Summary */
           MTD_EP_API_CISD,        /* CIS Deductions */
+          MTD_EP_API_IC,          /* Individuals Charges */
           MTD_EP_API_ICAL,        /* Individual Calculations */
           MTD_EP_API_ID,          /* Individuals Disclosures */
           MTD_EP_API_IDI,         /* Individuals Dividends Income */
@@ -550,6 +556,15 @@ MTD API Endpoints
           MTD_API_EP_CISD_CREATE,
           MTD_API_EP_CISD_AMEND,
           MTD_API_EP_CISD_DELETE,
+
+          /* Individuals Charges - Pension Charges */
+          MTD_API_EP_IC_PC_GET,
+          MTD_API_EP_IC_PC_AMEND,
+          MTD_API_EP_IC_PC_DELETE,
+          /* High Income Child Benefit Charge Submission */
+          MTD_API_EP_IC_HICBCS_GET,
+          MTD_API_EP_IC_HICBCS_AMEND,
+          MTD_API_EP_IC_HICBCS_DELETE,
 
           /* Individual Calculations - Tax Calculations */
           MTD_API_EP_ICAL_TRIGGER,
