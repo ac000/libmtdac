@@ -298,13 +298,15 @@ static int mkdir_p(int dirfd, const char *path, mode_t mode)
 
 		err = fstatat(dirfd, mdir, &sb, 0);
 		if (!err)
-			continue;
+			goto next_component;
 
 		ret = mkdirat(dirfd, mdir, mode);
 		if (ret == -1 && errno != EEXIST) {
 			ret = -1;
 			break;
 		}
+
+next_component:
 		strcat(mdir, "/");
 	}
 	free(ptr);
