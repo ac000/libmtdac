@@ -280,11 +280,14 @@ static int mkdir_p(int dirfd, const char *path, mode_t mode)
 		return -1;
 	}
 
-	if (*path == '/')
-		strcat(mdir, "/");
-
 	dir = strdup(path);
 	ptr = dir;
+
+	if (*path == '/') {
+		strcat(mdir, "/");
+		dir++;
+	}
+
 	for (;;) {
 		struct stat sb;
 		char *token;
