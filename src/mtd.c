@@ -303,8 +303,8 @@ static int mkdir_p(int dirfd, const char *path, mode_t mode)
 		if (!err)
 			goto next_component;
 
-		ret = mkdirat(dirfd, mdir, mode);
-		if (ret == -1 && errno != EEXIST) {
+		err = mkdirat(dirfd, mdir, mode);
+		if (err == -1 && errno != EEXIST) {
 			ret = -1;
 			break;
 		}
