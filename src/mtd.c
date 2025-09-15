@@ -300,8 +300,15 @@ static int mkdir_p(int dirfd, const char *path, mode_t mode)
 		strcat(mdir, token);
 
 		err = fstatat(dirfd, mdir, &sb, 0);
-		if (!err)
+		if (!err) {
+			if (!S_ISDIR(sb.st_mode)) {
+				errno = ENOTDIR;
+				ret = -1;
+				break;
+			}
+
 			goto next_component;
+		}
 
 		err = mkdirat(dirfd, mdir, mode);
 		if (err == -1 && errno != EEXIST) {
