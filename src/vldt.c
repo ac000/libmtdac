@@ -58,7 +58,7 @@ static const struct {
 		.func	= check_nino
 	},
 	[MTD_VLDT_FMT_PAYROLL_ID] = {
-		.regex	= "^[-A-Za-z0-9.,()/=!\\\"%&*; <>'+:?]{0,38}$"
+		.regex	= "^[-A-Za-z0-9.,()/=!\\\"%&*; <>'+:?#]{0,38}$"
 	},
 	[MTD_VLDT_FMT_PERIOD_ID] = {
 		.regex = "[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{4}-[0-9]{2}-[0-9]{2}$"
