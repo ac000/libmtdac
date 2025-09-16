@@ -420,6 +420,12 @@ static int set_headers(struct curl_ctx *ctx)
 	case CONTENT_TYPE_JSON:
 		err = curl_add_hdr(ctx, "Content-Type: application/json");
 		break;
+	case CONTENT_TYPE_NONE:
+		err = curl_add_hdr(ctx, "Content-Length:");
+		if (err)
+			break;
+		err = curl_add_hdr(ctx, "Content-Type:");
+		break;
 	default:
 		break;
 	}
