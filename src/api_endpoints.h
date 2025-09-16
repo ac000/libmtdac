@@ -970,12 +970,6 @@ static const struct {
 		.method	= M_GET,
 		.api	= MTD_EP_API_OB,
 	},
-	[MTD_API_EP_OB_GET_EPSO] = {
-		.epstr	= "MTD_API_EP_OB_GET_EPSO",
-		.tmpl	= "/obligations/details/{nino}/end-of-period-statement/{query_params}",
-		.method	= M_GET,
-		.api	= MTD_EP_API_OB,
-	},
 
 	/* Other Deductions */
 	[MTD_API_EP_OD_AMEND] = {

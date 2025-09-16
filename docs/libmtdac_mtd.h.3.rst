@@ -698,7 +698,6 @@ MTD API Endpoints
           /* Obligations */
           MTD_API_EP_OB_GET_IEO,
           MTD_API_EP_OB_GET_FDO,
-          MTD_API_EP_OB_GET_EPSO,
 
           /* Other Deductions */
           MTD_API_EP_OD_AMEND,
