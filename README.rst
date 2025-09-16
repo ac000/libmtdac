@@ -24,7 +24,7 @@ It currently supports the following MTD APIs
 ==================================================	=======
 API							Version
 ==================================================	=======
-`Business Details`_					1.0
+`Business Details`_					2.0
 `Business Income Source Summary`_			3.0
 `Business Source Adjustable Summary`_			7.0
 `CIS Deductions`_					3.0
@@ -56,7 +56,7 @@ API							Version
 `Test Fraud Prevention Headers`_			1.0
 ==================================================	=======
 
-.. _Business Details: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/business-details-api/1.0/oas/page
+.. _Business Details: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/business-details-api/2.0/oas/page
 .. _Business Income Source Summary: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-biss-api/3.0/oas/page
 .. _Business Source Adjustable Summary: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-bsas-api/7.0/oas/page
 .. _CIS Deductions: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/cis-deductions-api/3.0/oas/page

@@ -28,7 +28,7 @@ static const struct {
 	enum mtd_api_scope scope;
 } api_default_values[] = {
 	[MTD_EP_API_BD] = {
-		.api_version	= "1.0",
+		.api_version	= "2.0",
 		.name		= "Business Details",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
@@ -212,7 +212,7 @@ static const struct {
 	enum oauth_authz authz;
 	enum mtd_api_scope scope;
 } endpoints[] = {
-	/* Business Details */
+	/* Business Details - Support */
 	[MTD_API_EP_BD_LIST] = {
 		.epstr	= "MTD_API_EP_BD_LIST",
 		.tmpl	= "/individuals/business/details/{nino}/list",
@@ -230,6 +230,54 @@ static const struct {
 		.tmpl	= "/individuals/business/details/{nino}/{businessId}/{taxYear}",
 		.method	= M_PUT,
 		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_BD,
+	},
+	/* Accounting Type */
+	[MTD_API_EP_BD_AT_GET] = {
+		.epstr	= "MTD_API_EP_BD_AT_GET",
+		.tmpl	= "/individuals/business/details/{nino}/{businessId}/{taxYear}/accounting-type",
+		.method	= M_GET,
+		.api	= MTD_EP_API_BD,
+	},
+	[MTD_API_EP_BD_AT_AMEND] = {
+		.epstr	= "MTD_API_EP_BD_AT_AMEND",
+		.tmpl	= "/individuals/business/details/{nino}/{businessId}/{taxYear}/accounting-type",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_BD,
+	},
+	/* Periods of Account */
+	[MTD_API_EP_BD_POA_GET] = {
+		.epstr	= "MTD_API_EP_BD_POA_GET",
+		.tmpl	= "/individuals/business/details/{nino}/{businessId}/{taxYear}/periods-of-account",
+		.method	= M_GET,
+		.api	= MTD_EP_API_BD,
+	},
+	[MTD_API_EP_BD_POA_AMEND] = {
+		.epstr	= "MTD_API_EP_BD_POA_AMEND",
+		.tmpl	= "/individuals/business/details/{nino}/{businessId}/{taxYear}/periods-of-account",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_BD,
+	},
+	/* Late Accounting Date Rule */
+	[MTD_API_EP_BD_LADR_GET] = {
+		.epstr	= "MTD_API_EP_BD_LADR_GET",
+		.tmpl	= "/individuals/business/details/{nino}/{businessId}/{taxYear}/late-accounting-date-rule-election",
+		.method	= M_GET,
+		.api	= MTD_EP_API_BD,
+	},
+	[MTD_API_EP_BD_LADR_DISAPPLY] = {
+		.epstr	= "MTD_API_EP_BD_LADR_DISAPPLY",
+		.tmpl	= "/individuals/business/details/{nino}/{businessId}/{taxYear}/late-accounting-date-rule-election/disapply",
+		.method	= M_POST,
+		.ctype	= CONTENT_TYPE_NONE,
+		.api	= MTD_EP_API_BD,
+	},
+	[MTD_API_EP_BD_LADR_WITHDRAW] = {
+		.epstr	= "MTD_API_EP_BD_LADR_WITHDRAW",
+		.tmpl	= "/individuals/business/details/{nino}/{businessId}/{taxYear}/late-accounting-date-rule-election/withdraw",
+		.method	= M_DELETE,
 		.api	= MTD_EP_API_BD,
 	},
 

@@ -18,9 +18,9 @@ This is a C library for interacting with the UK's HMRC Make Tax Digital API.
 Supported API endpoints
 -----------------------
 
-Business Details 1.0
+Business Details 2.0
 
-https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/business-details-api/1.0/oas/page
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/business-details-api/2.0/oas/page
 
 Business Income Source Summary 3.0
 
