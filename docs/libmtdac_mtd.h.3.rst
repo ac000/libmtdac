@@ -584,7 +584,6 @@ MTD API Endpoints
 
           /* Individual Calculations - Tax Calculations */
           MTD_API_EP_ICAL_TRIGGER,
-          MTD_API_EP_ICAL_LIST_OLD,
           MTD_API_EP_ICAL_LIST,
           MTD_API_EP_ICAL_GET,
           /* Final Declaration */

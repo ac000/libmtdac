@@ -58,7 +58,7 @@ static const struct {
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_ICAL] = {
-		.api_version	= "7.0",
+		.api_version	= "8.0",
 		.name		= "Individual Calculations",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
@@ -421,12 +421,6 @@ static const struct {
 		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{taxYear}/trigger/{calculationType}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_NONE,
-		.api	= MTD_EP_API_ICAL,
-	},
-	[MTD_API_EP_ICAL_LIST_OLD] = {
-		.epstr	= "MTD_API_EP_ICAL_LIST_OLD",
-		.tmpl	= "/individuals/calculations/{nino}/self-assessment/{query_params}",
-		.method	= M_GET,
 		.api	= MTD_EP_API_ICAL,
 	},
 	[MTD_API_EP_ICAL_LIST] = {
