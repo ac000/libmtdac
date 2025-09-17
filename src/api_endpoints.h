@@ -695,6 +695,26 @@ static const struct {
 		.method	= M_DELETE,
 		.api	= MTD_EP_API_IEI,
 	},
+	/* Student Loan Benefits in Kind */
+	[MTD_API_EP_IEI_SLB_GET] = {
+		.epstr	= "MTD_API_EP_IEI_SLB_GET",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}/{employmentId}/benefit-in-kind/student-loans",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_SLB_AMEND] = {
+		.epstr	= "MTD_API_EP_IEI_SLB_AMEND",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}/{employmentId}/benefit-in-kind/student-loans",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IEI,
+	},
+	[MTD_API_EP_IEI_SLB_DELETE] = {
+		.epstr	= "MTD_API_EP_IEI_SLB_DELETE",
+		.tmpl	= "/individuals/employments-income/{nino}/{taxYear}/{employmentId}/benefit-in-kind/student-loans",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IEI,
+	},
 
 	/* Individuals Expenses - Employment Expenses */
 	[MTD_API_EP_IE_EE_AMEND] = {

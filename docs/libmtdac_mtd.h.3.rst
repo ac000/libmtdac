@@ -629,6 +629,10 @@ MTD API Endpoints
           MTD_API_EP_IEI_OE_GET,
           MTD_API_EP_IEI_OE_AMEND,
           MTD_API_EP_IEI_OE_DELETE,
+          /* Student Loan Benefits in Kind */
+          MTD_API_EP_IEI_SLB_GET,
+          MTD_API_EP_IEI_SLB_AMEND,
+          MTD_API_EP_IEI_SLB_DELETE,
 
           /* Individuals Expenses - Employment Expenses */
           MTD_API_EP_IE_EE_AMEND,
