@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	1.4.1
+Version:	1.5.0
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -53,6 +53,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Wed Sep 17 2025 Andrew Clayton <ac@sigsegv.uk> - 1.5.0-1
+- Update to new versbios of Business Details & Individual Calculations
+  APIs
+- Add new endpoints to Individuals Savings Income &
+  Individuals Employments Income APIs
+- Remove an endpoint from Obligations API
 
 * Tue Sep 16 2025 Andrew Clayton <ac@sigsegv.uk> - 1.4.1-1
 - Fix empty POST requests
