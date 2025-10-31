@@ -3,7 +3,7 @@
 .TH "mtd_hmrc_err" "3type" "Sep 17, 2025" "Version 1.5.0" "libmtdac"
 .SH NAME
 \f[B]struct mtd_hmrc_err\f[R] \- linked list of structures containing
-the erorrs from a MTD API endpoint.
+the errors from a MTD API endpoint.
 .SH LIBRARY
 libmtdac, \f[I]\-lmtdac\f[R]
 .SH SYNOPSIS
