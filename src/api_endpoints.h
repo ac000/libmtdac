@@ -986,7 +986,7 @@ static const struct {
 	},
 	[MTD_API_EP_OB_GET_FDO] = {
 		.epstr	= "MTD_API_EP_OB_GET_FDO",
-		.tmpl	= "/obligations/details/{nino}/crystallisation}/{query_params}",
+		.tmpl	= "/obligations/details/{nino}/crystallisation/{query_params}",
 		.method	= M_GET,
 		.api	= MTD_EP_API_OB,
 	},
