@@ -38,6 +38,10 @@ Individual Calculations 8.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/8.0/oas/page
 
+Individuals Capital Gains Income 2.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-capital-gains-income-api/2.0/oas/page
+
 Individuals Charges 3.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-charges-api/3.0/oas/page

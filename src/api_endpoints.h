@@ -63,6 +63,12 @@ static const struct {
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
+	[MTD_EP_API_ICGI] = {
+		.api_version	= "2.0",
+		.name		= "Individuals Capital Gains Income",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
 	[MTD_EP_API_ID] = {
 		.api_version	= "2.0",
 		.name		= "Individuals Disclosures",
@@ -442,6 +448,60 @@ static const struct {
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_NONE,
 		.api	= MTD_EP_API_ICAL,
+	},
+
+	/* Individuals Capital Gains Income - Residential Property Disposals */
+	[MTD_API_EP_ICGI_RPD_GET] = {
+		.epstr	= "MTD_API_EP_ICGI_RPD_GET",
+		.tmpl	= "/individuals/disposals-income/residential-property/{nino}/{taxYear}/{query_params}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_ICGI,
+	},
+	[MTD_API_EP_ICGI_RPD_N_PPD_AMEND] = {
+		.epstr	= "MTD_API_EP_ICGI_RPD_N_PPD_AMEND",
+		.tmpl	= "/individuals/disposals-income/residential-property/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_ICGI,
+	},
+	[MTD_API_EP_ICGI_RPD_N_PPD_DELETE] = {
+		.epstr	= "MTD_API_EP_ICGI_RPD_N_PPD_DELETE",
+		.tmpl	= "/individuals/disposals-income/residential-property/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_ICGI,
+	},
+	[MTD_API_EP_ICGI_RPD_PPD_AMEND] = {
+		.epstr	= "MTD_API_EP_ICGI_RPD_PPD_AMEND",
+		.tmpl	= "/individuals/disposals-income/residential-property/{nino}/{taxYear}/ppd",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_ICGI,
+	},
+	[MTD_API_EP_ICGI_RPD_PPD_DELETE] = {
+		.epstr	= "MTD_API_EP_ICGI_RPD_PPD_DELETE",
+		.tmpl	= "/individuals/disposals-income/residential-property/{nino}/{taxYear}/ppd",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_ICGI,
+	},
+	/* Other Capital Gains and Disposals */
+	[MTD_API_EP_ICGI_O_GET] = {
+		.epstr	= "MTD_API_EP_ICGI_O_GET",
+		.tmpl	= "/individuals/disposals-income/other-gains/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_ICGI,
+	},
+	[MTD_API_EP_ICGI_O_AMEND] = {
+		.epstr	= "MTD_API_EP_ICGI_O_AMEND",
+		.tmpl	= "/individuals/disposals-income/other-gains/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_ICGI,
+	},
+	[MTD_API_EP_ICGI_O_DELETE] = {
+		.epstr	= "MTD_API_EP_ICGI_O_DELETE",
+		.tmpl	= "/individuals/disposals-income/other-gains/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_ICGI,
 	},
 
 	/* Individuals Disclosures - Marriage Allowance */

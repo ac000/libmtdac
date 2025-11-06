@@ -29,6 +29,7 @@ API							Version
 `Business Source Adjustable Summary`_			7.0
 `CIS Deductions`_					3.0
 `Individual Calculations`_				8.0
+`Individuals Capital Gains Income`_			2.0
 `Individuals Charges`_					3.0
 `Individuals Disclosures`_				2.0
 `Individuals Dividends Income`_				2.0
@@ -61,6 +62,7 @@ API							Version
 .. _Business Source Adjustable Summary: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/self-assessment-bsas-api/7.0/oas/page
 .. _CIS Deductions: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/cis-deductions-api/3.0/oas/page
 .. _Individual Calculations: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-calculations-api/8.0/oas/page
+.. _Individuals Capital Gains Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-capital-gains-income-api/2.0/oas/page
 .. _Individuals Charges: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-charges-api/3.0/oas/page
 .. _Individuals Disclosures: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-disclosures-api/2.0/oas/page
 .. _Individuals Dividends Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-dividends-income-api/2.0/oas/page
