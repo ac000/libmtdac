@@ -206,6 +206,7 @@ Errors (HMRC)
           MTD_HMRC_ERR_FORMAT_CUSTOMER_REF,
           MTD_HMRC_ERR_FORMAT_CUSTOMER_REFERENCE,
           MTD_HMRC_ERR_FORMAT_DATE,
+          MTD_HMRC_ERR_FORMAT_DATE_OF_INVESTMENT,
           MTD_HMRC_ERR_FORMAT_DEDUCTIONS_FROM_DATE,
           MTD_HMRC_ERR_FORMAT_DEDUCTIONS_TO_DATE,
           MTD_HMRC_ERR_FORMAT_DIRECTORSHIP_CEASED_DATE,
@@ -225,8 +226,14 @@ Errors (HMRC)
           MTD_HMRC_ERR_FORMAT_ID,
           MTD_HMRC_ERR_FORMAT_INCLUDE_ESTIMATED_CHARGES,
           MTD_HMRC_ERR_FORMAT_INCLUDE_LOCKS,
+          MTD_HMRC_ERR_FORMAT_INCOME_SOURCE,
+          MTD_HMRC_ERR_FORMAT_LENDER_NAME,
           MTD_HMRC_ERR_FORMAT_LOSS_ID,
+          MTD_HMRC_ERR_FORMAT_NAME,
+          MTD_HMRC_ERR_FORMAT_NAME_BUSINESS,
+          MTD_HMRC_ERR_FORMAT_NAME_EX_SPOUSE,
           MTD_HMRC_ERR_FORMAT_NAME_OF_SHIP,
+          MTD_HMRC_ERR_FORMAT_NATURE_OF_TRADE,
           MTD_HMRC_ERR_FORMAT_NINO,
           MTD_HMRC_ERR_FORMAT_PAYROLL_ID,
           MTD_HMRC_ERR_FORMAT_PENSION_SCHEME_TAX_REFERENCE,
@@ -258,6 +265,7 @@ Errors (HMRC)
           MTD_HMRC_ERR_FORMAT_TRANSACTION_ID,
           MTD_HMRC_ERR_FORMAT_TYPE_OF_BUSINESS,
           MTD_HMRC_ERR_FORMAT_TYPE_OF_LOSS,
+          MTD_HMRC_ERR_FORMAT_UNIQUE_INVESTMENT_REFERENCE,
           MTD_HMRC_ERR_FORMAT_VALUE,
 
           MTD_HMRC_ERR_INVALID_CREDENTIALS,
@@ -346,6 +354,8 @@ Errors (HMRC)
           MTD_HMRC_ERR_RULE_FROM_DATE_NOT_SUPPORTED,
           MTD_HMRC_ERR_RULE_GAIN_AFTER_RELIEF_LOSS_AFTER_RELIEF,
           MTD_HMRC_ERR_RULE_GAIN_LOSS,
+          MTD_HMRC_ERR_RULE_GIFT_AID_NON_UK_AMOUNT_WITHOUT_NAMES,
+          MTD_HMRC_ERR_RULE_GIFTS_NON_UK_AMOUNT_WITHOUT_NAMES,
           MTD_HMRC_ERR_RULE_GROSS_AMOUNT_PAID,
           MTD_HMRC_ERR_RULE_IGNORE_FORBIDDEN,
           MTD_HMRC_ERR_RULE_INCOME_SOURCES_CHANGED,
@@ -533,6 +543,7 @@ MTD API Endpoints
           MTD_EP_API_ILOS,        /* Individual Losses */
           MTD_EP_API_IOI,         /* Individuals Other Income */
           MTD_EP_API_IPI,         /* Individuals Pensions Income */
+          MTD_EP_API_IR,          /* Individuals Reliefs */
           MTD_EP_API_ISB,         /* Individuals Savings Income */
           MTD_EP_API_ISI,         /* Individuals State Benefits */
           MTD_EP_API_OB,          /* Obligations */
@@ -704,6 +715,27 @@ MTD API Endpoints
           MTD_API_EP_IPI_GET,
           MTD_API_EP_IPI_AMEND,
           MTD_API_EP_IPI_DELETE,
+
+          /* Individuals Reliefs - Relief Investments */
+          MTD_API_EP_IR_RI_GET,
+          MTD_API_EP_IR_RI_AMEND,
+          MTD_API_EP_IR_RI_DELETE,
+          /* Other Reliefs */
+          MTD_API_EP_IR_OR_GET,
+          MTD_API_EP_IR_OR_AMEND,
+          MTD_API_EP_IR_OR_DELETE,
+          /* Foreign Reliefs */
+          MTD_API_EP_IR_FR_GET,
+          MTD_API_EP_IR_FR_AMEND,
+          MTD_API_EP_IR_FR_DELETE,
+          /* Pensions Reliefs */
+          MTD_API_EP_IR_PR_GET,
+          MTD_API_EP_IR_PR_AMEND,
+          MTD_API_EP_IR_PR_DELETE,
+          /* Charitable Givings */
+          MTD_API_EP_IR_CG_GET,
+          MTD_API_EP_IR_CG_AMEND,
+          MTD_API_EP_IR_CG_DELETE,
 
           /* Individuals State Benefits */
           MTD_API_EP_ISB_CREATE,

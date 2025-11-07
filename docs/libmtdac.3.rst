@@ -82,6 +82,10 @@ Individuals Pensions Income 2.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-pensions-income-api/2.0/oas/page
 
+Individuals Reliefs 2.0
+
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-reliefs-api/2.0/oas/page
+
 Individuals Savings Income 2.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-savings-income-api/2.0/oas/page

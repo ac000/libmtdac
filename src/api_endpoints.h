@@ -123,6 +123,12 @@ static const struct {
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
+	[MTD_EP_API_IR] = {
+		.api_version	= "2.0",
+		.name		= "Individuals Reliefs",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
 	[MTD_EP_API_ISB] = {
 		.api_version	= "2.0",
 		.name		= "Individuals State Benefits",
@@ -592,6 +598,107 @@ static const struct {
 		.tmpl	= "/individuals/dividends-income/directorship/{nino}/{taxYear}/{employmentId}",
 		.method	= M_DELETE,
 		.api	= MTD_EP_API_IDI,
+	},
+
+	/* Individuals Reliefs - Relief Investments */
+	[MTD_API_EP_IR_RI_GET] = {
+		.epstr	= "MTD_API_EP_IR_RI_GET",
+		.tmpl	= "/individuals/reliefs/investment/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IR,
+	},
+	[MTD_API_EP_IR_RI_AMEND] = {
+		.epstr	= "MTD_API_EP_IR_RI_AMEND",
+		.tmpl	= "/individuals/reliefs/investment/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IR,
+	},
+	[MTD_API_EP_IR_RI_DELETE] = {
+		.epstr	= "MTD_API_EP_IR_RI_DELETE",
+		.tmpl	= "/individuals/reliefs/investment/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IR,
+	},
+	/* Other Reliefs */
+	[MTD_API_EP_IR_OR_GET] = {
+		.epstr	= "MTD_API_EP_IR_OR_GET",
+		.tmpl	= "/individuals/reliefs/other/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IR,
+	},
+	[MTD_API_EP_IR_OR_AMEND] = {
+		.epstr	= "MTD_API_EP_IR_OR_AMEND",
+		.tmpl	= "/individuals/reliefs/other/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IR,
+	},
+	[MTD_API_EP_IR_OR_DELETE] = {
+		.epstr	= "MTD_API_EP_IR_OR_DELETE",
+		.tmpl	= "/individuals/reliefs/other/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IR,
+	},
+	/* Foreign Reliefs */
+	[MTD_API_EP_IR_FR_GET] = {
+		.epstr	= "MTD_API_EP_IR_FR_GET",
+		.tmpl	= "/individuals/reliefs/foreign/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IR,
+	},
+	[MTD_API_EP_IR_FR_AMEND] = {
+		.epstr	= "MTD_API_EP_IR_FR_AMEND",
+		.tmpl	= "/individuals/reliefs/foreign/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IR,
+	},
+	[MTD_API_EP_IR_FR_DELETE] = {
+		.epstr	= "MTD_API_EP_IR_FR_DELETE",
+		.tmpl	= "/individuals/reliefs/foreign/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IR,
+	},
+	/* Pensions Reliefs */
+	[MTD_API_EP_IR_PR_GET] = {
+		.epstr	= "MTD_API_EP_IR_PR_GET",
+		.tmpl	= "/individuals/reliefs/pensions/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IR,
+	},
+	[MTD_API_EP_IR_PR_AMEND] = {
+		.epstr	= "MTD_API_EP_IR_PR_AMEND",
+		.tmpl	= "/individuals/reliefs/pensions/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IR,
+	},
+	[MTD_API_EP_IR_PR_DELETE] = {
+		.epstr	= "MTD_API_EP_IR_PR_DELETE",
+		.tmpl	= "/individuals/reliefs/pensions/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IR,
+	},
+	/* Charitable Givings */
+	[MTD_API_EP_IR_CG_GET] = {
+		.epstr	= "MTD_API_EP_IR_CG_GET",
+		.tmpl	= "/individuals/reliefs/charitable-giving/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_IR,
+	},
+	[MTD_API_EP_IR_CG_AMEND] = {
+		.epstr	= "MTD_API_EP_IR_CG_AMEND",
+		.tmpl	= "/individuals/reliefs/charitable-giving/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IR,
+	},
+	[MTD_API_EP_IR_CG_DELETE] = {
+		.epstr	= "MTD_API_EP_IR_CG_DELETE",
+		.tmpl	= "/individuals/reliefs/charitable-giving/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IR,
 	},
 
 	/* Individuals State Benefits */
