@@ -58,55 +58,55 @@ enum fph_hdr {
 };
 
 #define _FPH_COMMON \
-	FPH_C_DEV_ID	   | \
-	FPH_C_USER_ID	   | \
-	FPH_C_TZ	   | \
-	FPH_C_LOCAL_IPS	   | \
-	FPH_C_LOCAL_IPS_TS | \
-	FPH_C_MAC_ADDRS	   | \
-	FPH_C_UA	   | \
-	FPH_C_MULTI_FACTOR | \
-	FPH_V_VERSION	   | \
-	FPH_V_LICENSE_ID   | \
-	FPH_V_PROD_NAME
+	(FPH_C_DEV_ID		| \
+	 FPH_C_USER_ID		| \
+	 FPH_C_TZ		| \
+	 FPH_C_LOCAL_IPS	| \
+	 FPH_C_LOCAL_IPS_TS	| \
+	 FPH_C_MAC_ADDRS	| \
+	 FPH_C_UA		| \
+	 FPH_C_MULTI_FACTOR	| \
+	 FPH_V_VERSION		| \
+	 FPH_V_LICENSE_ID	| \
+	 FPH_V_PROD_NAME)
 
 #define _FPH_COMMON_DESKTOP \
-	_FPH_COMMON	| \
-	FPH_C_SCREENS	| \
-	FPH_C_WINDOW_SZ
+	(_FPH_COMMON	| \
+	 FPH_C_SCREENS	| \
+	 FPH_C_WINDOW_SZ)
 
 #define FPH_DESKTOP_APP_DIRECT		_FPH_COMMON_DESKTOP
 
 #define FPH_DESKTOP_APP_VIA_SERVER \
-	FPH_C_PUBLIC_IP	    | \
-	FPH_C_PUBLIC_IP_TS  | \
-	FPH_C_PUBLIC_PORT   | \
-	_FPH_COMMON_DESKTOP | \
-	FPH_V_PUBLIC_IP	    | \
-	FPH_V_FWD
+	(FPH_C_PUBLIC_IP     | \
+	 FPH_C_PUBLIC_IP_TS  | \
+	 FPH_C_PUBLIC_PORT   | \
+	 _FPH_COMMON_DESKTOP | \
+	 FPH_V_PUBLIC_IP     | \
+	 FPH_V_FWD)
 
 #define FPH_WEB_APP_VIA_SERVER \
-	((FPH_DESKTOP_APP_VIA_SERVER) & ~FPH_C_MAC_ADDRS & ~FPH_C_UA)	| \
-	FPH_C_BROWSER_PLUGINS						| \
-	FPH_C_BROWSER_JS_UA						| \
-	FPH_C_BROWSER_DNT
+	((FPH_DESKTOP_APP_VIA_SERVER & ~FPH_C_MAC_ADDRS & ~FPH_C_UA)	| \
+	 FPH_C_BROWSER_PLUGINS						| \
+	 FPH_C_BROWSER_JS_UA						| \
+	 FPH_C_BROWSER_DNT)
 
 #define FPH_MOBILE_APP_DIRECT		FPH_DESKTOP_APP_DIRECT
 
 #define FPH_MOBILE_APP_VIA_SERVER	FPH_DESKTOP_APP_VIA_SERVER
 
 #define FPH_BATCH_PROCESS_DIRECT \
-	(_FPH_COMMON) & ~FPH_C_MULTI_FACTOR
+	(_FPH_COMMON & ~FPH_C_MULTI_FACTOR)
 
 #define FPH_OTHER_DIRECT		_FPH_COMMON
 
 #define FPH_OTHER_VIA_SERVER \
-	FPH_C_PUBLIC_IP	   | \
-	FPH_C_PUBLIC_IP_TS | \
-	FPH_C_PUBLIC_PORT  | \
-	_FPH_COMMON	   | \
-	FPH_V_PUBLIC_IP	   | \
-	FPH_V_FWD
+	(FPH_C_PUBLIC_IP    | \
+	 FPH_C_PUBLIC_IP_TS | \
+	 FPH_C_PUBLIC_PORT  | \
+	 _FPH_COMMON	    | \
+	 FPH_V_PUBLIC_IP    | \
+	 FPH_V_FWD)
 
 static const struct {
 	unsigned int fph;
@@ -757,7 +757,7 @@ static const struct mtd_fph_ops dfl_fph_ops = {
 };
 
 #define SET_FPH_FUNC(f, m) \
-	fph_ops.m = fph_type & f ? (ops->m ? ops->m : dfl_fph_ops.m) : NULL;
+	(fph_ops.m = fph_type & f ? (ops->m ? ops->m : dfl_fph_ops.m) : NULL)
 void fph_set_ops(enum app_conn_type conn_type, const struct mtd_fph_ops *ops)
 {
 	unsigned int fph_type = fph_type_map[conn_type].fph;
