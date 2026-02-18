@@ -385,7 +385,7 @@ int mtd_init(unsigned int flags, const struct mtd_cfg *cfg)
 	mtd_ctx = dfl_mtd_ctx;
 
 	/* Check for unknown flags */
-	if (flags & ~(MTD_OPT_ALL))
+	if (flags & ~MTD_OPT_ALL)
 		return MTD_ERR_UNKNOWN_FLAGS;
 	mtd_ctx.opts = flags;
 

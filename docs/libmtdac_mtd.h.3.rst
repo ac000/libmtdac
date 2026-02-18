@@ -940,7 +940,7 @@ Fraud Prevention Headers
 
 .. code-block::
 
-  #define MTD_FPH_SET_FUNC(s, m, f)          s.m = f
+  #define MTD_FPH_SET_FUNC(s, m, f)          (s.m = f)
 
 .. code-block::
 
