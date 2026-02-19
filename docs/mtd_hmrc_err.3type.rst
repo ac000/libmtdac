@@ -3,7 +3,7 @@
 NAME
 ====
 
-**struct mtd_hmrc_err** - linked list of structures containing the erorrs
+**struct mtd_hmrc_err** - linked list of structures containing the errors
 from a MTD API endpoint.
 
 LIBRARY
