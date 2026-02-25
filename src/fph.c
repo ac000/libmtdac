@@ -228,9 +228,10 @@ static char *get_version(void *user_data)
 	int err;
 
 	encname = mtd_percent_encode(LIBNAME, -1);
-	snprintf(ver, sizeof(ver), "%d.%d.%d (%s)",
+	snprintf(ver, sizeof(ver), "%d.%d.%d%s (%s)",
 		 LIBMTDAC_MAJOR_VERSION, LIBMTDAC_MINOR_VERSION,
-		 LIBMTDAC_MICRO_VERSION, GIT_VERSION + 1);
+		 LIBMTDAC_MICRO_VERSION, LIBMTDAC_VERSION_PLUS,
+		 GIT_VERSION + 1);
 	encver = mtd_percent_encode(ver, -1);
 
 	if (fph_ops.fph_version_cli)

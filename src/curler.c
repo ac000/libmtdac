@@ -307,9 +307,10 @@ static const char *get_user_agent(char *ua)
 {
 	curl_version_info_data *verinfo = curl_version_info(CURLVERSION_NOW);
 
-	snprintf(ua, 1024, "%s %d.%d.%d (%s) / (libcurl/%s)",
+	snprintf(ua, 1024, "%s %d.%d.%d%s (%s) / (libcurl/%s)",
 		 LIBNAME, LIBMTDAC_MAJOR_VERSION, LIBMTDAC_MINOR_VERSION,
-		 LIBMTDAC_MICRO_VERSION, GIT_VERSION + 1, verinfo->version);
+		 LIBMTDAC_MICRO_VERSION, LIBMTDAC_VERSION_PLUS,
+		 GIT_VERSION + 1, verinfo->version);
 
 	return ua;
 }

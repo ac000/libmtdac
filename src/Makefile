@@ -5,7 +5,7 @@ LIBNAME = libmtdac
 GIT_VERSION  = \"$(shell git describe --long --dirty 2> /dev/null || cat ../.version)\"
 
 SOVER	= $(MAJOR)
-VERSION = $(MAJOR).$(MINOR).$(PATCH)
+VERSION = $(MAJOR).$(MINOR).$(PATCH)$(PLUS)
 
 OBJ_DIR := .objs
 $(shell mkdir -p $(OBJ_DIR) >/dev/null)
@@ -20,7 +20,8 @@ CFLAGS += -Wall -Wextra -Wdeclaration-after-statement -Wvla \
 	  -std=gnu11 -g -O2 -Wp,-D_FORTIFY_SOURCE=2 --param=ssp-buffer-size=4 \
 	  -fno-common -fstack-protector -fPIC -fexceptions \
 	  -fvisibility=hidden -I../include/libmtdac \
-	  -DLIBNAME=\"$(LIBNAME)\" -DGIT_VERSION=${GIT_VERSION} -pipe
+	  -DLIBNAME=\"$(LIBNAME)\" -DLIBMTDAC_VERSION_PLUS=\"$(PLUS)\" \
+	  -DGIT_VERSION=${GIT_VERSION} -pipe
 LDFLAGS = -shared -Wl,-z,now,-z,relro,-z,defs,--as-needed
 LIBS	= -lcurl -ljansson
 POSTCOMPILE = @mv -f $(DEPDIR)/$(@F).Td $(DEPDIR)/$(@F).d && touch $@

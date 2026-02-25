@@ -1,6 +1,6 @@
 include ../version.mk
 
-VERSION	    = $(MAJOR).$(MINOR).$(PATCH)
+VERSION	    = $(MAJOR).$(MINOR).$(PATCH)$(PLUS)
 DATE	    = $(shell date +"%b %e, %Y")
 
 MANS3	    = man/man3
