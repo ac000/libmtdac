@@ -201,7 +201,7 @@ static const struct {
 		.api_version	= "1.0",
 		.name		= "Test Fraud Prevention Headers",
 		.authz		= AUTHZ_APPLICATION,
-		.scope		= MTD_API_SCOPE_NULL,
+		.scope		= MTD_API_SCOPE_T_FPH,
 	},
 	[MTD_EP_API_TEST_SATS] = {
 		.api_version	= "1.0",

@@ -3,7 +3,7 @@
 /*
  * endpoint.h - Make Tax Digital - Self Assessment API
  *
- * Copyright (C) 2020 - 2025	Andrew Clayton <ac@sigsegv.uk>
+ * Copyright (C) 2020 - 2026	Andrew Clayton <ac@sigsegv.uk>
  */
 
 #ifndef _ENDPOINT_H_
@@ -30,6 +30,9 @@ static const struct {
 	[MTD_API_SCOPE_VAT] = {
 		.name	= "vat",
 		.fname	= "VAT"
+	},
+	[MTD_API_SCOPE_T_FPH] = {
+		.fname = "Test Fraud Prevention Headers"
 	},
 };
 

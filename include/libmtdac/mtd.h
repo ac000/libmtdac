@@ -459,6 +459,7 @@ enum mtd_api_scope {
 	MTD_API_SCOPE_SA		= 0x1,
 	MTD_API_SCOPE_SAASS		= 0x2,
 	MTD_API_SCOPE_VAT		= 0x4,
+	MTD_API_SCOPE_T_FPH		= 0x8,
 
 	/*
 	 * Special value to tell we are adding more API
