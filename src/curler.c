@@ -409,7 +409,7 @@ static int set_headers(struct curl_ctx *ctx)
 	const char * const *hdrs;
 
 	if (ctx->scope != MTD_API_SCOPE_NULL) {
-		err = curl_add_hdr(ctx, ctx->mtd_api_ver_hdr);
+		err = curl_add_hdr(ctx, "%s", ctx->mtd_api_ver_hdr);
 		if (err)
 			return MTD_ERR_OS;
 	}
@@ -450,7 +450,7 @@ static int set_headers(struct curl_ctx *ctx)
 
 	hdrs = mtd_ctx.cfg->extra_hdrs;
 	while (*hdrs) {
-		err = curl_add_hdr(ctx, *(hdrs++));
+		err = curl_add_hdr(ctx, "%s", *(hdrs++));
 		if (err) {
 			ret = MTD_ERR_OS;
 			break;
