@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	1.5.2
+Version:	1.5.3
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -53,6 +53,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Tue Mar 03 2026 Andrew Clayton <ac@sigsegv.uk> - 1.5.3-1
+- Minor fixes
 
 * Thu Feb 19 2026 Andrew Clayton <ac@sigsegv.uk> - 1.5.2-1
 - Add support for the Individuals Capital Gains Income & Individuals Reliefs
