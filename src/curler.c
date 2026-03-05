@@ -464,7 +464,7 @@ static int try_connect(const struct addrinfo *ai)
 {
 	int ret;
 	int err;
-	int sockfd;
+	int sockfd __cleanup_close = -1;
 	int optval;
 	int flags = SOCK_NONBLOCK|SOCK_CLOEXEC;
 	socklen_t optlen = sizeof(optval);
@@ -476,7 +476,6 @@ static int try_connect(const struct addrinfo *ai)
 	ret = connect(sockfd, ai->ai_addr, ai->ai_addrlen);
 	if (ret == -1 && errno != EINPROGRESS) {
 		logger(MTD_LOG_ERRNO, NULL);
-		close(sockfd);
 		return ret;
 	}
 
@@ -497,13 +496,11 @@ do_poll:
 			break;
 		}
 
-		close(sockfd);
 		return -1;
 	}
 
 	err = getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &optval, &optlen);
 	if (err || optval != 0) {
-		close(sockfd);
 		if (!err) {
 			/* We want the error from the connect() */
 			errno = optval;
@@ -518,11 +515,20 @@ do_poll:
 	ret = fcntl(sockfd, F_SETFL, flags);
 	if (ret == -1) {
 		logger(MTD_LOG_ERRNO, NULL);
-		close(sockfd);
 		return -1;
 	}
 
-	return sockfd;
+	{
+		/*
+		 * sockfd will be closed when we return. Take a copy of
+		 * it and set it to -1 so it's skipped over by xclose()
+		 */
+		int sfd = sockfd;
+
+		sockfd = -1;
+
+		return sfd;
+	}
 }
 
 static int do_connect(const struct mtd_ctx *ctx)

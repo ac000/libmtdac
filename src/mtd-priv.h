@@ -10,6 +10,7 @@
 #define _MTD_PRIV_H_
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include <jansson.h>
 
@@ -24,6 +25,16 @@
 static inline void xfree(char **p)
 {
 	free(*p);
+}
+#endif
+
+#ifndef __cleanup_close
+#define __cleanup_close __attribute__((cleanup(xclose)))
+static inline void xclose(int *fd)
+{
+	if (*fd == -1)
+		return;
+	close(*fd);
 }
 #endif
 

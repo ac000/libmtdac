@@ -215,8 +215,8 @@ static int generate_device_id(void)
 	char *p;
 	struct stat sb;
 	json_t *new;
-	int dfd;
-	int fd;
+	int dfd __cleanup_close = -1;
+	int fd __cleanup_close = -1;
 	int err;
 	int ret = MTD_ERR_OS;
 
@@ -229,7 +229,6 @@ static int generate_device_id(void)
 		logger(MTD_LOG_INFO,
 		       "%s/uuid.json already exists, not overwriting\n",
 		       mtd_ctx.config_dir);
-		close(dfd);
 		return MTD_ERR_NONE;
 	}
 	if (errno != ENOENT) {
@@ -238,21 +237,18 @@ static int generate_device_id(void)
 		logger(MTD_LOG_ERR, "stat %s/uuid.json: %s\n",
 		       mtd_ctx.config_dir,
 		       x_strerror_r(errno, errbuf, sizeof(errbuf)));
-		close(dfd);
 		return MTD_ERR_OS;
 	}
 
 	fd = openat(dfd, "uuid.json", O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC,
 		    0600);
-	if (fd == -1) {
-		close(dfd);
+	if (fd == -1)
 		return MTD_ERR_OS;
-	}
 
 	p = gen_uuid(uuid);
 	if (!p) {
 		logger(MTD_LOG_ERR, "error generating UUID\n");
-		goto out_close;
+		return MTD_ERR_OS;
 	}
 
 	new = json_pack("{s:s}", "device_id", uuid);
@@ -260,10 +256,6 @@ static int generate_device_id(void)
 	json_decref(new);
 
 	ret = MTD_ERR_NONE;
-
-out_close:
-	close(fd);
-	close(dfd);
 
 	return ret;
 }
@@ -329,9 +321,8 @@ static int check_config_dir(const char *config_dir, bool is_production)
 	char errbuf[129];
 	char *cfg_dir;
 	struct stat sb;
-	int dfd;
+	int dfd __cleanup_close = -1;
 	int err;
-	int ret = MTD_ERR_NONE;
 
 	dfd = open(config_dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (dfd == -1)
@@ -339,10 +330,8 @@ static int check_config_dir(const char *config_dir, bool is_production)
 
 	err = asprintf(&cfg_dir, "%s/libmtdac/%s", config_dir,
 		       is_production ? "prod-api" : "test-api");
-	if (err == -1) {
-		ret = MTD_ERR_OS;
-		goto out_close;
-	}
+	if (err == -1)
+		return MTD_ERR_OS;
 
 	mtd_ctx.config_dir = cfg_dir;
 
@@ -352,20 +341,16 @@ static int check_config_dir(const char *config_dir, bool is_production)
 	 */
 	err = fstatat(dfd, cfg_dir, &sb, 0);
 	if (!err)
-		goto out_close;
+		return MTD_ERR_NONE;
 
 	err = mkdir_p(dfd, cfg_dir, 0700);
 	if (!err)
-		goto out_close;
+		return MTD_ERR_NONE;
 
-	ret = MTD_ERR_OS;
 	logger(MTD_LOG_ERR, "mkdirat %s: %s\n", cfg_dir,
 	       x_strerror_r(errno, errbuf, sizeof(errbuf)));
 
-out_close:
-	close(dfd);
-
-	return ret;
+	return MTD_ERR_OS;
 }
 
 void mtd_global_init(void)
@@ -444,8 +429,8 @@ void mtd_deinit(void)
 
 int write_config(const char *dir, const char *name, const json_t *json)
 {
-	int dfd;
-	int fd;
+	int dfd __cleanup_close = -1;
+	int fd __cleanup_close = -1;
 	int err;
 	int ret = MTD_ERR_NONE;
 
@@ -455,7 +440,6 @@ int write_config(const char *dir, const char *name, const json_t *json)
 
 	fd = openat(dfd, name, O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC, 0600);
 	if (fd == -1) {
-		close(dfd);
 		logger(MTD_LOG_ERRNO, "openat");
 		return MTD_ERR_OS;
 	}
@@ -465,9 +449,6 @@ int write_config(const char *dir, const char *name, const json_t *json)
 		logger(MTD_LOG_ERR, "json_dump() returned -1\n");
 		ret = MTD_ERR_OS;
 	}
-
-	close(fd);
-	close(dfd);
 
 	return ret;
 }
