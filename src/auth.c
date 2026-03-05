@@ -106,10 +106,13 @@ int oauther_refresh_access_token(enum mtd_api_scope scope)
 	struct mtd_dsrc_ctx dsctx;
 	char data[4096];
 	char path[PATH_MAX];
-	char *buf;
-	char *refresh_token = load_token("refresh_token", FT_AUTH, scope);
-	char *client_id = load_token("client_id", FT_CREDS, scope);
-	char *client_secret = load_token("client_secret", FT_CREDS, scope);
+	char *buf __cleanup_free = NULL;
+	char *refresh_token __cleanup_free = load_token("refresh_token",
+							FT_AUTH, scope);
+	char *client_id __cleanup_free = load_token("client_id", FT_CREDS,
+						    scope);
+	char *client_secret __cleanup_free = load_token("client_secret",
+							FT_CREDS, scope);
 	json_t *array;
 	json_t *froot;
 	json_t *result;
@@ -125,7 +128,7 @@ int oauther_refresh_access_token(enum mtd_api_scope scope)
 	err = mtd_ep(MTD_API_EP_OA_REFRESH_TOKEN, &dsctx, &buf, NULL);
 	if (err) {
 		logger(MTD_LOG_ERR, "%s\n", buf);
-		goto out_free;
+		return err;
 	}
 
 	snprintf(path, sizeof(path), "%s/oauth.json", mtd_ctx.config_dir);
@@ -144,12 +147,6 @@ int oauther_refresh_access_token(enum mtd_api_scope scope)
 	json_decref(array);
 	json_decref(froot);
 
-out_free:
-	free(buf);
-	free(refresh_token);
-	free(client_id);
-	free(client_secret);
-
 	return err;
 }
 
@@ -159,10 +156,12 @@ int oauther_get_application_token(enum mtd_api_scope scope)
 	char data[4096];
 	const char *scopes;
 	const char *file;
-	char *buf;
-	char *client_id = load_token("client_id", FT_CREDS, MTD_API_SCOPE_NULL);
-	char *client_secret = load_token("client_secret", FT_CREDS,
-					 MTD_API_SCOPE_NULL);
+	char *buf __cleanup_free = NULL;
+	char *client_id __cleanup_free = load_token("client_id", FT_CREDS,
+						    MTD_API_SCOPE_NULL);
+	char *client_secret __cleanup_free = load_token("client_secret",
+							FT_CREDS,
+							MTD_API_SCOPE_NULL);
 	json_t *array;
 	json_t *root;
 	json_t *result;
@@ -188,7 +187,7 @@ int oauther_get_application_token(enum mtd_api_scope scope)
 	err = mtd_ep(MTD_API_EP_OA_APPLICATION_TOKEN, &dsctx, &buf, NULL);
 	if (err) {
 		logger(MTD_LOG_ERR, "%s\n", buf);
-		goto out_free;
+		return err;
 	}
 
 	array = json_loads(buf, 0, NULL);
@@ -196,11 +195,6 @@ int oauther_get_application_token(enum mtd_api_scope scope)
 	result = json_object_get(root, "result");
 	write_config(mtd_ctx.config_dir, file, result);
 	json_decref(array);
-
-out_free:
-	free(buf);
-	free(client_id);
-	free(client_secret);
 
 	return err;
 }

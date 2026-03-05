@@ -505,11 +505,11 @@ extern char **environ;
 int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 {
 	struct mtd_dsrc_ctx dsctx;
-	char *client_id = NULL;
-	char *client_secret = NULL;
+	char *client_id __cleanup_free = NULL;
+	char *client_secret __cleanup_free = NULL;
 	const char *args[3];
 	char auth_code[41];
-	char *buf = NULL;
+	char *buf __cleanup_free = NULL;
 	char data[4096];
 	char url[2048];
 	char *s;
@@ -526,10 +526,8 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 	bool reset_oauth;
 
 	/* Check for unknown/invalid scopes */
-	if (scopes == 0 || scopes & ~(ALL_SCOPES)) {
-		err = MTD_ERR_UNKNOWN_SCOPES;
-		goto out_free;
-	}
+	if (scopes == 0 || scopes & ~(ALL_SCOPES))
+		return MTD_ERR_UNKNOWN_SCOPES;
 
 	reset_oauth = !(scope & MTD_API_SCOPE_ADD);
 	scope &= ~MTD_API_SCOPE_ADD;
@@ -577,10 +575,8 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 
 	printf("\nEnter authorisation code > ");
 	s = fgets(auth_code, sizeof(auth_code) - 1, stdin);
-	if (!s) {
-		err = MTD_ERR_OS;
-		goto out_free;
-	}
+	if (!s)
+		return MTD_ERR_OS;
 	auth_code[strlen(auth_code) - 1] = '\0';
 
 	printf("\n");
@@ -596,7 +592,7 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 	dsctx.src_type = MTD_DATA_SRC_BUF;
 	err = mtd_ep(MTD_API_EP_OA_EXCHANGE_AUTH_CODE, &dsctx, &buf, NULL);
 	if (err)
-		goto out_free;
+		return err;
 
 	array = json_loads(buf, 0, NULL);
 	root = json_array_get(array, 0);
@@ -627,11 +623,6 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 out_free_json:
 	json_decref(array);
 	json_decref(froot);
-
-out_free:
-	free(client_id);
-	free(client_secret);
-	free(buf);
 
 	return err;
 }
