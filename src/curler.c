@@ -470,8 +470,11 @@ static int try_connect(const struct addrinfo *ai)
 	socklen_t optlen = sizeof(optval);
 	struct pollfd pfd;
 
-	sockfd = socket(ai->ai_family, ai->ai_socktype | flags,
-			ai->ai_protocol);
+	sockfd = socket(ai->ai_family, ai->ai_socktype|flags, ai->ai_protocol);
+	if (sockfd == -1) {
+		logger(MTD_LOG_ERRNO, NULL);
+		return -1;
+	}
 
 	ret = connect(sockfd, ai->ai_addr, ai->ai_addrlen);
 	if (ret == -1 && errno != EINPROGRESS) {
