@@ -350,6 +350,9 @@ static int check_config_dir(const char *config_dir, bool is_production)
 	logger(MTD_LOG_ERR, "mkdirat %s: %s\n", cfg_dir,
 	       x_strerror_r(errno, errbuf, sizeof(errbuf)));
 
+	free(cfg_dir);
+	mtd_ctx.config_dir = NULL;
+
 	return MTD_ERR_OS;
 }
 
