@@ -127,7 +127,8 @@ int oauther_refresh_access_token(enum mtd_api_scope scope)
 	dsctx.src_type = MTD_DATA_SRC_BUF;
 	err = mtd_ep(MTD_API_EP_OA_REFRESH_TOKEN, &dsctx, &buf, NULL);
 	if (err) {
-		logger(MTD_LOG_ERR, "%s\n", buf);
+		if (buf)
+			logger(MTD_LOG_ERR, "%s\n", buf);
 		return err;
 	}
 
@@ -186,7 +187,8 @@ int oauther_get_application_token(enum mtd_api_scope scope)
 	dsctx.src_type = MTD_DATA_SRC_BUF;
 	err = mtd_ep(MTD_API_EP_OA_APPLICATION_TOKEN, &dsctx, &buf, NULL);
 	if (err) {
-		logger(MTD_LOG_ERR, "%s\n", buf);
+		if (buf)
+			logger(MTD_LOG_ERR, "%s\n", buf);
 		return err;
 	}
 
