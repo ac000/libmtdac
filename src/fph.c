@@ -540,7 +540,7 @@ static char *get_tz(void *user_data __unused)
 	const struct tm *tm = localtime_r(&now, &tm_res);
 	char *buf;
 
-	buf = malloc(strlen("UTC+HH:MM") + 1);
+	buf = malloc(sizeof("UTC+HH:MM"));
 	if (!buf) {
 		logger(MTD_LOG_ERRNO, "malloc");
 		return NULL;
