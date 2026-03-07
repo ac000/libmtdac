@@ -537,8 +537,11 @@ static char *get_tz(void *user_data __unused)
 {
 	time_t now = time(NULL);
 	struct tm tm_res;
-	const struct tm *tm = localtime_r(&now, &tm_res);
+	const struct tm *tm;
 	char *buf;
+
+	tzset();
+	tm = localtime_r(&now, &tm_res);
 
 	buf = malloc(sizeof("UTC+HH:MM"));
 	if (!buf) {
