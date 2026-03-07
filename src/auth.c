@@ -97,7 +97,7 @@ char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 		return NULL;
 	token = strdup(json_string_value(tok_obj));
 	if (!token)
-		logger(MTD_LOG_ERRNO, NULL);
+		logger(MTD_LOG_ERRNO, "strdup");
 	json_decref(root);
 
 	return token;

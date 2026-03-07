@@ -184,7 +184,7 @@ char *mtd_percent_encode(const char *str, ssize_t len)
 	buflen = ((len > -1 ? (size_t)len : strlen(str)) * 3) + 1;
 	buf = malloc(buflen);
 	if (!buf) {
-		logger(MTD_LOG_ERRNO, "malloc:");
+		logger(MTD_LOG_ERRNO, "malloc");
 		return NULL;
 	}
 	p2 = buf;
@@ -232,18 +232,18 @@ static int generate_device_id(void)
 		return MTD_ERR_NONE;
 	}
 	if (errno != ENOENT) {
-		char errbuf[129];
-
-		logger(MTD_LOG_ERR, "stat %s/uuid.json: %s\n",
-		       mtd_ctx.config_dir,
-		       x_strerror_r(errno, errbuf, sizeof(errbuf)));
+		logger(MTD_LOG_ERRNO, "%s/uuid.json: fstatat",
+		       mtd_ctx.config_dir);
 		return MTD_ERR_OS;
 	}
 
 	fd = openat(dfd, "uuid.json", O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC,
 		    0600);
-	if (fd == -1)
+	if (fd == -1) {
+		logger(MTD_LOG_ERRNO, "%s/uuid.json: openat",
+		       mtd_ctx.config_dir);
 		return MTD_ERR_OS;
+	}
 
 	p = gen_uuid(uuid);
 	if (!p) {
@@ -318,7 +318,6 @@ next_component:
 
 static int check_config_dir(const char *config_dir, bool is_production)
 {
-	char errbuf[129];
 	char *cfg_dir;
 	struct stat sb;
 	int dfd __cleanup_close = -1;
@@ -347,8 +346,7 @@ static int check_config_dir(const char *config_dir, bool is_production)
 	if (!err)
 		return MTD_ERR_NONE;
 
-	logger(MTD_LOG_ERR, "mkdirat %s: %s\n", cfg_dir,
-	       x_strerror_r(errno, errbuf, sizeof(errbuf)));
+	logger(MTD_LOG_ERRNO, "%s: mkdir_p", cfg_dir);
 
 	free(cfg_dir);
 	mtd_ctx.config_dir = NULL;
@@ -443,7 +441,7 @@ int write_config(const char *dir, const char *name, const json_t *json)
 
 	fd = openat(dfd, name, O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC, 0600);
 	if (fd == -1) {
-		logger(MTD_LOG_ERRNO, "openat");
+		logger(MTD_LOG_ERRNO, "%s: openat", name);
 		return MTD_ERR_OS;
 	}
 
