@@ -514,7 +514,7 @@ do_poll:
 
 	/* Set socket back to blocking mode */
 	flags = fcntl(sockfd, F_GETFL, 0);
-	flags &= ~SOCK_NONBLOCK;
+	flags &= ~O_NONBLOCK;
 	ret = fcntl(sockfd, F_SETFL, flags);
 	if (ret == -1) {
 		logger(MTD_LOG_ERRNO, NULL);
