@@ -71,7 +71,7 @@ void _logger(const char *func, enum log_level log_level, const char *fmt, ...)
 	if (log_level == MTD_LOG_ERRNO) {
 		char errbuf[1024] = "\0";
 
-		errp = x_strerror_r(errno, errbuf, sizeof(errbuf));
+		errp = x_strerror_r(e, errbuf, sizeof(errbuf));
 	}
 
 	if (logbuf && *logbuf == ' ') /* continuation line */
