@@ -96,6 +96,8 @@ char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 	if (!tok_obj)
 		return NULL;
 	token = strdup(json_string_value(tok_obj));
+	if (!token)
+		logger(MTD_LOG_ERRNO, NULL);
 	json_decref(root);
 
 	return token;
@@ -107,16 +109,31 @@ int oauther_refresh_access_token(enum mtd_api_scope scope)
 	char data[4096];
 	char path[PATH_MAX];
 	char *buf __cleanup_free = NULL;
-	char *refresh_token __cleanup_free = load_token("refresh_token",
-							FT_AUTH, scope);
-	char *client_id __cleanup_free = load_token("client_id", FT_CREDS,
-						    scope);
-	char *client_secret __cleanup_free = load_token("client_secret",
-							FT_CREDS, scope);
+	char *refresh_token __cleanup_free = NULL;
+	char *client_id __cleanup_free = NULL;
+	char *client_secret __cleanup_free = NULL;
 	json_t *array;
 	json_t *froot;
 	json_t *result;
 	int err;
+
+	refresh_token = load_token("refresh_token", FT_AUTH, scope);
+	if (!refresh_token) {
+		logger(MTD_LOG_ERR, "Couldn't load 'refresh_token'\n");
+		return MTD_ERR_OS;
+	}
+
+	client_id = load_token("client_id", FT_CREDS, scope);
+	if (!client_id) {
+		logger(MTD_LOG_ERR, "Couldn't load 'client_id'\n");
+		return MTD_ERR_OS;
+	}
+
+	client_secret = load_token("client_secret", FT_CREDS, scope);
+	if (!client_secret) {
+		logger(MTD_LOG_ERR, "Couldn't load 'client_secret'\n");
+		return MTD_ERR_OS;
+	}
 
 	snprintf(data, sizeof(data),
 		 "client_secret=%s&client_id=%s&grant_type=refresh_token"
@@ -158,15 +175,25 @@ int oauther_get_application_token(enum mtd_api_scope scope)
 	const char *scopes;
 	const char *file;
 	char *buf __cleanup_free = NULL;
-	char *client_id __cleanup_free = load_token("client_id", FT_CREDS,
-						    MTD_API_SCOPE_NULL);
-	char *client_secret __cleanup_free = load_token("client_secret",
-							FT_CREDS,
-							MTD_API_SCOPE_NULL);
+	char *client_id __cleanup_free = NULL;
+	char *client_secret __cleanup_free = NULL;
 	json_t *array;
 	json_t *root;
 	json_t *result;
 	int err;
+
+	client_id = load_token("client_id", FT_CREDS, MTD_API_SCOPE_NULL);
+	if (!client_id) {
+		logger(MTD_LOG_ERR, "Couldn't load 'client_id'\n");
+		return MTD_ERR_OS;
+	}
+
+	client_secret = load_token("client_secret", FT_CREDS,
+				   MTD_API_SCOPE_NULL);
+	if (!client_secret) {
+		logger(MTD_LOG_ERR, "Couldn't load 'client_secret'\n");
+		return MTD_ERR_OS;
+	}
 
 	switch (scope) {
 	case MTD_API_SCOPE_SA:

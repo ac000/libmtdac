@@ -591,7 +591,9 @@ curl_again:
 		if (strstr(ctx->curl_buf->buf, "INVALID_CREDENTIALS")) {
 			logger(MTD_LOG_INFO, "INVALID_CREDENTIALS: "
 			       "Refreshing access_token\n");
-			ctx->oauther(ctx->scope);
+			err = ctx->oauther(ctx->scope);
+			if (err)
+				return err;
 			curl_slist_free_all(ctx->hdrs);
 			ctx->hdrs = NULL;
 			*ctx->curl_buf->buf = '\0';
