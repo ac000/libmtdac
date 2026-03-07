@@ -476,13 +476,13 @@ static int try_connect(const struct addrinfo *ai)
 
 	sockfd = socket(ai->ai_family, ai->ai_socktype|flags, ai->ai_protocol);
 	if (sockfd == -1) {
-		logger(MTD_LOG_ERRNO, NULL);
+		logger(MTD_LOG_ERRNO, "socket");
 		return -1;
 	}
 
 	ret = connect(sockfd, ai->ai_addr, ai->ai_addrlen);
 	if (ret == -1 && errno != EINPROGRESS) {
-		logger(MTD_LOG_ERRNO, NULL);
+		logger(MTD_LOG_ERRNO, "connect");
 		return ret;
 	}
 
@@ -499,7 +499,7 @@ do_poll:
 			if (errno == EINTR)
 				goto do_poll;
 
-			logger(MTD_LOG_ERRNO, NULL);
+			logger(MTD_LOG_ERRNO, "poll");
 			break;
 		}
 
@@ -512,7 +512,7 @@ do_poll:
 			/* We want the error from the connect() */
 			errno = optval;
 		}
-		logger(MTD_LOG_ERRNO, NULL);
+		logger(MTD_LOG_ERRNO, "connect/SO_ERROR");
 		return -1;
 	}
 
@@ -521,7 +521,7 @@ do_poll:
 	flags &= ~O_NONBLOCK;
 	ret = fcntl(sockfd, F_SETFL, flags);
 	if (ret == -1) {
-		logger(MTD_LOG_ERRNO, NULL);
+		logger(MTD_LOG_ERRNO, "fcntl");
 		return -1;
 	}
 
@@ -705,7 +705,7 @@ static int do_put_post(struct curl_ctx *ctx, char **buf)
 
 		log_buf = malloc(sb.st_size + 1);
 		if (!log_buf) {
-			logger(MTD_LOG_ERRNO, "malloc:");
+			logger(MTD_LOG_ERRNO, "malloc");
 			err = MTD_ERR_OS;
 			goto out_cleanup;
 		}
