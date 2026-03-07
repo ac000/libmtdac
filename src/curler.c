@@ -464,19 +464,21 @@ static int try_connect(const struct addrinfo *ai)
 {
 	int ret;
 	int err;
-	int sockfd;
+	int sockfd __cleanup_close = -1;
 	int optval;
 	int flags = SOCK_NONBLOCK|SOCK_CLOEXEC;
 	socklen_t optlen = sizeof(optval);
 	struct pollfd pfd;
 
-	sockfd = socket(ai->ai_family, ai->ai_socktype | flags,
-			ai->ai_protocol);
+	sockfd = socket(ai->ai_family, ai->ai_socktype|flags, ai->ai_protocol);
+	if (sockfd == -1) {
+		logger(MTD_LOG_ERRNO, "socket");
+		return -1;
+	}
 
 	ret = connect(sockfd, ai->ai_addr, ai->ai_addrlen);
 	if (ret == -1 && errno != EINPROGRESS) {
-		logger(MTD_LOG_ERRNO, NULL);
-		close(sockfd);
+		logger(MTD_LOG_ERRNO, "connect");
 		return ret;
 	}
 
@@ -493,36 +495,48 @@ do_poll:
 			if (errno == EINTR)
 				goto do_poll;
 
-			logger(MTD_LOG_ERRNO, NULL);
+			logger(MTD_LOG_ERRNO, "poll");
 			break;
 		}
 
-		close(sockfd);
 		return -1;
 	}
 
 	err = getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &optval, &optlen);
 	if (err || optval != 0) {
-		close(sockfd);
 		if (!err) {
 			/* We want the error from the connect() */
 			errno = optval;
 		}
-		logger(MTD_LOG_ERRNO, NULL);
+		logger(MTD_LOG_ERRNO, "getsockopt");
 		return -1;
 	}
 
 	/* Set socket back to blocking mode */
 	flags = fcntl(sockfd, F_GETFL, 0);
-	flags &= ~SOCK_NONBLOCK;
-	ret = fcntl(sockfd, F_SETFL, flags);
-	if (ret == -1) {
-		logger(MTD_LOG_ERRNO, NULL);
-		close(sockfd);
+	if (flags == -1) {
+		logger(MTD_LOG_ERRNO, "fcntl(F_GETFL)");
 		return -1;
 	}
 
-	return sockfd;
+	flags &= ~O_NONBLOCK;
+	ret = fcntl(sockfd, F_SETFL, flags);
+	if (ret == -1) {
+		logger(MTD_LOG_ERRNO, "fcntl(F_SETFL)");
+		return -1;
+	}
+
+	{
+		/*
+		 * sockfd will be closed when we return. Take a copy of
+		 * it and set it to -1 so it's skipped over by xclose()
+		 */
+		int sfd = sockfd;
+
+		sockfd = -1;
+
+		return sfd;
+	}
 }
 
 static int do_connect(const struct mtd_ctx *ctx)
@@ -582,7 +596,9 @@ curl_again:
 		if (strstr(ctx->curl_buf->buf, "INVALID_CREDENTIALS")) {
 			logger(MTD_LOG_INFO, "INVALID_CREDENTIALS: "
 			       "Refreshing access_token\n");
-			ctx->oauther(ctx->scope);
+			err = ctx->oauther(ctx->scope);
+			if (err)
+				return err;
 			curl_slist_free_all(ctx->hdrs);
 			ctx->hdrs = NULL;
 			*ctx->curl_buf->buf = '\0';
@@ -690,7 +706,7 @@ static int do_put_post(struct curl_ctx *ctx, char **buf)
 
 		log_buf = malloc(sb.st_size + 1);
 		if (!log_buf) {
-			logger(MTD_LOG_ERRNO, "malloc:");
+			logger(MTD_LOG_ERRNO, "malloc");
 			err = MTD_ERR_OS;
 			goto out_cleanup;
 		}

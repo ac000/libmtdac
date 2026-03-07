@@ -184,7 +184,7 @@ char *mtd_percent_encode(const char *str, ssize_t len)
 	buflen = ((len > -1 ? (size_t)len : strlen(str)) * 3) + 1;
 	buf = malloc(buflen);
 	if (!buf) {
-		logger(MTD_LOG_ERRNO, "malloc:");
+		logger(MTD_LOG_ERRNO, "malloc");
 		return NULL;
 	}
 	p2 = buf;
@@ -215,8 +215,8 @@ static int generate_device_id(void)
 	char *p;
 	struct stat sb;
 	json_t *new;
-	int dfd;
-	int fd;
+	int dfd __cleanup_close = -1;
+	int fd __cleanup_close = -1;
 	int err;
 	int ret = MTD_ERR_OS;
 
@@ -229,30 +229,26 @@ static int generate_device_id(void)
 		logger(MTD_LOG_INFO,
 		       "%s/uuid.json already exists, not overwriting\n",
 		       mtd_ctx.config_dir);
-		close(dfd);
 		return MTD_ERR_NONE;
 	}
 	if (errno != ENOENT) {
-		char errbuf[129];
-
-		logger(MTD_LOG_ERR, "stat %s/uuid.json: %s\n",
-		       mtd_ctx.config_dir,
-		       x_strerror_r(errno, errbuf, sizeof(errbuf)));
-		close(dfd);
+		logger(MTD_LOG_ERRNO, "%s/uuid.json: fstatat",
+		       mtd_ctx.config_dir);
 		return MTD_ERR_OS;
 	}
 
 	fd = openat(dfd, "uuid.json", O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC,
 		    0600);
 	if (fd == -1) {
-		close(dfd);
+		logger(MTD_LOG_ERRNO, "%s/uuid.json: openat",
+		       mtd_ctx.config_dir);
 		return MTD_ERR_OS;
 	}
 
 	p = gen_uuid(uuid);
 	if (!p) {
 		logger(MTD_LOG_ERR, "error generating UUID\n");
-		goto out_close;
+		return MTD_ERR_OS;
 	}
 
 	new = json_pack("{s:s}", "device_id", uuid);
@@ -260,10 +256,6 @@ static int generate_device_id(void)
 	json_decref(new);
 
 	ret = MTD_ERR_NONE;
-
-out_close:
-	close(fd);
-	close(dfd);
 
 	return ret;
 }
@@ -326,12 +318,10 @@ next_component:
 
 static int check_config_dir(const char *config_dir, bool is_production)
 {
-	char errbuf[129];
 	char *cfg_dir;
 	struct stat sb;
-	int dfd;
+	int dfd __cleanup_close = -1;
 	int err;
-	int ret = MTD_ERR_NONE;
 
 	dfd = open(config_dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (dfd == -1)
@@ -339,10 +329,8 @@ static int check_config_dir(const char *config_dir, bool is_production)
 
 	err = asprintf(&cfg_dir, "%s/libmtdac/%s", config_dir,
 		       is_production ? "prod-api" : "test-api");
-	if (err == -1) {
-		ret = MTD_ERR_OS;
-		goto out_close;
-	}
+	if (err == -1)
+		return MTD_ERR_OS;
 
 	mtd_ctx.config_dir = cfg_dir;
 
@@ -352,20 +340,18 @@ static int check_config_dir(const char *config_dir, bool is_production)
 	 */
 	err = fstatat(dfd, cfg_dir, &sb, 0);
 	if (!err)
-		goto out_close;
+		return MTD_ERR_NONE;
 
 	err = mkdir_p(dfd, cfg_dir, 0700);
 	if (!err)
-		goto out_close;
+		return MTD_ERR_NONE;
 
-	ret = MTD_ERR_OS;
-	logger(MTD_LOG_ERR, "mkdirat %s: %s\n", cfg_dir,
-	       x_strerror_r(errno, errbuf, sizeof(errbuf)));
+	logger(MTD_LOG_ERRNO, "%s: mkdir_p", cfg_dir);
 
-out_close:
-	close(dfd);
+	free(cfg_dir);
+	mtd_ctx.config_dir = NULL;
 
-	return ret;
+	return MTD_ERR_OS;
 }
 
 void mtd_global_init(void)
@@ -444,8 +430,8 @@ void mtd_deinit(void)
 
 int write_config(const char *dir, const char *name, const json_t *json)
 {
-	int dfd;
-	int fd;
+	int dfd __cleanup_close = -1;
+	int fd __cleanup_close = -1;
 	int err;
 	int ret = MTD_ERR_NONE;
 
@@ -455,8 +441,7 @@ int write_config(const char *dir, const char *name, const json_t *json)
 
 	fd = openat(dfd, name, O_CREAT|O_WRONLY|O_TRUNC|O_CLOEXEC, 0600);
 	if (fd == -1) {
-		close(dfd);
-		logger(MTD_LOG_ERRNO, "openat");
+		logger(MTD_LOG_ERRNO, "%s: openat", name);
 		return MTD_ERR_OS;
 	}
 
@@ -465,9 +450,6 @@ int write_config(const char *dir, const char *name, const json_t *json)
 		logger(MTD_LOG_ERR, "json_dump() returned -1\n");
 		ret = MTD_ERR_OS;
 	}
-
-	close(fd);
-	close(dfd);
 
 	return ret;
 }
@@ -505,11 +487,11 @@ extern char **environ;
 int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 {
 	struct mtd_dsrc_ctx dsctx;
-	char *client_id = NULL;
-	char *client_secret = NULL;
+	char *client_id __cleanup_free = NULL;
+	char *client_secret __cleanup_free = NULL;
 	const char *args[3];
 	char auth_code[41];
-	char *buf = NULL;
+	char *buf __cleanup_free = NULL;
 	char data[4096];
 	char url[2048];
 	char *s;
@@ -526,10 +508,8 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 	bool reset_oauth;
 
 	/* Check for unknown/invalid scopes */
-	if (scopes == 0 || scopes & ~(ALL_SCOPES)) {
-		err = MTD_ERR_UNKNOWN_SCOPES;
-		goto out_free;
-	}
+	if (scopes == 0 || scopes & ~(ALL_SCOPES))
+		return MTD_ERR_UNKNOWN_SCOPES;
 
 	reset_oauth = !(scope & MTD_API_SCOPE_ADD);
 	scope &= ~MTD_API_SCOPE_ADD;
@@ -577,10 +557,8 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 
 	printf("\nEnter authorisation code > ");
 	s = fgets(auth_code, sizeof(auth_code) - 1, stdin);
-	if (!s) {
-		err = MTD_ERR_OS;
-		goto out_free;
-	}
+	if (!s)
+		return MTD_ERR_OS;
 	auth_code[strlen(auth_code) - 1] = '\0';
 
 	printf("\n");
@@ -596,7 +574,7 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 	dsctx.src_type = MTD_DATA_SRC_BUF;
 	err = mtd_ep(MTD_API_EP_OA_EXCHANGE_AUTH_CODE, &dsctx, &buf, NULL);
 	if (err)
-		goto out_free;
+		return err;
 
 	array = json_loads(buf, 0, NULL);
 	root = json_array_get(array, 0);
@@ -627,11 +605,6 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 out_free_json:
 	json_decref(array);
 	json_decref(froot);
-
-out_free:
-	free(client_id);
-	free(client_secret);
-	free(buf);
 
 	return err;
 }

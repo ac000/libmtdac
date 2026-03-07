@@ -240,7 +240,7 @@ static char *get_version(void *user_data)
 	err = asprintf(&buf, "%s%s%s=%s", ver_cli ? ver_cli : "",
 		       ver_cli ? "&" : "", encname, encver);
 	if (err == -1) {
-		logger(MTD_LOG_ERRNO, "asprintf:");
+		logger(MTD_LOG_ERRNO, "asprintf");
 		buf = NULL;
 	}
 
@@ -275,7 +275,7 @@ static char *get_ua(void *user_data __unused)
 		       "os-family=%s&os-version=%s&device-manufacturer=%s&device-model=%s",
 		       encsys, encrel, encvendor, encmodel);
 	if (err == -1) {
-		logger(MTD_LOG_ERRNO, "asprintf:");
+		logger(MTD_LOG_ERRNO, "asprintf");
 		buf = NULL;
 	}
 
@@ -542,7 +542,7 @@ static char *get_tz(void *user_data __unused)
 
 	buf = malloc(strlen("UTC+HH:MM") + 1);
 	if (!buf) {
-		logger(MTD_LOG_ERRNO, "malloc:");
+		logger(MTD_LOG_ERRNO, "malloc");
 		return NULL;
 	}
 
@@ -568,7 +568,7 @@ static char *get_user(void *user_data __unused)
 	encuser = mtd_percent_encode(getenv("USER"), -1);
 	err = asprintf(&buf, "os=%s", encuser);
 	if (err == -1) {
-		logger(MTD_LOG_ERRNO, "asprintf:");
+		logger(MTD_LOG_ERRNO, "asprintf");
 		buf = NULL;
 	}
 	free(encuser);
@@ -594,7 +594,7 @@ static char *get_device_id(void *user_data __unused)
 
 	err = asprintf(&buf, "%s", json_string_value(did));
 	if (err == -1) {
-		logger(MTD_LOG_ERRNO, "asprintf:");
+		logger(MTD_LOG_ERRNO, "asprintf");
 		buf = NULL;
 	}
 	json_decref(root);

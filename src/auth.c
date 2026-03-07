@@ -27,7 +27,7 @@ extern __thread struct mtd_ctx mtd_ctx;
 char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 {
 	char path[PATH_MAX];
-	char *token;
+	char *token = NULL;
 	const char *file;
 	json_t *root;
 	json_t *tok_obj;
@@ -92,10 +92,19 @@ char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 	} else if (scope != MTD_API_SCOPE_NULL && ft != FT_AUTH_APPLICATION) {
 		tok_obj = json_object_get(root, api_scope_map[scope].name);
 	}
+
+	if (!tok_obj)
+		goto out_json_decref;
+
 	tok_obj = json_object_get(tok_obj, which);
 	if (!tok_obj)
-		return NULL;
+		goto out_json_decref;
+
 	token = strdup(json_string_value(tok_obj));
+	if (!token)
+		logger(MTD_LOG_ERRNO, "strdup");
+
+out_json_decref:
 	json_decref(root);
 
 	return token;
@@ -106,14 +115,32 @@ int oauther_refresh_access_token(enum mtd_api_scope scope)
 	struct mtd_dsrc_ctx dsctx;
 	char data[4096];
 	char path[PATH_MAX];
-	char *buf;
-	char *refresh_token = load_token("refresh_token", FT_AUTH, scope);
-	char *client_id = load_token("client_id", FT_CREDS, scope);
-	char *client_secret = load_token("client_secret", FT_CREDS, scope);
+	char *buf __cleanup_free = NULL;
+	char *refresh_token __cleanup_free = NULL;
+	char *client_id __cleanup_free = NULL;
+	char *client_secret __cleanup_free = NULL;
 	json_t *array;
 	json_t *froot;
 	json_t *result;
 	int err;
+
+	refresh_token = load_token("refresh_token", FT_AUTH, scope);
+	if (!refresh_token) {
+		logger(MTD_LOG_ERR, "Couldn't load 'refresh_token'\n");
+		return MTD_ERR_OS;
+	}
+
+	client_id = load_token("client_id", FT_CREDS, scope);
+	if (!client_id) {
+		logger(MTD_LOG_ERR, "Couldn't load 'client_id'\n");
+		return MTD_ERR_OS;
+	}
+
+	client_secret = load_token("client_secret", FT_CREDS, scope);
+	if (!client_secret) {
+		logger(MTD_LOG_ERR, "Couldn't load 'client_secret'\n");
+		return MTD_ERR_OS;
+	}
 
 	snprintf(data, sizeof(data),
 		 "client_secret=%s&client_id=%s&grant_type=refresh_token"
@@ -124,8 +151,9 @@ int oauther_refresh_access_token(enum mtd_api_scope scope)
 	dsctx.src_type = MTD_DATA_SRC_BUF;
 	err = mtd_ep(MTD_API_EP_OA_REFRESH_TOKEN, &dsctx, &buf, NULL);
 	if (err) {
-		logger(MTD_LOG_ERR, "%s\n", buf);
-		goto out_free;
+		if (buf)
+			logger(MTD_LOG_ERR, "%s\n", buf);
+		return err;
 	}
 
 	snprintf(path, sizeof(path), "%s/oauth.json", mtd_ctx.config_dir);
@@ -144,12 +172,6 @@ int oauther_refresh_access_token(enum mtd_api_scope scope)
 	json_decref(array);
 	json_decref(froot);
 
-out_free:
-	free(buf);
-	free(refresh_token);
-	free(client_id);
-	free(client_secret);
-
 	return err;
 }
 
@@ -159,14 +181,26 @@ int oauther_get_application_token(enum mtd_api_scope scope)
 	char data[4096];
 	const char *scopes;
 	const char *file;
-	char *buf;
-	char *client_id = load_token("client_id", FT_CREDS, MTD_API_SCOPE_NULL);
-	char *client_secret = load_token("client_secret", FT_CREDS,
-					 MTD_API_SCOPE_NULL);
+	char *buf __cleanup_free = NULL;
+	char *client_id __cleanup_free = NULL;
+	char *client_secret __cleanup_free = NULL;
 	json_t *array;
 	json_t *root;
 	json_t *result;
 	int err;
+
+	client_id = load_token("client_id", FT_CREDS, MTD_API_SCOPE_NULL);
+	if (!client_id) {
+		logger(MTD_LOG_ERR, "Couldn't load 'client_id'\n");
+		return MTD_ERR_OS;
+	}
+
+	client_secret = load_token("client_secret", FT_CREDS,
+				   MTD_API_SCOPE_NULL);
+	if (!client_secret) {
+		logger(MTD_LOG_ERR, "Couldn't load 'client_secret'\n");
+		return MTD_ERR_OS;
+	}
 
 	switch (scope) {
 	case MTD_API_SCOPE_SA:
@@ -187,8 +221,9 @@ int oauther_get_application_token(enum mtd_api_scope scope)
 	dsctx.src_type = MTD_DATA_SRC_BUF;
 	err = mtd_ep(MTD_API_EP_OA_APPLICATION_TOKEN, &dsctx, &buf, NULL);
 	if (err) {
-		logger(MTD_LOG_ERR, "%s\n", buf);
-		goto out_free;
+		if (buf)
+			logger(MTD_LOG_ERR, "%s\n", buf);
+		return err;
 	}
 
 	array = json_loads(buf, 0, NULL);
@@ -197,15 +232,10 @@ int oauther_get_application_token(enum mtd_api_scope scope)
 	write_config(mtd_ctx.config_dir, file, result);
 	json_decref(array);
 
-out_free:
-	free(buf);
-	free(client_id);
-	free(client_secret);
-
 	return err;
 }
 
 int oauther_dummy(enum mtd_api_scope scope __unused)
 {
-	return 0;
+	return MTD_ERR_NONE;
 }

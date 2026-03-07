@@ -3,11 +3,14 @@
 /*
  * mtd-priv.h - Make Tax Digital
  *
- * Copyright (C) 2020 - 2021	Andrew Clayton <andrew@digital-domain.net>
+ * Copyright (C) 2020 - 2026	Andrew Clayton <ac@sigsegv.uk>
  */
 
 #ifndef _MTD_PRIV_H_
 #define _MTD_PRIV_H_
+
+#include <stdlib.h>
+#include <unistd.h>
 
 #include <jansson.h>
 
@@ -15,6 +18,24 @@
 
 #ifndef __unused
 #define __unused	__attribute__((unused))
+#endif
+
+#ifndef __cleanup_free
+#define __cleanup_free __attribute__((cleanup(xfree)))
+static inline void xfree(char **p)
+{
+	free(*p);
+}
+#endif
+
+#ifndef __cleanup_close
+#define __cleanup_close __attribute__((cleanup(xclose)))
+static inline void xclose(int *fd)
+{
+	if (*fd == -1)
+		return;
+	close(*fd);
+}
 #endif
 
 enum app_conn_type {
