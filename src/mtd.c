@@ -517,7 +517,16 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 	scope &= ~MTD_API_SCOPE_ADD;
 
 	client_id = load_token("client_id", FT_CREDS, scope);
+	if (!client_id) {
+		logger(MTD_LOG_ERR, "Couldn't load 'client_id'\n");
+		return MTD_ERR_OS;
+	}
+
 	client_secret = load_token("client_secret", FT_CREDS, scope);
+	if (!client_secret) {
+		logger(MTD_LOG_ERR, "Couldn't load 'client_secret'\n");
+		return MTD_ERR_OS;
+	}
 
 	printf("You need to authorise libmtdac to have '%s%s%s' access to "
 	       "your\n'%s' information.\n",

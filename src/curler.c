@@ -434,12 +434,16 @@ static int set_headers(struct curl_ctx *ctx)
 		return MTD_ERR_OS;
 
 	if (!strstr(ctx->url, "/oauth/token")) {
-		char *access_token = ep_get_token(ctx->endpoint);
+		char *access_token __cleanup_free = NULL;
+
+		access_token = ep_get_token(ctx->endpoint);
+		if (!access_token) {
+			logger(MTD_LOG_ERR, "Couldn't load 'access_token'\n");
+			return MTD_ERR_OS;
+		}
 
 		err = curl_add_hdr(ctx, "Authorization: Bearer %s",
 				   access_token);
-		free(access_token);
-
 		if (err)
 			return MTD_ERR_OS;
 	}
@@ -591,7 +595,9 @@ curl_again:
 		if (strstr(ctx->curl_buf->buf, "INVALID_CREDENTIALS")) {
 			logger(MTD_LOG_INFO, "INVALID_CREDENTIALS: "
 			       "Refreshing access_token\n");
-			ctx->oauther(ctx->scope);
+			err = ctx->oauther(ctx->scope);
+			if (err)
+				return err;
 			curl_slist_free_all(ctx->hdrs);
 			ctx->hdrs = NULL;
 			*ctx->curl_buf->buf = '\0';
