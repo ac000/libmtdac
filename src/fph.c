@@ -589,7 +589,7 @@ static char *get_device_id(void *user_data __unused)
 	if (!root)
 		return NULL;
 	did = json_object_get(root, "device_id");
-	if (!did)
+	if (!did || !json_is_string(did))
 		goto out_json_decref;
 
 	err = asprintf(&buf, "%s", json_string_value(did));
