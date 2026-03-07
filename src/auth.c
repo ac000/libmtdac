@@ -27,7 +27,7 @@ extern __thread struct mtd_ctx mtd_ctx;
 char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 {
 	char path[PATH_MAX];
-	char *token;
+	char *token = NULL;
 	const char *file;
 	json_t *root;
 	json_t *tok_obj;
@@ -92,12 +92,19 @@ char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 	} else if (scope != MTD_API_SCOPE_NULL && ft != FT_AUTH_APPLICATION) {
 		tok_obj = json_object_get(root, api_scope_map[scope].name);
 	}
+
+	if (!tok_obj)
+		goto out_json_decref;
+
 	tok_obj = json_object_get(tok_obj, which);
 	if (!tok_obj)
-		return NULL;
+		goto out_json_decref;
+
 	token = strdup(json_string_value(tok_obj));
 	if (!token)
 		logger(MTD_LOG_ERRNO, "strdup");
+
+out_json_decref:
 	json_decref(root);
 
 	return token;
