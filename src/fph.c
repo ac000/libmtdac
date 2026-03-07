@@ -581,7 +581,7 @@ static char *get_device_id(void *user_data __unused)
 	char path[PATH_MAX];
 	json_t *root;
 	json_t *did;
-	char *buf;
+	char *buf = NULL;
 	int err;
 
 	snprintf(path, sizeof(path), "%s/uuid.json", mtd_ctx.config_dir);
@@ -590,13 +590,15 @@ static char *get_device_id(void *user_data __unused)
 		return NULL;
 	did = json_object_get(root, "device_id");
 	if (!did)
-		return NULL;
+		goto out_json_decref;
 
 	err = asprintf(&buf, "%s", json_string_value(did));
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf");
 		buf = NULL;
 	}
+
+out_json_decref:
 	json_decref(root);
 
 	return buf;
