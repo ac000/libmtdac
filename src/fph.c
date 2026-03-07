@@ -561,11 +561,16 @@ static char *get_tz(void *user_data __unused)
 
 static char *get_user(void *user_data __unused)
 {
+	char *user;
 	char *encuser;
 	char *buf;
 	int err;
 
-	encuser = mtd_percent_encode(getenv("USER"), -1);
+	user = getenv("USER");
+	if (!user)
+		user = "nobody";
+
+	encuser = mtd_percent_encode(user, -1);
 	err = asprintf(&buf, "os=%s", encuser);
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf");
