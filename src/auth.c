@@ -203,5 +203,5 @@ int oauther_get_application_token(enum mtd_api_scope scope)
 
 int oauther_dummy(enum mtd_api_scope scope __unused)
 {
-	return 0;
+	return MTD_ERR_NONE;
 }
