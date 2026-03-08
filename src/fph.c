@@ -571,7 +571,7 @@ static char *get_tz(void *user_data __unused)
 	 * TZ format wants to be UTC+/-HH:MM
 	 * %z gives +/-HHMM
 	 */
-	strftime(buf, BUF_SZ, "UTC%z", tm);
+	strftime(buf, sizeof("UTC+HH:MM"), "UTC%z", tm);
 	buf[7] = buf[6];
 	buf[8] = buf[7];
 	buf[6] = ':';
