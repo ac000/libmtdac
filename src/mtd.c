@@ -338,7 +338,7 @@ static int check_config_dir(const char *config_dir, bool is_production)
 	 * The chances are the config directory exists and we
 	 * can short cut out.
 	 */
-	err = fstatat(dfd, cfg_dir, &sb, 0);
+	err = stat(cfg_dir, &sb);
 	if (!err)
 		return MTD_ERR_NONE;
 
