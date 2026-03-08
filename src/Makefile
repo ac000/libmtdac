@@ -18,7 +18,7 @@ CC	= gcc
 CFLAGS += -Wall -Wextra -Wdeclaration-after-statement -Wvla \
 	  -Wmissing-prototypes -Wstrict-prototypes -Wold-style-definition \
 	  -std=gnu11 -g -O2 -Wp,-D_FORTIFY_SOURCE=2 --param=ssp-buffer-size=4 \
-	  -fno-common -fstack-protector -fPIC -fexceptions \
+	  -fno-common -fstack-protector -fPIC -funsigned-char -fexceptions \
 	  -fvisibility=hidden -I../include/libmtdac \
 	  -DLIBNAME=\"$(LIBNAME)\" -DLIBMTDAC_VERSION_PLUS=\"$(PLUS)\" \
 	  -DGIT_VERSION=${GIT_VERSION} -pipe
