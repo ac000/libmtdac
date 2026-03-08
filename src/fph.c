@@ -477,32 +477,48 @@ static char *get_ipaddrs(void *user_data __unused)
 static __thread int libcurl_sockfd;
 static char *get_src_port(void *user_data __unused)
 {
+	int err;
 	struct sockaddr_storage ss;
 	socklen_t addrlen = sizeof(ss);
 	char port[6];
 
-	getsockname(libcurl_sockfd, (struct sockaddr *)&ss, &addrlen);
+	err = getsockname(libcurl_sockfd, (struct sockaddr *)&ss, &addrlen);
+	if (err) {
+		logger(MTD_LOG_ERRNO, "getsockname");
+		return NULL;
+	}
+
 	if (_check_is_local_ip((struct sockaddr *)&ss, ss.ss_family))
 		return NULL;
 
-	getnameinfo((struct sockaddr *)&ss, addrlen, NULL, 0, port,
-		    sizeof(port), NI_NUMERICHOST|NI_NUMERICSERV);
+	err = getnameinfo((struct sockaddr *)&ss, addrlen, NULL, 0, port,
+			  sizeof(port), NI_NUMERICHOST|NI_NUMERICSERV);
+	if (err)
+		return NULL;
 
 	return strdup(port);
 }
 
 static char *get_src_addr(void *user_data __unused)
 {
+	int err;
 	struct sockaddr_storage ss;
 	socklen_t addrlen = sizeof(ss);
 	char host[INET6_ADDRSTRLEN];
 
-	getsockname(libcurl_sockfd, (struct sockaddr *)&ss, &addrlen);
+	err = getsockname(libcurl_sockfd, (struct sockaddr *)&ss, &addrlen);
+	if (err) {
+		logger(MTD_LOG_ERRNO, "getsockname");
+		return NULL;
+	}
+
 	if (_check_is_local_ip((struct sockaddr *)&ss, ss.ss_family))
 		return NULL;
 
-	getnameinfo((struct sockaddr *)&ss, addrlen, host, sizeof(host), NULL,
-		    0, NI_NUMERICHOST|NI_NUMERICSERV);
+	err = getnameinfo((struct sockaddr *)&ss, addrlen, host, sizeof(host),
+			  NULL, 0, NI_NUMERICHOST|NI_NUMERICSERV);
+	if (err)
+		return NULL;
 
 	return strdup(host);
 }
