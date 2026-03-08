@@ -97,7 +97,7 @@ char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 		goto out_json_decref;
 
 	tok_obj = json_object_get(tok_obj, which);
-	if (!tok_obj)
+	if (!tok_obj || !json_is_string(tok_obj))
 		goto out_json_decref;
 
 	token = strdup(json_string_value(tok_obj));
