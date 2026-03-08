@@ -581,6 +581,10 @@ static int do_curl(struct curl_ctx *ctx)
 
 	ctx->oauther = ep_set_oauther(ctx->endpoint);
 	ctx->url = ep_make_url(ctx->endpoint, ctx->params, url);
+	if (!ctx->url) {
+		logger(MTD_LOG_ERR, "NULL URL from ep_make_url()\n");
+		return MTD_ERR_OS;
+	}
 
 curl_again:
 	ctx->sockfd = do_connect(&mtd_ctx);

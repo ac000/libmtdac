@@ -129,18 +129,27 @@ extern __thread struct mtd_ctx mtd_ctx;
 char *ep_make_url(enum mtd_api_endpoint ep, const char * const params[],
 		  char *url)
 {
-	char *nino = NULL;
-	char *string;
+	char *nino __cleanup_free = NULL;
+	char *string __cleanup_free = NULL;
 	char *ptr;
 	int len;
 
 	string = strdup(endpoints[ep].tmpl + 1); /* skip past first '/' */
+	if (!string) {
+		logger(MTD_LOG_ERRNO, "strdup");
+		return NULL;
+	}
 	ptr = string;
 
 	len = snprintf(url, URL_LEN + 1, "%s", mtd_ctx.api_url);
 
-	if (strstr(string, "{nino}"))
+	if (strstr(string, "{nino}")) {
 		nino = load_token("nino", FT_NINO, MTD_API_SCOPE_NULL);
+		if (!nino) {
+			logger(MTD_LOG_ERR, "Couldn't load 'nino'\n");
+			return NULL;
+		}
+	}
 
 	for (int p = 0; ;) {
 		char *token;
@@ -162,9 +171,6 @@ char *ep_make_url(enum mtd_api_endpoint ep, const char * const params[],
 
 		len = strlen(url);
 	}
-
-	free(string);
-	free(nino);
 
 	return url;
 }
