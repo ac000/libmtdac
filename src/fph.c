@@ -465,7 +465,9 @@ static char *get_ipaddrs(void *user_data __unused)
 		iplen = strlen(buf);
 		free(encip);
 	}
-	buf[iplen - 1] = '\0';	/* trim trailing ',' */
+
+	if (iplen > 0)
+		buf[iplen - 1] = '\0';	/* trim trailing ',' */
 
 	freeifaddrs(ifaddr);
 
