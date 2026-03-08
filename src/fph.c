@@ -459,8 +459,11 @@ static char *get_ipaddrs(void *user_data __unused)
 
 		addrlen = family == AF_INET ? sizeof(struct sockaddr_in) :
 					      sizeof(struct sockaddr_in6);
-		getnameinfo(ifa->ifa_addr, addrlen, ip, sizeof(ip), NULL, 0,
-			    NI_NUMERICHOST);
+		err = getnameinfo(ifa->ifa_addr, addrlen, ip, sizeof(ip), NULL,
+				  0, NI_NUMERICHOST);
+		if (err)
+			continue;
+
 		encip = mtd_percent_encode(ip, -1);
 		snprintf(buf + iplen, BUF_SZ - iplen, "%s,", encip);
 		iplen = strlen(buf);
