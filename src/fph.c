@@ -443,6 +443,7 @@ static char *get_ipaddrs(void *user_data __unused)
 
 	for (ifa = ifaddr, n = 0; ifa != NULL; ifa = ifa->ifa_next, n++) {
 		int family;
+		socklen_t addrlen;
 		char *encip;
 		char ip[INET6_ADDRSTRLEN];
 
@@ -456,10 +457,10 @@ static char *get_ipaddrs(void *user_data __unused)
 		if (!_check_is_local_ip(ifa->ifa_addr, family))
 			continue;
 
-		getnameinfo(ifa->ifa_addr,
-			    family == AF_INET ? sizeof(struct sockaddr_in) :
-						sizeof(struct sockaddr_in6),
-			    ip, sizeof(ip), NULL, 0, NI_NUMERICHOST);
+		addrlen = family == AF_INET ? sizeof(struct sockaddr_in) :
+					      sizeof(struct sockaddr_in6);
+		getnameinfo(ifa->ifa_addr, addrlen, ip, sizeof(ip), NULL, 0,
+			    NI_NUMERICHOST);
 		encip = mtd_percent_encode(ip, -1);
 		snprintf(buf + iplen, BUF_SZ - iplen, "%s,", encip);
 		iplen = strlen(buf);
