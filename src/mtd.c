@@ -331,6 +331,7 @@ static int check_config_dir(const char *config_dir, bool is_production)
 	struct stat sb;
 	int dfd __cleanup_close = -1;
 	int err;
+	int ret = MTD_ERR_OS;
 
 	dfd = open(config_dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (dfd == -1)
@@ -348,8 +349,13 @@ static int check_config_dir(const char *config_dir, bool is_production)
 	 * can short cut out.
 	 */
 	err = stat(cfg_dir, &sb);
-	if (!err)
-		return MTD_ERR_NONE;
+	if (!err) {
+		if (S_ISDIR(sb.st_mode))
+			return MTD_ERR_NONE;
+
+		ret = MTD_ERR_CONFIG_DIR_INVALID;
+		goto out_free_cfg_dir;
+	}
 
 	err = mkdir_p(dfd, cfg_dir, 0700);
 	if (!err)
@@ -357,10 +363,11 @@ static int check_config_dir(const char *config_dir, bool is_production)
 
 	logger(MTD_LOG_ERRNO, "%s: mkdir_p", cfg_dir);
 
+out_free_cfg_dir:
 	free(cfg_dir);
 	mtd_ctx.config_dir = NULL;
 
-	return MTD_ERR_OS;
+	return ret;
 }
 
 void mtd_global_init(void)
