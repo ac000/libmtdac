@@ -52,6 +52,14 @@ char *load_token(const char *which, enum file_type ft, enum mtd_api_scope scope)
 	case FT_NINO:
 		file = "nino.json";
 		break;
+	default:
+		/*
+		 * Mainly for GCC otherwise:
+		 * warning: ‘file’ may be used uninitialized
+		 * [-Wmaybe-uninitialized]
+		 */
+		logger(MTD_LOG_ERR, "Unknown file_type\n");
+		return NULL;
 	}
 
 	snprintf(path, sizeof(path), "%s/%s", mtd_ctx.config_dir, file);
