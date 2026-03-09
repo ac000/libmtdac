@@ -313,7 +313,9 @@ static char *get_macaddrs(void *user_data __unused)
 		maclen = strlen(buf);
 		free(encmac);
 	}
-	buf[maclen - 1] = '\0';	/* trim trailing ',' */
+
+	if (maclen > 0)
+		buf[maclen - 1] = '\0';	/* trim trailing ',' */
 
 	freeifaddrs(ifaddr);
 
