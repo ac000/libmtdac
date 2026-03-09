@@ -221,9 +221,9 @@ static char *get_prod_name(void *user_data __unused)
 static char *get_version(void *user_data)
 {
 	char ver[128];
-	char *encname;
-	char *encver;
-	char *ver_cli = NULL;
+	char *encname __cleanup_free = NULL;
+	char *encver __cleanup_free = NULL;
+	char *ver_cli __cleanup_free = NULL;
 	char *buf;
 	int err;
 
@@ -238,15 +238,12 @@ static char *get_version(void *user_data)
 		ver_cli = fph_ops.fph_version_cli(user_data);
 
 	err = asprintf(&buf, "%s%s%s=%s", ver_cli ? ver_cli : "",
-		       ver_cli ? "&" : "", encname, encver);
+		       ver_cli ? "&" : "", encname ? encname : "",
+		       encver ? encver : "");
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf");
 		buf = NULL;
 	}
-
-	free(encname);
-	free(encver);
-	free(ver_cli);
 
 	return buf;
 }
@@ -257,10 +254,10 @@ static char *get_ua(void *user_data __unused)
 	char *buf;
 	char ven[64];
 	char model[128];
-	char *encsys;
-	char *encrel;
-	char *encvendor;
-	char *encmodel;
+	char *encsys __cleanup_free = NULL;
+	char *encrel __cleanup_free = NULL;
+	char *encvendor __cleanup_free = NULL;
+	char *encmodel __cleanup_free = NULL;
 	int err;
 
 	uname(&un);
@@ -273,16 +270,12 @@ static char *get_ua(void *user_data __unused)
 
 	err = asprintf(&buf,
 		       "os-family=%s&os-version=%s&device-manufacturer=%s&device-model=%s",
-		       encsys, encrel, encvendor, encmodel);
+		       encsys ? encsys : "", encrel ? encrel : "",
+		       encvendor ? encvendor : "", encmodel ? encmodel : "");
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf");
 		buf = NULL;
 	}
-
-	free(encsys);
-	free(encrel);
-	free(encvendor);
-	free(encmodel);
 
 	return buf;
 }
@@ -309,7 +302,8 @@ static char *get_macaddrs(void *user_data __unused)
 			continue;
 
 		encmac = mtd_percent_encode(mac, -1);
-		snprintf(buf + maclen, BUF_SZ - maclen, "%s,", encmac);
+		snprintf(buf + maclen, BUF_SZ - maclen, "%s,",
+			 encmac ? encmac : "");
 		maclen = strlen(buf);
 		free(encmac);
 	}
@@ -467,7 +461,8 @@ static char *get_ipaddrs(void *user_data __unused)
 			continue;
 
 		encip = mtd_percent_encode(ip, -1);
-		snprintf(buf + iplen, BUF_SZ - iplen, "%s,", encip);
+		snprintf(buf + iplen, BUF_SZ - iplen, "%s,",
+			 encip ? encip : "");
 		iplen = strlen(buf);
 		free(encip);
 	}
@@ -598,7 +593,7 @@ static char *get_user(void *user_data __unused)
 		user = "nobody";
 
 	encuser = mtd_percent_encode(user, -1);
-	err = asprintf(&buf, "os=%s", encuser);
+	err = asprintf(&buf, "os=%s", encuser ? encuser : "nobody");
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf");
 		buf = NULL;
