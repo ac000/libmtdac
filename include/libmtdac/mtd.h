@@ -921,7 +921,7 @@ extern void mtd_deinit(void);
 extern int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes);
 extern int mtd_init_creds(enum mtd_api_scope scope);
 extern int mtd_init_nino(void);
-extern char *mtd_percent_encode(const char *str, ssize_t len);
+extern char *mtd_percent_encode(const char *str, size_t len);
 extern const char *mtd_err2str(int err);
 extern const char *mtd_err2enum_str(int err);
 extern enum mtd_http_status_code mtd_http_status_code(const char *json);

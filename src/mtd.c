@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -174,37 +175,45 @@ const char *mtd_http_status_str(const char *json)
 	return str;
 }
 
-char *mtd_percent_encode(const char *str, ssize_t len)
+char *mtd_percent_encode(const char *str, size_t len)
 {
-	char *p = (char *)str;
 	char *buf;
-	char *p2;
+	char *p;
 	size_t buflen;
 
-	buflen = ((len > -1 ? (size_t)len : strlen(str)) * 3) + 1;
+	if (len == SIZE_MAX)
+		len = strlen(str);
+	if (len > (SIZE_MAX - 1) / 3) {
+		logger(MTD_LOG_ERR, "Input too long\n");
+		return NULL;
+	}
+	buflen = (len * 3) + 1;
+
 	buf = malloc(buflen);
 	if (!buf) {
 		logger(MTD_LOG_ERRNO, "malloc");
 		return NULL;
 	}
-	p2 = buf;
+	p = buf;
 
-	while (*p) {
-		switch (*p) {
-		case ' ':	case '\n':	case '\r':	case '!':
-		case '*':	case '\'':	case '(':	case ')':
-		case ';':	case ':':	case '@':	case '&':
-		case '=':	case '+':	case '$':	case ',':
-		case '/':	case '?':	case '#':	case '[':
-		case ']':	case '%':
-			p2 += sprintf(p2, "%%%02X", *p);
+	for (size_t i = 0; i < len; i++) {
+		char ch = str[i];
+
+		switch (ch) {
+		case 'A' ... 'Z':
+		case 'a' ... 'z':
+		case '0' ... '9':
+		case '-':
+		case '.':
+		case '_':
+		case '~':
+			*(p++) = ch;
 			break;
 		default:
-			*(p2++) = *p;
+			p += sprintf(p, "%%%02X", ch);
 		}
-		p++;
 	}
-	*p2 = '\0';
+	*p = '\0';
 
 	return buf;
 }
