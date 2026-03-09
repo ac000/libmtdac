@@ -333,6 +333,9 @@ static int check_config_dir(const char *config_dir, bool is_production)
 	int err;
 	int ret = MTD_ERR_OS;
 
+	if (*config_dir != '/')
+		return MTD_ERR_CONFIG_DIR_INVALID;
+
 	dfd = open(config_dir, O_PATH|O_DIRECTORY|O_CLOEXEC);
 	if (dfd == -1)
 		return MTD_ERR_CONFIG_DIR_INVALID;
