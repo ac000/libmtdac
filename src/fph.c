@@ -573,8 +573,8 @@ static char *get_tz(void *user_data __unused)
 	 * %z gives +/-HHMM
 	 */
 	strftime(buf, sizeof("UTC+HH:MM"), "UTC%z", tm);
-	buf[7] = buf[6];
 	buf[8] = buf[7];
+	buf[7] = buf[6];
 	buf[6] = ':';
 	buf[9] = '\0';
 
