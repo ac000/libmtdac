@@ -3,7 +3,7 @@
 /*
  * logger.c - Simple logging functon
  *
- * Copyright (C) 2020 - 2025	Andrew Clayton <ac@sigsegv.uk>
+ * Copyright (C) 2020 - 2026	Andrew Clayton <ac@sigsegv.uk>
  */
 
 #define _GNU_SOURCE		/* vasprintf(3) */
@@ -30,7 +30,6 @@ static const char *logger_err_levels[] = {
 };
 
 extern __thread struct mtd_ctx mtd_ctx;
-__attribute__((format(printf, 3, 4)))
 void _logger(const char *func, enum log_level log_level, const char *fmt, ...)
 {
 	int e = errno;

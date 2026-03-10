@@ -3,7 +3,7 @@
 /*
  * logger.h - Simple logging functon
  *
- * Copyright (C) 2020 - 2025	Andrew Clayton <ac@sigsegv.uk>
+ * Copyright (C) 2020 - 2026	Andrew Clayton <ac@sigsegv.uk>
  */
 
 #ifndef _LOGGER_H_
@@ -16,6 +16,7 @@
 #define logger(log_level, fmt, ...) \
 	_logger((const char *)__func__, log_level, fmt, ##__VA_ARGS__)
 
+__attribute__((format(printf, 3, 4)))
 extern void _logger(const char *func, enum log_level log_level,
 		    const char *fmt, ...);
 
