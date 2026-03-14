@@ -238,8 +238,8 @@ static char *get_version(void *user_data)
 		ver_cli = fph_ops.fph_version_cli(user_data);
 
 	err = asprintf(&buf, "%s%s%s=%s", ver_cli ? ver_cli : "",
-		       ver_cli ? "&" : "", encname ? encname : "",
-		       encver ? encver : "");
+		       ver_cli ? "&" : "", encname ? : "",
+		       encver ? : "");
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf");
 		buf = NULL;
@@ -270,8 +270,8 @@ static char *get_ua(void *user_data __unused)
 
 	err = asprintf(&buf,
 		       "os-family=%s&os-version=%s&device-manufacturer=%s&device-model=%s",
-		       encsys ? encsys : "", encrel ? encrel : "",
-		       encvendor ? encvendor : "", encmodel ? encmodel : "");
+		       encsys ? : "", encrel ? : "",
+		       encvendor ? : "", encmodel ? : "");
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf");
 		buf = NULL;
@@ -302,8 +302,7 @@ static char *get_macaddrs(void *user_data __unused)
 			continue;
 
 		encmac = mtd_percent_encode(mac, -1);
-		snprintf(buf + maclen, BUF_SZ - maclen, "%s,",
-			 encmac ? encmac : "");
+		snprintf(buf + maclen, BUF_SZ - maclen, "%s,", encmac ? : "");
 		maclen = strlen(buf);
 		free(encmac);
 	}
@@ -593,7 +592,7 @@ static char *get_user(void *user_data __unused)
 		user = "nobody";
 
 	encuser = mtd_percent_encode(user, -1);
-	err = asprintf(&buf, "os=%s", encuser ? encuser : "nobody");
+	err = asprintf(&buf, "os=%s", encuser ? : "nobody");
 	if (err == -1) {
 		logger(MTD_LOG_ERRNO, "asprintf");
 		buf = NULL;
@@ -724,7 +723,7 @@ static void add_fph(struct curl_ctx *ctx, const enum fph_hdr hdr)
 	 * does.
 	 */
 	curl_add_hdr(ctx, "%s%s%s%s", hstr, val ? ":" : ";", val ? " " : "",
-		     val ? val : "");
+		     val ? : "");
 	free(val);
 }
 
@@ -787,7 +786,7 @@ static const struct mtd_fph_ops dfl_fph_ops = {
 };
 
 #define SET_FPH_FUNC(f, m) \
-	(fph_ops.m = fph_type & f ? (ops->m ? ops->m : dfl_fph_ops.m) : NULL)
+	(fph_ops.m = fph_type & f ? (ops->m ? : dfl_fph_ops.m) : NULL)
 void fph_set_ops(enum app_conn_type conn_type, const struct mtd_fph_ops *ops)
 {
 	unsigned int fph_type = fph_type_map[conn_type].fph;
