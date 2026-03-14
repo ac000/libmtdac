@@ -818,5 +818,5 @@ void fph_set_ops(enum app_conn_type conn_type, const struct mtd_fph_ops *ops)
 	SET_FPH_FUNC(FPH_V_VERSION, MTD_FPH_VEN_VERSION);
 	SET_FPH_FUNC(FPH_V_VERSION, MTD_FPH_VEN_VERSION_CLI);
 
-	fph_ops.user_data = ops->user_data ? ops->user_data : NULL;
+	fph_ops.user_data = ops->user_data;
 }
