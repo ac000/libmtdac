@@ -1669,7 +1669,7 @@ static const struct {
 	/* Self Assessment Test Support Business Income Source */
 	[MTD_API_EP_TEST_SATS_BIS_CREATE] = {
 		.epstr	= "MTD_API_EP_TEST_SATS_BIS_CREATE",
-		.tmpl	= "https://test-api.service.hmrc.gov.uk/individuals/self-assessment-test-support/business/{nino}",
+		.tmpl	= "/individuals/self-assessment-test-support/business/{nino}",
 		.method	= M_POST,
 		.ctype	= CONTENT_TYPE_JSON,
 		.api	= MTD_EP_API_TEST_SATS,
