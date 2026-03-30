@@ -1,4 +1,4 @@
 MAJOR	= 1
 MINOR	= 6
 PATCH	= 1
-PLUS	=
+PLUS	= +
