@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	1.6.0
+Version:	1.6.1
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -53,6 +53,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Mon Mar 30 2026 Andrew Clayton <ac@sigsegv.uk> - 1.6.1-1
+- Fix the MTD_API_EP_TEST_SATS_BIS_CREATE endpoint URL
 
 * Mon Mar 09 2026 Andrew Clayton <ac@sigsegv.uk> - 1.6.0-1
 - Improved errno logging
