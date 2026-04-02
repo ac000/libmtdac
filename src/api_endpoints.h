@@ -124,7 +124,7 @@ static const struct {
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_IR] = {
-		.api_version	= "2.0",
+		.api_version	= "3.0",
 		.name		= "Individuals Reliefs",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
