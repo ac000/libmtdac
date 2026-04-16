@@ -574,10 +574,10 @@ int mtd_init_auth(enum mtd_api_scope scope, unsigned long scopes)
 	args[2] = (const char *)NULL;
 
 	printf("\n");
-	printf("If a browser window doesn't pop up, you can use the below "
-	       "url.\n\n");
+	printf("If a browser window doesn't pop up after pressing ENTER,\n"
+	       "you can use the below url.\n\n");
 	printf("  %s\n\n\n", url);
-	printf("                       Press ENTER to continue\n");
+	printf("     Press ENTER to continue and attempt to open the authorisation endpoint\n");
 	getchar();
 
 	posix_spawnp(&child_pid, args[0], NULL, NULL, (char * const *)args,
