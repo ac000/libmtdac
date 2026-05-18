@@ -39,6 +39,9 @@ static const struct {
 	[MTD_VLDT_FMT_COMPANY_NUMBER] = {
 		.regex	= "^[0-9]{8}|[A-Za-z]{2}[0-9]{6}$"
 	},
+	[MTD_VLDT_FMT_CONTRACTOR_NAME] = {
+		.regex	= "^.{1,105}$"
+	},
 	[MTD_VLDT_FMT_EMPLOYER_NAME] = {
 		.regex	= "^\\S.{0,73}$"
 	},

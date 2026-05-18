@@ -97,6 +97,7 @@ Format validation
             MTD_VLDT_FMT_CHARITY_NAME,
             MTD_VLDT_FMT_COMPANY_NAME,
             MTD_VLDT_FMT_COMPANY_NUMBER,
+            MTD_VLDT_FMT_CONTRACTOR_NAME,
             MTD_VLDT_FMT_EMPLOYER_NAME,
             MTD_VLDT_FMT_EMPLOYER_REF,
             MTD_VLDT_FMT_EMPLOYMENT_ID,
