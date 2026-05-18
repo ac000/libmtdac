@@ -283,8 +283,6 @@ static char *get_ua(void *user_data __unused)
 static char *get_macaddrs(void *user_data __unused)
 {
 	struct ifaddrs *ifaddr;
-	struct ifaddrs *ifa;
-	int n;
 	int maclen = 0;
 	int err;
 	char buf[BUF_SZ] = "\0";
@@ -293,7 +291,7 @@ static char *get_macaddrs(void *user_data __unused)
 	if (err)
 		return strdup("");
 
-	for (ifa = ifaddr, n = 0; ifa != NULL; ifa = ifa->ifa_next, n++) {
+	for (struct ifaddrs *ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
 		char mac[18];
 		char *encmac;
 
@@ -426,8 +424,6 @@ static bool _check_is_local_ip(const struct sockaddr *sa, int family)
 static char *get_ipaddrs(void *user_data __unused)
 {
 	struct ifaddrs *ifaddr;
-	struct ifaddrs *ifa;
-	int n;
 	int iplen = 0;
 	int err;
 	char buf[BUF_SZ] = "\0";
@@ -436,7 +432,7 @@ static char *get_ipaddrs(void *user_data __unused)
 	if (err)
 		return strdup("");
 
-	for (ifa = ifaddr, n = 0; ifa != NULL; ifa = ifa->ifa_next, n++) {
+	for (struct ifaddrs *ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
 		int family;
 		socklen_t addrlen;
 		char *encip;
