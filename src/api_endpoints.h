@@ -1346,7 +1346,7 @@ static const struct {
 	/* Foreign Property Cumulative Period Summary */
 	[MTD_API_EP_PB_FPCPS_GET] = {
 		.epstr	= "MTD_API_EP_PB_FPCPS_GET",
-		.tmpl	= "/individuals/business/property/foreign/{nino}/{businessId}/cumulative/{taxYear}",
+		.tmpl	= "/individuals/business/property/foreign/{nino}/{businessId}/cumulative/{taxYear}/{query_params}",
 		.method	= M_GET,
 		.api	= MTD_EP_API_PB,
 	},
@@ -1360,7 +1360,7 @@ static const struct {
 	/* Foreign Property Annual Submission */
 	[MTD_API_EP_PB_FPAS_GET] = {
 		.epstr	= "MTD_API_EP_PB_FPAS_GET",
-		.tmpl	= "/individuals/business/property/foreign/{nino}/{businessId}/annual/{taxYear}",
+		.tmpl	= "/individuals/business/property/foreign/{nino}/{businessId}/annual/{taxYear}/{query_params}",
 		.method	= M_GET,
 		.api	= MTD_EP_API_PB,
 	},

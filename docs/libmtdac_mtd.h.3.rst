@@ -130,6 +130,7 @@ Aliases for some of the above
     #define MTD_VLDT_FMT_EVENT                     MTD_VLDT_FMT_REF
     #define MTD_VLDT_FMT_HOLDING_COMPANY_NAME      MTD_VLDT_FMT_I_F_NAME
     #define MTD_VLDT_FMT_POSTCODE                  MTD_VLDT_FMT_REF
+    #define MTD_VLDT_FMT_PROPERTY_ID               MTD_VLDT_FMT_UUID
     #define MTD_VLDT_FMT_QOPS_REF                  MTD_VLDT_FMT_REF
     #define MTD_VLDT_FMT_REPORT_ID                 MTD_VLDT_FMT_UUID
     #define MTD_VLDT_FMT_SAVINGS_ACCOUNT_NAME      MTD_VLDT_FMT_ACCOUNT_NAME
