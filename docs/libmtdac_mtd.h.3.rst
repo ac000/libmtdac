@@ -66,7 +66,7 @@ Header options
   #define MTD_OPT_NO_ANTI_FRAUD_HDRS
   #define MTD_OPT_SND_EMPTY_HDRS
 
-Don't sent anti-fraud headers and send headers that have no value rather
+Don't send anti-fraud headers and send headers that have no value rather
 than skipping them respectively.
 
 Misc. options
