@@ -31,7 +31,7 @@ RETURN VALUE
 ============
 
 On success, a pointer to a dynamically allocated buffer containing the
-encoded string, which should be **free(2)**'d when finished with.
+encoded string, which should be **free(3)**'d when finished with.
 
 On error, **NULL** is returned. This can happen if there was insufficient
 memory to allocate the new buffer or the input string is too long.
