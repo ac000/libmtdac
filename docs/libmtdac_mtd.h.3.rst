@@ -631,9 +631,10 @@ MTD API Endpoints
           MTD_API_EP_ICAL_FINAL_DECLARATION,
 
           /* Individuals Capital Gains Income - Residential Property Disposals */
-          MTD_API_EP_ICGI_RPD_GET,
+          MTD_API_EP_ICGI_RPD_N_PPD_GET,
           MTD_API_EP_ICGI_RPD_N_PPD_AMEND,
           MTD_API_EP_ICGI_RPD_N_PPD_DELETE,
+          MTD_API_EP_ICGI_RPD_PPD_GET,
           MTD_API_EP_ICGI_RPD_PPD_AMEND,
           MTD_API_EP_ICGI_RPD_PPD_DELETE,
           /* Other Capital Gains and Disposals */

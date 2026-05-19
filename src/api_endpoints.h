@@ -64,7 +64,7 @@ static const struct {
 		.scope		= MTD_API_SCOPE_SA,
 	},
 	[MTD_EP_API_ICGI] = {
-		.api_version	= "2.0",
+		.api_version	= "3.0",
 		.name		= "Individuals Capital Gains Income",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
@@ -457,9 +457,9 @@ static const struct {
 	},
 
 	/* Individuals Capital Gains Income - Residential Property Disposals */
-	[MTD_API_EP_ICGI_RPD_GET] = {
-		.epstr	= "MTD_API_EP_ICGI_RPD_GET",
-		.tmpl	= "/individuals/disposals-income/residential-property/{nino}/{taxYear}/{query_params}",
+	[MTD_API_EP_ICGI_RPD_N_PPD_GET] = {
+		.epstr	= "MTD_API_EP_ICGI_RPD_N_PPD_GET",
+		.tmpl	= "/individuals/disposals-income/residential-property/{nino}/{taxYear}",
 		.method	= M_GET,
 		.api	= MTD_EP_API_ICGI,
 	},
@@ -474,6 +474,12 @@ static const struct {
 		.epstr	= "MTD_API_EP_ICGI_RPD_N_PPD_DELETE",
 		.tmpl	= "/individuals/disposals-income/residential-property/{nino}/{taxYear}",
 		.method	= M_DELETE,
+		.api	= MTD_EP_API_ICGI,
+	},
+	[MTD_API_EP_ICGI_RPD_PPD_GET] = {
+		.epstr	= "MTD_API_EP_ICGI_RPD_PPD_GET",
+		.tmpl	= "/individuals/disposals-income/residential-property/{nino}/{taxYear}/ppd/{query_params}",
+		.method	= M_GET,
 		.api	= MTD_EP_API_ICGI,
 	},
 	[MTD_API_EP_ICGI_RPD_PPD_AMEND] = {
