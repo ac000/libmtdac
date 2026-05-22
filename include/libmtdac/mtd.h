@@ -838,6 +838,8 @@ enum mtd_api_endpoint {
 	MTD_API_EP_OA_APPLICATION_TOKEN,
 };
 
+#define MTD_EP_NO_PARAMS		((const char *[1]){})
+
 struct mtd_ep_api_info {
 	enum mtd_ep_api api;
 	const char *version;

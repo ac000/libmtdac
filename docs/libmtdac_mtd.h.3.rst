@@ -897,6 +897,12 @@ MTD API Endpoints
           MTD_API_EP_OA_APPLICATION_TOKEN,
   };
 
+Macro that specifies an empty params array for use with *mtd_ep()*
+
+.. code-block::
+
+  #define MTD_EP_NO_PARAMS                   ((const char *[1]){})
+
 Used to tell **mtd_ep(3)** which API endpoint to query.
 
 .. code-block::
