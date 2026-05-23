@@ -165,9 +165,12 @@ char *ep_make_url(enum mtd_api_endpoint ep, const char * const params[],
 		else if (strstr(token, "query_params"))
 			snprintf(url + len, URL_LEN+1 - len, "%s",
 				 params && params[p] ? params[p++] : "");
-		else
+		else if (params && params[p])
 			snprintf(url + len, URL_LEN+1 - len, "/%s",
 				 params[p++]);
+		else
+			/* This will show what parameter(s) are missing */
+			snprintf(url + len, URL_LEN+1 - len, "/%s", token);
 
 		len = strlen(url);
 	}
