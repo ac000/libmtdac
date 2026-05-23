@@ -164,7 +164,7 @@ char *ep_make_url(enum mtd_api_endpoint ep, const char * const params[],
 			snprintf(url + len, URL_LEN+1 - len, "/%s", nino);
 		else if (strstr(token, "query_params"))
 			snprintf(url + len, URL_LEN+1 - len, "%s",
-				 params[p] ? params[p++] : "");
+				 params && params[p] ? params[p++] : "");
 		else
 			snprintf(url + len, URL_LEN+1 - len, "/%s",
 				 params[p++]);

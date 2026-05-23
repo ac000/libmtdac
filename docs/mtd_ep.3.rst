@@ -57,10 +57,9 @@ This function is used to send a query to a specified API endpoint.
    There is no need to pass in how many entries is in params (or for it
    to be NULL terminated) as this is dictated by each endpoint.
 
-   For any endpoints which don’t require *any* parameters, this can be
-   **NULL**. If an endpoint *only* takes an *optional* query stirng,
-   then you still need a params with a single entry either containing
-   NULL or a valid query string.
+   For any endpoints which don’t require *any* parameters, including
+   endpoints that take an optional query string where you don't want to
+   pass one, this can be **NULL**.
 
    **NOTE:** nino (National Insurance Number) is not included in the
    above as that is acquired by libmtdac via other means.
