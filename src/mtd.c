@@ -197,7 +197,7 @@ char *mtd_percent_encode(const char *str, size_t len)
 	p = buf;
 
 	for (size_t i = 0; i < len; i++) {
-		char ch = str[i];
+		unsigned char ch = str[i];
 
 		switch (ch) {
 		case 'A' ... 'Z':
