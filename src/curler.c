@@ -408,7 +408,7 @@ static int set_headers(struct curl_ctx *ctx)
 	int err = 0;
 	const char * const *hdrs;
 
-	if (ctx->scope != MTD_API_SCOPE_NULL) {
+	if (*ctx->mtd_api_ver_hdr) {
 		err = curl_add_hdr(ctx, "%s", ctx->mtd_api_ver_hdr);
 		if (err)
 			return MTD_ERR_OS;

@@ -11,6 +11,8 @@
 
 #define _GNU_SOURCE
 
+#include <stdbool.h>
+
 #include "mtd.h"
 #include "curler.h"
 
@@ -26,6 +28,7 @@ static const struct api_def_val {
 	const char *name;
 	enum oauth_authz authz;
 	enum mtd_api_scope scope;
+	bool req_accept_hdr;
 } api_default_values[] = {
 	[MTD_EP_API_BD] = {
 		.api_version	= "2.0",
@@ -202,6 +205,7 @@ static const struct api_def_val {
 		.name		= "Test Fraud Prevention Headers",
 		.authz		= AUTHZ_APPLICATION,
 		.scope		= MTD_API_SCOPE_NULL,
+		.req_accept_hdr = true,
 	},
 	[MTD_EP_API_TEST_SATS] = {
 		.api_version	= "1.0",
