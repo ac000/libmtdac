@@ -21,7 +21,7 @@ enum oauth_authz {
 	AUTHZ_USER,
 };
 
-static const struct {
+static const struct api_def_val {
 	const char *api_version;
 	const char *name;
 	enum oauth_authz authz;

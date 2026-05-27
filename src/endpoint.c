@@ -58,6 +58,7 @@ int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 	size_t len;
 	enum mtd_ep_api api = endpoints[ep].api;
 	struct curl_ctx ctx = {};
+	const struct api_def_val *adv = &api_default_values[api];
 	char api_ver_hdr[128];
 
 	*buf = NULL;
@@ -66,14 +67,14 @@ int mtd_ep(enum mtd_api_endpoint ep, const struct mtd_dsrc_ctx *dsctx,
 
 	if (ctx.scope != MTD_API_SCOPE_NULL) {
 		len = snprintf(api_ver_hdr, sizeof(api_ver_hdr), API_VER_FMT,
-			       api_default_values[api].api_version);
+			       adv->api_version);
 		if (len >= sizeof(api_ver_hdr))
 			return MTD_ERR_REQUEST;
 	}
 
 	ctx.mtd_api_ver_hdr = api_ver_hdr;
-	ctx.mtd_api_name = api_default_values[api].name;
-	ctx.mtd_api_ver = api_default_values[api].api_version;
+	ctx.mtd_api_name = adv->name;
+	ctx.mtd_api_ver = adv->api_version;
 	ctx.endpoint = ep;
 	ctx.epstr = endpoints[ep].epstr;
 	ctx.params = params;
