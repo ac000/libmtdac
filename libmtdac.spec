@@ -28,14 +28,12 @@ make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT/%{_libdir}
+cp -a src/libmtdac.so* $RPM_BUILD_ROOT/%{_libdir}/
 install -Dp -m0644 -t $RPM_BUILD_ROOT/%{_includedir}/libmtdac/ include/libmtdac/*.h
-install -Dp -m0755 src/libmtdac.so.%{version} $RPM_BUILD_ROOT/%{_libdir}/libmtdac.so.%{version}
 install -Dp -m0644 -t $RPM_BUILD_ROOT/%{_mandir}/man3/ docs/man/man3/*.3
 install -Dp -m0644 -t $RPM_BUILD_ROOT/%{_mandir}/man3type/ docs/man/man3type/*.3type
 gzip $RPM_BUILD_ROOT/%{_mandir}/man3/*.3 $RPM_BUILD_ROOT/%{_mandir}/man3type/*.3type
-cd $RPM_BUILD_ROOT/%{_libdir}
-ln -s libmtdac.so.1 libmtdac.so
-cd -
 
 %post -p /sbin/ldconfig
 
