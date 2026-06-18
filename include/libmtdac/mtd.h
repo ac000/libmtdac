@@ -494,8 +494,8 @@ enum mtd_ep_api {
 	MTD_EP_API_IOI,		/* Individuals Other Income */
 	MTD_EP_API_IPI,		/* Individuals Pensions Income */
 	MTD_EP_API_IR,		/* Individuals Reliefs */
-	MTD_EP_API_ISB,		/* Individuals Savings Income */
-	MTD_EP_API_ISI,		/* Individuals State Benefits */
+	MTD_EP_API_ISB,		/* Individuals State Benefits */
+	MTD_EP_API_ISI,		/* Individuals Savings Income */
 	MTD_EP_API_ITLA,	/* Individuals Tax Liability Adjustments */
 	MTD_EP_API_OB,		/* Obligations */
 	MTD_EP_API_OD,		/* Other Deductions */
