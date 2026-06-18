@@ -4,8 +4,8 @@ LIBNAME = libmtdac
 
 GIT_VERSION  = \"$(shell git describe --long --dirty 2> /dev/null || cat ../.version)\"
 
-SOVER	= $(MAJOR)
-VERSION = $(MAJOR).$(MINOR).$(PATCH)$(PLUS)
+SOVER	= $(MAJOR).$(MINOR)
+VERSION = $(SOVER).$(PATCH)$(PLUS)
 
 OBJ_DIR := .objs
 $(shell mkdir -p $(OBJ_DIR) >/dev/null)
