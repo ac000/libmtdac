@@ -43,6 +43,7 @@ API							Version
 `Individuals Reliefs`_					3.0
 `Individuals Savings Income`_				2.0
 `Individuals State Benefits`_				2.0
+`Individuals Tax Liability Adjustments`			1.0
 `Obligations`_						3.0
 `Other Deductions`_					2.0
 `Property Business`_					6.0
@@ -77,6 +78,7 @@ API							Version
 .. _Individuals Reliefs: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-reliefs-api/3.0/oas/page
 .. _Individuals Savings Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-savings-income-api/2.0/oas/page
 .. _Individuals State Benefits: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-state-benefits-api/2.0/oas/page
+.. _Individuals Tax Liability Adjustments: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-tax-liability-adjustments-api/1.0/oas/page
 .. _Obligations: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/obligations-api/3.0/oas/page
 .. _Other Deductions: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/other-deductions-api/2.0/oas/page
 .. _Property Business: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/property-business-api/6.0/oas/page

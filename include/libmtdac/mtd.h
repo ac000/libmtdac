@@ -496,6 +496,7 @@ enum mtd_ep_api {
 	MTD_EP_API_IR,		/* Individuals Reliefs */
 	MTD_EP_API_ISB,		/* Individuals Savings Income */
 	MTD_EP_API_ISI,		/* Individuals State Benefits */
+	MTD_EP_API_ITLA,	/* Individuals Tax Liability Adjustments */
 	MTD_EP_API_OB,		/* Obligations */
 	MTD_EP_API_OD,		/* Other Deductions */
 	MTD_EP_API_PB,		/* Property Business */
@@ -712,6 +713,11 @@ enum mtd_api_endpoint {
 	MTD_API_EP_ISI_SI_O_GET,
 	MTD_API_EP_ISI_SI_O_UPDATE,
 	MTD_API_EP_ISI_SI_O_DELETE,
+
+	/* Individuals Tax Liability Adjustments */
+	MTD_API_EP_ITLA_GET,
+	MTD_API_EP_ITLA_UPDATE,
+	MTD_API_EP_ITLA_DELETE,
 
 	/* Obligations */
 	MTD_API_EP_OB_GET_IEO,

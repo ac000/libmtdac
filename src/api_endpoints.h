@@ -144,6 +144,12 @@ static const struct api_def_val {
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
+	[MTD_EP_API_ITLA] = {
+		.api_version	= "1.0",
+		.name		= "Individuals Tax Liability Adjustments",
+		.authz		= AUTHZ_USER,
+		.scope		= MTD_API_SCOPE_SA,
+	},
 	[MTD_EP_API_OB] = {
 		.api_version	= "3.0",
 		.name		= "Obligations",
@@ -1152,6 +1158,27 @@ static const struct {
 		.tmpl	= "/individuals/savings-income/other/{nino}/{taxYear}",
 		.method = M_DELETE,
 		.api	= MTD_EP_API_ISI,
+	},
+
+	/* Individuals Tax Liability Adjustments */
+	[MTD_API_EP_ITLA_GET] = {
+		.epstr	= "MTD_API_EP_ITLA_GET",
+		.tmpl	= "/individuals/tax-liability/adjustments/{nino}/{taxYear}",
+		.method	= M_GET,
+		.api	= MTD_EP_API_ITLA,
+	},
+	[MTD_API_EP_ITLA_UPDATE] = {
+		.epstr	= "MTD_API_EP_ITLA_UPDATE",
+		.tmpl	= "/individuals/tax-liability/adjustments/{nino}/{taxYear}",
+		.method	= M_PUT,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_ITLA,
+	},
+	[MTD_API_EP_ITLA_DELETE] = {
+		.epstr	= "MTD_API_EP_ITLA_DELETE",
+		.tmpl	= "/individuals/tax-liability/adjustments/{nino}/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_ITLA,
 	},
 
 	/* Obligations */
