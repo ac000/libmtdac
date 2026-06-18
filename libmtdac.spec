@@ -1,5 +1,5 @@
 Name:		libmtdac
-Version:	1.6.2
+Version:	1.7.0
 Release:	1%{?dist}
 Summary:	Library to interface with HMRC MTD API
 
@@ -51,6 +51,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+
+* Thu Jun 18 2026 Andrew Clayton <ac@sigsegv.uk> - 1.7.0-1
+- Adjust the SOVER to MAJOR.MINOR
+- Add support for the Individuals Tax Liability Adjustments API
+- Set the 'Accept' header for the Test Fraud Prevention API
+- Fix percent encoding of characters > 127
 
 * Tue May 19 2026 Andrew Clayton <ac@sigsegv.uk> - 1.6.2-1
 - Update to version 3.0 of 'Individuals Reliefs' API
