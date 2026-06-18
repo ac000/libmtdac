@@ -43,7 +43,7 @@ API							Version
 `Individuals Reliefs`_					3.0
 `Individuals Savings Income`_				2.0
 `Individuals State Benefits`_				2.0
-`Individuals Tax Liability Adjustments`			1.0
+`Individuals Tax Liability Adjustments`_		1.0
 `Obligations`_						3.0
 `Other Deductions`_					2.0
 `Property Business`_					6.0
