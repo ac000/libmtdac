@@ -108,9 +108,9 @@ static const struct api_def_val {
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
-	[MTD_EP_API_ILOS] = {
-		.api_version	= "6.0",
-		.name		= "Individual Losses",
+	[MTD_EP_API_IL] = {
+		.api_version	= "7.0",
+		.name		= "Individuals Losses",
 		.authz		= AUTHZ_USER,
 		.scope		= MTD_API_SCOPE_SA,
 	},
@@ -833,78 +833,25 @@ static const struct {
 		.api	= MTD_EP_API_IIPI,
 	},
 
-	/* Individual Losses - Brought Forward */
-	[MTD_API_EP_ILOS_BF_CREATE] = {
-		.epstr	= "MTD_API_EP_ILOS_BF_CREATE",
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/tax-year/brought-forward-from/{taxYear}",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.api	= MTD_EP_API_ILOS,
-	},
-	[MTD_API_EP_ILOS_BF_AMEND_AMNT] = {
-		.epstr	= "MTD_API_EP_ILOS_BF_AMEND_AMNT",
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}/tax-year/{taxYear}/change-loss-amount",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.api	= MTD_EP_API_ILOS,
-	},
-	[MTD_API_EP_ILOS_BF_LIST] = {
-		.epstr	= "MTD_API_EP_ILOS_BF_LIST",
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/tax-year/{taxYearBroughtForwardFrom}/{query_params}",
+	/* Individuals Losses */
+	[MTD_API_EP_IL_GET] = {
+		.epstr	= "MTD_API_EP_IL_GET",
+		.tmpl	= "/individuals/losses/{nino}/businesses/{businessId}/loss-claims/{taxYear}",
 		.method	= M_GET,
-		.api	= MTD_EP_API_ILOS,
+		.api	= MTD_EP_API_IL,
 	},
-	[MTD_API_EP_ILOS_BF_GET] = {
-		.epstr	= "MTD_API_EP_ILOS_BF_GET",
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}",
-		.method	= M_GET,
-		.api	= MTD_EP_API_ILOS,
-	},
-	[MTD_API_EP_ILOS_BF_DELETE] = {
-		.epstr	= "MTD_API_EP_ILOS_BF_DELETE",
-		.tmpl	= "/individuals/losses/{nino}/brought-forward-losses/{lossId}/tax-year/{taxYear}",
-		.method	= M_DELETE,
-		.api	= MTD_EP_API_ILOS,
-	},
-	/* Loss Claims */
-	[MTD_API_EP_ILOS_LC_CREATE] = {
-		.epstr	= "MTD_API_EP_ILOS_LC_CREATE",
-		.tmpl	= "/individuals/losses/{nino}/loss-claims",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.api	= MTD_EP_API_ILOS,
-	},
-	[MTD_API_EP_ILOS_LC_LIST] = {
-		.epstr	= "MTD_API_EP_ILOS_LC_LIST",
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/tax-year/{taxYearClaimedFor}/{query_params}",
-		.method	= M_GET,
-		.api	= MTD_EP_API_ILOS,
-	},
-	[MTD_API_EP_ILOS_LC_GET] = {
-		.epstr	= "MTD_API_EP_ILOS_LC_GET",
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}",
-		.method	= M_GET,
-		.api	= MTD_EP_API_ILOS,
-	},
-	[MTD_API_EP_ILOS_LC_DELETE] = {
-		.epstr	= "MTD_API_EP_ILOS_LC_DELETE",
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}/tax-year/{taxYearClaimedFor}",
-		.method	= M_DELETE,
-		.api	= MTD_EP_API_ILOS,
-	},
-	[MTD_API_EP_ILOS_LC_AMEND_TYPE] = {
-		.epstr	= "MTD_API_EP_ILOS_LC_AMEND_TYPE",
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/{claimId}/tax-year/{taxYearClaimedFor}/change-type-of-claim",
-		.method	= M_POST,
-		.ctype	= CONTENT_TYPE_JSON,
-		.api	= MTD_EP_API_ILOS,
-	},
-	[MTD_API_EP_ILOS_LC_AMEND_ORDER] = {
-		.epstr	= "MTD_API_EP_ILOS_LC_AMEND_ORDER",
-		.tmpl	= "/individuals/losses/{nino}/loss-claims/order/{taxYearClaimedFor}",
+	[MTD_API_EP_IL_AMEND] = {
+		.epstr	= "MTD_API_EP_IL_AMEND",
+		.tmpl	= "/individuals/losses/{nino}/businesses/{businessId}/loss-claims/{taxYear}",
 		.method	= M_PUT,
-		.ctype  = CONTENT_TYPE_JSON,
-		.api	= MTD_EP_API_ILOS,
+		.ctype	= CONTENT_TYPE_JSON,
+		.api	= MTD_EP_API_IL,
+	},
+	[MTD_API_EP_IL_DELETE] = {
+		.epstr	= "MTD_API_EP_IL_DELETE",
+		.tmpl	= "/individuals/losses/{nino}/businesses/{businessId}/loss-claims/{taxYear}",
+		.method	= M_DELETE,
+		.api	= MTD_EP_API_IL,
 	},
 
 	/* Individuals Other Income */

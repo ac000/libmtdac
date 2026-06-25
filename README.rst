@@ -37,7 +37,7 @@ API							Version
 `Individuals Expenses`_					3.0
 `Individuals Foreign Income`_				2.0
 `Individuals Insurance Policies Income`_		2.0
-`Individual Losses`_					6.0
+`Individuals Losses`_					7.0
 `Individuals Other Income`_				2.0
 `Individuals Pensions Income`_				2.0
 `Individuals Reliefs`_					3.0
@@ -72,7 +72,7 @@ API							Version
 .. _Individuals Expenses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-expenses-api/3.0/oas/page
 .. _Individuals Foreign Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-foreign-income-api/2.0/oas/page
 .. _Individuals Insurance Policies Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-insurance-policies-income-api/2.0/oas/page
-.. _Individual Losses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/6.0/oas/page
+.. _Individuals Losses: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/7.0/oas/page
 .. _Individuals Other Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-other-income-api/2.0/oas/page
 .. _Individuals Pensions Income: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-pensions-income-api/2.0/oas/page
 .. _Individuals Reliefs: https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-reliefs-api/3.0/oas/page

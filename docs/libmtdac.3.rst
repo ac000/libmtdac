@@ -70,9 +70,9 @@ Individuals Insurance Policies Income 2.0
 
 https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individuals-insurance-policies-income-api/2.0/oas/page
 
-Individual Losses 6.0
+Individuals Losses 7.0
 
-https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/6.0/oas/page
+https://developer.service.hmrc.gov.uk/api-documentation/docs/api/service/individual-losses-api/7.0/oas/page
 
 Individuals Other Income 2.0
 
